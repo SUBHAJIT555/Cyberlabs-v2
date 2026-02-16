@@ -36,6 +36,72 @@ const GeneralAdmission = () => {
         },
     };
 
+    const dashedGridStyle = {
+        backgroundImage: `
+            linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+            linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+        `,
+        backgroundSize: "10px 10px",
+        backgroundPosition: "0 0, 0 0",
+        maskImage: `
+            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+        `,
+        WebkitMaskImage: `
+            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+        `,
+        maskComposite: "intersect" as const,
+        WebkitMaskComposite: "source-in" as const,
+    };
+
+    const callToActionGridStyle = {
+        backgroundImage: `
+            linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+            linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+        `,
+        backgroundSize: "1px 1px",
+        backgroundPosition: "0 0, 0 0",
+        maskImage: `
+            repeating-linear-gradient(
+                to right,
+                black 0px,
+                black 3px,
+                transparent 3px,
+                transparent 8px
+            ),
+            repeating-linear-gradient(
+                to bottom,
+                black 0px,
+                black 3px,
+                transparent 3px,
+                transparent 8px
+            ),
+            radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+        `,
+        WebkitMaskImage: `
+            repeating-linear-gradient(
+                to right,
+                black 0px,
+                black 3px,
+                transparent 3px,
+                transparent 8px
+            ),
+            repeating-linear-gradient(
+                to bottom,
+                black 0px,
+                black 3px,
+                transparent 3px,
+                transparent 8px
+            ),
+            radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+        `,
+        maskComposite: "intersect" as const,
+        WebkitMaskComposite: "source-in" as const,
+    };
+
     const SectionBlock = ({
         children,
         className = "",
@@ -43,25 +109,26 @@ const GeneralAdmission = () => {
         children: ReactNode;
         className?: string;
     }) => (
-        <div
-            className={`w-full py-12 sm:py-16 md:py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 border-b border-neutral-200/80 ${className}`}
-        >
-            <div className="w-full">{children}</div>
+        <div className={`w-full mb-8 md:mb-10 ${className}`}>
+            <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
+                <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+                <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
+                    {children}
+                </div>
+            </div>
         </div>
     );
 
     return (
-        <section ref={containerRef} className="w-full bg-background py-6 md:py-10">
-            <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
-                <div ref={headingRef}>
-                    <AnimatedHeading
-                        inView={headingInView}
-                        lines={[
-                            { text: "General Admission Expectations ", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter-display text-text-primary leading-tight tracking-tight font-semibold" },
-                            { text: "(All Programs)", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter-display text-primary leading-tight tracking-tight font-semibold", startDelay: 0.15 },
-                        ]}
-                    />
-                </div>
+        <section className="w-full px-5 md:px-10 lg:px-16 py-4 sm:py-6 lg:py-6" ref={containerRef}>
+            <div ref={headingRef} className="mb-6 sm:mb-8">
+                <AnimatedHeading
+                    inView={headingInView}
+                    lines={[
+                        { text: "General Admission Expectations ", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter-display text-text-primary leading-tight tracking-tight font-semibold" },
+                        { text: "(All Programs)", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter-display text-primary leading-tight tracking-tight font-semibold", startDelay: 0.15 },
+                    ]}
+                />
             </div>
 
             <motion.div
@@ -71,7 +138,7 @@ const GeneralAdmission = () => {
                 className="w-full"
             >
                 {/* 1. Regardless of background — content left, image right */}
-                <SectionBlock className="">
+                <SectionBlock>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
                         <div className="space-y-6 order-2 md:order-1">
                             <motion.h2
@@ -114,7 +181,7 @@ const GeneralAdmission = () => {
                 </SectionBlock>
 
                 {/* 2. Do you need prior experience? — image left, content right (zigzag) */}
-                <SectionBlock className="bg-neutral-50/80">
+                <SectionBlock>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
                         <div className="order-1 md:order-1 flex justify-center md:justify-start">
                             <img
@@ -155,40 +222,37 @@ const GeneralAdmission = () => {
                     </div>
                 </SectionBlock>
 
-                {/* 3. Closing statement — no heading, only two paragraphs (like WhatTruelySet) */}
-                <SectionBlock className="bg-white border-b-0">
-                    <motion.div
-                        initial={{ opacity: 0, y: 24 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-                        transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-                        className="rounded-xl border border-neutral-200 bg-white overflow-hidden shadow-sm"
-                    >
-                        <div className="p-6 sm:p-8 md:p-10 lg:p-12 space-y-5 sm:space-y-6">
-                            <p
-                                className="text-base sm:text-lg md:text-xl font-inter-display font-medium text-text-primary leading-relaxed italic border-l-4 border-primary/40 pl-4 py-1"
-                                style={{
-                                    background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), transparent",
-                                }}
+                {/* 3. Closing statement — no heading, only two paragraphs */}
+                <div className="w-full mb-8 md:mb-10">
+                    <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
+                        {/* Dashed grid background (fade at top) - same as CallToAction */}
+                        <div
+                            className="absolute inset-0 z-0 pointer-events-none"
+                            style={callToActionGridStyle}
+                        />
+                        <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
+                            <motion.div
+                                initial={{ opacity: 0, y: 24 }}
+                                animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+                                transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                                className="space-y-5 sm:space-y-6"
                             >
-                                CYBERLABS programs are designed for learners who want to{" "}
-                                <span className="font-semibold text-primary not-italic">think</span>,{" "}
-                                <span className="font-semibold text-primary not-italic">investigate</span>, and{" "}
-                                <span className="font-semibold text-primary not-italic">operate</span>, not just collect certificates.
-                            </p>
-                            <p
-                                className="text-base sm:text-lg md:text-xl font-inter-display font-medium text-text-primary leading-relaxed italic border-l-4 border-primary/40 pl-4 py-1"
-                                style={{
-                                    background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), transparent",
-                                }}
-                            >
-                                If you are <span className="font-semibold text-primary not-italic">motivated</span>,{" "}
-                                <span className="font-semibold text-primary not-italic">curious</span>, and{" "}
-                                <span className="font-semibold text-primary not-italic">serious</span> about building a long-term cybersecurity career,
-                                your educational background will not limit you here.
-                            </p>
+                                <p className="text-base sm:text-lg md:text-xl font-inter-display font-medium text-text-primary leading-relaxed italic border-l-4 border-primary/40 pl-4 py-1">
+                                    CYBERLABS programs are designed for learners who want to{" "}
+                                    <span className="font-semibold text-primary not-italic">think</span>,{" "}
+                                    <span className="font-semibold text-primary not-italic">investigate</span>, and{" "}
+                                    <span className="font-semibold text-primary not-italic">operate</span>, not just collect certificates.
+                                </p>
+                                <p className="text-base sm:text-lg md:text-xl font-inter-display font-medium text-text-primary leading-relaxed italic border-l-4 border-primary/40 pl-4 py-1">
+                                    If you are <span className="font-semibold text-primary not-italic">motivated</span>,{" "}
+                                    <span className="font-semibold text-primary not-italic">curious</span>, and{" "}
+                                    <span className="font-semibold text-primary not-italic">serious</span> about building a long-term cybersecurity career,
+                                    your educational background will not limit you here.
+                                </p>
+                            </motion.div>
                         </div>
-                    </motion.div>
-                </SectionBlock>
+                    </div>
+                </div>
             </motion.div>
         </section>
     );
