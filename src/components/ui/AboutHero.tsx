@@ -280,19 +280,19 @@ const AboutHero = () => {
 
           {/* Tagline - Small Caps, Spaced Out */}
           <div className="text-center py-4 sm:py-6 md:py-8 overflow-x-hidden">
-            <p className="text-xs xs:text-sm sm:text-base md:text-base font-montserrat tracking-widest sm:tracking-[0.15em] uppercase font-bold text-text-primary/70 flex flex-wrap justify-center gap-2 sm:gap-4">
+            <p className="text-xs xs:text-sm sm:text-base md:text-base font-montserrat tracking-widest sm:tracking-[0.15em] uppercase font-bold text-text-primary/70 flex flex-wrap justify-center gap-3 sm:gap-6">
               <span className="inline-block px-2 py-0.5 md:py-1 rounded-lg border border-neutral-200 ring ring-neutral-300 ring-offset-2 md:ring-offset-4"
                 style={{
                   background:
                     "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
                 }}>ISRAEL-FOUNDED</span>
-              <span className="inline-block text-primary/50">·</span>
+              
               <span className="inline-block px-2 py-0.5 md:py-1 rounded-lg border border-neutral-200 ring ring-neutral-300 ring-offset-2 md:ring-offset-4"
                 style={{
                   background:
                     "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
                 }}>PRACTITIONER-LED</span>
-              <span className="inline-block text-primary/50">·</span>
+              
               <span className="inline-block px-2 py-0.5 md:py-1 rounded-lg border border-neutral-200 ring ring-neutral-300 ring-offset-2 md:ring-offset-4"
                 style={{
                   background:

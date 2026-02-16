@@ -366,8 +366,8 @@ const Navbar: React.FC = () => {
                                     </motion.button>
                                 </DrawerTrigger>
 
-                                <DrawerContent side="right" className="bg-white">
-                                    <DrawerHeader className="border-b border-neutral-300 bg-white"
+                                <DrawerContent side="right" className="bg-white border-solid">
+                                    <DrawerHeader className="border-b border-neutral-300 border-solid bg-white"
                                         style={{
                                             background:
                                                 "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
@@ -424,7 +424,7 @@ const Navbar: React.FC = () => {
                                     </DrawerBody>
 
                                     <DrawerFooter
-                                        className="flex flex-col gap-4"
+                                        className="flex flex-col gap-4 border-solid"
                                         style={{
                                             background:
                                                 "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",

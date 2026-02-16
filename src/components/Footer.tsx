@@ -533,7 +533,7 @@ const Footer = () => {
                         }
                       }}
                       variant="light"
-                      className={isSubmitting ? "opacity-70 cursor-not-allowed" : " font-inter-display"}
+                      className={isSubmitting ? "opacity-70 cursor-not-allowed" : " font-inter-display font-semibold ring ring-neutral-300 ring-offset-2 md:ring-offset-3"}
                     />
                   </div>
                 </form>

@@ -164,7 +164,7 @@ const CourseCardCategories1 = () => {
                                                 )}
 
                                                 {/* Duration badge */}
-                                                <div className="inline-flex items-center gap-2 rounded-md border border-neutral-200 bg-white/90 backdrop-blur-sm px-3.5 py-2 mb-5 shadow-sm">
+                                                <div className="inline-flex items-center gap-2 rounded-lg border border-neutral-200 bg-white ring ring-neutral-200 ring-offset-2 md:ring-offset-4 backdrop-blur-sm px-3.5 py-2 mb-5 shadow-sm">
                                                     <AnimatedClockIcon isInView={cardsInView} />
                                                     <span className="text-text-primary text-sm md:text-base font-inter-display font-medium">
                                                         Duration:{" "}
@@ -199,7 +199,7 @@ const CourseCardCategories1 = () => {
                                                     to={`/cyber-defense-programs/${course.slug}`}
                                                     label="View Program Details"
                                                     variant="light"
-                                                    className="shrink-0 w-fit font-inter-display"
+                                                    className="shrink-0 w-fit font-inter-display font-semibold ring ring-neutral-300 ring-offset-2 md:ring-offset-4"
                                                 />
                                             </div>
                                         </div>

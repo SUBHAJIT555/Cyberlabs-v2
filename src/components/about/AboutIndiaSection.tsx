@@ -11,8 +11,51 @@ import cyberlabsIndiaImage from "../../assets/img/AboutPageImages/cyberlabsindia
 const mainTitleBaseClass =
   "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold tracking-tight leading-tight md:leading-normal inline";
 
-const bulletIcon = (
-  <span className="text-primary text-sm sm:text-base mt-0.5 shrink-0">•</span>
+// List item icons
+const BriefcaseIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-xl p-1.5 sm:p-2 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-briefcase w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9" />
+      <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+      <path d="M12 12l0 .01" />
+      <path d="M3 13a20 20 0 0 0 18 0" />
+    </svg>
+  </div>
+);
+
+const UserScanIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-xl p-1.5 sm:p-2 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-user-scan w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M10 9a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path d="M4 8v-2a2 2 0 0 1 2 -2h2" />
+      <path d="M4 16v2a2 2 0 0 0 2 2h2" />
+      <path d="M16 4h2a2 2 0 0 1 2 2v2" />
+      <path d="M16 20h2a2 2 0 0 0 2 -2v-2" />
+      <path d="M8 16a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2" />
+    </svg>
+  </div>
+);
+
+const SearchIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-xl p-1.5 sm:p-2 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-search w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+      <path d="M21 21l-6 -6" />
+    </svg>
+  </div>
+);
+
+const TrendingUpIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-xl p-1.5 sm:p-2 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-trending-up w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M3 17l6 -6l4 4l8 -8" />
+      <path d="M14 7l7 0l0 7" />
+    </svg>
+  </div>
 );
 
 const AboutIndiaSection = () => {
@@ -26,12 +69,12 @@ const AboutIndiaSection = () => {
   const imageInView = useInView(imageRef, { once: false, margin: "-100px" });
 
   const listItems: AnimatedListItem[] = [
-    { text: "Enterprise cybersecurity roles", icon: bulletIcon },
-    { text: "Cybercrime and investigation functions", icon: bulletIcon },
-    { text: "Platform, identity, and abuse defense teams", icon: bulletIcon },
+    { text: "Enterprise cybersecurity roles.", icon: BriefcaseIcon },
+    { text: "Cybercrime and investigation functions.", icon: UserScanIcon },
+    { text: "Platform, identity, and abuse defense teams.", icon: SearchIcon },
     {
-      text: "India's rapidly expanding digital and regulatory environment",
-      icon: bulletIcon,
+      text: "India's rapidly expanding digital and regulatory environment.",
+      icon: TrendingUpIcon,
     },
   ];
 

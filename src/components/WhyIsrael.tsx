@@ -19,6 +19,43 @@ import type { AnimatedListItem } from "./ui/animated-list";
 
 const baseTitleClass = "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold tracking-tight leading-tight md:leading-normal inline";
 
+// List item icons (no border)
+const CurrentLocationIcon = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-current-location w-4 h-4 sm:w-5 sm:h-5 text-primary">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M9 12a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+    <path d="M4 12a8 8 0 1 0 16 0a8 8 0 1 0 -16 0" />
+    <path d="M12 2l0 2" />
+    <path d="M12 20l0 2" />
+    <path d="M20 12l2 0" />
+    <path d="M2 12l2 0" />
+  </svg>
+);
+
+const RadarIcon = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="icon icon-tabler icons-tabler-filled icon-tabler-radar w-4 h-4 sm:w-5 sm:h-5 text-primary">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M12 10a2 2 0 0 1 1.678 .911l.053 .089h7.269l.117 .007a1 1 0 0 1 .883 .993c0 5.523 -4.477 10 -10 10a1 1 0 0 1 -1 -1v-7.269l-.089 -.053a2 2 0 0 1 -.906 -1.529l-.005 -.149a2 2 0 0 1 2 -2m9.428 -1.334a1 1 0 0 1 -1.884 .668a8 8 0 1 0 -10.207 10.218a1 1 0 0 1 -.666 1.886a10 10 0 1 1 12.757 -12.772m-4.628 -.266a1 1 0 0 1 -1.6 1.2a4 4 0 1 0 -5.6 5.6a1 1 0 0 1 -1.2 1.6a6 6 0 1 1 8.4 -8.4" />
+  </svg>
+);
+
+const ShieldCheckIcon = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-shield-check w-4 h-4 sm:w-5 sm:h-5 text-primary">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" />
+    <path d="M15 19l2 2l4 -4" />
+  </svg>
+);
+
+const RouteSquare2Icon = (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-route-square-2 w-4 h-4 sm:w-5 sm:h-5 text-primary">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M14 5a2 2 0 0 0 -2 2v10a2 2 0 0 1 -2 2" />
+    <path d="M3 17h4v4h-4l0 -4" />
+    <path d="M17 3h4v4h-4l0 -4" />
+  </svg>
+);
+
 const WhyIsrael = () => {
   const titleRef = useRef<HTMLDivElement>(null);
   const introRef = useRef(null);
@@ -42,10 +79,10 @@ const WhyIsrael = () => {
   };
 
   const cyberDefenseItems: AnimatedListItem[] = [
-    { text: "Mission-critical", icon: <span className="text-primary">•</span> },
-    { text: "Intelligence-led", icon: <span className="text-primary">•</span> },
-    { text: "Continuously tested against real adversaries", icon: <span className="text-primary">•</span> },
-    { text: "Integrated into national security, enterprises, and infrastructure", icon: <span className="text-primary">•</span> },
+    { text: "Mission-critical.", icon: CurrentLocationIcon },
+    { text: "Intelligence-led.", icon: RadarIcon },
+    { text: "Continuously tested against real adversaries.", icon: ShieldCheckIcon },
+    { text: "Integrated into national security, enterprises, and infrastructure.", icon: RouteSquare2Icon },
   ];
 
 
@@ -108,7 +145,7 @@ const WhyIsrael = () => {
                 <p className="text-base sm:text-lg md:text-xl font-inter-display text-text-primary leading-tight">
                   Israeli cyber professionals are trained to <span className="font-bold">defend live systems, respond to real attacks, and protect national-scale assets.</span>
                 </p>
-                <p className="text-base sm:text-lg md:text-xl font-inter-display text-text-primary leading-tight">
+                <p className="text-lg sm:text-xl md:text-2xl font-inter-display text-text-primary leading-tight font-semibold">
                   This real-world mindset is what defines CYBERLABS.
 
                 </p>

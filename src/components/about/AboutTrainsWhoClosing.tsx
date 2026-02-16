@@ -12,9 +12,247 @@ import whoCyberlabs from '../../assets/img/AboutPageImages/whoCyberlabs.svg'
 // import enterpriseImage from "../../assets/img/whoThis/enterprise.webp";
 import closingImage from "../../assets/img/AboutPageImages/closingImage.svg";
 
-const bulletIcon = (
-  <span className="text-primary text-sm sm:text-base mt-0.5 shrink-0">•</span>
+// List item icons
+const CubePlusIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-cube-plus w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M21 12.5v-4.509a1.98 1.98 0 0 0 -1 -1.717l-7 -4.008a2.016 2.016 0 0 0 -2 0l-7 4.007c-.619 .355 -1 1.01 -1 1.718v8.018c0 .709 .381 1.363 1 1.717l7 4.008a2.016 2.016 0 0 0 2 0" />
+      <path d="M12 22v-10" />
+      <path d="M12 12l8.73 -5.04" />
+      <path d="M3.27 6.96l8.73 5.04" />
+      <path d="M16 19h6" />
+      <path d="M19 16v6" />
+    </svg>
+  </div>
 );
+
+const SitemapIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-sitemap w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M3 17a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -2" />
+      <path d="M15 17a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -2" />
+      <path d="M9 5a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2l0 -2" />
+      <path d="M6 15v-1a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v1" />
+      <path d="M12 9l0 3" />
+    </svg>
+  </div>
+);
+
+const GitBranchIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-git-branch w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M5 18a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+      <path d="M5 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+      <path d="M15 6a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+      <path d="M7 8l0 8" />
+      <path d="M9 18h6a2 2 0 0 0 2 -2v-5" />
+      <path d="M14 14l3 -3l3 3" />
+    </svg>
+  </div>
+);
+
+const ClockPlayIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-clock-play w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M12 7v5l2 2" />
+      <path d="M17 22l5 -3l-5 -3l0 6" />
+      <path d="M13.017 20.943a9 9 0 1 1 7.831 -7.292" />
+    </svg>
+  </div>
+);
+
+const Server2Icon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-server-2 w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v2a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-2" />
+      <path d="M3 15a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v2a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3l0 -2" />
+      <path d="M7 8l0 .01" />
+      <path d="M7 16l0 .01" />
+      <path d="M11 8h6" />
+      <path d="M11 16h6" />
+    </svg>
+  </div>
+);
+
+const BoltIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-bolt w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M13 3l0 7l6 0l-8 11l0 -7l-6 0l8 -11" />
+    </svg>
+  </div>
+);
+
+const UserStarIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-user-star w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+      <path d="M6 21v-2a4 4 0 0 1 4 -4h.5" />
+      <path d="M17.8 20.817l-2.172 1.138a.392 .392 0 0 1 -.568 -.41l.415 -2.411l-1.757 -1.707a.389 .389 0 0 1 .217 -.665l2.428 -.352l1.086 -2.193a.392 .392 0 0 1 .702 0l1.086 2.193l2.428 .352a.39 .39 0 0 1 .217 .665l-1.757 1.707l.414 2.41a.39 .39 0 0 1 -.567 .411l-2.172 -1.138" />
+    </svg>
+  </div>
+);
+
+const BuildingBankIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-building-bank w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M3 21l18 0" />
+      <path d="M3 10l18 0" />
+      <path d="M5 6l7 -3l7 3" />
+      <path d="M4 10l0 11" />
+      <path d="M20 10l0 11" />
+      <path d="M8 14l0 3" />
+      <path d="M12 14l0 3" />
+      <path d="M16 14l0 3" />
+    </svg>
+  </div>
+);
+
+const FileTextIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-file-text w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+      <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2" />
+      <path d="M9 9l1 0" />
+      <path d="M9 13l6 0" />
+      <path d="M9 17l6 0" />
+    </svg>
+  </div>
+);
+
+const IdBadgeIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-id-badge w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M5 6a3 3 0 0 1 3 -3h8a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-8a3 3 0 0 1 -3 -3l0 -12" />
+      <path d="M10 13a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+      <path d="M10 6h4" />
+      <path d="M9 18h6" />
+    </svg>
+  </div>
+);
+
+const HourglassIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-hourglass w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M6.5 7h11" />
+      <path d="M6.5 17h11" />
+      <path d="M6 20v-2a6 6 0 1 1 12 0v2a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1" />
+      <path d="M6 4v2a6 6 0 1 0 12 0v-2a1 1 0 0 0 -1 -1h-10a1 1 0 0 0 -1 1" />
+    </svg>
+  </div>
+);
+
+const SpeakerphoneIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-speakerphone w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M18 8a3 3 0 0 1 0 6" />
+      <path d="M10 8v11a1 1 0 0 1 -1 1h-1a1 1 0 0 1 -1 -1v-5" />
+      <path d="M12 8l4.524 -3.77a.9 .9 0 0 1 1.476 .692v12.156a.9 .9 0 0 1 -1.476 .692l-4.524 -3.77h-8a1 1 0 0 1 -1 -1v-4a1 1 0 0 1 1 -1h8" />
+    </svg>
+  </div>
+);
+
+const UserPlusIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+      <path d="M16 19h6" />
+      <path d="M19 16v6" />
+      <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+    </svg>
+  </div>
+);
+
+const RepeatIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-repeat w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" />
+      <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" />
+    </svg>
+  </div>
+);
+
+const StackFrontIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-stack-front w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M12 4l-8 4l8 4l8 -4l-8 -4" fill="currentColor" />
+      <path d="M8 14l-4 2l8 4l8 -4l-4 -2" />
+      <path d="M8 10l-4 2l8 4l8 -4l-4 -2" />
+    </svg>
+  </div>
+);
+
+const UserIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-user w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+      <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+    </svg>
+  </div>
+);
+
+const WorldIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-world w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+      <path d="M3.6 9h16.8" />
+      <path d="M3.6 15h16.8" />
+      <path d="M11.5 3a17 17 0 0 0 0 18" />
+      <path d="M12.5 3a17 17 0 0 1 0 18" />
+    </svg>
+  </div>
+);
+
+const SettingsCodeIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-settings-code w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M11.482 20.924a1.666 1.666 0 0 1 -1.157 -1.241a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.312 .318 1.644 1.794 .995 2.697" />
+      <path d="M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </div>
+);
+
+const SquareRoundedCheckIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-square-rounded-check w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M9 12l2 2l4 -4" />
+      <path d="M12 3c7.2 0 9 1.8 9 9c0 7.2 -1.8 9 -9 9c-7.2 0 -9 -1.8 -9 -9c0 -7.2 1.8 -9 9 -9" />
+    </svg>
+  </div>
+);
+
+const AwardIcon = (
+  <div className="border border-neutral-200 bg-neutral-100 rounded-lg p-0.5 sm:p-1 ring ring-neutral-200 ring-offset-2 flex items-center justify-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-award w-4 h-4 sm:w-5 sm:h-5">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <path d="M6 9a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" />
+      <path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" />
+      <path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" />
+    </svg>
+  </div>
+);
+
+
 
 const AboutTrainsWhoClosing = () => {
   const containerRef = useRef(null);
@@ -29,41 +267,41 @@ const AboutTrainsWhoClosing = () => {
   };
 
   const howTrainsListItems: AnimatedListItem[] = [
-    { text: "Simulation-driven cyber environments", icon: bulletIcon },
-    { text: "Scenario-based exercises", icon: bulletIcon },
-    { text: "Investigation-led workflows", icon: bulletIcon },
-    { text: "Instructor-guided, real-time sessions", icon: bulletIcon },
+    { text: "Simulation-driven cyber environments.", icon: CubePlusIcon },
+    { text: "Scenario-based exercises.", icon: SitemapIcon },
+    { text: "Investigation-led workflows.", icon: GitBranchIcon },
+    { text: "Instructor-guided, real-time sessions.", icon: ClockPlayIcon },
   ];
 
   const whoLeadsListItems: AnimatedListItem[] = [
-    { text: "Defended real systems", icon: bulletIcon },
-    { text: "Handled live cyber incidents", icon: bulletIcon },
-    { text: "Led investigations and response teams", icon: bulletIcon },
+    { text: "Defended real systems.", icon: Server2Icon },
+    { text: "Handled live cyber incidents.", icon: BoltIcon },
+    { text: "Led investigations and response teams.", icon: UserStarIcon },
     {
-      text: "Built cybersecurity capabilities at enterprise and national levels",
-      icon: bulletIcon,
+      text: "Built cybersecurity capabilities at enterprise and national levels.",
+      icon: BuildingBankIcon,
     },
   ];
 
   const doesNotDoListItems: AnimatedListItem[] = [
-    { text: "Slide-based instruction", icon: bulletIcon },
-    { text: "Exam-only credentialing", icon: bulletIcon },
-    { text: "Short-term certification programs", icon: bulletIcon },
-    { text: "Marketing-led education models", icon: bulletIcon },
+    { text: "Slide-based instruction.", icon: FileTextIcon },
+    { text: "Exam-only credentialing.", icon: IdBadgeIcon },
+    { text: "Short-term certification programs.", icon: HourglassIcon },
+    { text: "Marketing-led education models.", icon: SpeakerphoneIcon },
   ];
 
   const whoBuiltForListItems: AnimatedListItem[] = [
-    { text: "Aspiring cybersecurity professionals", icon: bulletIcon },
-    { text: "Career switchers seeking serious, structured entry", icon: bulletIcon },
-    { text: "Working professionals advancing into complex cyber roles", icon: bulletIcon },
-    { text: "Organizations seeking operationally ready talent", icon: bulletIcon },
+    { text: "Aspiring cybersecurity professionals.", icon: UserPlusIcon },
+    { text: "Career switchers seeking serious, structured entry.", icon: RepeatIcon },
+    { text: "Working professionals advancing into complex cyber roles.", icon: StackFrontIcon },
+    { text: "Organizations seeking operationally ready talent.", icon: UserIcon },
   ];
 
   const closingListItems: AnimatedListItem[] = [
-    { text: "Real-world relevance", icon: bulletIcon },
-    { text: "Operational rigor", icon: bulletIcon },
-    { text: "Accountability", icon: bulletIcon },
-    { text: "Long-term professional credibility", icon: bulletIcon },
+    { text: "Real-world relevance.", icon: WorldIcon },
+    { text: "Operational rigor.", icon: SettingsCodeIcon },
+    { text: "Accountability.  ", icon: SquareRoundedCheckIcon },
+    { text: "Long-term professional credibility.", icon: AwardIcon },
   ];
 
   const dashedGridStyle = {
@@ -210,7 +448,7 @@ const AboutTrainsWhoClosing = () => {
                 contentClassName="text-base sm:text-lg font-inter-display text-text-primary leading-tight"
                 itemClassName="flex items-start gap-3"
                 iconClassName="text-primary shrink-0 flex items-center pt-0.5"
-                boldText={false}
+                boldText={true}
               />
               <p className="text-base sm:text-lg md:text-xl font-inter-display text-text-primary leading-relaxed font-medium">
                 {parseBoldText("Our focus is **operational readiness**.")}

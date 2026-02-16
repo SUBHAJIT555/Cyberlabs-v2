@@ -168,7 +168,7 @@ const AboutIndia = () => {
               </motion.div>
 
               <motion.p
-                className="text-text-primary text-lg sm:text-xl md:text-2xl font-inter-display mt-6 leading-tight md:leading-normal italic underline underline-offset-4 decoration-neutral-300 decoration-1"
+                className="text-text-primary text-lg sm:text-xl md:text-2xl font-inter-display mt-6 leading-tight md:leading-normal italic "
                 initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: false, amount: 0.2 }}
