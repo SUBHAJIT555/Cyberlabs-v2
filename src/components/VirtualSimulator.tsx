@@ -289,7 +289,7 @@ const AiDriven = () => {
     text: f.text,
     icon: (
       <span
-        className="flex items-center justify-center bg-white border border-neutral-300 border-dashed rounded p-0.5 sm:p-1 mt-1 shrink-0 text-primary"
+        className="flex items-center justify-center bg-white border border-neutral-200  rounded-md ring ring-neutral-300 ring-offset-3 shadow-lg mt-1 shrink-0 text-primary"
         style={{
           background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
           width: 24,

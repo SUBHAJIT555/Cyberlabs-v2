@@ -6,6 +6,27 @@ import { AnimatedList } from "./ui/animated-list";
 import type { AnimatedListItem } from "./ui/animated-list";
 import { StackOrbit } from "./ui/StackOrbit";
 
+const dashedGridStyle = {
+  backgroundImage: `
+    linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+    linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+  `,
+  backgroundSize: "10px 10px",
+  backgroundPosition: "0 0, 0 0",
+  maskImage: `
+    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+    radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+  `,
+  WebkitMaskImage: `
+    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+    radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+  `,
+  maskComposite: "intersect" as const,
+  WebkitMaskComposite: "source-in" as const,
+};
+
 const CheckIcon = () => (
     <div className="shrink-0 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
         <svg
@@ -70,26 +91,29 @@ const WhyThisMatters = () => {
     }));
 
     return (
-        <section className="w-full bg-background py-16 md:py-24">
-            <div className="w-full px-5 md:px-10 lg:px-16">
-                <motion.div
-                    ref={ref}
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate={isInView ? "visible" : "hidden"}
-                >
-                    {/* Heading */}
-                    <div ref={headingRef} className="mb-8 sm:mb-12">
-                        <AnimatedHeading
-                            inView={headingInView}
-                            lines={[
-                                { text: "Why This Matters ?", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight" },
-                            ]}
-                        />
-                    </div>
+        <section className="w-full px-5 md:px-10 lg:px-16 py-4 sm:py-6 lg:py-6">
+            <motion.div
+                ref={ref}
+                variants={containerVariants}
+                initial="hidden"
+                animate={isInView ? "visible" : "hidden"}
+            >
+                {/* Heading */}
+                <div ref={headingRef} className="mb-8 sm:mb-12">
+                    <AnimatedHeading
+                        inView={headingInView}
+                        lines={[
+                            { text: "Why This Matters ?", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight" },
+                        ]}
+                    />
+                </div>
 
-                    {/* Two Column Layout: Text Left, Image Right */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                {/* Card wrapper with dashed grid background */}
+                <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 mb-8 md:mb-10">
+                    <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+                    <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
+                        {/* Two Column Layout: Text Left, Image Right */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
                         {/* Left Side: Text Content */}
                         <motion.div className="order-1 md:order-1" variants={itemVariants}>
                             {/* Opening Statement */}
@@ -127,25 +151,26 @@ const WhyThisMatters = () => {
 
                             {/* Closing Statement */}
                             <motion.p
-                                className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-inter-display font-semibold text-text-primary leading-tight pt-4 border-t border-neutral-300 border-dashed"
+                                className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-inter-display font-semibold text-text-primary leading-tight pt-4 border-t border-neutral-300"
                                 variants={itemVariants}
                             >
                                 This is the difference between <span className="font-bold text-primary">learning cybersecurity</span> and <span className="font-bold text-primary">being ready to practice it.</span>
                             </motion.p>
                         </motion.div>
 
-                        {/* Right Side: Tech stack orbit */}
-                        <motion.div
-                            className="order-2 md:order-2 relative w-full h-full min-h-[280px] md:min-h-[320px] lg:min-h-[380px] rounded-lg overflow-hidden bg-background"
-                            variants={itemVariants}
-                        >
-                            <div className="relative z-10 w-full h-full">
-                                <StackOrbit />
-                            </div>
-                        </motion.div>
+                            {/* Right Side: Tech stack orbit */}
+                            <motion.div
+                                className="order-2 md:order-2 relative w-full h-full min-h-[280px] md:min-h-[320px] lg:min-h-[380px] overflow-hidden "
+                                variants={itemVariants}
+                            >
+                                <div className="relative z-10 w-full h-full">
+                                    <StackOrbit />
+                                </div>
+                            </motion.div>
+                        </div>
                     </div>
-                </motion.div>
-            </div>
+                </div>
+            </motion.div>
         </section>
     );
 };

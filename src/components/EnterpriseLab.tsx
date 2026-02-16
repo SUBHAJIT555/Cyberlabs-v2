@@ -784,7 +784,28 @@ const EnterpriseLab = () => {
     { text: "Continuously updated enterprise environments", icon: <AnimatedCloudUpIcon /> },
   ];
 
-  // Section wrapper: full width, no max-w
+  const dashedGridStyle = {
+    backgroundImage: `
+      linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+      linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+    `,
+    backgroundSize: "10px 10px",
+    backgroundPosition: "0 0, 0 0",
+    maskImage: `
+      repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+      repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+      radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+    `,
+    WebkitMaskImage: `
+      repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+      repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+      radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+    `,
+    maskComposite: "intersect" as const,
+    WebkitMaskComposite: "source-in" as const,
+  };
+
+  // Section wrapper: card-style like AboutMerged
   const SectionBlock = ({
     children,
     className = "",
@@ -792,17 +813,18 @@ const EnterpriseLab = () => {
     children: ReactNode;
     className?: string;
   }) => (
-    <div
-      className={`w-full py-12 sm:py-16 md:py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 border-b border-neutral-200/80 ${className}`}
-    >
-      <div className="w-full">
-        {children}
+    <div className={`w-full mb-8 md:mb-10 ${className}`}>
+      <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
+        <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+        <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
+          {children}
+        </div>
       </div>
     </div>
   );
 
   return (
-    <section className="w-full bg-background py-12 md:py-20" ref={containerRef}>
+    <section className="w-full px-5 md:px-10 lg:px-16 py-4 sm:py-6 lg:py-6" ref={containerRef}>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -810,7 +832,7 @@ const EnterpriseLab = () => {
         className="w-full"
       >
         {/* 1. Enterprise style Lab Environment */}
-        <SectionBlock className="bg-white">
+        <SectionBlock>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="space-y-6 order-2 md:order-1">
               <motion.h2
@@ -851,7 +873,7 @@ const EnterpriseLab = () => {
         </SectionBlock>
 
         {/* 2. Instructors-Led Online Sessions */}
-        <SectionBlock className="bg-neutral-50/80">
+        <SectionBlock>
           <motion.h2
             className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6"
             initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
@@ -864,7 +886,7 @@ const EnterpriseLab = () => {
           <p className="text-lg sm:text-xl text-text-primary font-montserrat font-semibold mb-4">
             All programs are delivered through live, instructor-led online sessions. These sessions focus on:
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
             {[
               "Explaining system architecture and trust boundaries",
               "Breaking down attack paths, abuse scenarios, and failure points",
@@ -873,17 +895,17 @@ const EnterpriseLab = () => {
             ].map((text, i) => (
               <div
                 key={i}
-                className="p-5 border border-neutral-300 border-dashed rounded-lg bg-white/90 flex items-center gap-3"
-                style={{
-                  background: "repeating-linear-gradient(135deg, #fafafa 0px, #fafafa 1px, transparent 1px, transparent 4px), white",
-                }}
+                className="relative p-5 border border-neutral-200 rounded-xl ring ring-neutral-200 ring-offset-2 md:ring-offset-4 bg-linear-to-l from-neutral-200 to-white flex items-center gap-3 overflow-hidden"
               >
-                <span className="shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-montserrat font-bold text-sm">
-                  {i + 1}
-                </span>
-                <p className="text-sm sm:text-base font-inter-display font-medium text-text-primary leading-relaxed">
-                  {text}
-                </p>
+                
+                <div className="relative z-10 flex items-center gap-3">
+                  <span className="shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-montserrat font-bold text-sm">
+                    {i + 1}
+                  </span>
+                  <p className="text-sm sm:text-base font-inter-display font-medium text-text-primary leading-relaxed">
+                    {text}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -894,7 +916,7 @@ const EnterpriseLab = () => {
         </SectionBlock>
 
         {/* 3. How Practical Learning Flows */}
-        <SectionBlock className="bg-white">
+        <SectionBlock>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="space-y-6 order-2 md:order-1">
               <motion.h2
@@ -935,7 +957,7 @@ const EnterpriseLab = () => {
         </SectionBlock>
 
         {/* 4. Practical Work & Operational Output */}
-        <SectionBlock className="bg-neutral-50/80">
+        <SectionBlock>
           <motion.h2
             className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6"
             initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
@@ -951,16 +973,14 @@ const EnterpriseLab = () => {
           <p className="text-base font-inter-display font-semibold text-text-primary mb-6">
             Rather than isolating learning into a single end-stage project, practical work is continuously integrated through:
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
             {["Structured Laboratories", "Real-world Scenarios", "Simulator Investigations", "Assessment & Exercises"].map((label, i) => (
               <div
                 key={i}
-                className="p-5 border border-neutral-300 border-dashed rounded-lg bg-white/90"
-                style={{
-                  background: "repeating-linear-gradient(135deg, #fafafa 0px, #fafafa 1px, transparent 1px, transparent 4px), white",
-                }}
+                className="relative p-5 border border-neutral-200 rounded-xl ring ring-neutral-200 ring-offset-2 md:ring-offset-4 bg-linear-to-l from-neutral-200 to-white overflow-hidden"
               >
-                <p className="text-sm sm:text-base font-inter-display font-semibold text-text-primary leading-tight">
+                
+                <p className="relative z-10 text-sm sm:text-base font-inter-display font-semibold text-text-primary leading-tight">
                   {label}
                 </p>
               </div>
@@ -975,7 +995,7 @@ const EnterpriseLab = () => {
         </SectionBlock>
 
         {/* 5. Assessments & Evaluation */}
-        <SectionBlock className="bg-white">
+        <SectionBlock>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="space-y-6 order-2 md:order-1">
               <motion.h2
@@ -1019,7 +1039,7 @@ const EnterpriseLab = () => {
         </SectionBlock>
 
         {/* 6. Certification Alignment */}
-        <SectionBlock className="bg-neutral-50/80">
+        <SectionBlock>
           <motion.h2
             className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6"
             initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
@@ -1041,7 +1061,7 @@ const EnterpriseLab = () => {
         </SectionBlock>
 
         {/* 7. Current & Next-Generation Simulator Roadmap */}
-        <SectionBlock className="bg-white">
+        <SectionBlock>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="space-y-6 order-2 md:order-1">
               <motion.h2
@@ -1085,7 +1105,7 @@ const EnterpriseLab = () => {
         </SectionBlock>
 
         {/* 8. Delivery Model */}
-        <SectionBlock className="bg-neutral-50/80 border-b-0">
+        <SectionBlock>
           <motion.h2
             className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6"
             initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
@@ -1098,7 +1118,7 @@ const EnterpriseLab = () => {
           <p className="text-base font-inter-display font-semibold text-text-primary mb-6">
             The CYBERLABS learning environment is delivered through:
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
             {[
               "Live Instructor-Led Online Training",
               "Simulation-Driven Practical Learning",
@@ -1106,12 +1126,10 @@ const EnterpriseLab = () => {
             ].map((label, i) => (
               <div
                 key={i}
-                className="p-6 border border-neutral-300 border-dashed rounded-lg bg-white/90 flex items-center justify-center text-center"
-                style={{
-                  background: "repeating-linear-gradient(135deg, #fafafa 0px, #fafafa 1px, transparent 1px, transparent 4px), white",
-                }}
+                className="relative p-6 border border-neutral-200 rounded-xl ring ring-neutral-200 ring-offset-2 md:ring-offset-4 bg-linear-to-l from-neutral-200 to-white flex items-center justify-center text-center overflow-hidden"
               >
-                <p className="text-base font-inter-display font-semibold text-text-primary leading-relaxed">
+                
+                <p className="relative z-10 text-base font-inter-display font-semibold text-text-primary leading-relaxed">
                   {label}
                 </p>
               </div>

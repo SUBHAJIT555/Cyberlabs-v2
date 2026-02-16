@@ -278,7 +278,7 @@ const What = () => {
     <>
       <motion.section
         ref={ref}
-        className="w-full mx-auto px-5 md:px-10 lg:px-16 py-8 sm:py-12 lg:py-16 bg-bg"
+        className="w-full mx-auto px-5 md:px-10 lg:px-16 py-8 sm:py-12 lg:py-16"
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
@@ -290,9 +290,57 @@ const What = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-          className="rounded-xl border border-neutral-200 bg-white overflow-hidden shadow-sm mb-8 sm:mb-10 md:mb-12"
+          className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 mb-8 sm:mb-10 md:mb-12"
         >
-          <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
+          {/* Dashed grid background (fade at top) - same as CallToAction */}
+          <div
+            className="absolute inset-0 z-0"
+            style={{
+              backgroundImage: `
+                linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+              `,
+              backgroundSize: "1px 1px",
+              backgroundPosition: "0 0, 0 0",
+              maskImage: `
+                repeating-linear-gradient(
+                  to right,
+                  black 0px,
+                  black 3px,
+                  transparent 3px,
+                  transparent 8px
+                ),
+                repeating-linear-gradient(
+                  to bottom,
+                  black 0px,
+                  black 3px,
+                  transparent 3px,
+                  transparent 8px
+                ),
+                radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+              `,
+              WebkitMaskImage: `
+                repeating-linear-gradient(
+                  to right,
+                  black 0px,
+                  black 3px,
+                  transparent 3px,
+                  transparent 8px
+                ),
+                repeating-linear-gradient(
+                  to bottom,
+                  black 0px,
+                  black 3px,
+                  transparent 3px,
+                  transparent 8px
+                ),
+                radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+              `,
+              maskComposite: "intersect",
+              WebkitMaskComposite: "source-in",
+            }}
+          />
+          <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
             {/* Image — left side (top on mobile) */}
             <div className="order-1 md:order-1 flex justify-center md:justify-start shrink-0">
               <img src={openingSvg} alt="" className="w-full max-w-[200px] sm:max-w-[240px] md:w-[200px] md:max-w-none lg:w-[260px] h-auto" />
@@ -307,7 +355,7 @@ const What = () => {
                 transition={{ duration: 0.5, ease: "easeOut" }}
               >
                 <span className="block sm:inline">Cybersecurity cannot be mastered through theory alone.</span>
-                
+
               </motion.p>
               <div className="w-16 sm:w-20 h-0.5 bg-primary/30 mx-auto md:mx-0" aria-hidden />
               <div className="space-y-4 sm:space-y-5">
@@ -348,21 +396,67 @@ const What = () => {
             return (
               <motion.div
                 key={index}
-                className="flex lg:flex-col lg:items-center items-start gap-4 md:gap-5 group border border-neutral-300 border-dashed rounded-md p-6 md:p-8 xl:p-10 transition-all duration-300 hover:border-primary/50 overflow-hidden"
-                style={{
-                  background:
-                    "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                  ...anim.style,
-                }}
+                className="relative flex lg:flex-col lg:items-center items-start gap-4 md:gap-5 group border border-neutral-200 rounded-md p-6 md:p-8 xl:p-10 transition-all duration-300 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 overflow-hidden bg-white"
+                style={anim.style}
                 initial={anim.initial}
                 whileInView={anim.whileInView}
                 viewport={{ once: false, amount: 0.4 }}
                 transition={anim.transition}
               >
-                <span className="text-primary shrink-0 flex items-center pt-0.5">{item.icon}</span>
-                <p className="text-lg lg:text-xl text-text-primary font-inter-display font-medium leading-relaxed text-left lg:text-center">
-                  {item.text}
-                </p>
+                {/* Dashed grid background (fade at top) - same as CallToAction */}
+                <div
+                  className="absolute inset-0 z-0"
+                  style={{
+                    backgroundImage: `
+                      linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                      linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+                    `,
+                    backgroundSize: "1px 1px",
+                    backgroundPosition: "0 0, 0 0",
+                    maskImage: `
+                      repeating-linear-gradient(
+                        to right,
+                        black 0px,
+                        black 3px,
+                        transparent 3px,
+                        transparent 8px
+                      ),
+                      repeating-linear-gradient(
+                        to bottom,
+                        black 0px,
+                        black 3px,
+                        transparent 3px,
+                        transparent 8px
+                      ),
+                      radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                    `,
+                    WebkitMaskImage: `
+                      repeating-linear-gradient(
+                        to right,
+                        black 0px,
+                        black 3px,
+                        transparent 3px,
+                        transparent 8px
+                      ),
+                      repeating-linear-gradient(
+                        to bottom,
+                        black 0px,
+                        black 3px,
+                        transparent 3px,
+                        transparent 8px
+                      ),
+                      radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                    `,
+                    maskComposite: "intersect",
+                    WebkitMaskComposite: "source-in",
+                  }}
+                />
+                <div className="relative z-10 flex lg:flex-col lg:items-center items-start gap-4 md:gap-5">
+                  <span className="text-primary shrink-0 flex items-center pt-0.5">{item.icon}</span>
+                  <p className="text-lg lg:text-xl text-text-primary font-inter-display font-medium leading-relaxed text-left lg:text-center">
+                    {item.text}
+                  </p>
+                </div>
               </motion.div>
             );
           })}

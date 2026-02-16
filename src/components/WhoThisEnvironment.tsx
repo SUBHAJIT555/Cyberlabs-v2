@@ -10,6 +10,8 @@ import enterpriseImage from "../assets/img/Learning-Enviorment/enterprises-devel
 import academicImage from "../assets/img/Learning-Enviorment/academic-institutions-seekings.webp";
 
 
+
+
 interface TargetAudience {
   image: string;
   title: string;
@@ -60,9 +62,9 @@ const For = () => {
   ];
 
   return (
-    <motion.div
+    <motion.section
       ref={ref}
-      className="w-full mx-auto px-5 md:px-10 lg:px-16 py-8 "
+      className="w-full px-5 md:px-10 lg:px-16 py-4 sm:py-6 lg:py-6"
     >
       <div ref={headingRef} className="mb-6 sm:mb-8">
         <AnimatedHeading
@@ -92,47 +94,45 @@ const For = () => {
           return (
             <motion.div
               key={index}
-              className={`p-4 sm:p-5 md:p-6 border border-neutral-300 border-dashed border-b-0 sm:border-b ${!isLast ? "sm:border-r-0" : ""
+              className={`relative p-4 sm:p-5 md:p-6 border border-neutral-200 border-b-0 sm:border-b ${!isLast ? "sm:border-r-0" : ""
                 } ${isFirst
                   ? "rounded-tl-md rounded-tr-md sm:rounded-tr-none sm:rounded-bl-md"
                   : isLast
                     ? "rounded-bl-md rounded-br-md sm:rounded-tl-none sm:rounded-bl-none sm:rounded-tr-md sm:rounded-br-md"
                     : "sm:rounded-none"
-                } flex flex-col`}
-              style={{
-                background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                ...(anim.style ?? {}),
-              }}
+                } flex flex-col overflow-hidden bg-white`}
+              style={anim.style}
               initial={anim.initial}
               whileInView={anim.whileInView}
               viewport={{ once: false, amount: 0.4 }}
               transition={anim.transition}
             >
-              {/* Image */}
-              <div className="mb-3 sm:mb-4 shrink-0">
-                <img
-                  src={audience.image}
-                  alt={audience.title}
-                  className="w-full h-auto object-cover"
-                />
+              <div className="relative z-10 flex flex-col">
+                {/* Image */}
+                <div className="mb-3 sm:mb-4 shrink-0 ring ring-neutral-200 ring-offset-2 md:ring-offset-4 rounded-md">
+                  <img
+                    src={audience.image}
+                    alt={audience.title}
+                    className="w-full h-auto object-cover rounded-md"
+                  />
+                </div>
+
+                {/* Title */}
+                <h3 className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-text-primary leading-tight mb-2 sm:mb-3">
+                  {audience.title}
+                </h3>
+
+                {/* Description */}
+                {/* <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-tight">
+                  {audience.description}
+                </p> */}
               </div>
-
-              {/* Title */}
-              <h3 className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-text-primary leading-tight mb-2 sm:mb-3">
-                {audience.title}
-              </h3>
-
-
-              {/* Description */}
-              {/* <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-tight">
-                {audience.description}
-              </p> */}
             </motion.div>
           );
         })}
       </div>
       <TypewriterText />
-    </motion.div>
+    </motion.section>
   );
 };
 
