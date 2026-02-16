@@ -6,7 +6,7 @@ import { useRef } from "react";
 import { AnimatedHeading } from "../ui/animated-heading";
 import { AnimatedList } from "../ui/animated-list";
 import type { AnimatedListItem } from "../ui/animated-list";
-import cyberlabsIndiaImage from "../../assets/img/AboutPageImages/cyberlabsindia.svg";
+import cyberlabsIndiaImage from "../../assets/img/AboutPageImages/cyberlabsIndia.svg";
 
 const mainTitleBaseClass =
   "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold tracking-tight leading-tight md:leading-normal inline";
