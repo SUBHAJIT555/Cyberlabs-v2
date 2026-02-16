@@ -3,6 +3,27 @@ import { useParams } from "react-router";
 import { motion, useInView } from "framer-motion";
 import { useCourses } from "@/hooks/useCourses";
 
+const dashedGridStyle = {
+    backgroundImage: `
+        linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+        linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+    `,
+    backgroundSize: "1px 1px",
+    backgroundPosition: "0 0, 0 0",
+    maskImage: `
+        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+        radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+    `,
+    WebkitMaskImage: `
+        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+        radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+    `,
+    maskComposite: "intersect" as const,
+    WebkitMaskComposite: "source-in" as const,
+};
+
 const ProgramDeepDive = () => {
     const { slug } = useParams();
     const { getCourseProgramDeepDiveBySlug } = useCourses();
@@ -92,16 +113,14 @@ const ProgramDeepDive = () => {
         >
             {/* Bordered Content Container */}
             <motion.div
-                className="relative border border-neutral-300 border-dashed rounded-md w-full overflow-hidden bg-white"
+                className="relative border border-neutral-200 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl w-full overflow-hidden bg-white"
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                style={{
-                    background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                }}
             >
+                <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
                 {/* Content Padding */}
-                <div className="p-3 sm:p-4 md:p-4 lg:p-5 relative z-10">
+                <div className="relative z-10 p-3 sm:p-4 md:p-4 lg:p-5">
                     {/* Main Title */}
                     {/* <motion.h2
                         className="text-2xl sm:text-3xl md:text-4xl text-text-primary font-montserrat font-semibold tracking-tight leading-tight mb-3 sm:mb-4 md:mb-5"

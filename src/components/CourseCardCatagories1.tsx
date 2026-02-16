@@ -1,10 +1,31 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { Link } from "react-router";
 import CallbackModal from "./CallbackModal";
+import CTAButton from "./ui/CTAButton";
 import { useCourses } from "@/hooks/useCourses";
 import type { Course } from "@/interface/program";
 import { parseBoldText } from "@/lib/utils";
+
+const dashedGridCardStyle = {
+    backgroundImage: `
+        linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+        linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+    `,
+    backgroundSize: "10px 10px",
+    backgroundPosition: "0 0, 0 0",
+    maskImage: `
+        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+        radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+    `,
+    WebkitMaskImage: `
+        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+        radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+    `,
+    maskComposite: "intersect" as const,
+    WebkitMaskComposite: "source-in" as const,
+};
 
 
 
@@ -88,21 +109,18 @@ const CourseCardCategories1 = () => {
     }, []);
 
     return (
-        <div ref={coursesSectionRef} className="min-h-screen pt-6 md:pt-10" id="courses">
+        <div ref={coursesSectionRef} className="min-h-screen pt-6 md:pt-10 px-5 md:px-10 lg:px-16" id="courses">
             <div className="w-full">
                 {/* Header Section */}
-                <div className="mb-12 md:mb-16 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mx-auto">
+                <div className="mb-10 md:mb-14">
                     <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-text-primary font-montserrat font-semibold leading-tight tracking-tight">
                         Flagship Programs
                     </h2>
                 </div>
 
                 {/* Course Cards - Horizontal Layout */}
-                <div
-                    className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 mx-auto"
-                    id="our-programs"
-                >
-                    <div ref={cardsGridRef} className="space-y-8 md:space-y-12 mb-16">
+                <div id="our-programs">
+                    <div ref={cardsGridRef} className="space-y-8 md:space-y-10 mb-16">
                         {allCourses.map((course, index) => (
                             <motion.div
                                 key={course.id}
@@ -116,99 +134,77 @@ const CourseCardCategories1 = () => {
                                     delay: index * 0.12,
                                 }}
                             >
-                                <Link
-                                    to={`/cyber-defense-programs/${course.slug}`}
-                                    className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md"
-                                >
-                                    <div
-                                        className="relative rounded-md overflow-hidden bg-white border border-neutral-200 shadow-[0_4px_24px_rgba(0,0,0,0.06)] hover:shadow-[0_12px 40px_rgba(0,0,0,0.1)] hover:border-primary/20 transition-all duration-300 cursor-pointer"
-                                        style={{
-                                            background:
-                                                "repeating-linear-gradient(135deg, #fafafa 0px, #fafafa 1px, transparent 1px, transparent 5px), white",
-                                        }}
-                                    >
-                                        {/* Accent bar on hover */}
-                                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 rounded-l-md" />
+                                <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 hover:border-primary/20 transition-all duration-300">
+                                    <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridCardStyle} />
+                                    {/* Accent bar on hover */}
+                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 rounded-l-xl" />
 
-                                        <div className="flex flex-col md:flex-row min-h-0">
-                                            {/* Left - Image */}
-                                            <div className="relative w-full md:w-[40%] lg:w-[38%] h-52 sm:h-64 md:h-auto md:min-h-[300px] overflow-hidden shrink-0">
-                                                <img
-                                                    src={course.image}
-                                                    alt={course.title}
-                                                    className="w-full h-full object-cover"
-                                                />
-                                                <div className="absolute inset-0 bg-linear-to-t md:bg-linear-to-r from-black/30 via-transparent to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                            </div>
+                                    <div className="relative z-10 flex flex-col md:flex-row min-h-0">
+                                        {/* Left - Image */}
+                                        <div className="relative w-full md:w-[40%] lg:w-[38%] h-52 sm:h-64 md:h-auto md:min-h-[300px] overflow-hidden shrink-0">
+                                            <img
+                                                src={course.image}
+                                                alt={course.title}
+                                                className="w-full h-full object-cover"
+                                            />
+                                            <div className="absolute inset-0 bg-linear-to-t md:bg-linear-to-r from-black/30 via-transparent to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        </div>
 
-                                            {/* Right - Content */}
-                                            <div className="flex-1 p-5 sm:p-6 md:p-6 lg:p-8 flex flex-col justify-between min-w-0">
-                                                <div>
-                                                    <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-text-primary font-montserrat font-semibold leading-tight mb-2 md:mb-3">
-                                                        {course.title}
-                                                    </h3>
+                                        {/* Right - Content */}
+                                        <div className="flex-1 p-5 sm:p-6 md:p-6 lg:p-8 flex flex-col justify-between min-w-0">
+                                            <div>
+                                                <h3 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-text-primary font-montserrat font-semibold leading-tight mb-2 md:mb-3">
+                                                    {course.title}
+                                                </h3>
 
-                                                    {course.programTagLine && (
-                                                        <p className="text-base sm:text-lg md:text-xl text-primary font-inter-display font-semibold mb-4">
-                                                            {course.programTagLine}
-                                                        </p>
-                                                    )}
+                                                {course.programTagLine && (
+                                                    <p className="text-base sm:text-lg md:text-xl text-primary font-inter-display font-semibold mb-4">
+                                                        {course.programTagLine}
+                                                    </p>
+                                                )}
 
-                                                    {/* Duration badge */}
-                                                    <div className="inline-flex items-center gap-2 rounded-md border border-neutral-200 bg-white/90 backdrop-blur-sm px-3.5 py-2 mb-5 shadow-sm">
-                                                        <AnimatedClockIcon isInView={cardsInView} />
-                                                        <span className="text-text-primary text-sm md:text-base font-inter-display font-medium">
-                                                            Duration:{" "}
-                                                            <span className="text-primary font-semibold">
-                                                                {course.duration}
-                                                            </span>
+                                                {/* Duration badge */}
+                                                <div className="inline-flex items-center gap-2 rounded-md border border-neutral-200 bg-white/90 backdrop-blur-sm px-3.5 py-2 mb-5 shadow-sm">
+                                                    <AnimatedClockIcon isInView={cardsInView} />
+                                                    <span className="text-text-primary text-sm md:text-base font-inter-display font-medium">
+                                                        Duration:{" "}
+                                                        <span className="text-primary font-semibold">
+                                                            {course.duration}
                                                         </span>
-                                                    </div>
-
-                                                    {/* Description */}
-                                                    <div className="space-y-2.5 mb-6">
-                                                        {course.descriptionParagraphs?.length ? (
-                                                            course.descriptionParagraphs.map((para, i) => (
-                                                                <p
-                                                                    key={i}
-                                                                    className="text-sm sm:text-base md:text-lg text-text-primary/85 font-inter-display font-medium leading-relaxed"
-                                                                >
-                                                                    {parseBoldText(para)}
-                                                                </p>
-                                                            ))
-                                                        ) : (
-                                                            <p className="text-sm sm:text-base md:text-lg text-text-primary/85 font-inter-display font-medium leading-relaxed">
-                                                                {course.description}
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                </div>
-
-                                                {/* CTA */}
-                                                <div className="flex items-center gap-2 text-primary font-montserrat font-semibold text-sm md:text-base mt-auto pt-2 border-t border-neutral-100 group-hover:border-primary/20 transition-colors duration-300">
-                                                    <span>View program details</span>
-                                                    <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white text-text-primary shrink-0 group-hover:scale-110 group-hover:rotate-0 transition-all duration-300 rotate-0 border border-neutral-200 shadow-sm">
-                                                        <svg
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            width="16"
-                                                            height="16"
-                                                            viewBox="0 0 24 24"
-                                                            fill="none"
-                                                            stroke="currentColor"
-                                                            strokeWidth="2.5"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            className="text-text-primary"
-                                                        >
-                                                            <path d="M5 12h14" />
-                                                            <path d="m12 5 7 7-7 7" />
-                                                        </svg>
                                                     </span>
                                                 </div>
+
+                                                {/* Description */}
+                                                <div className="space-y-2.5 mb-6">
+                                                    {course.descriptionParagraphs?.length ? (
+                                                        course.descriptionParagraphs.map((para, i) => (
+                                                            <p
+                                                                key={i}
+                                                                className="text-sm sm:text-base md:text-lg text-text-primary/85 font-inter-display font-medium leading-relaxed"
+                                                            >
+                                                                {parseBoldText(para)}
+                                                            </p>
+                                                        ))
+                                                    ) : (
+                                                        <p className="text-sm sm:text-base md:text-lg text-text-primary/85 font-inter-display font-medium leading-relaxed">
+                                                            {course.description}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* CTA */}
+                                            <div className="mt-auto pt-4 border-t border-neutral-200/80">
+                                                <CTAButton
+                                                    to={`/cyber-defense-programs/${course.slug}`}
+                                                    label="View Program Details"
+                                                    variant="light"
+                                                    className="shrink-0 w-fit font-inter-display"
+                                                />
                                             </div>
                                         </div>
                                     </div>
-                                </Link>
+                                </div>
                             </motion.div>
                         ))}
 
@@ -323,16 +319,11 @@ const CourseCardCategories1 = () => {
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 100, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50 flex items-center gap-3 bg-white/20 backdrop-blur-sm text-bg p-1 border border-neutral-300 border-dashed rounded-md"
+                        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50"
                     >
-                        {/* Request Callback Button */}
                         <button
                             onClick={() => setIsCallbackModalOpen(true)}
-                            className="bg-background rounded-md hover:bg-white text-bg px-6 py-3 shadow-lg font-montserrat font-bold text-sm sm:text-base md:text-lg transition-all duration-300"
-                            style={{
-                                background:
-                                    "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                            }}
+                            className="bg-neutral-600 hover:bg-neutral-800 text-background px-6 sm:px-8 md:px-10 py-2 sm:py-2.5 shadow-lg font-montserrat font-medium tracking-tight text-sm sm:text-base md:text-base transition-all duration-300 text-center whitespace-nowrap rounded-md cursor-pointer ring ring-neutral-300 ring-offset-2 md:ring-offset-4"
                         >
                             Request Callback
                         </button>

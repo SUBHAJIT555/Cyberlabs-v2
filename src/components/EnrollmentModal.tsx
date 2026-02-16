@@ -79,12 +79,31 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                         className="fixed inset-0 z-10000 flex items-center justify-center p-4 sm:p-6 md:p-8"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="relative w-full max-w-2xl max-h-[90vh] text-text-primary overflow-hidden shadow-xl border border-neutral-300 border-dashed"
-                            style={{
-                                background:
-                                    "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                            }}
-                        >
+                        <div className="relative w-full max-w-2xl max-h-[90vh] text-text-primary overflow-hidden shadow-xl border border-neutral-200 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl bg-white">
+                            {/* Dashed grid background (fade at top) - same as CallToAction */}
+                            <div
+                                className="absolute inset-0 z-0 pointer-events-none"
+                                style={{
+                                    backgroundImage: `
+                                        linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                                        linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+                                    `,
+                                    backgroundSize: "1px 1px",
+                                    backgroundPosition: "0 0, 0 0",
+                                    maskImage: `
+                                        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+                                        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+                                        radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                                    `,
+                                    WebkitMaskImage: `
+                                        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+                                        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+                                        radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                                    `,
+                                    maskComposite: "intersect",
+                                    WebkitMaskComposite: "source-in",
+                                }}
+                            />
                             {/* Close Button */}
                             <button
                                 onClick={handleClose}
@@ -107,12 +126,12 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                             </button>
 
                             {/* Scrollable Content */}
-                            <div className="overflow-y-auto max-h-[90vh]">
+                            <div className="relative z-10 overflow-y-auto max-h-[90vh]">
                                 {!showCheckoutForm ? (
                                     <div className="p-6 sm:p-8 md:p-10">
                                         {/* Header */}
                                         <div className="mb-8">
-                                            <h2 className="text-2xl sm:text-3xl font-montserrat font-semibold tracking-tight text-text-primary mb-2 bg-white w-fit">
+                                            <h2 className="text-2xl sm:text-3xl font-montserrat font-semibold tracking-tight text-text-primary mb-2  w-fit">
                                                 Program Overview
                                             </h2>
                                             <div className="w-12 h-0.5 bg-primary"></div>
@@ -122,11 +141,11 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                                         <div className="mb-10">
                                             <div className="flex flex-col sm:flex-row gap-6 mb-6">
                                                 {/* Course Image */}
-                                                <div className="w-full sm:w-40 md:w-48 h-auto overflow-hidden flex items-center justify-center p-3 shrink-0">
+                                                <div className="w-full sm:w-40 md:w-48 h-auto overflow-hidden flex items-center justify-center p-3 shrink-0 ring ring-neutral-300 rounded-xl bg-white">
                                                     <img
                                                         src={heroData.image.src}
                                                         alt={heroData.image.alt}
-                                                        className="w-full h-auto object-contain"
+                                                        className="w-full h-auto object-contain rounded-lg"
                                                     />
                                                 </div>
 
@@ -155,8 +174,8 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                                             <h3 className="text-lg font-inter-display bg-white w-fit font-medium text-text-primary mb-4">
                                                 What's Included
                                             </h3>
-                                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                                                <div className="flex items-start gap-3 p-4 border border-neutral-300 border-dashed bg-white">
+                                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                                                <div className="flex items-start gap-3 p-4 border border-neutral-300 rounded-lg bg-white ring ring-neutral-300 ring-offset-2 md:ring-offset-4">
                                                     <FaCheckCircle className="text-primary text-xl shrink-0 mt-0.5" />
                                                     <div>
                                                         <p className="text-sm md:text-base font-inter-display font-medium text-text-primary mb-1 leading-tight">
@@ -167,7 +186,7 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <div className="flex items-start gap-3 p-4 border border-neutral-300 border-dashed bg-white">
+                                                <div className="flex items-start gap-3 p-4 border border-neutral-300 rounded-lg bg-white ring ring-neutral-300 ring-offset-2 md:ring-offset-4">
                                                     <FaCheckCircle className="text-primary text-xl shrink-0 mt-0.5" />
                                                     <div>
                                                         <p className="text-sm md:text-base font-inter-display font-medium text-text-primary mb-1 leading-tight">
@@ -178,7 +197,7 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                                                         </a>
                                                     </div>
                                                 </div>
-                                                <div className="flex items-start gap-3 p-4 border border-neutral-300 border-dashed bg-white">
+                                                <div className="flex items-start gap-3 p-4 border border-neutral-300 rounded-lg bg-white ring ring-neutral-300 ring-offset-2 md:ring-offset-4">
                                                     <FaCheckCircle className="text-primary text-xl shrink-0 mt-0.5" />
                                                     <div>
                                                         <p className="text-sm md:text-base font-inter-display font-medium text-text-primary mb-1 leading-tight">

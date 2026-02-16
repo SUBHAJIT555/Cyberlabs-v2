@@ -7,6 +7,27 @@ import { AnimatedHeading } from "@/components/ui/animated-heading";
 import { AnimatedList } from "@/components/ui/animated-list";
 import type { AnimatedListItem } from "@/components/ui/animated-list";
 
+const dashedCenterFadeGridStyle = {
+    backgroundImage: `
+        linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+        linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+    `,
+    backgroundSize: "10px 10px",
+    backgroundPosition: "0 0, 0 0",
+    maskImage: `
+        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+        radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+    `,
+    WebkitMaskImage: `
+        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+        radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+    `,
+    maskComposite: "intersect" as const,
+    WebkitMaskComposite: "source-in" as const,
+};
+
 const ProgramTeaches = () => {
     const { slug } = useParams();
     const { getCourseProgramTeachesBySlug } = useCourses();
@@ -151,18 +172,13 @@ const ProgramTeaches = () => {
                         variants={containerVariants}
                         initial="hidden"
                         animate={isInView ? "visible" : "hidden"}
-                        className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-36"
+                        className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-36 py-6 md:py-10"
                     >
                         {/* Left Card: What You Learn */}
                         <motion.div variants={itemVariants}>
-                            <Card
-                                className="h-full border border-neutral-300 border-dashed bg-white overflow-hidden"
-                                style={{
-                                    background:
-                                        "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                                }}
-                            >
-                                <CardHeader className="p-6 md:p-8">
+                            <Card className="relative h-full border border-neutral-200 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl bg-white overflow-hidden">
+                                <div className="absolute inset-0 z-0 pointer-events-none" style={dashedCenterFadeGridStyle} />
+                                <CardHeader className="relative z-10 p-6 md:p-8">
                                     <div className="flex items-center gap-3 mb-4">
                                         <span className="bg-background/5 backdrop-blur-sm p-2 rounded rotate-10 shadow-md shadow-black/20"><AnimatedBookIcon isInView={isInView} /></span>
 
@@ -199,7 +215,7 @@ const ProgramTeaches = () => {
                                     />
                                 </CardHeader>
                                 {whatYouLearnNote && (
-                                    <CardContent className="p-6 md:p-8 pt-0 -mt-2 sm:-mt-3">
+                                    <CardContent className="relative z-10 p-6 md:p-8 pt-0 -mt-2 sm:-mt-3">
                                         <motion.p
                                             className="text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed italic"
                                             initial={{ opacity: 0, y: 10 }}
@@ -223,14 +239,9 @@ const ProgramTeaches = () => {
 
                         {/* Right Card: Your Readiness After Completion */}
                         <motion.div variants={itemVariants}>
-                            <Card
-                                className="h-full border border-neutral-300 border-dashed bg-white overflow-hidden"
-                                style={{
-                                    background:
-                                        "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                                }}
-                            >
-                                <CardHeader className="p-6 md:p-8">
+                            <Card className="relative h-full border border-neutral-200 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl bg-white overflow-hidden">
+                                <div className="absolute inset-0 z-0 pointer-events-none" style={dashedCenterFadeGridStyle} />
+                                <CardHeader className="relative z-10 p-6 md:p-8">
                                     <div className="flex items-center gap-3 mb-4">
                                         <span className="bg-background/20 backdrop-blur-sm p-2 rounded rotate-10 shadow-md shadow-black/20"><AnimatedBriefcaseIcon isInView={isInView} /></span>
                                         <h3 className="text-xl sm:text-2xl md:text-3xl font-montserrat font-semibold tracking-tight text-text-primary">
@@ -256,9 +267,9 @@ const ProgramTeaches = () => {
                                         iconClassName="shrink-0 pt-0.5"
                                     />
                                 </CardHeader>
-                                <CardContent className="p-6 md:p-8 pt-0">
+                                <CardContent className="relative z-10 p-6 md:p-8 pt-0">
                                     <motion.p
-                                        className="text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed pt-4 border-t border-neutral-300 border-dashed"
+                                        className="text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed pt-4 border-t border-neutral-300 "
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={
                                             isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }

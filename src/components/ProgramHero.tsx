@@ -2,7 +2,6 @@ import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
 import { useInViewOnce } from "../hooks/useInViewOnce.tsx";
-import { DottedGlowBackground } from "@/components/ui/dotted-glow-background";
 import { parseBoldText } from "@/lib/utils";
 
 const ProgramHero = () => {
@@ -184,69 +183,56 @@ const ProgramHero = () => {
     return (
         <section
             ref={ref}
-            className="relative min-h-screen w-full overflow-x-hidden overflow-y-auto mt-10"
+            className="relative min-h-screen w-full overflow-x-hidden overflow-y-auto mt-10 bg-white"
         >
-            {/* Fallback Background */}
-            <div className="absolute inset-0 bg-linear-to-br from-background via-neutral-200 to-background" />
-
-            {/* DottedGlowBackground */}
-            <DottedGlowBackground
-                gap={12}
-                radius={2}
-                opacity={0.4}
-                blur={2}
-                speedScale={1}
-                color="rgba(43, 13, 62, 0.3)"
-                glowColor="rgba(122, 63, 145, 0.6)"
-                colorLightVar="--green-light"
-                glowColorLightVar="--primary"
-                colorDarkVar="--evening-dark"
-                glowColorDarkVar="--text-primary"
+            {/* Dashed grid background (fade at top) - same as AboutHero */}
+            <div
+                className="absolute inset-0 z-0 bg-white pointer-events-none"
+                style={{
+                    backgroundImage: `
+                        linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                        linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+                    `,
+                    backgroundSize: "1px 1px",
+                    backgroundPosition: "0 0, 0 0",
+                    maskImage: `
+                        repeating-linear-gradient(
+                            to right,
+                            black 0px,
+                            black 3px,
+                            transparent 3px,
+                            transparent 8px
+                        ),
+                        repeating-linear-gradient(
+                            to bottom,
+                            black 0px,
+                            black 3px,
+                            transparent 3px,
+                            transparent 8px
+                        ),
+                        radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                    `,
+                    WebkitMaskImage: `
+                        repeating-linear-gradient(
+                            to right,
+                            black 0px,
+                            black 3px,
+                            transparent 3px,
+                            transparent 8px
+                        ),
+                        repeating-linear-gradient(
+                            to bottom,
+                            black 0px,
+                            black 3px,
+                            transparent 3px,
+                            transparent 8px
+                        ),
+                        radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                    `,
+                    maskComposite: "intersect",
+                    WebkitMaskComposite: "source-in",
+                }}
             />
-
-            {/* Vintage Masking Overlay - Top, Bottom, and Sides */}
-            <div className="absolute inset-0 z-5 pointer-events-none">
-                {/* Top Mask */}
-                <div
-                    className="absolute top-0 left-0 w-full h-1/3"
-                    style={{
-                        background:
-                            "linear-gradient(to bottom, rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 0.8) 30%, rgba(245, 245, 245, 0) 100%)",
-                    }}
-                />
-                {/* Bottom Mask */}
-                <div
-                    className="absolute bottom-0 left-0 w-full h-1/3"
-                    style={{
-                        background:
-                            "linear-gradient(to top, rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 0.8) 30%, rgba(245, 245, 245, 0) 100%)",
-                    }}
-                />
-                {/* Left Side Mask */}
-                <div
-                    className="absolute top-0 left-0 h-full w-1/3"
-                    style={{
-                        background:
-                            "linear-gradient(to right, rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 0.8) 30%, rgba(245, 245, 245, 0) 100%)",
-                    }}
-                />
-                {/* Right Side Mask */}
-                <div
-                    className="absolute top-0 right-0 h-full w-1/3"
-                    style={{
-                        background:
-                            "linear-gradient(to left, rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 0.8) 30%, rgba(245, 245, 245, 0) 100%)",
-                    }}
-                />
-                {/* Radial Vignette for Vintage Look */}
-                <div
-                    className="absolute inset-0"
-                    style={{
-                        background:
-                            "radial-gradient(ellipse at center, transparent 0%, transparent 40%, rgba(245, 245, 245, 0.3) 70%, rgba(245, 245, 245, 0.8) 100%)",
-                    }}
-                />
-            </div>
 
             {/* Content */}
             <div

@@ -10,6 +10,27 @@ const flowSteps = [
   { label: "Official credential", sub: "CYBERLABS USA certificate" },
 ];
 
+const dashedGridStyle = {
+  backgroundImage: `
+    linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+    linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+  `,
+  backgroundSize: "1px 1px",
+  backgroundPosition: "0 0, 0 0",
+  maskImage: `
+    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+    radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+  `,
+  WebkitMaskImage: `
+    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+    radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+  `,
+  maskComposite: "intersect" as const,
+  WebkitMaskComposite: "source-in" as const,
+};
+
 const LevelUp = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -118,17 +139,20 @@ const LevelUp = () => {
             <motion.div
               key={step.label}
               variants={itemVariants}
-              className="rounded-lg border border-neutral-300 border-dashed bg-neutral-50/80 p-4 md:p-5 transition-colors hover:border-primary/40 hover:bg-neutral-50"
+              className="relative rounded-lg border border-neutral-200 ring ring-neutral-200 ring-offset-2 md:ring-offset-4 overflow-hidden bg-white p-4 md:p-5 transition-colors hover:border-primary/40"
             >
-              <span className="inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-primary/50 bg-background text-primary font-montserrat font-bold text-base mb-2">
-                {index + 1}
-              </span>
-              <p className="font-montserrat font-semibold text-text-primary text-base md:text-lg mb-0.5">
-                {step.label}
-              </p>
-              <p className="text-neutral-500 text-sm md:text-base font-inter-display">
-                {step.sub}
-              </p>
+              <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+              <div className="relative z-10">
+                <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg ring ring-neutral-300 ring-offset-2 border border-neutral-200 bg-neutral-500 text-white font-montserrat font-bold text-base mb-2">
+                  {index + 1}
+                </span>
+                <p className="font-montserrat font-semibold text-text-primary text-base md:text-lg mb-0.5">
+                  {step.label}
+                </p>
+                <p className="text-neutral-500 text-sm md:text-base font-inter-display">
+                  {step.sub}
+                </p>
+              </div>
             </motion.div>
           ))}
         </motion.div>

@@ -46,7 +46,7 @@ const CourseHero = () => {
 
         {/* 2. Image - second on mobile (after title block), right column on lg */}
         <div className="min-w-0 flex items-center lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:items-stretch">
-          <div className="w-full  overflow-hidden bg-neutral-50/80 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.06)] aspect-4/3 lg:aspect-auto lg:min-h-[380px]">
+          <div className="w-full  overflow-hidden bg-neutral-50/80 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.06)] aspect-4/3 lg:aspect-auto lg:min-h-[380px] rounded-xl ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
             <img
               src={data?.image.src}
               alt={data?.image.alt ?? course?.title ?? "Program"}

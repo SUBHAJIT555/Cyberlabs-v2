@@ -30,7 +30,7 @@ const ModuleChart = () => {
         : "A module-by-module breakdown of where you focus and what you learn.";
 
     return (
-        <section className="w-full bg-background text-text-primary py-12 md:py-16">
+        <section className="w-full  text-text-primary py-12 md:py-16">
             <div className="w-full mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-26">
                 <div ref={headingRef} className="mb-8 md:mb-10">
                     <AnimatedHeading
@@ -46,7 +46,7 @@ const ModuleChart = () => {
 
                 {/* Table container styled like GradePerformance */}
                 <div className="overflow-x-auto">
-                    <table className="w-full min-w-[640px] table-fixed border-collapse border border-neutral-300 border-dashed bg-white">
+                    <table className="w-full min-w-[640px] table-fixed border-collapse border border-neutral-300 bg-white">
                         <thead
                             className="bg-white"
                             style={{
@@ -56,18 +56,18 @@ const ModuleChart = () => {
                         >
                             <tr>
                                 {/* On mobile, first two columns are narrow, last column wider */}
-                                <th className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[15%] md:w-[12%] lg:w-[10%]">
+                                <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[15%] md:w-[12%] lg:w-[10%]">
                                     {firstColLabel}
                                 </th>
-                                <th className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[20%] md:w-[22%] lg:w-[24%]">
+                                <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[20%] md:w-[22%] lg:w-[24%]">
                                     {secondColLabel}
                                 </th>
                                 {hasHours && (
-                                    <th className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[12%] md:w-[12%] lg:w-[10%]">
+                                    <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[12%] md:w-[12%] lg:w-[10%]">
                                         Hours
                                     </th>
                                 )}
-                                <th className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[53%] md:w-[54%] lg:w-[56%]">
+                                <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[53%] md:w-[54%] lg:w-[56%]">
                                     {thirdColLabel}
                                 </th>
                             </tr>
@@ -81,18 +81,18 @@ const ModuleChart = () => {
                                     viewport={{ once: false, amount: 0.3 }}
                                     transition={{ duration: 0.45, ease: "easeOut", delay: index * 0.06 }}
                                 >
-                                    <td className="align-top border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-normal sm:whitespace-nowrap">
+                                    <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-normal sm:whitespace-nowrap">
                                         {row.module}
                                     </td>
-                                    <td className="align-top border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
+                                    <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
                                         {row.focusArea}
                                     </td>
                                     {hasHours && (
-                                        <td className="align-top border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-nowrap">
+                                        <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-nowrap">
                                             {row.hours || "-"}
                                         </td>
                                     )}
-                                    <td className="align-top border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary leading-relaxed">
+                                    <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary leading-relaxed">
                                         {row.whatYouLearn}
                                     </td>
                                 </motion.tr>

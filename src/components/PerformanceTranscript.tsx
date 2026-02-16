@@ -5,6 +5,27 @@ import { AnimatedHeading } from "./ui/animated-heading";
 import { Card, CardContent } from "./ui/card";
 import professionalTranscript from "@/assets/img/ProgramPageImage/performacetranscribe.svg";
 
+const dashedCenterFadeGridStyle = {
+  backgroundImage: `
+    linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+    linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+  `,
+  backgroundSize: "10px 10px",
+  backgroundPosition: "0 0, 0 0",
+  maskImage: `
+    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+    radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+  `,
+  WebkitMaskImage: `
+    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+    radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+  `,
+  maskComposite: "intersect" as const,
+  WebkitMaskComposite: "source-in" as const,
+};
+
 const PerformanceTranscript = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: false, margin: "-100px" });
@@ -52,13 +73,12 @@ const PerformanceTranscript = () => {
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
-        className="grid gap-4 sm:grid-cols-5"
+        className="grid gap-6 sm:grid-cols-5"
       >
         {/* Card 1: Professional Performance Transcript (India Program) */}
-        <Card className="group overflow-hidden border-neutral-300 border-dashed bg-white sm:col-span-3"
-          style={{ background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white", }}
-        >
-          <CardContent className="p-6 md:p-8 space-y-4 md:space-y-6">
+        <Card className="group relative overflow-hidden border border-neutral-200 ring ring-neutral-200 ring-offset-2 md:ring-offset-4 rounded-xl bg-white sm:col-span-3">
+          <div className="absolute inset-0 z-0 pointer-events-none" style={dashedCenterFadeGridStyle} />
+          <CardContent className="relative z-10 p-6 md:p-8 space-y-4 md:space-y-6">
             <motion.div variants={cardVariants} className="space-y-3 md:space-y-10">
               {/* <div>
                 <motion.p
@@ -97,24 +117,9 @@ const PerformanceTranscript = () => {
         </Card>
 
         {/* Card 2: Industry Recognition & Professional Alignment */}
-        <Card
-          className="group relative overflow-hidden border border-dashed border-neutral-300 bg-white sm:col-span-2 flex flex-col min-h-0"
-          style={{
-            background:
-              "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-          }}
-        >
-          {/* background pattern */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.03]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, rgba(0,0,0,0.2) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.2) 1px, transparent 1px)",
-              backgroundSize: "18px 18px",
-            }}
-          />
-
-          <CardContent className="flex-1 flex flex-col min-h-0 p-3 md:p-4">
+        <Card className="group relative overflow-hidden border border-neutral-200 ring ring-neutral-200 ring-offset-2 md:ring-offset-4 rounded-xl bg-white sm:col-span-2 flex flex-col min-h-0">
+          <div className="absolute inset-0 z-0 pointer-events-none" style={dashedCenterFadeGridStyle} />
+          <CardContent className="relative z-10 flex-1 flex flex-col min-h-0 p-3 md:p-4">
             <div className="relative flex-1 min-h-0 overflow-hidden flex items-center justify-center">
               <img
                 src={professionalTranscript}
@@ -145,10 +150,9 @@ const PerformanceTranscript = () => {
         </Card> */}
 
         {/* Card 3: Graded Performance Framework table */}
-        <Card className="group overflow-hidden border-neutral-300 border-dashed bg-white sm:col-span-5"
-          style={{ background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white", }}
-        >
-          <CardContent className="p-6 md:p-8 space-y-4 md:space-y-6">
+        <Card className="group relative overflow-hidden border border-neutral-200 ring ring-neutral-200 ring-offset-2 md:ring-offset-4 rounded-xl bg-white sm:col-span-5">
+          <div className="absolute inset-0 z-0 pointer-events-none" style={dashedCenterFadeGridStyle} />
+          <CardContent className="relative z-10 p-6 md:p-8 space-y-4 md:space-y-6">
             <motion.div variants={cardVariants} className="space-y-3 md:space-y-4">
               <div>
                 <motion.p
@@ -163,7 +167,7 @@ const PerformanceTranscript = () => {
               </div>
 
               <div className="overflow-x-auto">
-                <table className="w-full border-collapse border border-neutral-300 border-dashed bg-white text-left">
+                <table className="w-full border-collapse border border-neutral-300 bg-white text-left">
                   <motion.thead
                     initial={{ opacity: 0, y: 12 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -176,16 +180,16 @@ const PerformanceTranscript = () => {
                     }}
                   >
                     <tr>
-                      <th className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary">
+                      <th className="border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary">
                         Assessment Category
                       </th>
-                      <th className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary">
+                      <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary">
                         Weightage
                       </th>
-                      <th className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary">
+                      <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary">
                         Grade / Score
                       </th>
-                      <th className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary">
+                      <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary">
                         Classification
                       </th>
                     </tr>
@@ -205,16 +209,16 @@ const PerformanceTranscript = () => {
                         transition={{ duration: 0.4, delay: index * 0.08 }}
                         className={row.isBold ? "font-bold" : ""}
                       >
-                        <td className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
+                        <td className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
                           {row.category}
                         </td>
-                        <td className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
+                        <td className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
                           {row.weight}
                         </td>
-                        <td className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
+                        <td className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-center text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
                           {row.grade}
                         </td>
-                        <td className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
+                        <td className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
                           {row.classification}
                         </td>
                       </motion.tr>

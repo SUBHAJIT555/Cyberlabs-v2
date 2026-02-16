@@ -16,7 +16,7 @@ const CareerOpertunity = () => {
     if (!careerChart || careerChart.length === 0) return null;
 
     return (
-        <section className="w-full bg-background text-text-primary py-12 md:py-16">
+        <section className="w-full  text-text-primary py-12 md:py-16">
             <div className="mx-auto px-4 md:px-12 xl:px-25">
                 <div ref={headingRef} className="mb-8 md:mb-10">
                     <AnimatedHeading
@@ -35,7 +35,7 @@ const CareerOpertunity = () => {
 
                 {/* Table styled like GradePerformance */}
                 <div className="overflow-x-auto">
-                    <table className="w-full min-w-160 sm:min-w-230 md:min-w-6xl table-fixed border-collapse border border-neutral-300 border-dashed bg-white">
+                    <table className="w-full min-w-160 sm:min-w-230 md:min-w-6xl table-fixed border-collapse border border-neutral-300  bg-white">
                         <thead
                             className="bg-white"
                             style={{
@@ -45,13 +45,13 @@ const CareerOpertunity = () => {
                         >
                             <tr>
                                 {/* On mobile, first two columns are narrower, last column wider */}
-                                <th className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[22%] md:w-[24%] lg:w-[26%]">
+                                <th className="border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[22%] md:w-[24%] lg:w-[26%]">
                                     Job Role
                                 </th>
-                                <th className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[32%] md:w-[34%] lg:w-[36%]">
+                                <th className="border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[32%] md:w-[34%] lg:w-[36%]">
                                     What You&apos;ll Do
                                 </th>
-                                <th className="border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[46%] md:w-[42%] lg:w-[38%]">
+                                <th className="border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[46%] md:w-[42%] lg:w-[38%]">
                                     Example Employers
                                 </th>
                             </tr>
@@ -64,13 +64,13 @@ const CareerOpertunity = () => {
                                     animate={tableInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
                                     transition={{ duration: 0.4, delay: index * 0.06, ease: "easeOut" }}
                                 >
-                                    <td className="align-top border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-normal sm:whitespace-nowrap">
+                                    <td className="align-top border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-normal sm:whitespace-nowrap">
                                         {row.jobRole}
                                     </td>
-                                    <td className="align-top border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary leading-relaxed">
+                                    <td className="align-top border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary leading-relaxed">
                                         {row.whatYouDo}
                                     </td>
-                                    <td className="align-top border border-neutral-300 border-dashed px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary leading-relaxed">
+                                    <td className="align-top border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary leading-relaxed">
                                         {row.exampleEmployers}
                                     </td>
                                 </motion.tr>

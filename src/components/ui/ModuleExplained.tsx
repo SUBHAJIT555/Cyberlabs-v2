@@ -122,7 +122,7 @@ const Syllabus = () => {
           staggerChildren: 0.1,
           delayChildren: 0.2,
         }}
-        className="flex flex-col divide-y divide-dashed divide-neutral-300 mb-8 sm:mb-10"
+        className="flex flex-col divide-y  divide-neutral-300 mb-8 sm:mb-10"
       >
         {syllabusData?.map((item, index) => (
           <motion.div
@@ -140,7 +140,7 @@ const Syllabus = () => {
             >
               <div className="flex items-center gap-2 sm:gap-4 py-1 md:py-1">
                 <motion.span
-                  className={`text-xl sm:text-2xl border border-neutral-200 border-dashed rounded p-1 transition-all duration-300 group-hover:bg-primary/10 group-hover:shadow-lg ${openIndex === index ? "bg-primary/10 shadow-lg" : ""
+                  className={`text-xl sm:text-2xl border border-neutral-200 rounded-lg ring ring-neutral-200 ring-offset-2 md:ring-offset-4 p-1 transition-all duration-300 group-hover:bg-primary/10 group-hover:shadow-lg ${openIndex === index ? "bg-primary/10 shadow-lg" : ""
                     }`}
                   animate={{
                     scale: openIndex === index ? 1.1 : 1,

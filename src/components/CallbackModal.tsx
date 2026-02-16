@@ -143,7 +143,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
             }}
           >
             <motion.div
-              className="bg-background border border-neutral-300 border-dashed w-full max-w-md relative overflow-hidden"
+              className="bg-white border border-neutral-200 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl w-full max-w-md relative overflow-hidden"
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
               exit={{ scale: 0.9, y: 20 }}
@@ -158,10 +158,32 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
                 margin: isMobile ? "1rem" : "2rem",
                 maxWidth: isMobile ? "calc(100vw - 2rem)" : "28rem",
                 width: isMobile ? "auto" : "28rem",
-                background:
-                  "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
               }}
             >
+              {/* Dashed grid background (fade at top) - same as CallToAction */}
+              <div
+                className="absolute inset-0 z-0 pointer-events-none"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                    linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+                  `,
+                  backgroundSize: "1px 1px",
+                  backgroundPosition: "0 0, 0 0",
+                  maskImage: `
+                    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+                    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+                    radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                  `,
+                  WebkitMaskImage: `
+                    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+                    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+                    radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                  `,
+                  maskComposite: "intersect",
+                  WebkitMaskComposite: "source-in",
+                }}
+              />
               {/* Header */}
               <div className="relative z-10 p-4 sm:p-6 pb-4">
                 <div className="flex items-center justify-between mb-2">
@@ -207,7 +229,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
                     type="text"
                     {...register("name", { required: "Full name is required" })}
                     placeholder="Name"
-                    className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-background border text-text-primary placeholder-neutral-400 focus:outline-none rounded transition-colors text-sm sm:text-base font-inter-display ${errors.name ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"
+                    className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-background border text-text-primary placeholder-neutral-400 focus:outline-none rounded-lg focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 transition-colors text-sm sm:text-base font-inter-display ${errors.name ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"
                       }`}
                   />
                   {errors.name && (
@@ -221,7 +243,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
                     Phone Number <span className="text-red-500">*</span>
                   </label>
                   <div className="flex">
-                    <span className="inline-flex items-center px-2 sm:px-3 py-2 sm:py-3 bg-neutral-100 border border-neutral-300 border-r-0 rounded-l text-text-primary text-sm sm:text-base font-inter-display">
+                    <span className="inline-flex items-center px-2 sm:px-3 py-2 sm:py-3 bg-neutral-100 border border-neutral-300 border-r-0 rounded-l-lg text-text-primary text-sm sm:text-base font-inter-display">
                       🇮🇳 +91
                     </span>
                     <input
@@ -237,7 +259,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
                       })}
                       placeholder="9876543210"
                       maxLength={10}
-                      className={`flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-background border border-l-0 text-text-primary placeholder-neutral-400 focus:outline-none rounded-r transition-colors text-sm sm:text-base font-inter-display ${errors.phone ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"
+                      className={`flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-background border border-l-0 text-text-primary placeholder-neutral-400 focus:outline-none focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 rounded-r-lg transition-colors text-sm sm:text-base font-inter-display ${errors.phone ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"
                         }`}
                     />
                   </div>
@@ -256,7 +278,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
                       type="datetime-local"
                       {...register("callbackTime", { required: "Preferred callback time is required" })}
                       min={new Date().toISOString().slice(0, 16)}
-                      className={`w-full px-3 sm:px-4 py-2 sm:py-3 pr-10 sm:pr-12 bg-background border text-text-primary focus:outline-none rounded transition-colors text-sm sm:text-base font-inter-display cursor-pointer [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none [&::-webkit-calendar-picker-indicator]:w-0 [&::-webkit-calendar-picker-indicator]:h-0 ${errors.callbackTime ? "border-red-400" : "border-neutral-300 focus:border-neutral-400"
+                      className={`w-full px-3 sm:px-4 py-2 sm:py-3 pr-10 sm:pr-12 bg-background border text-text-primary focus:outline-none focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 rounded-lg transition-colors text-sm sm:text-base font-inter-display cursor-pointer [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none [&::-webkit-calendar-picker-indicator]:w-0 [&::-webkit-calendar-picker-indicator]:h-0 ${errors.callbackTime ? "border-red-400" : "border-neutral-300 focus:border-neutral-400"
                         }`}
                       style={{
                         fontSize: isMobile ? "14px" : "16px",
@@ -313,7 +335,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
                   </label>
                   <select
                     {...register("enquiryFor", { required: "Please select a program" })}
-                    className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-background border text-text-primary focus:outline-none rounded transition-colors appearance-none cursor-pointer text-sm sm:text-base font-inter-display ${errors.enquiryFor ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"
+                    className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-background border text-text-primary focus:outline-none focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 rounded-lg transition-colors appearance-none cursor-pointer text-sm sm:text-base font-inter-display ${errors.enquiryFor ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"
                       }`}
                   >
                     <option value="">Select a program</option>
@@ -332,7 +354,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
                 <motion.button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-primary text-background font-medium font-montserrat py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-primary/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-lg sm:text-xl cursor-pointer"
+                  className="w-full bg-primary text-background font-medium font-montserrat py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-primary/80  transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-lg sm:text-xl cursor-pointer"
                   whileTap={{ scale: 0.98 }}
                 >
                   {isSubmitting ? "Submitting..." : "Submit"}

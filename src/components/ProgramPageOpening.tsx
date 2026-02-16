@@ -2,7 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { AnimatedHeading } from "./ui/animated-heading";
 import { TechStackOrbitCarousel } from "./ui/TechStackOrbitCarousel";
-import { DottedGlowBackground } from "./ui/dotted-glow-background";
+
 
 const headingBaseClass = "text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-montserrat font-semibold leading-[1.05] tracking-tight inline";
 
@@ -15,7 +15,7 @@ const ProgramPageOpening = () => {
     return (
         <section
             ref={sectionRef}
-            className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 py-24 md:py-32 bg-background overflow-hidden"
+            className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 py-24 md:py-32  overflow-hidden"
         >
             <div className="space-y-12 md:space-y-16">
                 {/* HEADING - AnimatedHeading */}
@@ -84,10 +84,10 @@ const ProgramPageOpening = () => {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
                         {/* Fallback background */}
-                        <div className="absolute inset-0 bg-linear-to-br from-background via-neutral-200 to-background" />
+                        <div className="absolute inset-0 " />
 
                         {/* DottedGlowBackground - same as GlobalThreat */}
-                        <div className="absolute inset-0 opacity-100">
+                        {/* <div className="absolute inset-0 opacity-100">
                             <DottedGlowBackground
                                 gap={16}
                                 radius={1.5}
@@ -100,46 +100,10 @@ const ProgramPageOpening = () => {
                                 colorDarkVar="--evening-dark"
                                 glowColorDarkVar="--text-primary"
                             />
-                        </div>
+                        </div> */}
 
                         {/* Masking overlays - same as GlobalThreat */}
-                        <div className="absolute inset-0 z-5 pointer-events-none">
-                            <div
-                                className="absolute top-0 left-0 w-full h-1/3"
-                                style={{
-                                    background:
-                                        "linear-gradient(to bottom, rgba(245, 245, 245, 0.95) 0%, rgba(245, 245, 245, 0.6) 40%, transparent 100%)",
-                                }}
-                            />
-                            <div
-                                className="absolute bottom-0 left-0 w-full h-1/3"
-                                style={{
-                                    background:
-                                        "linear-gradient(to top, rgba(245, 245, 245, 0.95) 0%, rgba(245, 245, 245, 0.6) 40%, transparent 100%)",
-                                }}
-                            />
-                            <div
-                                className="absolute top-0 left-0 h-full w-1/4"
-                                style={{
-                                    background:
-                                        "linear-gradient(to right, rgba(245, 245, 245, 0.9) 0%, rgba(245, 245, 245, 0.5) 50%, transparent 100%)",
-                                }}
-                            />
-                            <div
-                                className="absolute top-0 right-0 h-full w-1/4"
-                                style={{
-                                    background:
-                                        "linear-gradient(to left, rgba(245, 245, 245, 0.9) 0%, rgba(245, 245, 245, 0.5) 50%, transparent 100%)",
-                                }}
-                            />
-                            <div
-                                className="absolute inset-0"
-                                style={{
-                                    background:
-                                        "radial-gradient(ellipse at center, transparent 0%, transparent 50%, rgba(245, 245, 245, 0.4) 80%, rgba(245, 245, 245, 0.7) 100%)",
-                                }}
-                            />
-                        </div>
+                       
 
                         {/* Content */}
                         <div className="relative z-10 w-full flex items-center justify-center">

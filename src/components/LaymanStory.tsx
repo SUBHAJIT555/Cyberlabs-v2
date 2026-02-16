@@ -4,7 +4,8 @@ import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 
 import { useCourses } from "@/hooks/useCourses";
-import { FallingPattern } from "@/components/ui/falling-pattern";
+import laymansStoryImage from "@/assets/img/ProgramPageImage/LaymansStory.svg";
+// import { FallingPattern } from "@/components/ui/falling-pattern";
 
 // Helper function to highlight the last word(s) in the heading
 const getHighlightedHeading = (heading: string) => {
@@ -52,64 +53,69 @@ const LaymanStory = () => {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
         >
-            {/* Falling Pattern Background - full width including center */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <FallingPattern
-                    color="rgba(83, 86, 90, 0.65)"
-                    backgroundColor="rgb(245, 245, 245)"
-                    duration={200}
-                    blurIntensity="0.4em"
-                    density={1.2}
-                    className="h-full w-full"
-                    style={{
-                        maskImage: 'linear-gradient(to bottom, transparent 0%, rgb(245, 245, 245) 10%, rgb(245, 245, 245) 90%, transparent 100%)',
-                        WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, rgb(245, 245, 245) 10%, rgb(245, 245, 245) 90%, transparent 100%)',
-                    }}
-                />
-            </div>
+            {/* Grid Layout: Content left, Image right */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
+                {/* Left: Content */}
+                <motion.div
+                    variants={itemVariants}
+                    className="relative z-10 order-2 lg:order-1"
+                >
+                    {/* Clean, simple container */}
+                    <div className="relative">
+                        {/* Title */}
+                        <motion.h3
+                            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-bold tracking-tight leading-tight mb-4 sm:mb-6 md:mb-8 text-left"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                        >
+                            {getHighlightedHeading(layman.heading)}
+                        </motion.h3>
+                        <div className="botder-t border border-neutral-300  my-4"></div>
 
-            <motion.div
-                variants={itemVariants}
-                className="relative max-w-5xl mx-auto z-10"
-            >
-                {/* Clean, simple container */}
-                <div className="relative">
-                    {/* Title */}
-                    <motion.h3
-                        className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-bold tracking-tight leading-tight mb-4 sm:mb-6 md:mb-8 text-left"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-                        transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                    >
-                        {getHighlightedHeading(layman.heading)}
-                    </motion.h3>
-                    <div className="botder-t border border-neutral-300 border-dashed my-4"></div>
-
-                    {/* Story lines */}
-                    <div className="space-y-5 sm:space-y-6 md:space-y-7">
-                        {layman.lines.map((line, index) => (
-                            <motion.p
-                                key={index}
-                                className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter-display font-semibold text-text-primary leading-relaxed text-left bg-background/30 backdrop-blur-sm w-fit"
-                                style={{
-                                    textShadow: "0 1px 8px rgba(255,255,255,0.92), 0 0px 2px #fff",
-                                }}
-                                initial={{ opacity: 0, y: 15 }}
-                                animate={
-                                    isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }
-                                }
-                                transition={{
-                                    duration: 0.6,
-                                    delay: 0.3 + index * 0.1,
-                                    ease: "easeOut",
-                                }}
-                            >
-                                {line}
-                            </motion.p>
-                        ))}
+                        {/* Story lines */}
+                        <div className="space-y-5 sm:space-y-6 md:space-y-7">
+                            {layman.lines.map((line, index) => (
+                                <motion.p
+                                    key={index}
+                                    className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter-display font-semibold text-text-primary leading-relaxed text-left bg-background/30 backdrop-blur-sm w-fit"
+                                    style={{
+                                        textShadow: "0 1px 8px rgba(255,255,255,0.92), 0 0px 2px #fff",
+                                    }}
+                                    initial={{ opacity: 0, y: 15 }}
+                                    animate={
+                                        isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }
+                                    }
+                                    transition={{
+                                        duration: 0.6,
+                                        delay: 0.3 + index * 0.1,
+                                        ease: "easeOut",
+                                    }}
+                                >
+                                    {line}
+                                </motion.p>
+                            ))}
+                        </div>
                     </div>
-                </div>
-            </motion.div>
+                </motion.div>
+
+                {/* Right: Sticky Image */}
+                <motion.div
+                    variants={itemVariants}
+                    className="lg:sticky lg:top-24 order-1 lg:order-2 relative flex items-center justify-center"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+                    transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+                >
+                    <div className="flex items-center justify-center">
+                        <img
+                            src={laymansStoryImage}
+                            alt="Layman's Story"
+                            className="w-full max-w-[420px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[560px] h-auto"
+                        />
+                    </div>
+                </motion.div>
+            </div>
         </motion.section>
     );
 };
