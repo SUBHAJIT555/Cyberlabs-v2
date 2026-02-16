@@ -312,13 +312,13 @@ const CallToAction = () => {
                 label="Request a Callback"
                 onClick={handleCallbackModalOpen}
                 variant="dark"
-                className="shrink-0 bg-linear-to-l from-neutral-600 to-neutral-900 font-inter-display"
+                className="shrink-0 bg-linear-to-l from-neutral-600 to-neutral-900 font-inter-display font-semibold ring ring-neutral-300 ring-offset-2 md:ring-offset-4 shadow-lg cursor-pointer"
               />
               <CTAButton
                 to="/cyber-defense-programs"
                 label="Explore Programs"
                 variant="light"
-                className="shrink-0 bg-linear-to-l from-neutral-100 to-neutral-300 font-inter-display"
+                className="shrink-0 bg-linear-to-l from-neutral-100 to-neutral-300 font-inter-display font-semibold ring ring-neutral-300 ring-offset-2 md:ring-offset-4 shadow-lg cursor-pointer"
               />
             </motion.div>
           </motion.div>
