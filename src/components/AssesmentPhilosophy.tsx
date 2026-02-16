@@ -25,6 +25,27 @@ const AssesmentPhilosophy = () => {
         },
     };
 
+    const dashedGridStyle = {
+        backgroundImage: `
+            linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+            linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+        `,
+        backgroundSize: "10px 10px",
+        backgroundPosition: "0 0, 0 0",
+        maskImage: `
+            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+        `,
+        WebkitMaskImage: `
+            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+        `,
+        maskComposite: "intersect" as const,
+        WebkitMaskComposite: "source-in" as const,
+    };
+
     const SectionBlock = ({
         children,
         className = "",
@@ -32,10 +53,13 @@ const AssesmentPhilosophy = () => {
         children: ReactNode;
         className?: string;
     }) => (
-        <div
-            className={`w-full pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 border-b border-neutral-200/80 ${className}`}
-        >
-            <div className="w-full">{children}</div>
+        <div className={`w-full mb-8 md:mb-10 ${className}`}>
+            <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
+                <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+                <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
+                    {children}
+                </div>
+            </div>
         </div>
     );
 
@@ -318,7 +342,7 @@ const AssesmentPhilosophy = () => {
     ];
 
     return (
-        <section className="w-full bg-background pt-4 md:pt-8 pb-12 md:pb-20" ref={containerRef}>
+        <section className="w-full px-5 md:px-10 lg:px-16 py-4 sm:py-6 lg:py-6" ref={containerRef}>
             <motion.div
                 variants={containerVariants}
                 initial="hidden"
@@ -326,7 +350,7 @@ const AssesmentPhilosophy = () => {
                 className="w-full"
             >
                 {/* 1. Assessment Philosophy — content left, image right */}
-                <SectionBlock className="bg-white">
+                <SectionBlock>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
                         <div className="space-y-6 order-2 md:order-1">
                             <motion.h2
@@ -359,7 +383,7 @@ const AssesmentPhilosophy = () => {
                                     boldText={false}
                                 />
                             </div>
-                            <div className="pt-2 border-t border-neutral-300 border-dashed">
+                            <div className="pt-2 border-t border-neutral-300">
                                 <motion.p
                                     className="text-lg sm:text-xl md:text-2xl text-text-primary leading-light font-montserrat tracking-tighter font-semibold mb-2 sm:mb-3"
                                     initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
@@ -378,7 +402,7 @@ const AssesmentPhilosophy = () => {
                 </SectionBlock>
 
                 {/* 2. Industry Alignment & Professional Relevance — zigzag: image left, content right */}
-                <SectionBlock className="bg-neutral-50/80 border-b-0">
+                <SectionBlock>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
                         <div className="order-1 md:order-1 flex justify-center md:justify-start">
                             <img src={industryallignmentSvg} alt="" className="w-full max-w-md h-auto" />
@@ -409,7 +433,7 @@ const AssesmentPhilosophy = () => {
                                 ].map((org) => (
                                     <motion.div
                                         key={org.name}
-                                        className="rounded-lg border border-neutral-300 border-dashed overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow"
+                                        className="rounded-xl border border-neutral-300 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow"
                                         style={{
                                             background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
                                         }}
@@ -432,7 +456,7 @@ const AssesmentPhilosophy = () => {
                                 ))}
                             </div>
                             <div
-                                className="p-4 sm:p-5 md:p-6 rounded-lg border border-neutral-300 border-dashed mb-6"
+                                className="p-4 sm:p-5 md:p-6 rounded-xl border border-neutral-300 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 mb-6"
                                 style={{
                                     background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
                                 }}
@@ -442,7 +466,7 @@ const AssesmentPhilosophy = () => {
                                 </p>
                             </div>
                             <div
-                                className="p-4 sm:p-5 md:p-6 rounded-lg border border-neutral-300 border-dashed flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
+                                className="p-4 sm:p-5 md:p-6 rounded-xl border border-neutral-300 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
                                 style={{
                                     background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
                                 }}

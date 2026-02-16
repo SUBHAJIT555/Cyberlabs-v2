@@ -11,6 +11,27 @@ const WhatThisMean = () => {
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: false, margin: "-100px" });
 
+    const dashedGridStyle = {
+        backgroundImage: `
+            linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+            linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+        `,
+        backgroundSize: "10px 10px",
+        backgroundPosition: "0 0, 0 0",
+        maskImage: `
+            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+        `,
+        WebkitMaskImage: `
+            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+        `,
+        maskComposite: "intersect" as const,
+        WebkitMaskComposite: "source-in" as const,
+    };
+
     const SectionBlock = ({
         children,
         className = "",
@@ -18,10 +39,13 @@ const WhatThisMean = () => {
         children: ReactNode;
         className?: string;
     }) => (
-        <div
-            className={`w-full pt-4 sm:pt-6 md:pt-8 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 border-b border-neutral-200/80 ${className}`}
-        >
-            <div className="w-full">{children}</div>
+        <div className={`w-full mb-8 md:mb-10 ${className}`}>
+            <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
+                <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+                <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
+                    {children}
+                </div>
+            </div>
         </div>
     );
 
@@ -511,7 +535,7 @@ const WhatThisMean = () => {
     };
 
     return (
-        <section className="w-full bg-background pt-4 md:pt-8 pb-12 md:pb-20" ref={containerRef}>
+        <section className="w-full px-5 md:px-10 lg:px-16 py-4 sm:py-6 lg:py-6" ref={containerRef}>
             <motion.div
                 variants={containerVariants}
                 initial="hidden"
@@ -519,7 +543,7 @@ const WhatThisMean = () => {
                 className="w-full"
             >
                 {/* 1. What This Means for Employers — content left, image right (zigzag start) */}
-                <SectionBlock className="bg-white">
+                <SectionBlock>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
                         <div className="space-y-6 order-2 md:order-1">
                             <motion.h2
@@ -558,7 +582,7 @@ const WhatThisMean = () => {
                 </SectionBlock>
 
                 {/* 2. What This Means for Learners — zigzag: image left, content right */}
-                <SectionBlock className="bg-neutral-50/80">
+                <SectionBlock>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
                         <div className="order-1 md:order-1 flex justify-center md:justify-start">
                             <img src={learnermeanSvg} alt="" className="w-full max-w-md h-auto" />
@@ -597,7 +621,7 @@ const WhatThisMean = () => {
                 </SectionBlock>
 
                 {/* 3. Integrity, Transparency & Standards — content left, image right (zigzag) */}
-                <SectionBlock className="bg-white border-b-0">
+                <SectionBlock>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
                         <div className="space-y-6 order-2 md:order-1">
                             <motion.h2

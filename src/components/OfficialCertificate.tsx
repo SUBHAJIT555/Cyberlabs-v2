@@ -19,7 +19,48 @@ const OfficialCertificate = () => {
     },
   };
 
-  // Section wrapper: full width, no max-w (same as EnterpriseLab)
+  const dashedGridStyle = {
+    backgroundImage: `
+      linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+      linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+    `,
+    backgroundSize: "10px 10px",
+    backgroundPosition: "0 0, 0 0",
+    maskImage: `
+      repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+      repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+      radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+    `,
+    WebkitMaskImage: `
+      repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+      repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+      radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+    `,
+    maskComposite: "intersect" as const,
+    WebkitMaskComposite: "source-in" as const,
+  };
+
+  // const cardDashedGridStyle = {
+  //   backgroundImage: `
+  //     linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+  //     linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+  //   `,
+  //   backgroundSize: "1px 1px",
+  //   backgroundPosition: "0 0, 0 0",
+  //   maskImage: `
+  //     repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+  //     repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+  //     radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+  //   `,
+  //   WebkitMaskImage: `
+  //     repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+  //     repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+  //     radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+  //   `,
+  //   maskComposite: "intersect" as const,
+  //   WebkitMaskComposite: "source-in" as const,
+  // };
+
   const SectionBlock = ({
     children,
     className = "",
@@ -27,17 +68,18 @@ const OfficialCertificate = () => {
     children: ReactNode;
     className?: string;
   }) => (
-    <div
-      className={`w-full py-12 sm:py-16 md:py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 border-b border-neutral-200/80 ${className}`}
-    >
-      <div className="w-full">
-        {children}
+    <div className={`w-full mb-8 md:mb-10 ${className}`}>
+      <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
+        <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+        <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
+          {children}
+        </div>
       </div>
     </div>
   );
 
   return (
-    <section className="w-full bg-background py-12 md:py-20" ref={containerRef}>
+    <section className="w-full px-5 md:px-10 lg:px-16 py-4 sm:py-6 lg:py-6" ref={containerRef}>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -45,7 +87,7 @@ const OfficialCertificate = () => {
         className="w-full"
       >
         {/* 1. Official Certification Issued by CYBERLABS USA */}
-        <SectionBlock className="bg-white">
+        <SectionBlock>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="space-y-6 order-2 md:order-1">
               <motion.h2
@@ -64,7 +106,7 @@ const OfficialCertificate = () => {
               <p className="text-lg sm:text-xl md:text-2xl font-inter-display font-semibold text-text-primary leading-tight mb-6">
                 These certificates are issued under CYBERLABS USA&apos;s global training and evaluation framework and represent a rigorous standard of cybersecurity competence, with strong emphasis on:
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
                 {[
                   "Practical Execution",
                   "Investigation & Analytical Thinking",
@@ -73,12 +115,13 @@ const OfficialCertificate = () => {
                 ].map((text, i) => (
                   <div
                     key={i}
-                    className="p-5 border border-neutral-300 border-dashed rounded-lg bg-white/90"
-                    style={{
-                      background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                    }}
+                    className="relative p-5 border border-neutral-200 rounded-xl ring ring-neutral-200 ring-offset-2 md:ring-offset-4 bg-white overflow-hidden"
                   >
-                    <p className="text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed">
+                    <div
+                      className="absolute inset-0 z-0 pointer-events-none"
+                     
+                    />
+                    <p className="relative z-10 text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed">
                       {text}
                     </p>
                   </div>
@@ -87,7 +130,7 @@ const OfficialCertificate = () => {
               <p className="text-lg sm:text-xl md:text-2xl font-inter-display font-semibold text-text-primary leading-relaxed mb-6">
                 The certification confirms that the learner has successfully completed:
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
                 {[
                   "Structured Academic Instruction",
                   "Extensive Hands-on Labs and Simulations",
@@ -95,12 +138,13 @@ const OfficialCertificate = () => {
                 ].map((text, i) => (
                   <div
                     key={i}
-                    className="p-5 border border-neutral-300 border-dashed rounded-lg bg-white/90"
-                    style={{
-                      background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                    }}
+                    className="relative p-5 border border-neutral-200 rounded-xl ring ring-neutral-200 ring-offset-2 md:ring-offset-4 bg-white overflow-hidden"
                   >
-                    <p className="text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed">
+                    <div
+                      className="absolute inset-0 z-0 pointer-events-none"
+                      // style={cardDashedGridStyle}
+                    />
+                    <p className="relative z-10 text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed">
                       {text}
                     </p>
                   </div>
@@ -114,7 +158,7 @@ const OfficialCertificate = () => {
         </SectionBlock>
 
         {/* 2. Professional Performance Transcript */}
-        <SectionBlock className="bg-neutral-50/80 border-b-0">
+        <SectionBlock>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="space-y-6 order-2 md:order-1">
               <motion.h2
@@ -135,7 +179,7 @@ const OfficialCertificate = () => {
               <p className="text-base sm:text-lg md:text-xl font-inter-display font-medium text-text-primary leading-tight">
                 The transcript complements the CYBERLABS USA certificate and does not replace or modify it.
               </p>
-              <div className="pt-6 border-t border-neutral-300 border-dashed space-y-4">
+              <div className="pt-6 border-t border-neutral-300 space-y-4">
                 <motion.p
                   className="text-lg sm:text-xl md:text-2xl font-inter-display font-semibold text-text-primary leading-tight"
                   initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
@@ -148,7 +192,7 @@ const OfficialCertificate = () => {
                 <p className="text-base sm:text-lg font-inter-display font-medium text-text-primary leading-tight mb-4">
                   The Professional Performance Transcript provides granular insight into performance across:
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-4">
                   {[
                     "Practical lab execution",
                     "Investigation and analytical work",
@@ -157,12 +201,13 @@ const OfficialCertificate = () => {
                   ].map((text, i) => (
                     <div
                       key={i}
-                      className={`p-4 sm:p-5 border border-neutral-300 border-dashed rounded-lg ${i === 3 ? "sm:col-span-3" : ""}`}
-                      style={{
-                        background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                      }}
+                      className={`relative p-4 sm:p-5 border border-neutral-200 rounded-xl ring ring-neutral-200 ring-offset-2 md:ring-offset-4 bg-white overflow-hidden ${i === 3 ? "sm:col-span-3" : ""}`}
                     >
-                      <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-tight">
+                      <div
+                        className="absolute inset-0 z-0 pointer-events-none"
+                        // style={cardDashedGridStyle}
+                      />
+                      <p className="relative z-10 text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-tight">
                         {text}
                       </p>
                     </div>

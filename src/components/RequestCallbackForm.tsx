@@ -134,7 +134,7 @@ const RequestCallbackForm = () => {
                         transition={{ duration: 0.4, ease: "easeOut", delay: 0.05 }}
                         className="order-2 lg:order-2 min-w-0"
                     >
-                        <Card className="border border-neutral-200 bg-white shadow-sm rounded-2xl overflow-hidden">
+                        <Card className="border border-neutral-200 bg-white shadow-sm rounded-2xl ring ring-neutral-200 ring-offset-4 md:ring-offset-8 overflow-hidden">
                             <CardHeader className="p-6 sm:p-8 md:p-10 pb-4">
                                 <h2 className="text-2xl sm:text-3xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-2">
                                     Request a Call Back
@@ -299,11 +299,12 @@ const RequestCallbackForm = () => {
                                 </form>
                             </CardContent>
                         </Card>
+                        <div className="text-text-primary mt-4">
+                            <p className="text-sm sm:text-base md:text-lg font-inter-display text-text-primary font-medium leading-relaxed italic"> Cybersecurity is not learned casually. If you are ready to take it seriously, we’re ready to guide you.</p>
+                        </div>
                     </motion.div>
                 </div>
-                <div className="text-text-primary mt-4">
-                    <p className="text-sm sm:text-base font-inter-display text-text-primary font-medium leading-relaxed italic"> Cybersecurity is not learned casually. If you are ready to take it seriously, we’re ready to guide you.</p>
-                </div>
+                
             </div>
 
             {/* What Happens Next — popup after submit */}

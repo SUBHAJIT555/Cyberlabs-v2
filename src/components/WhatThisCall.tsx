@@ -123,16 +123,16 @@ const WhatThisCall = () => {
     const stepsListItems: AnimatedListItem[] = steps.map((step) => ({
         text: step.title,
         icon: (
-            <div className="shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-montserrat font-bold text-sm sm:text-base bg-primary text-background">
+            <div className="shrink-0 w-8 h-8 sm:w-8 sm:h-8 rounded-lg ring ring-neutral-200 ring-offset-2 md:ring-offset-4 flex items-center justify-center font-montserrat font-bold text-sm sm:text-base bg-primary text-background">
                 {step.number}
             </div>
-        ),
+        )
     }));
 
     const whoShouldCallListItems: AnimatedListItem[] = whoShouldCall.map((item) => ({
         text: item.title,
         icon: (
-            <div className="shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-primary text-background [&_svg]:text-background">
+            <div className="shrink-0 w-8 h-8 sm:w-8 sm:h-8 rounded-lg ring ring-neutral-200 ring-offset-2 md:ring-offset-4 flex items-center justify-center bg-primary text-background [&_svg]:text-background">
                 {item.icon}
             </div>
         ),
@@ -161,8 +161,53 @@ const WhatThisCall = () => {
         },
     };
 
+    const dashedCenterFadeGridStyle = {
+        backgroundImage: `
+            linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+            linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+        `,
+        backgroundSize: "10px 10px",
+        backgroundPosition: "0 0, 0 0",
+        maskImage: `
+            repeating-linear-gradient(
+                to right,
+                black 0px,
+                black 3px,
+                transparent 3px,
+                transparent 8px
+            ),
+            repeating-linear-gradient(
+                to bottom,
+                black 0px,
+                black 3px,
+                transparent 3px,
+                transparent 8px
+            ),
+            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+        `,
+        WebkitMaskImage: `
+            repeating-linear-gradient(
+                to right,
+                black 0px,
+                black 3px,
+                transparent 3px,
+                transparent 8px
+            ),
+            repeating-linear-gradient(
+                to bottom,
+                black 0px,
+                black 3px,
+                transparent 3px,
+                transparent 8px
+            ),
+            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+        `,
+        maskComposite: "intersect" as const,
+        WebkitMaskComposite: "source-in" as const,
+    };
+
     return (
-        <section className="w-full bg-background py-4 md:py-8" ref={containerRef}>
+        <section className="w-full py-4 md:py-8" ref={containerRef}>
             <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -176,9 +221,57 @@ const WhatThisCall = () => {
                         initial={{ opacity: 0, y: 24 }}
                         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
                         transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="rounded-xl border border-neutral-200 bg-white overflow-hidden shadow-sm mb-8 md:mb-10"
+                        className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 mb-8 md:mb-10"
                     >
-                        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
+                        {/* Dashed grid background (fade at top) */}
+                        <div
+                            className="absolute inset-0 z-0"
+                            style={{
+                                backgroundImage: `
+                                    linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                                    linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+                                `,
+                                backgroundSize: "1px 1px",
+                                backgroundPosition: "0 0, 0 0",
+                                maskImage: `
+                                    repeating-linear-gradient(
+                                        to right,
+                                        black 0px,
+                                        black 3px,
+                                        transparent 3px,
+                                        transparent 8px
+                                    ),
+                                    repeating-linear-gradient(
+                                        to bottom,
+                                        black 0px,
+                                        black 3px,
+                                        transparent 3px,
+                                        transparent 8px
+                                    ),
+                                    radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                                `,
+                                WebkitMaskImage: `
+                                    repeating-linear-gradient(
+                                        to right,
+                                        black 0px,
+                                        black 3px,
+                                        transparent 3px,
+                                        transparent 8px
+                                    ),
+                                    repeating-linear-gradient(
+                                        to bottom,
+                                        black 0px,
+                                        black 3px,
+                                        transparent 3px,
+                                        transparent 8px
+                                    ),
+                                    radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                                `,
+                                maskComposite: "intersect",
+                                WebkitMaskComposite: "source-in",
+                            }}
+                        />
+                        <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
                             <div className="order-1 md:order-1 flex justify-center md:justify-start shrink-0">
                                 <img src={closingSvg} alt="" className="w-full max-w-[200px] sm:max-w-[240px] md:w-[200px] md:max-w-none lg:w-[260px] h-auto" />
                             </div>
@@ -216,13 +309,9 @@ const WhatThisCall = () => {
                     >
                         {/* Card 1: What This Call Is For */}
                         <motion.div variants={itemVariants}>
-                            <Card className="h-full border border-neutral-300 border-dashed bg-white overflow-hidden"
-                                style={{
-                                    background:
-                                        "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white"
-                                }}
-                            >
-                                <CardHeader className="p-6 md:p-8">
+                            <Card className="relative h-full border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl">
+                                <div className="absolute inset-0 z-0 pointer-events-none" style={dashedCenterFadeGridStyle} />
+                                <CardHeader className="relative z-10 p-6 md:p-8">
                                     <div ref={card1TitleRef} className="mb-4">
                                         <AnimatedHeading
                                             inView={card1TitleInView}
@@ -245,12 +334,12 @@ const WhatThisCall = () => {
                                         xOffset={50}
                                         containerClassName="space-y-3 sm:space-y-4"
                                         contentClassName="flex-1 text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed"
-                                        itemClassName="flex items-center gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-neutral-300 border-dashed last:border-b-0 last:pb-0"
+                                        itemClassName="flex items-center gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-neutral-200 last:border-b-0 last:pb-0"
                                         iconClassName="shrink-0 flex items-center justify-center pt-0.5"
                                         boldText={false}
                                     />
                                 </CardHeader>
-                                <CardContent className="p-6 md:p-8 pt-0 -mt-2 sm:-mt-3">
+                                <CardContent className="relative z-10 p-6 md:p-8 pt-0 -mt-2 sm:-mt-3">
                                     <p className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-text-primary leading-relaxed">
                                         Our goal is to ensure mutual fit, not just enrollment.
                                     </p>
@@ -260,13 +349,9 @@ const WhatThisCall = () => {
 
                         {/* Card 2: Who Should Request a Call Back */}
                         <motion.div variants={itemVariants}>
-                            <Card className="h-full border border-neutral-300 border-dashed bg-white overflow-hidden"
-                                style={{
-                                    background:
-                                        "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white"
-                                }}
-                            >
-                                <CardHeader className="p-6 md:p-8">
+                            <Card className="relative h-full border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl">
+                                <div className="absolute inset-0 z-0 pointer-events-none" style={dashedCenterFadeGridStyle} />
+                                <CardHeader className="relative z-10 p-6 md:p-8">
                                     <div ref={card2TitleRef} className="mb-8 md:mb-10">
                                         <AnimatedHeading
                                             inView={card2TitleInView}
@@ -284,12 +369,12 @@ const WhatThisCall = () => {
                                         xOffset={50}
                                         containerClassName="space-y-3 sm:space-y-4"
                                         contentClassName="flex-1 text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed"
-                                        itemClassName="flex items-center gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-neutral-300 border-dashed last:border-b-0 last:pb-0"
+                                        itemClassName="flex items-center gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-neutral-200 last:border-b-0 last:pb-0"
                                         iconClassName="shrink-0 flex items-center justify-center pt-0.5 [&_svg]:text-background"
                                         boldText={false}
                                     />
                                 </CardHeader>
-                                <CardContent className="p-6 md:p-8 pt-0 -mt-2 sm:-mt-3">
+                                <CardContent className="relative z-10 p-6 md:p-8 pt-0 -mt-2 sm:-mt-3">
                                     <p className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-text-primary leading-relaxed">
                                         If you are serious about building real cybersecurity capability, this call is for you.
                                     </p>
