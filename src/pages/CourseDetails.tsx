@@ -28,8 +28,34 @@ const CourseDetails = () => {
   const [isEnrollmentModalOpen, setIsEnrollmentModalOpen] = useState(false);
   const heroSectionRef = useRef<HTMLDivElement>(null);
   const callToActionRef = useRef<HTMLDivElement>(null);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
+
+  // Observe footer visibility using IntersectionObserver
+  useEffect(() => {
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsFooterVisible(entry.isIntersecting);
+        });
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of footer is visible
+        rootMargin: "0px 0px -100px 0px", // Start hiding slightly before footer enters viewport
+      }
+    );
+
+    observer.observe(footer);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   // Show back button and Enroll / Request Callback bar after one scroll — uses Lenis like ScrollToTop
+  // Hide floating button when footer is in view
   useEffect(() => {
     if (!lenis) {
       setShowBackButton(false);
@@ -38,17 +64,25 @@ const CourseDetails = () => {
     }
     const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 800;
     const scrollThreshold = viewportHeight; // appear after one viewport scroll
+
     const handleScroll = ({ scroll }: { scroll: number }) => {
       const show = scroll > scrollThreshold;
       setShowBackButton(show);
-      setShowFloatingButton(show);
+
+      // Hide floating button when footer is visible
+      if (isFooterVisible) {
+        setShowFloatingButton(false);
+      } else {
+        setShowFloatingButton(show);
+      }
     };
+
     handleScroll({ scroll: lenis.scroll || 0 });
     lenis.on("scroll", handleScroll);
     return () => {
       lenis.off("scroll", handleScroll);
     };
-  }, [lenis]);
+  }, [lenis, isFooterVisible]);
 
   return (
     <>
@@ -128,7 +162,7 @@ const CourseDetails = () => {
           type="button"
           aria-label="Go back"
           onClick={() => navigate(-1)}
-          className={`fixed bottom-20 left-4 sm:bottom-24 sm:left-6 md:bottom-8 md:left-8 z-900 inline-flex p-0.5 md:p-1 items-center justify-center rounded-md bg-white border border-neutral-300 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 text-text-primary shadow-lg transition-all duration-300 ease-out hover:opacity-90 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary/50 motion-reduce:transition-none ${showBackButton
+          className={`fixed bottom-20 left-4 sm:bottom-24 sm:left-6 md:bottom-8 md:left-8 inline-flex p-0.5 md:p-1 items-center justify-center rounded-md bg-white border border-neutral-300 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 text-text-primary shadow-lg transition-all duration-300 ease-out hover:opacity-90 cursor-pointer z-999 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary/50 motion-reduce:transition-none ${showBackButton
             ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
             : "opacity-0 translate-y-8 sm:translate-y-10 scale-95 pointer-events-none"
             }`}

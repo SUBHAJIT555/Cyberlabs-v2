@@ -11,6 +11,7 @@ import { useCourses } from "@/hooks/useCourses";
 import { Course } from "@/interface/program";
 import { CONTACT } from "@/constants/contactInfo";
 import { MAIL_API_URL } from "@/lib/api";
+import { LetterSwapPingPong } from "@/components/ui/LetterSwap";
 
 interface FormData {
     fullName: string;
@@ -83,7 +84,7 @@ const ContactHeader = () => {
     };
 
     return (
-        <section className="w-full bg-background py-8 sm:py-12 md:py-16 lg:py-20" ref={containerRef}>
+        <section className="w-full py-8 sm:py-12 md:py-16 lg:py-20" ref={containerRef}>
             <div className="mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
                 {/* Two-column layout: Company Info (left) | Form (right) */}
                 <div className="flex flex-col lg:flex-row lg:gap-8 xl:gap-10 lg:items-start">
@@ -95,7 +96,7 @@ const ContactHeader = () => {
                         className="w-full lg:w-[400px] xl:w-[600px] shrink-0 mb-8 lg:mb-0 xl:sticky xl:top-24 xl:self-start"
                     >
                         <Card
-                            className="border border-neutral-300 border-dashed bg-white overflow-hidden h-full"
+                            className="border border-neutral-200 bg-white overflow-hidden h-full ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl"
                             style={{
                                 background:
                                     "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
@@ -140,9 +141,13 @@ const ContactHeader = () => {
                                     </h4>
                                     <a
                                         href={`mailto:${CONTACT.educationEmail}`}
-                                        className="text-base sm:text-lg font-inter-display text-primary hover:underline leading-relaxed break-all transition-colors"
+                                        className="text-base sm:text-lg font-inter-display text-primary hover:underline leading-relaxed break-all transition-colors inline-block"
                                     >
-                                        {CONTACT.educationEmail}
+                                        <LetterSwapPingPong
+                                            label={CONTACT.educationEmail}
+                                            reverse={true}
+                                            className="inline-block"
+                                        />
                                     </a>
                                 </div>
 
@@ -151,15 +156,19 @@ const ContactHeader = () => {
                                     <h4 className="text-sm sm:text-base font-montserrat font-semibold text-text-primary mb-3 uppercase tracking-wide">
                                         Social Media:
                                     </h4>
-                                    <div className="flex flex-col gap-3">
+                                    <div className="flex flex-col gap-6">
                                         <a
                                             href="https://www.linkedin.com"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="flex items-center gap-3 text-base sm:text-lg font-inter-display text-text-primary hover:text-primary transition-colors group"
                                         >
-                                            <FaLinkedinIn className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                                            <span>LinkedIn</span>
+                                            <FaLinkedinIn className="w-7 h-7 bg-neutral-100 p-1 border border-neutral-200 rounded-lg  transition-transform ring ring-neutral-300 ring-offset-2 md:ring-offset-4" />
+                                            <LetterSwapPingPong
+                                                label="LinkedIn"
+                                                reverse={true}
+                                                className="inline-block"
+                                            />
                                         </a>
                                         <a
                                             href="https://www.facebook.com"
@@ -167,8 +176,12 @@ const ContactHeader = () => {
                                             rel="noopener noreferrer"
                                             className="flex items-center gap-3 text-base sm:text-lg font-inter-display text-text-primary hover:text-primary transition-colors group"
                                         >
-                                            <FaFacebookF className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                                            <span>Facebook</span>
+                                            <FaFacebookF className="w-7 h-7 bg-neutral-100 p-1 border border-neutral-200 rounded-lg  transition-transform ring ring-neutral-300 ring-offset-2 md:ring-offset-4" />
+                                            <LetterSwapPingPong
+                                                label="Facebook"
+                                                reverse={true}
+                                                className="inline-block"
+                                            />
                                         </a>
                                         <a
                                             href="https://www.instagram.com"
@@ -176,8 +189,12 @@ const ContactHeader = () => {
                                             rel="noopener noreferrer"
                                             className="flex items-center gap-3 text-base sm:text-lg font-inter-display text-text-primary hover:text-primary transition-colors group"
                                         >
-                                            <FaInstagram className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                                            <span>Instagram</span>
+                                            <FaInstagram className="w-7 h-7 bg-neutral-100 p-1 border border-neutral-200 rounded-lg  transition-transform ring ring-neutral-300 ring-offset-2 md:ring-offset-4" />
+                                            <LetterSwapPingPong
+                                                label="Instagram"
+                                                reverse={true}
+                                                className="inline-block"
+                                            />
                                         </a>
                                     </div>
                                 </div>
@@ -193,7 +210,7 @@ const ContactHeader = () => {
                         className="flex-1 min-w-0"
                     >
                         <Card
-                            className="border border-neutral-300 border-dashed bg-white overflow-hidden"
+                            className="border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl"
                             style={{
                                 background:
                                     "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
@@ -212,14 +229,14 @@ const ContactHeader = () => {
                                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 sm:space-y-6">
                                     {/* Success Message */}
                                     {submitStatus === "success" && (
-                                        <div className="bg-green-50 border border-green-200 border-dashed rounded-lg p-4 text-green-700 text-sm font-inter-display">
+                                        <div className="bg-green-50 border border-green-200  rounded-lg p-4 text-green-700 text-sm font-inter-display">
                                             Thank you! We've received your message and will contact you soon.
                                         </div>
                                     )}
 
                                     {/* Error Message */}
                                     {submitStatus === "error" && (
-                                        <div className="bg-red-50 border border-red-200 border-dashed rounded-lg p-4 text-red-600 text-sm font-inter-display">
+                                        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-600 text-sm font-inter-display">
                                             Something went wrong. Please try again later.
                                         </div>
                                     )}
@@ -236,7 +253,7 @@ const ContactHeader = () => {
                                                 {...register("fullName", {
                                                     required: "Full name is required",
                                                 })}
-                                                className={`w-full px-4 py-3 bg-white border border-dashed rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display ${errors.fullName
+                                                className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display ${errors.fullName
                                                     ? "border-red-300 focus:border-red-500"
                                                     : "border-neutral-300 focus:border-primary"
                                                     }`}
@@ -263,7 +280,7 @@ const ContactHeader = () => {
                                                         message: "Invalid email address",
                                                     },
                                                 })}
-                                                className={`w-full px-4 py-3 bg-white border border-dashed rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display ${errors.email
+                                                className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display ${errors.email
                                                     ? "border-red-300 focus:border-red-500"
                                                     : "border-neutral-300 focus:border-primary"
                                                     }`}
@@ -291,7 +308,7 @@ const ContactHeader = () => {
                                                     message: "Please enter a valid mobile number with country code",
                                                 },
                                             })}
-                                            className={`w-full px-4 py-3 bg-white border border-dashed rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display ${errors.mobileNumber
+                                            className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display ${errors.mobileNumber
                                                 ? "border-red-300 focus:border-red-500"
                                                 : "border-neutral-300 focus:border-primary"
                                                 }`}
@@ -315,7 +332,7 @@ const ContactHeader = () => {
                                                 {...register("currentBackground", {
                                                     required: "Please select your current background",
                                                 })}
-                                                className={`w-full px-4 py-3 bg-white border border-dashed rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display appearance-none cursor-pointer ${errors.currentBackground
+                                                className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display appearance-none cursor-pointer ${errors.currentBackground
                                                     ? "border-red-300 focus:border-red-500"
                                                     : "border-neutral-300 focus:border-primary"
                                                     }`}
@@ -342,7 +359,7 @@ const ContactHeader = () => {
                                                 {...register("yearsOfExperience", {
                                                     required: "Please select years of experience",
                                                 })}
-                                                className={`w-full px-4 py-3 bg-white border border-dashed rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display appearance-none cursor-pointer ${errors.yearsOfExperience
+                                                className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display appearance-none cursor-pointer ${errors.yearsOfExperience
                                                     ? "border-red-300 focus:border-red-500"
                                                     : "border-neutral-300 focus:border-primary"
                                                     }`}
@@ -370,7 +387,7 @@ const ContactHeader = () => {
                                             {...register("programOfInterest", {
                                                 required: "Please select a program of interest",
                                             })}
-                                            className={`w-full px-4 py-3 bg-white border border-dashed rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display appearance-none cursor-pointer ${errors.programOfInterest
+                                            className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display appearance-none cursor-pointer ${errors.programOfInterest
                                                 ? "border-red-300 focus:border-red-500"
                                                 : "border-neutral-300 focus:border-primary"
                                                 }`}
@@ -399,7 +416,7 @@ const ContactHeader = () => {
                                             {...register("preferredTime", {
                                                 required: "Please specify your preferred time for call",
                                             })}
-                                            className={`w-full px-4 py-3 bg-white border border-dashed rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display ${errors.preferredTime
+                                            className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display ${errors.preferredTime
                                                 ? "border-red-300 focus:border-red-500"
                                                 : "border-neutral-300 focus:border-primary"
                                                 }`}
@@ -421,7 +438,7 @@ const ContactHeader = () => {
                                         <textarea
                                             {...register("questionsOrGoals")}
                                             rows={4}
-                                            className="w-full px-4 py-3 bg-white border border-dashed border-neutral-300 rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display resize-none"
+                                            className="w-full px-4 py-3 bg-white border  border-neutral-300 rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display resize-none"
                                             placeholder="Share any specific questions or goals you'd like to discuss..."
                                         />
                                     </div>

@@ -132,7 +132,7 @@ const CourseHero = () => {
             <div className="flex flex-wrap gap-3">
               <button
                 onClick={() => setIsEnrollmentModalOpen(true)}
-                className="bg-text-primary hover:bg-primary text-background px-6 py-2.5 md:px-8 md:py-3 rounded-md font-montserrat font-semibold text-base md:text-lg transition-colors cursor-pointer"
+                className="bg-text-primary hover:bg-primary text-background px-6 py-2.5 md:px-8 md:py-3 rounded-xl font-montserrat font-semibold text-base md:text-lg transition-colors cursor-pointer ring ring-neutral-400 ring-offset-2 md:ring-offset-3"
               >
                 Enroll Now
               </button>
@@ -146,7 +146,7 @@ const CourseHero = () => {
                     });
                   }
                 }}
-                className="border border-neutral-300 border-dashed hover:border-neutral-400 hover:bg-neutral-50 text-text-primary px-6 py-2.5 md:px-8 md:py-3 rounded-md font-montserrat font-medium text-base md:text-lg transition-colors cursor-pointer hover:text-shadow-lg"
+                className="border border-neutral-300  hover:border-neutral-400 hover:bg-neutral-50 text-text-primary px-6 py-2.5 md:px-8 md:py-3 rounded-xl font-montserrat font-medium text-base md:text-lg transition-colors cursor-pointer hover:text-shadow-lg ring ring-neutral-300 ring-offset-2 md:ring-offset-3"
                 style={{
                   background:
                     "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",

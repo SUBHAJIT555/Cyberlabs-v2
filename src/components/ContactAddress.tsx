@@ -28,7 +28,7 @@ const ContactAddress = () => {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUp}
-          className="w-full border border-neutral-300 border-dashed rounded-md p-2 md:p-4"
+          className="w-full border border-neutral-200 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl  p-2 md:p-4"
           style={{
             background:
               "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
@@ -48,7 +48,7 @@ const ContactAddress = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="w-full flex flex-col border-b md:border-b-0 md:border-r border-neutral-300 border-dashed md:pr-4 pb-4"
+              className="w-full flex flex-col border-b md:border-b-0 md:border-r border-neutral-200 md:pr-4 pb-4"
             >
               <div className="mb-3 h-[110px] flex flex-col justify-start">
                 <h4 className="text-lg font-inter-display font-semibold text-text-primary mb-2">
@@ -82,7 +82,7 @@ const ContactAddress = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="w-full flex flex-col md:border-r border-b md:border-b-0 border-neutral-300 border-dashed md:pr-4 pb-4"
+              className="w-full flex flex-col md:border-r border-b md:border-b-0 border-neutral-300 md:pr-4 pb-4"
             >
               <div className="mb-3 h-[110px] flex flex-col justify-start">
                 <h4 className="text-lg font-inter-display font-semibold text-text-primary mb-2">

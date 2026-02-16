@@ -278,7 +278,7 @@ const Faq = () => {
           staggerChildren: 0.1,
           delayChildren: 0.2,
         }}
-        className="flex flex-col divide-y divide-neutral-300 divide-dashed"
+        className="flex flex-col divide-y divide-neutral-300"
       >
         {faqItems.map((item, index) => (
           <motion.div
@@ -294,7 +294,8 @@ const Faq = () => {
               whileHover={{ x: 5 }}
               transition={{ duration: 0.2 }}
             >
-              <h3 className="font-inter-display text-text-primary text-xl sm:text-xl md:text-xl lg:text-2xl xl:text-3xl font-medium pr-4">
+              <h3 className="font-inter-display text-text-primary text-xl sm:text-xl md:text-xl lg:text-2xl xl:text-3xl font-bold pr-4">
+                <span className="text-primary mr-2 sm:mr-3 ">{index + 1}.</span>
                 {item.question}
               </h3>
               <div className="text-neutral-500 flex items-center gap-1 sm:gap-2 font-inter-display font-medium">

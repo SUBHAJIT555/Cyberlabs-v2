@@ -2,8 +2,9 @@ import { Link } from "react-router";
 
 import { useForm, type FieldValues } from "react-hook-form";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
+import CTAButton from "./ui/CTAButton";
 
 import footerlogo from "../assets/img/logo/Cyberlabs-logo-03.svg";
 // import { PiTrademarkRegisteredFill } from "react-icons/pi";
@@ -22,6 +23,7 @@ import {
 
 const Footer = () => {
   const [message, setMessage] = useState<string>("");
+  const formRef = useRef<HTMLFormElement>(null);
 
   const {
     register,
@@ -74,25 +76,25 @@ const Footer = () => {
     <>
       <footer className="w-full bg-neutral-100 relative overflow-hidden"
         style={{
-          background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
+          background: "repeating-linear-gradient(90deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
         }}
       >
         {/* Two Dashed Border Lines */}
-        <div className="w-full border-t border-neutral-300 border-dashed"></div>
-        <div className="w-full border-t border-neutral-300 border-dashed mt-2 "></div>
+        <div className="w-full border-t border-neutral-200"></div>
+        <div className="w-full border-t border-neutral-200 mt-2 "></div>
 
         <div className="w-full mx-auto px-5 py-2 lg:py-5 sm:px-6 lg:px-8 xl:px-12 relative z-10">
           <div className="relative">
             {/* Vertical Dividers - Desktop Only - Extend from top to bottom border only */}
-            <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[25%] border-l border-neutral-300 border-dashed"></div>
-            <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[41.666%] border-l border-neutral-300 border-dashed"></div>
-            <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[58.333%] border-l border-neutral-300 border-dashed"></div>
-            <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[75%] border-l border-neutral-300 border-dashed"></div>
+              <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[25%] border-l border-neutral-200"></div>
+            <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[41.666%] border-l border-neutral-200"></div>
+            <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[58.333%] border-l border-neutral-200"></div>
+            <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[75%] border-l border-neutral-200"></div>
 
             <div className="grid grid-cols-2 lg:grid-cols-12 lg:gap-y-8 relative">
 
               {/* About / Logo */}
-              <div className="col-span-2 lg:col-span-3 border-b lg:border-b-0 border-neutral-300 border-dashed pb-8 lg:pb-0 pr-5 lg:pr-8">
+              <div className="col-span-2 lg:col-span-3 border-b lg:border-b-0 border-neutral-200 pb-8 lg:pb-0 pr-5 lg:pr-8">
                 <div className="text-text-primary md:text-5xl text-3xl font-montserrat flex items-center gap-2 tracking-tighter">
                   <Link to="/">
                     <img
@@ -172,7 +174,7 @@ const Footer = () => {
 
               {/* Useful Links */}
 
-              <div className="col-span-2 sm:col-span-1 lg:col-span-2 border-b lg:border-b-0 border-neutral-300 border-dashed pb-8 lg:pb-0 pr-5 lg:pr-8 pl-2">
+              <div className="col-span-2 sm:col-span-1 lg:col-span-2 border-b lg:border-b-0 border-neutral-300  pb-8 lg:pb-0 pr-5 lg:pr-8 pl-2">
                 <h3 className="text-primary text-xl md:text-2xl font-montserrat tracking-tighter font-bold mb-5 ">
                   Useful Links
                 </h3>
@@ -335,7 +337,7 @@ const Footer = () => {
 
               {/* Legals */}
 
-              <div className="col-span-2 sm:col-span-1 lg:col-span-2 border-b lg:border-b-0 border-neutral-300 border-dashed pb-8 lg:pb-0 pr-5 lg:pr-8 pl-2">
+              <div className="col-span-2 sm:col-span-1 lg:col-span-2 border-b lg:border-b-0 border-neutral-300  pb-8 lg:pb-0 pr-5 lg:pr-8 pl-2">
                 <h3 className="text-primary text-xl md:text-2xl font-montserrat tracking-tighter font-bold mb-5 ">
                   Legals
                 </h3>
@@ -415,7 +417,7 @@ const Footer = () => {
 
               {/* Socials */}
 
-              <div className="col-span-2 sm:col-span-1 lg:col-span-2 border-b lg:border-b-0 border-neutral-300 border-dashed pb-8 lg:pb-0 pr-5 lg:pr-8 pl-2">
+              <div className="col-span-2 sm:col-span-1 lg:col-span-2 border-b lg:border-b-0 border-neutral-300  pb-8 lg:pb-0 pr-5 lg:pr-8 pl-2">
                 <h3 className="text-primary text-xl md:text-2xl font-montserrat tracking-tighter font-bold mb-5 ">
                   Socials
                 </h3>
@@ -493,7 +495,7 @@ const Footer = () => {
 
               {/* Newsletter */}
 
-              <div className="col-span-2 sm:col-span-1 lg:col-span-3 border-b lg:border-b-0 border-neutral-300 border-dashed pb-8 lg:pb-1 pl-2 lg:pl-2">
+              <div className="col-span-2 sm:col-span-1 lg:col-span-3 border-b lg:border-b-0 border-neutral-300  pb-8 lg:pb-1 pl-2 lg:pl-2">
                 <h3 className="text-primary text-xl md:text-2xl font-montserrat tracking-tighter font-bold mb-5 ">
                   Newsletter
                 </h3>
@@ -503,7 +505,7 @@ const Footer = () => {
                   exclusive offers.
                 </p>
 
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
                   <input type="hidden" name="formType" value="newsletter" />
 
                   <label
@@ -519,106 +521,20 @@ const Footer = () => {
                     required
                     {...register("email")}
                     placeholder="username@example.com"
-                    className="w-full px-4 py-3 bg-transparent backdrop-blur-sm border-0 border-b border-b-dashed border-b-neutral-300 text-text-primary placeholder:text-text-primary/50 text-sm md:text-lg focus:outline-none focus:border-b-neutral-400 hover:border-b-neutral-400 transition-all duration-300 ease-in-out font-inter-display!"
+                    className="w-full px-4 py-3 bg-transparent backdrop-blur-sm border border-neutral-200 rounded-xl ring ring-neutral-300 ring-offset-2 md:ring-offset-3 text-text-primary placeholder:text-text-primary/50 text-sm md:text-lg focus:outline-none focus:border-b-neutral-400 hover:border-b-neutral-400 transition-all duration-300 ease-in-out font-inter-display!"
                   />
 
                   <div className="flex justify-end mt-5">
-                    <motion.button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="relative h-[40px] w-fit px-8 bg-white border border-neutral-300 border-dashed text-text-primary text-sm md:text-lg font-montserrat font-medium cursor-pointer tracking-wide rounded transition-colors duration-200 disabled:opacity-70 overflow-hidden"
-                      initial="initial"
-                      whileHover="hover"
-                      style={{
-                        background:
-                          "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
+                    <CTAButton
+                      label={isSubmitting ? "Submitting..." : "Subscribe Us"}
+                      onClick={() => {
+                        if (formRef.current && !isSubmitting) {
+                          formRef.current.requestSubmit();
+                        }
                       }}
-                    >
-                      <div className="relative flex items-center justify-center h-full w-full">
-                        {/* Hidden text to maintain button width */}
-                        <span className="invisible whitespace-nowrap">
-                          {isSubmitting ? "Submitting..." : "Subscribe Us"}
-                        </span>
-
-                        {/* Text - moves up on hover */}
-                        <motion.span
-                          variants={{
-                            initial: { y: 0, opacity: 1 },
-                            hover: { y: -35, opacity: 0 },
-                          }}
-                          transition={{ duration: 0.3, ease: "easeOut" }}
-                          className="absolute whitespace-nowrap"
-                        >
-                          {isSubmitting ? "Submitting..." : "Subscribe Us"}
-                        </motion.span>
-
-                        {/* Mail Share Icon - slides up from bottom on hover */}
-                        <motion.div
-                          className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center"
-                          variants={{
-                            initial: { y: 35, opacity: 0 },
-                            hover: { y: 0, opacity: 1 },
-                          }}
-                          transition={{ duration: 0.3, ease: "easeOut" }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            className="icon icon-tabler icons-tabler-outline icon-tabler-mail-share"
-                          >
-                            <motion.path
-                              stroke="none"
-                              d="M0 0h24v24H0z"
-                              fill="none"
-                              variants={{
-                                initial: { pathLength: 0 },
-                                hover: { pathLength: 1 },
-                              }}
-                              transition={{ duration: 0.5, ease: "easeInOut", delay: 0.2 }}
-                            />
-                            <motion.path
-                              d="M13 19h-8a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v6"
-                              variants={{
-                                initial: { pathLength: 0 },
-                                hover: { pathLength: 1 },
-                              }}
-                              transition={{ duration: 0.5, ease: "easeInOut", delay: 0.3 }}
-                            />
-                            <motion.path
-                              d="M3 7l9 6l9 -6"
-                              variants={{
-                                initial: { pathLength: 0 },
-                                hover: { pathLength: 1 },
-                              }}
-                              transition={{ duration: 0.5, ease: "easeInOut", delay: 0.4 }}
-                            />
-                            <motion.path
-                              d="M16 22l5 -5"
-                              variants={{
-                                initial: { pathLength: 0 },
-                                hover: { pathLength: 1 },
-                              }}
-                              transition={{ duration: 0.5, ease: "easeInOut", delay: 0.5 }}
-                            />
-                            <motion.path
-                              d="M21 21.5v-4.5h-4.5"
-                              variants={{
-                                initial: { pathLength: 0 },
-                                hover: { pathLength: 1 },
-                              }}
-                              transition={{ duration: 0.5, ease: "easeInOut", delay: 0.6 }}
-                            />
-                          </svg>
-                        </motion.div>
-                      </div>
-                    </motion.button>
+                      variant="light"
+                      className={isSubmitting ? "opacity-70 cursor-not-allowed" : " font-inter-display"}
+                    />
                   </div>
                 </form>
 
@@ -635,7 +551,7 @@ const Footer = () => {
             </div>
 
             {/* Bottom Border */}
-            <div className="w-full border-t border-neutral-300 border-dashed"></div>
+            <div className="w-full border-t border-neutral-300 "></div>
           </div>
 
           {/* Bottom Bar */}
