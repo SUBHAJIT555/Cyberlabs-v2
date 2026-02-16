@@ -62,7 +62,7 @@ export function AnimatedList({
           className={itemClassName}
         >
           <span className={iconClassName}>{item.icon}</span>
-          <p className={contentClassName}>
+          <p className={`${contentClassName} min-w-0 flex-1 wrap-break-words`}>
             {boldText ? <span className="font-bold">{item.text}</span> : item.text}
             {item.rest != null && item.rest !== "" && <>{" "}{item.rest}</>}
           </p>

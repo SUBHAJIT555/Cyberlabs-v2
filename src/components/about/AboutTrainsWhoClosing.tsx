@@ -536,7 +536,7 @@ const AboutTrainsWhoClosing = () => {
             <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
 
               {/* Content — right side */}
-              <div className="order-1 md:order-1 space-y-5 sm:space-y-6 text-center md:text-left">
+              <div className="order-1 md:order-1 space-y-5 sm:space-y-6 text-left">
                 <motion.p
                   className="text-xl sm:text-2xl md:text-3xl lg:text-4xl capitalize font-inter-display font-semibold text-text-primary leading-snug"
                   initial={{ opacity: 0, y: 16 }}
@@ -546,7 +546,7 @@ const AboutTrainsWhoClosing = () => {
                 >
                   <span className="block sm:inline">CYBERLABS represents a different standard in cybersecurity education.</span>
                 </motion.p>
-                <div className="w-16 sm:w-20 h-0.5 bg-primary/30 mx-auto md:mx-0" aria-hidden />
+                <div className="w-16 sm:w-20 h-0.5 bg-primary/30" aria-hidden />
                 <div className="space-y-4 sm:space-y-5">
                   <p className="text-base sm:text-lg md:text-xl font-inter-display font-medium text-text-primary leading-tight">
                     A standard defined by:
