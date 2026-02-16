@@ -4,7 +4,6 @@ import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
 import { useInViewOnce } from "../../hooks/useInViewOnce.tsx";
-import { DottedGlowBackground } from "@/components/ui/dotted-glow-background";
 import { parseBoldText } from "@/lib/utils";
 
 // Animated SVG: icon-tabler-search (Investigation Before Instruction)
@@ -207,69 +206,56 @@ const AboutHero = () => {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen w-full overflow-x-hidden overflow-y-auto"
+      className="relative min-h-screen w-full overflow-x-hidden overflow-y-auto bg-white"
     >
-      {/* Fallback Background */}
-      <div className="absolute inset-0 bg-linear-to-br from-background via-neutral-200 to-background" />
-
-      {/* DottedGlowBackground */}
-      <DottedGlowBackground
-        gap={12}
-        radius={2}
-        opacity={0.5}
-        speedScale={1}
-        blur={2}
-        color="rgba(43, 13, 62, 0.4)"
-        glowColor="rgba(122, 63, 145, 0.7)"
-        colorLightVar="--green-light"
-        glowColorLightVar="--primary"
-        colorDarkVar="--evening-dark"
-        glowColorDarkVar="--text-primary"
+      {/* Dashed grid background (fade at top) - same as CallToAction / HomeOverview */}
+      <div
+        className="absolute inset-0 z-0 bg-white pointer-events-none"
+        style={{
+          backgroundImage: `
+            linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+            linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+          `,
+          backgroundSize: "1px 1px",
+          backgroundPosition: "0 0, 0 0",
+          maskImage: `
+            repeating-linear-gradient(
+              to right,
+              black 0px,
+              black 3px,
+              transparent 3px,
+              transparent 8px
+            ),
+            repeating-linear-gradient(
+              to bottom,
+              black 0px,
+              black 3px,
+              transparent 3px,
+              transparent 8px
+            ),
+            radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+          `,
+          WebkitMaskImage: `
+            repeating-linear-gradient(
+              to right,
+              black 0px,
+              black 3px,
+              transparent 3px,
+              transparent 8px
+            ),
+            repeating-linear-gradient(
+              to bottom,
+              black 0px,
+              black 3px,
+              transparent 3px,
+              transparent 8px
+            ),
+            radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+          `,
+          maskComposite: "intersect",
+          WebkitMaskComposite: "source-in",
+        }}
       />
-
-      {/* Vintage Masking Overlay - Top, Bottom, and Sides */}
-      <div className="absolute inset-0 z-5 pointer-events-none">
-        {/* Top Mask */}
-        <div
-          className="absolute top-0 left-0 w-full h-1/3"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 0.8) 30%, rgba(245, 245, 245, 0) 100%)",
-          }}
-        />
-        {/* Bottom Mask */}
-        <div
-          className="absolute bottom-0 left-0 w-full h-1/3"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 0.8) 30%, rgba(245, 245, 245, 0) 100%)",
-          }}
-        />
-        {/* Left Side Mask */}
-        <div
-          className="absolute top-0 left-0 h-full w-1/3"
-          style={{
-            background:
-              "linear-gradient(to right, rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 0.8) 30%, rgba(245, 245, 245, 0) 100%)",
-          }}
-        />
-        {/* Right Side Mask */}
-        <div
-          className="absolute top-0 right-0 h-full w-1/3"
-          style={{
-            background:
-              "linear-gradient(to left, rgba(245, 245, 245, 1) 0%, rgba(245, 245, 245, 0.8) 30%, rgba(245, 245, 245, 0) 100%)",
-          }}
-        />
-        {/* Radial Vignette for Vintage Look */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, transparent 0%, transparent 40%, rgba(245, 245, 245, 0.3) 70%, rgba(245, 245, 245, 0.8) 100%)",
-          }}
-        />
-      </div>
 
       {/* Content */}
       <div
@@ -293,21 +279,21 @@ const AboutHero = () => {
           </div>
 
           {/* Tagline - Small Caps, Spaced Out */}
-          <div className="text-center mb-4 sm:mb-6 md:mb-8 overflow-x-hidden">
+          <div className="text-center py-4 sm:py-6 md:py-8 overflow-x-hidden">
             <p className="text-xs xs:text-sm sm:text-base md:text-base font-montserrat tracking-widest sm:tracking-[0.15em] uppercase font-bold text-text-primary/70 flex flex-wrap justify-center gap-2 sm:gap-4">
-              <span className="inline-block px-2 py-1 rounded-md border border-neutral-300 border-dashed"
+              <span className="inline-block px-2 py-0.5 md:py-1 rounded-lg border border-neutral-200 ring ring-neutral-300 ring-offset-2 md:ring-offset-4"
                 style={{
                   background:
                     "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
                 }}>ISRAEL-FOUNDED</span>
               <span className="inline-block text-primary/50">·</span>
-              <span className="inline-block px-2 py-1 rounded-md border border-neutral-300 border-dashed"
+              <span className="inline-block px-2 py-0.5 md:py-1 rounded-lg border border-neutral-200 ring ring-neutral-300 ring-offset-2 md:ring-offset-4"
                 style={{
                   background:
                     "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
                 }}>PRACTITIONER-LED</span>
               <span className="inline-block text-primary/50">·</span>
-              <span className="inline-block px-2 py-1 rounded-md border border-neutral-300 border-dashed"
+              <span className="inline-block px-2 py-0.5 md:py-1 rounded-lg border border-neutral-200 ring ring-neutral-300 ring-offset-2 md:ring-offset-4"
                 style={{
                   background:
                     "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",

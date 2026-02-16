@@ -66,22 +66,44 @@ const AboutTrainsWhoClosing = () => {
     { text: "Long-term professional credibility", icon: bulletIcon },
   ];
 
+  const dashedGridStyle = {
+    backgroundImage: `
+      linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+      linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+    `,
+    backgroundSize: "10px 10px",
+    backgroundPosition: "0 0, 0 0",
+    maskImage: `
+      repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+      repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+      radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+    `,
+    WebkitMaskImage: `
+      repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+      repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+      radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+    `,
+    maskComposite: "intersect" as const,
+    WebkitMaskComposite: "source-in" as const,
+  };
+
   const SectionBlock = ({
     children,
-    className = "",
   }: {
     children: ReactNode;
-    className?: string;
   }) => (
-    <div
-      className={`w-full py-12 sm:py-16 md:py-20 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 border-b border-neutral-200/80 ${className}`}
-    >
-      <div className="w-full">{children}</div>
+    <div className="w-full mb-8 md:mb-10">
+      <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
+        <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+        <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
+          {children}
+        </div>
+      </div>
     </div>
   );
 
   return (
-    <section className="w-full bg-background py-12 md:py-20" ref={containerRef}>
+    <section className="w-full px-5 md:px-10 lg:px-16 py-8 sm:py-12 lg:py-16" ref={containerRef}>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -89,11 +111,11 @@ const AboutTrainsWhoClosing = () => {
         className="w-full"
       >
         {/* 1. How CYBERLABS Trains — content left, image right */}
-        <SectionBlock className="bg-white">
+        <SectionBlock>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
             <div className="space-y-6 order-2 md:order-1">
               <motion.h2
-                className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6 uppercase"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6 uppercase"
                 initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: false, amount: 0.2 }}
@@ -115,7 +137,7 @@ const AboutTrainsWhoClosing = () => {
                 contentClassName="text-base sm:text-lg font-inter-display text-text-primary leading-tight"
                 itemClassName="flex items-start gap-3"
                 iconClassName="text-primary shrink-0 flex items-center pt-0.5"
-                boldText={false}
+                boldText={true}
               />
               <p className="text-base sm:text-lg md:text-xl font-inter-display text-text-primary leading-relaxed font-medium">
                 {parseBoldText(
@@ -130,14 +152,14 @@ const AboutTrainsWhoClosing = () => {
         </SectionBlock>
 
         {/* 2. Who Leads & Teaches — zigzag: image left, content right */}
-        <SectionBlock className="bg-neutral-50/80">
+        <SectionBlock>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
             <div className="order-1 md:order-1 flex justify-center md:justify-start">
               <img src={whoSvg} alt="" className="w-full max-w-md h-auto" />
             </div>
             <div className="space-y-6 order-2 md:order-2">
               <motion.h2
-                className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6 uppercase"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6 uppercase"
                 initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: false, amount: 0.2 }}
@@ -154,7 +176,7 @@ const AboutTrainsWhoClosing = () => {
                 contentClassName="text-base sm:text-lg font-inter-display text-text-primary leading-tight"
                 itemClassName="flex items-start gap-3"
                 iconClassName="text-primary shrink-0 flex items-center pt-0.5"
-                boldText={false}
+                boldText={true}
               />
               <p className="text-base sm:text-lg md:text-xl font-inter-display text-text-primary leading-relaxed font-medium">
                 CYBERLABS does not rely on classroom-only trainers.
@@ -167,11 +189,11 @@ const AboutTrainsWhoClosing = () => {
         </SectionBlock>
 
         {/* 3. What CYBERLABS Does Not Do — content left, image right */}
-        <SectionBlock className="bg-white">
+        <SectionBlock>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
             <div className="space-y-6 order-2 md:order-1">
               <motion.h2
-                className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6 uppercase"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6 uppercase"
                 initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: false, amount: 0.2 }}
@@ -201,7 +223,7 @@ const AboutTrainsWhoClosing = () => {
         </SectionBlock>
 
         {/* 4. Who CYBERLABS Is Built For — zigzag: image left, content right */}
-        <SectionBlock className="bg-neutral-50/80">
+        <SectionBlock>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
             <div className="order-1 md:order-1 flex justify-center md:justify-start">
               <img
@@ -212,7 +234,7 @@ const AboutTrainsWhoClosing = () => {
             </div>
             <div className="space-y-6 order-2 md:order-2">
               <motion.h2
-                className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-6"
                 initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: false, amount: 0.2 }}
@@ -231,7 +253,7 @@ const AboutTrainsWhoClosing = () => {
                 contentClassName="text-base sm:text-lg font-inter-display text-text-primary leading-tight"
                 itemClassName="flex items-start gap-3"
                 iconClassName="text-primary shrink-0 flex items-center pt-0.5"
-                boldText={false}
+                boldText={true}
               />
               <p className="text-base sm:text-lg md:text-xl font-inter-display text-text-primary leading-relaxed font-semibold pt-4 border-t border-neutral-300 border-dashed">
                 {parseBoldText(
@@ -242,20 +264,43 @@ const AboutTrainsWhoClosing = () => {
           </div>
         </SectionBlock>
 
-        {/* 5. Closing Perspective — same design as WhatTruelySet: card with image left, big quote + divider + content */}
-        <SectionBlock className="bg-background border-b-0">
+        {/* 5. Closing Perspective — background same as CallToAction (dashed grid, fade at top) */}
+        <div className="w-full">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-            className="rounded-xl border border-neutral-200 bg-white overflow-hidden shadow-sm"
+            className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8"
           >
-            <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
+            <div
+              className="absolute inset-0 z-0 pointer-events-none"
+              style={{
+                backgroundImage: `
+                  linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                  linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+                `,
+                backgroundSize: "1px 1px",
+                backgroundPosition: "0 0, 0 0",
+                maskImage: `
+                  repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+                  repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+                  radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                `,
+                WebkitMaskImage: `
+                  repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+                  repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+                  radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                `,
+                maskComposite: "intersect" as const,
+                WebkitMaskComposite: "source-in" as const,
+              }}
+            />
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
 
               {/* Content — right side */}
               <div className="order-1 md:order-1 space-y-5 sm:space-y-6 text-center md:text-left">
                 <motion.p
-                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-inter-display font-semibold text-text-primary leading-snug"
+                  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl capitalize font-inter-display font-semibold text-text-primary leading-snug"
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: false, amount: 0.2 }}
@@ -274,7 +319,7 @@ const AboutTrainsWhoClosing = () => {
                     contentClassName="text-base sm:text-lg font-inter-display text-text-primary leading-tight"
                     itemClassName="flex items-start gap-3"
                     iconClassName="text-primary shrink-0 flex items-center pt-0.5"
-                    boldText={false}
+                    boldText={true}
                   />
                   <p className="text-base sm:text-lg md:text-xl font-inter-display font-medium text-text-primary leading-relaxed">
                     <span className="font-bold text-primary">CYBERLABS</span> was built by people who have <span className="font-semibold text-text-primary">carried responsibility</span>, not just credentials — and it trains professionals to do the same.
@@ -291,7 +336,7 @@ const AboutTrainsWhoClosing = () => {
               </div>
             </div>
           </motion.div>
-        </SectionBlock>
+        </div>
       </motion.div>
     </section>
   );

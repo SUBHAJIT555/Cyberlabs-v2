@@ -59,21 +59,45 @@ const AboutGlobalFramework = () => {
   };
 
   return (
-    <section className="w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-4 sm:py-5 md:py-6 bg-background">
-      <div className="w-full">
-        <div ref={titleRef} className="mb-3 md:mb-4 flex flex-wrap items-baseline">
-          <AnimatedHeading
-            inView={titleInView}
-            lines={[
-              {
-                text: "One Global Framework, Delivered Locally",
-                className: `${mainTitleBaseClass} text-text-primary`,
-              },
-            ]}
-          />
-        </div>
+    <section className="w-full px-5 md:px-10 lg:px-16 py-8 sm:py-12 lg:py-16">
+      <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
+        <div
+          className="absolute inset-0 z-0 pointer-events-none"
+          style={{
+              backgroundImage: `
+                linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+                linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+              `,
+              backgroundSize: "10px 10px",
+              backgroundPosition: "0 0, 0 0",
+              maskImage: `
+                repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+                repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+                radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+              `,
+              WebkitMaskImage: `
+                repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+                repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+                radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+              `,
+              maskComposite: "intersect" as const,
+              WebkitMaskComposite: "source-in" as const,
+            }}
+        />
+        <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
+          <div ref={titleRef} className="mb-6 md:mb-8 flex flex-wrap items-baseline">
+            <AnimatedHeading
+              inView={titleInView}
+              lines={[
+                {
+                  text: "One Global Framework, Delivered Locally",
+                  className: `${mainTitleBaseClass} text-text-primary`,
+                },
+              ]}
+            />
+          </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 lg:gap-16 items-start mb-12 md:mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 lg:gap-16 items-start">
           <motion.div
             ref={imageRef}
             variants={imageVariants}
@@ -125,7 +149,7 @@ const AboutGlobalFramework = () => {
                 contentClassName="text-base sm:text-lg font-inter-display text-text-primary leading-tight"
                 itemClassName="flex items-start gap-3"
                 iconClassName="text-primary shrink-0 flex items-center pt-0.5"
-                boldText={false}
+                boldText={true}
               />
             </div>
 
@@ -139,6 +163,7 @@ const AboutGlobalFramework = () => {
               dilution — while being adapted for local learners through Cyveritas
               Technologies LLP.
             </motion.p>
+          </div>
           </div>
         </div>
       </div>
