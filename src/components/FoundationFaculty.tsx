@@ -221,7 +221,7 @@ const FoundationFaculty = () => {
     ];
 
     return (
-        <section className="w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 mt-8 md:mt-12 bg-background">
+        <section className="w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 mt-8 md:mt-12">
             <div className="w-full">
                 {/* Separate Heading - Full Width */}
                 <div ref={headingRef} className="mb-8 sm:mb-10 md:mb-12 lg:mb-16">

@@ -101,10 +101,31 @@ const WhatTruelySet = () => {
         { text: "Architects of real cyber systems and national training frameworks", icon: <AnimatedCheckIcon isInView={isInView} /> },
     ];
 
+    const dashedGridCardStyle = {
+        backgroundImage: `
+            linear-gradient(to right, #e7e5e4 1px, transparent 1px),
+            linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
+        `,
+        backgroundSize: "10px 10px",
+        backgroundPosition: "0 0, 0 0",
+        maskImage: `
+            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+        `,
+        WebkitMaskImage: `
+            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+        `,
+        maskComposite: "intersect" as const,
+        WebkitMaskComposite: "source-in" as const,
+    };
+
     return (
         <section
             ref={containerRef}
-            className="w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-8 sm:py-10 md:py-12 lg:py-16 bg-background"
+            className="w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20 py-8 sm:py-10 md:py-12 lg:py-16"
         >
             <div className="w-full">
                 {/* Main Heading */}
@@ -127,12 +148,10 @@ const WhatTruelySet = () => {
                     {/* Most institutes section */}
                     <motion.div
                         variants={itemVariants}
-                        className="border border-neutral-300 border-dashed rounded-md p-6 sm:p-8 md:p-10"
-                        style={{
-                            background:
-                                "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                        }}
+                        className="relative border border-neutral-200 ring ring-neutral-300 ring-offset-3 md:ring-offset-6 bg-white rounded-xl overflow-hidden"
                     >
+                        <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridCardStyle} />
+                        <div className="relative z-10 p-6 sm:p-8 md:p-10">
                         <div className="mb-4 sm:mb-5">
                             <motion.h3
                                 className="text-lg sm:text-xl md:text-2xl font-inter-display text-text-primary font-semibold leading-tight tracking-tight"
@@ -157,17 +176,16 @@ const WhatTruelySet = () => {
                             iconClassName="text-text-primary shrink-0 flex items-center"
                             boldText={false}
                         />
+                        </div>
                     </motion.div>
 
                     {/* CYBERLABS section */}
                     <motion.div
                         variants={itemVariants}
-                        className="border border-neutral-300 border-dashed rounded-md p-6 sm:p-8 md:p-10"
-                        style={{
-                            background:
-                                "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                        }}
+                        className="relative border border-neutral-200 ring ring-neutral-300 ring-offset-3 md:ring-offset-6 bg-white rounded-xl overflow-hidden"
                     >
+                        <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridCardStyle} />
+                        <div className="relative z-10 p-6 sm:p-8 md:p-10">
                         <div className="mb-4 sm:mb-5">
                             <motion.h3
                                 className="text-lg sm:text-xl md:text-2xl font-inter-display text-text-primary font-semibold leading-tight tracking-tight"
@@ -192,17 +210,41 @@ const WhatTruelySet = () => {
                             iconClassName="text-text-primary shrink-0 flex items-center"
                             boldText={false}
                         />
+                        </div>
                     </motion.div>
                 </motion.div>
 
-                {/* Statement + Closing — image left, content right */}
+                {/* Statement + Closing — image left, content right (background same as CallToAction) */}
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
                     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
                     transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-                    className="rounded-xl border border-neutral-200 bg-white overflow-hidden shadow-sm"
+                    className="relative rounded-xl border border-neutral-200 ring ring-neutral-300 ring-offset-4 md:ring-offset-8 bg-white overflow-hidden shadow-sm"
                 >
-                    <div className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
+                    <div
+                        className="absolute inset-0 z-0 pointer-events-none"
+                        style={{
+                            backgroundImage: `
+                                linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                                linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+                            `,
+                            backgroundSize: "1px 1px",
+                            backgroundPosition: "0 0, 0 0",
+                            maskImage: `
+                                repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+                                repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+                                radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                            `,
+                            WebkitMaskImage: `
+                                repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+                                repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+                                radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+                            `,
+                            maskComposite: "intersect",
+                            WebkitMaskComposite: "source-in",
+                        }}
+                    />
+                    <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
                         {/* Image — left side (top on mobile) */}
                         <div className="order-1 md:order-1 flex justify-center md:justify-start shrink-0">
                             <img src={closingSvg} alt="" className="w-full max-w-[200px] sm:max-w-[240px] md:w-[200px] md:max-w-none lg:w-[260px] h-auto" />

@@ -71,7 +71,7 @@ const TeamMemberCard = ({
                 boxShadow: "0 20px 40px -12px rgba(0,0,0,0.15)",
             }}
             transition={{ type: "spring", stiffness: 350, damping: 22 }}
-            className="relative flex flex-col h-full border border-neutral-300 border-dashed bg-white overflow-hidden cursor-pointer will-change-transform"
+            className="relative flex flex-col h-full border border-neutral-200 rounded-xl bg-white overflow-hidden cursor-pointer will-change-transform ring ring-neutral-300 ring-offset-2 md:ring-offset-4"
             style={{
                 background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
                 transformStyle: "preserve-3d",
@@ -246,7 +246,7 @@ const CoreFaculty = () => {
     };
 
     return (
-        <section className="w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20  bg-background" ref={containerRef}>
+        <section className="w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-20  " ref={containerRef}>
             <div className="w-full">
                 {/* Header */}
                 <div ref={headingRef} className="mb-8 md:mb-12">
@@ -298,7 +298,7 @@ const CoreFaculty = () => {
                         top: 0,
                     }}
                 >
-                    <div className="relative inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 border border-neutral-300 border-dashed rounded-md"
+                    <div className="relative inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 border border-neutral-300  rounded-md"
                         style={{
                             background:
                                 "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
@@ -425,7 +425,7 @@ const CoreFaculty = () => {
                                     }}
                                 >
                                     <motion.div
-                                        className="relative bg-white w-full max-w-6xl h-[90vh] flex flex-col border border-neutral-300 border-dashed overflow-hidden"
+                                        className="relative bg-white w-full max-w-6xl h-[90vh] flex flex-col border border-neutral-200 rounded-xl overflow-hidden ring ring-neutral-300 ring-offset-4 md:ring-offset-8"
                                         initial={{ scale: 0.95, y: 20 }}
                                         animate={{ scale: 1, y: 0 }}
                                         exit={{ scale: 0.95, y: 20 }}
@@ -444,7 +444,7 @@ const CoreFaculty = () => {
                                             }}
                                         >
                                             {/* Clean Header */}
-                                            <div className="border-b border-neutral-300 border-dashed shrink-0 relative bg-white">
+                                            <div className="border-b border-neutral-300 shrink-0 relative bg-white">
                                                 <div className="flex items-center justify-between px-6 sm:px-8 md:px-12 py-4 sm:py-5">
                                                     <div className="flex-1">
                                                         <h2 className="text-lg sm:text-xl text-gray-500 font-montserrat font-semibold uppercase tracking-wider">
@@ -471,11 +471,11 @@ const CoreFaculty = () => {
                                                         {/* Left Column - Image */}
                                                         <div className="md:col-span-4">
                                                             <div className="sticky top-8">
-                                                                <div className="border border-neutral-300 p-3 bg-white border-dashed rounded-md">
+                                                                <div className="border border-neutral-200 ring ring-neutral-300 ring-offset-3 md:ring-offset-6 bg-white  rounded-xl shadow-lg">
                                                                     <img
                                                                         src={selectedMember.src}
                                                                         alt={selectedMember.alt}
-                                                                        className="w-full h-auto object-cover rounded"
+                                                                        className="w-full h-auto object-cover rounded-xl"
                                                                     />
                                                                 </div>
                                                                 <p className="text-sm sm:text-base text-gray-700 font-montserrat font-semibold mt-4 text-left border-l-3 border-primary pl-2 bg-white w-fit">

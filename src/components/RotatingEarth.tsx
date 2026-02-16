@@ -278,7 +278,7 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
 
   if (error) {
     return (
-      <div className={`flex items-center justify-center bg-card rounded-2xl p-8 ${className}`}>
+      <div className={`flex items-center justify-center rounded-2xl p-8 ${className}`}>
         <div className="text-center">
           <p className="text-destructive font-semibold mb-2">Error loading Earth visualization</p>
           <p className="text-muted-foreground text-sm">{error}</p>
@@ -291,7 +291,7 @@ export default function RotatingEarth({ width = 600, height = 600, className = "
     <div className={`relative w-full ${className}`} style={{ aspectRatio: "1 / 1" }}>
       <canvas
         ref={canvasRef}
-        className="w-full h-full rounded-2xl bg-background"
+        className="w-full h-full rounded-2xl "
         style={{ maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }}
       />
 
