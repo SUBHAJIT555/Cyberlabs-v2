@@ -9,7 +9,7 @@ const InputGroup = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "relative flex w-full items-center rounded-xl border border-neutral-200 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 bg-white px-3 py-1.5 text-sm transition-colors focus-within:border-primary focus-within:ring-1 focus-within:ring-primary",
+        "relative flex w-full items-center rounded-xl border border-neutral-200 ring ring-neutral-300 ring-offset-2  bg-white px-3 py-1.5 text-sm transition-colors focus-within:border-primary focus-within:ring-1 focus-within:ring-primary",
         className
       )}
       {...props}

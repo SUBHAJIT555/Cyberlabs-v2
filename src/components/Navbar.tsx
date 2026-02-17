@@ -287,7 +287,7 @@ const Navbar: React.FC = () => {
                                 className="flex items-center gap-2"
                             >
                                 <motion.button
-                                    className="hidden lg:flex items-center gap-2 md:px-3 px-2 md:py-1.5 p-1 text-sm font-inter-display font-medium text-neutral-500 hover:text-primary transition-colors border border-neutral-200 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 rounded-xl cursor-pointer"
+                                    className="hidden lg:flex items-center gap-2 md:px-3 px-2 md:py-1.5 p-1 text-sm font-inter-display font-medium text-neutral-500 hover:text-primary transition-colors border border-neutral-200 ring ring-neutral-300 ring-offset-2 rounded-xl cursor-pointer"
                                     style={{
                                         background:
                                             "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
@@ -344,7 +344,7 @@ const Navbar: React.FC = () => {
                             <DrawerRoot open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
                                 <DrawerTrigger asChild>
                                     <motion.button
-                                        className="md:p-1 p-0.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors lg:border lg:border-neutral-200 md:ring md:ring-neutral-300 md:ring-offset-4 relative cursor-pointer"
+                                        className="md:p-1 p-0.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors lg:border lg:border-neutral-200 md:ring md:ring-neutral-300 ring-offset-2 relative cursor-pointer"
                                         style={{
                                             background: "transparent",
                                         }}
@@ -501,7 +501,7 @@ const Navbar: React.FC = () => {
                         onTouchStart={(e) => e.stopPropagation()}
                     >
                         <div
-                            className="bg-white border border-neutral-200 ring ring-neutral-400 ring-offset-4 md:ring-offset-8 rounded-xl shadow-xl overflow-hidden flex flex-col"
+                            className="bg-white border border-neutral-200 ring ring-neutral-300 ring-offset-4 md:ring-offset-8 rounded-xl shadow-xl overflow-hidden flex flex-col"
                             style={{
                                 background:
                                     "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
@@ -512,7 +512,7 @@ const Navbar: React.FC = () => {
                             onKeyDown={handleCommandKeyDown}
                         >
                             {/* Header — CYBERLABS India + close (no search bar) */}
-                            <div className="px-3 sm:px-4 pt-3 pb-2 border-b border-neutral-300  bg-white/90 shrink-0">
+                            <div className="px-3 sm:px-4 pt-3 pb-2 border-b border-neutral-300 bg-white/90 shrink-0">
                                 <div className="flex items-center justify-between px-2 py-1.5">
                                     <span className="text-base font-inter-display font-semibold text-text-primary">
                                         CYBERLABS INDIA

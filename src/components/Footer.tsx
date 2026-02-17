@@ -122,7 +122,7 @@ const Footer = () => {
                     <span className="font-semibold">{" "}{CONTACT.registeredEntity.replace(" LLP", "")}.</span>
                   </span>
                   <br />
-                  <span className="font-bold">Training Real Cyber Defenders for a Real World</span>
+                  <span className="font-bold">Training Real Cyber Defenders for a Real World.</span>
                 </p>
 
                 {/* <div className="flex items-center gap-10 mt-6  ">

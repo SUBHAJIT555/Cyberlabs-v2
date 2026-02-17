@@ -18,10 +18,10 @@ const FacultyHero = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.5"
+            strokeWidth="1"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-12 h-12 sm:w-15 sm:h-15 text-primary shrink-0"
+            className="w-10 h-10 sm:w-12 sm:h-12 text-primary shrink-0 p-1"
         >
             <motion.path
                 stroke="none"
@@ -61,10 +61,10 @@ const FacultyHero = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.5"
+            strokeWidth="1"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-12 h-12 sm:w-15 sm:h-15 text-primary shrink-0"
+            className="w-10 h-10 sm:w-12 sm:h-12 text-primary shrink-0 p-1"
         >
             <motion.path
                 stroke="none"
@@ -122,10 +122,10 @@ const FacultyHero = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="1.5"
+            strokeWidth="1"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-12 h-12 sm:w-15 sm:h-15 text-primary shrink-0"
+            className="w-10 h-10 sm:w-12 sm:h-12 text-primary shrink-0 p-1"
         >
             <motion.path
                 stroke="none"
@@ -228,7 +228,7 @@ const FacultyHero = () => {
               transparent 3px,
               transparent 8px
             ),
-            radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+            radial-gradient(ellipse 80% 100% at 50% 0%, #000 35%, transparent 75%)
           `,
                     WebkitMaskImage: `
             repeating-linear-gradient(
@@ -245,7 +245,7 @@ const FacultyHero = () => {
               transparent 3px,
               transparent 8px
             ),
-            radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
+            radial-gradient(ellipse 80% 100% at 50% 0%, #000 35%, transparent 75%)
           `,
                     maskComposite: "intersect",
                     WebkitMaskComposite: "source-in",
@@ -314,17 +314,19 @@ const FacultyHero = () => {
                                     // }}
                                     >
                                         <div className="flex items-center justify-center mb-2 sm:mb-3 md:mb-4">
-                                            <IconComponent isInView={featuresInView} />
+                                            <div className="border border-neutral-200 rounded-xl ring ring-neutral-300 ring-offset-2 md:ring-offset-4 bg-neutral-100">
+                                                <IconComponent isInView={featuresInView} />
+                                            </div>
                                         </div>
 
-                                        <h4 className="text-center text-sm xs:text-base sm:text-lg md:text-xl font-inter-display text-primary font-semibold leading-tight tracking-tight mb-2 sm:mb-3 md:mb-4  gap-2 sm:gap-3">
+                                        <h4 className="text-center text-sm xs:text-base sm:text-lg md:text-xl font-inter-display text-primary font-medium leading-tight tracking-tight mb-2 sm:mb-3 md:mb-4  gap-2 sm:gap-3">
                                             {/* <span className="bg-background shadow-md rounded-md p-1.5 sm:p-2 rotate-12 group-hover:rotate-0 transition-all duration-300">
                                                 
                                             </span> */}
                                             <span>{parseBoldText(item.title)}</span>
                                         </h4>
                                         <p
-                                            className="text-xs xs:text-sm sm:text-base  font-montserrat font-medium text-text-primary leading-relaxed text-center"
+                                            className="text-xs xs:text-sm sm:text-base  font-montserrat font-medium text-text-primary  text-center"
                                             style={{ textShadow: "0 2px 22px #fff, 0 1px 4px #fff, 0 0px 0px #fff" }}
                                         >
                                             {item.body}
