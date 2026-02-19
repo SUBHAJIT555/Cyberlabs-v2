@@ -34,7 +34,7 @@ export const courses: Course[] = [
   // Cybercrime, Dark Web & Financial Intelligence Operations - 1
   {
     id: 1,
-    slug: "cybercrime-dark-web-financial-intelligence-operations",
+    slug: "master-the-modern-underworld-cybercrime-dark-web-and-crypto-investigations",
     title:
       "Master the Modern Underworld: Cybercrime, Dark Web & Crypto Investigations",
     subheading: "Master The Modern Underworld",
@@ -176,7 +176,6 @@ export const courses: Course[] = [
           "Full-scope cybercrime investigation with professional intelligence output.",
       },
     ],
-    
 
     // why this program different data
     whatsNew: {
@@ -449,7 +448,7 @@ export const courses: Course[] = [
   // Platform, Identity & Abuse Defense Engineering - 2
   {
     id: 2,
-    slug: "advanced-platform-identity-abuse-defense-engineering",
+    slug: "defend-digital-platforms-at-scale-platform-identity-and-abuse-defense-engineering",
     title:
       "Defend Digital Platforms at Scale: Platform, Identity & Abuse Defense Engineering",
     subheading: "Defend Digital Platforms at Scale",
@@ -969,7 +968,7 @@ export const courses: Course[] = [
   // Full-Stack Cyber Defense & Offensive Security - 3
   {
     id: 3,
-    slug: "full-stack-cyber-defense-offensive-security",
+    slug: "build-complete-cyber-capability-full-stack-cyber-defense-and-offensive-security",
     title:
       "Build Complete Cyber Capability: Full-Stack Cyber Defense & Offensive Security",
     subheading: "Build Complete Cyber Capability",
