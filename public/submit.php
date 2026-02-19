@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $formTypeRaw = v('formType');
 $formType = strtolower($formTypeRaw);
-if (!in_array($formType, ['contact', 'request-callback', 'newsletter', 'callback-modal'], true)) {
+if (!in_array($formType, ['contact', 'request-callback', 'newsletter', 'callback-modal', 'enrollment-modal'], true)) {
     if (ob_get_level() > 0) {
         ob_end_clean();
     }
@@ -159,10 +159,42 @@ if ($formType === 'newsletter') {
     if (strlen($phoneDigits) < 10) {
         sendJsonError('Please enter a valid phone number.', 422);
     }
+} elseif ($formType === 'enrollment-modal') {
+    if (
+        $msg = required([
+            'fullName' => 'Full name',
+            'email' => 'Email address',
+            'phoneNumber' => 'Phone number',
+            'age' => 'Age',
+            'gender' => 'Gender',
+            'occupation' => 'Occupation',
+            'preferredCallTime' => 'Preferred call time',
+            'address' => 'Address',
+            'collegeSchool' => 'College/School',
+            'graduationYear' => 'Graduation year',
+        ])
+    ) {
+        sendJsonError($msg, 422);
+    }
+    // Phone validation
+    $phoneDigits = preg_replace('/[^0-9]/', '', v('phoneNumber'));
+    if (strlen($phoneDigits) < 10) {
+        sendJsonError('Please enter a valid phone number.', 422);
+    }
+    // Age validation
+    $age = (int)v('age');
+    if ($age < 13 || $age > 100) {
+        sendJsonError('Age must be between 13 and 100.', 422);
+    }
+    // Email validation
+    $email = v('email');
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        sendJsonError('Invalid email address.', 422);
+    }
 }
 
 // --- Email validation (only when form has email) ---
-if (in_array($formType, ['newsletter', 'contact', 'request-callback'], true)) {
+if (in_array($formType, ['newsletter', 'contact', 'request-callback', 'enrollment-modal'], true)) {
     $email = v('email');
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         sendJsonError('Invalid email address.', 422);
@@ -170,8 +202,8 @@ if (in_array($formType, ['newsletter', 'contact', 'request-callback'], true)) {
 }
 
 // --- Capture values (unified name/phone/email per form type) ---
-$name = in_array($formType, ['contact', 'request-callback'], true) ? v('fullName') : v('name');
-$phone = in_array($formType, ['contact', 'request-callback'], true) ? v('mobileNumber') : v('phone');
+$name = in_array($formType, ['contact', 'request-callback', 'enrollment-modal'], true) ? v('fullName') : v('name');
+$phone = in_array($formType, ['contact', 'request-callback'], true) ? v('mobileNumber') : (in_array($formType, ['enrollment-modal'], true) ? v('phoneNumber') : v('phone'));
 $email = v('email');
 $serverip = $_SERVER['HTTP_X_FORWARDED_FOR']
     ?? $_SERVER['HTTP_CLIENT_IP']
@@ -220,6 +252,9 @@ switch ($formType) {
         break;
     case 'callback-modal':
         $subject = "New Callback Request – " . clean($name) . " – CYBERLABS India";
+        break;
+    case 'enrollment-modal':
+        $subject = "New Enrollment Request – " . clean($name) . " – CYBERLABS India";
         break;
     default:
         $subject = "Form Submission – CYBERLABS India";
@@ -276,6 +311,33 @@ if ($formType === 'contact' || $formType === 'request-callback') {
           <tr><td style="padding:12px;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#333;">
             <p><strong>Email:</strong> ' . clean($email) . '</p>
           </td></tr>
+        </table>
+      </td>
+    </tr>';
+} elseif ($formType === 'enrollment-modal') {
+    $details = '';
+    $details .= '<p><strong>Full Name:</strong> ' . clean($name) . '</p>';
+    $details .= '<p><strong>Email:</strong> ' . clean($email) . '</p>';
+    $details .= '<p><strong>Phone Number:</strong> ' . clean($phone) . '</p>';
+    if (v('secondaryPhoneNumber') !== '') {
+        $details .= '<p><strong>Secondary Phone Number:</strong> ' . clean(v('secondaryPhoneNumber')) . '</p>';
+    }
+    $details .= '<p><strong>Age:</strong> ' . clean(v('age')) . '</p>';
+    $details .= '<p><strong>Gender:</strong> ' . clean(v('gender')) . '</p>';
+    $details .= '<p><strong>Occupation:</strong> ' . clean(v('occupation')) . '</p>';
+    $details .= '<p><strong>Preferred Call Time:</strong> ' . clean(v('preferredCallTime')) . '</p>';
+    $details .= '<p><strong>Address:</strong><br>' . nl2br(clean(v('address'))) . '</p>';
+    $details .= '<p><strong>College/School:</strong> ' . clean(v('collegeSchool')) . '</p>';
+    $details .= '<p><strong>Graduation Year:</strong> ' . clean(v('graduationYear')) . '</p>';
+    if (v('courseSlug') !== '') {
+        $details .= '<p><strong>Course:</strong> ' . clean(v('courseSlug')) . '</p>';
+    }
+    $mainContent = '
+    <tr>
+      <td style="padding:0 24px 24px;">
+        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid ' . $border . ';border-radius:4px;">
+          <tr><td style="background:#f3f4f6;padding:8px 10px;font-family:Arial,Helvetica,sans-serif;font-weight:600;color:#0a2540;">Enrollment Request</td></tr>
+          <tr><td style="padding:12px;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#333;">' . $details . '</td></tr>
         </table>
       </td>
     </tr>';
@@ -432,6 +494,23 @@ if ($formType === 'contact' || $formType === 'request-callback') {
     $alt .= "Enquiry For: " . v('enquiryFor') . "\n";
 } elseif ($formType === 'newsletter') {
     $alt .= "Email: " . $email . "\n";
+} elseif ($formType === 'enrollment-modal') {
+    $alt .= "Name: " . $name . "\n";
+    $alt .= "Email: " . $email . "\n";
+    $alt .= "Phone: " . $phone . "\n";
+    if (v('secondaryPhoneNumber') !== '') {
+        $alt .= "Secondary Phone: " . v('secondaryPhoneNumber') . "\n";
+    }
+    $alt .= "Age: " . v('age') . "\n";
+    $alt .= "Gender: " . v('gender') . "\n";
+    $alt .= "Occupation: " . v('occupation') . "\n";
+    $alt .= "Preferred Call Time: " . v('preferredCallTime') . "\n";
+    $alt .= "Address: " . strip_tags(v('address')) . "\n";
+    $alt .= "College/School: " . v('collegeSchool') . "\n";
+    $alt .= "Graduation Year: " . v('graduationYear') . "\n";
+    if (v('courseSlug') !== '') {
+        $alt .= "Course: " . v('courseSlug') . "\n";
+    }
 }
 
 // --- Send Email ---
@@ -461,7 +540,7 @@ try {
     $mail->send();
 
     // --- Auto-reply to customer (only when form has email) ---
-    if ($email !== '') {
+    if ($email !== '' && in_array($formType, ['newsletter', 'contact', 'request-callback', 'enrollment-modal'], true)) {
         try {
             $mail->clearAllRecipients();
             $mail->clearAttachments();

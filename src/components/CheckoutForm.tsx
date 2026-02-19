@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useSearchParams } from "react-router";
 import type { Hero } from "@/interface/program";
+import { MAIL_API_URL } from "@/lib/api";
 
 // Zod validation schema
 const checkoutFormSchema = z.object({
@@ -117,8 +118,8 @@ const YearPicker = ({
           type="button"
           onClick={() => setIsOpen(!isOpen)}
           className={`w-full px-4 py-3 bg-white border rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-montserrat text-left flex items-center justify-between ${error
-              ? "border-red-300 focus:border-red-500"
-              : "border-gray-300 focus:border-primary"
+            ? "border-red-300 focus:border-red-500"
+            : "border-gray-300 focus:border-primary"
             } ${!value ? "text-gray-400" : ""}`}
         >
           <span>{value ? value : "Select Year"}</span>
@@ -156,8 +157,8 @@ const YearPicker = ({
                     type="button"
                     onClick={() => handleYearSelect(year)}
                     className={`w-full px-4 py-2.5 text-left hover:bg-primary/10 transition-colors font-montserrat ${value === year
-                        ? "bg-primary/20 text-primary font-semibold"
-                        : "text-text-primary"
+                      ? "bg-primary/20 text-primary font-semibold"
+                      : "text-text-primary"
                       }`}
                   >
                     {year}
@@ -204,8 +205,7 @@ const CheckoutForm = ({
   // Use prop slug if provided (for modal), otherwise fall back to search params (for payment portal page)
   const courseSlug = propSlug || searchParams.get("slug") || "";
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
 
   const {
     register,
@@ -232,52 +232,45 @@ const CheckoutForm = ({
 
   const onSubmit = async (data: z.infer<typeof checkoutFormSchema>) => {
     setIsSubmitting(true);
-    setSubmitError(null);
-    setSubmitSuccess(false);
+    setSubmitStatus(null);
 
     try {
-      // Prepare submission data with course information
-      const submissionData = {
-        // User data
-        ...data,
-        // Course data
-        courseSlug,
-      };
-
-      // TODO: Replace with your actual backend API endpoint
-      const response = await fetch("/api/checkout/submit", {
+      const response = await fetch(MAIL_API_URL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(submissionData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formType: "enrollment-modal",
+          fullName: data.fullName,
+          email: data.email,
+          phoneNumber: data.phoneNumber,
+          secondaryPhoneNumber: data.secondaryPhoneNumber || "",
+          age: data.age.toString(),
+          gender: data.gender,
+          occupation: data.occupation,
+          preferredCallTime: data.preferredCallTime,
+          address: data.address,
+          collegeSchool: data.collegeSchool,
+          graduationYear: data.graduationYear.toString(),
+          courseSlug: courseSlug || "",
+        }),
       });
 
+      const result = await response.json();
       if (!response.ok) {
-        throw new Error("Failed to submit form. Please try again.");
+        throw new Error(result?.error ?? "Submission failed");
       }
 
-      await response.json();
-
-      setSubmitSuccess(true);
-
-      // Show success message and inform user about email
-      alert(
-        "Form submitted successfully! A provisional invoice has been sent to your email. " +
-        "You will receive the official payment link and final invoice after confirmation."
-      );
+      setSubmitStatus("success");
 
       // Call onSuccess callback if provided (e.g., to close modal)
       if (onSuccess) {
-        onSuccess();
+        setTimeout(() => {
+          onSuccess();
+        }, 2000);
       }
     } catch (error) {
       console.error("Form submission error:", error);
-      setSubmitError(
-        error instanceof Error
-          ? error.message
-          : "An error occurred. Please try again."
-      );
+      setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -285,38 +278,6 @@ const CheckoutForm = ({
 
   // Get current year for graduation year validation
   const currentYear = new Date().getFullYear();
-
-  if (submitSuccess) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="p-6 sm:p-8 md:p-10 text-center"
-      >
-        <div className="bg-green-50 border border-green-200 rounded-lg p-8">
-          <div className="mb-4">
-            <svg className="w-16 h-16 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-montserrat font-semibold text-text-primary mb-4">
-            Form Submitted Successfully!
-          </h2>
-          <p className="text-text-primary font-montserrat mb-6">
-            A provisional invoice has been sent to your email address.
-            <br />
-            You will receive the official payment link and final invoice after confirmation.
-          </p>
-          <button
-            onClick={onBack}
-            className="bg-primary hover:bg-primary/90 text-white py-3 px-6 rounded-lg font-medium text-base font-montserrat transition-colors"
-          >
-            Back to Overview
-          </button>
-        </div>
-      </motion.div>
-    );
-  }
 
   return (
     <motion.div
@@ -373,10 +334,17 @@ const CheckoutForm = ({
 
         {/* Form Fields */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+          {/* Success Message */}
+          {submitStatus === "success" && (
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-green-700 text-sm font-montserrat">
+              Thank you! We've received your enrollment request and will contact you soon.
+            </div>
+          )}
+
           {/* Error Message */}
-          {submitError && (
+          {submitStatus === "error" && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-600 text-sm font-montserrat">
-              {submitError}
+              Something went wrong. Please try again later.
             </div>
           )}
 

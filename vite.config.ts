@@ -12,7 +12,7 @@ export default defineConfig({
   },
   server: {
     proxy:{
-      '/mail.php': {
+      '/submit.php': {
         target: 'http://localhost/cyberlabs',
         changeOrigin: true,
       },
