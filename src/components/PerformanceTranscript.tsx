@@ -57,7 +57,7 @@ const PerformanceTranscript = () => {
   return (
     <section
       ref={containerRef}
-      className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-16 md:py-24 bg-background"
+      className="w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-16 md:py-24"
     >
       <div ref={headingRef} className="w-full mb-8 md:mb-12">
         <AnimatedHeading

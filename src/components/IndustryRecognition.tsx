@@ -39,7 +39,7 @@ const IndustryRecognition = () => {
     const headingInView = useInView(headingRef, { once: false, margin: "-80px" });
 
     return (
-        <section className="w-full bg-background py-4 sm:py-6 md:py-8 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 mb-12 sm:mb-16 md:mb-20" ref={containerRef}>
+        <section className="w-full py-4 sm:py-6 md:py-8 px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20 mb-12 sm:mb-16 md:mb-20" ref={containerRef}>
             <div className="w-full">
                 <div className="space-y-8 md:space-y-10">
                     {/* Heading */}
