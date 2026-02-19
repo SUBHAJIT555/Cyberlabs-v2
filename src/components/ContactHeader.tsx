@@ -158,7 +158,7 @@ const ContactHeader = () => {
                                     </h4>
                                     <div className="flex flex-col gap-6">
                                         <a
-                                            href="https://www.linkedin.com"
+                                            href="https://www.linkedin.com/company/cyberlabs-india/posts/?feedView=all"
                                             target="_blank"
                                             rel="noopener noreferrer"
                                             className="flex items-center gap-3 text-base sm:text-lg font-inter-display text-text-primary hover:text-primary transition-colors group"
