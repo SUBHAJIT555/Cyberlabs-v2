@@ -444,7 +444,7 @@ const Navbar: React.FC = () => {
                                                 <FaFacebookF className="w-5 h-5" />
                                             </motion.a>
                                             <motion.a
-                                                href="#"
+                                                href="https://www.instagram.com/cyberlabsindia"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="text-gray-600 hover:text-primary transition-colors"

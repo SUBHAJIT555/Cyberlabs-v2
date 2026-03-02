@@ -86,7 +86,7 @@ const Footer = () => {
         <div className="w-full mx-auto px-5 py-2 lg:py-5 sm:px-6 lg:px-8 xl:px-12 relative z-10">
           <div className="relative">
             {/* Vertical Dividers - Desktop Only - Extend from top to bottom border only */}
-              <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[25%] border-l border-neutral-200"></div>
+            <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[25%] border-l border-neutral-200"></div>
             <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[41.666%] border-l border-neutral-200"></div>
             <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[58.333%] border-l border-neutral-200"></div>
             <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[75%] border-l border-neutral-200"></div>
@@ -425,7 +425,7 @@ const Footer = () => {
                 <ul className="text-text-primary text-sm md:text-xl font-inter-display mt-2">
                   <li>
                     <a
-                      href="#"
+                      href="https://www.instagram.com/cyberlabsindia"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
