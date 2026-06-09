@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
 import { MagicText } from "./ui/magic-text";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 // Replace with your image when ready — e.g. import overviewImage from "@/assets/img/Home/your-image.webp";
 import overviewImage from "@/assets/img/Home/homepageopening.svg";
 
@@ -58,10 +59,11 @@ const HomeOverview = () => {
         initial={{ opacity: 0, y: 24 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
         transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-        className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8"
+        className="relative rounded-lg border border-neutral-200 bg-white overflow-hidden shadow-md"
+        style={crosshatchBgStyle}
       >
         {/* Dashed grid background (fade at top) */}
-        <div
+        {/* <div
           className="absolute inset-0 z-0"
           style={{
             backgroundImage: `
@@ -107,7 +109,7 @@ const HomeOverview = () => {
             maskComposite: "intersect",
             WebkitMaskComposite: "source-in",
           }}
-        />
+        /> */}
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
           {/* Image — left side (top on mobile). Replace src with your image when ready. */}
           <div className="order-1 md:order-1 flex justify-center md:justify-start shrink-0">

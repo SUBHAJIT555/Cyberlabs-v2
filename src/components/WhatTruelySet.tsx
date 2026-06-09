@@ -5,6 +5,7 @@ import { AnimatedHeading } from "./ui/animated-heading";
 import { AnimatedList } from "./ui/animated-list";
 import type { AnimatedListItem } from "./ui/animated-list";
 import closingSvg from "@/assets/img/TeamMemberImages/closing.svg";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 
 const WhatTruelySet = () => {
     const containerRef = useRef(null);
@@ -67,7 +68,7 @@ const WhatTruelySet = () => {
         </svg>
     );
 
-    const AnimatedCheckIcon = ({ isInView }: { isInView: boolean }) => (
+    const AnimatedCheckIcon = ({ isInView, className = "text-primary" }: { isInView: boolean; className?: string }) => (
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -78,7 +79,7 @@ const WhatTruelySet = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="w-5 h-5 sm:w-6 sm:h-6 text-primary shrink-0"
+            className={`w-5 h-5 sm:w-6 sm:h-6 shrink-0 ${className}`}
         >
             <motion.path
                 d="M20 6L9 17l-5-5"
@@ -96,31 +97,31 @@ const WhatTruelySet = () => {
     ];
 
     const cyberlabsListItems: AnimatedListItem[] = [
-        { text: "Cyber commanders and intelligence officers", icon: <AnimatedCheckIcon isInView={isInView} /> },
-        { text: "CISOs and incident responders", icon: <AnimatedCheckIcon isInView={isInView} /> },
-        { text: "Architects of real cyber systems and national training frameworks", icon: <AnimatedCheckIcon isInView={isInView} /> },
+        { text: "Cyber commanders and intelligence officers", icon: <AnimatedCheckIcon isInView={isInView} className="text-white" /> },
+        { text: "CISOs and incident responders", icon: <AnimatedCheckIcon isInView={isInView} className="text-white" /> },
+        { text: "Architects of real cyber systems and national training frameworks", icon: <AnimatedCheckIcon isInView={isInView} className="text-white" /> },
     ];
 
-    const dashedGridCardStyle = {
-        backgroundImage: `
-            linear-gradient(to right, #e7e5e4 1px, transparent 1px),
-            linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
-        `,
-        backgroundSize: "10px 10px",
-        backgroundPosition: "0 0, 0 0",
-        maskImage: `
-            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-        `,
-        WebkitMaskImage: `
-            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-        `,
-        maskComposite: "intersect" as const,
-        WebkitMaskComposite: "source-in" as const,
-    };
+    const VerticalStripesBg = ({
+        lineColor,
+        opacity = 0.1,
+    }: {
+        lineColor: string;
+        opacity?: number;
+    }) => (
+        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
+            <div
+                className="absolute inset-0"
+                style={{
+                    WebkitMaskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
+                    maskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
+                    backgroundImage: `linear-gradient(90deg, ${lineColor} 1px, transparent 1px)`,
+                    backgroundSize: "4px 100%",
+                    opacity,
+                }}
+            />
+        </div>
+    );
 
     return (
         <section
@@ -133,7 +134,7 @@ const WhatTruelySet = () => {
                     <AnimatedHeading
                         inView={headingInView}
                         lines={[
-                            { text: "What Truly Sets CYBERLABS Apart", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter-display text-text-primary leading-tight tracking-tight font-semibold" },
+                            { text: "What Truly Sets CYBERLABS Apart", className: "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display text-text-primary font-semibold tracking-tighter leading-tight" },
                         ]}
                     />
                 </div>
@@ -145,12 +146,12 @@ const WhatTruelySet = () => {
                     animate={isInView ? "visible" : "hidden"}
                     className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 mb-12 md:mb-16"
                 >
-                    {/* Most institutes section */}
+                    {/* Most institutes — light card */}
                     <motion.div
                         variants={itemVariants}
-                        className="relative border border-neutral-200 ring ring-neutral-300 ring-offset-3 md:ring-offset-6 bg-white rounded-xl overflow-hidden"
+                        className="relative border border-neutral-200  bg-white shadow-sm overflow-hidden"
                     >
-                        <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridCardStyle} />
+                        <VerticalStripesBg lineColor="#d4d4d8" opacity={0.22} />
                         <div className="relative z-10 p-6 sm:p-8 md:p-10">
                         <div className="mb-4 sm:mb-5">
                             <motion.h3
@@ -179,16 +180,16 @@ const WhatTruelySet = () => {
                         </div>
                     </motion.div>
 
-                    {/* CYBERLABS section */}
+                    {/* CYBERLABS — dark card */}
                     <motion.div
                         variants={itemVariants}
-                        className="relative border border-neutral-200 ring ring-neutral-300 ring-offset-3 md:ring-offset-6 bg-white rounded-xl overflow-hidden"
+                        className="relative border border-neutral-600  bg-text-primary shadow-sm overflow-hidden"
                     >
-                        <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridCardStyle} />
+                        <VerticalStripesBg lineColor="rgba(255, 255, 255, 0.25)" opacity={0.28} />
                         <div className="relative z-10 p-6 sm:p-8 md:p-10">
                         <div className="mb-4 sm:mb-5">
                             <motion.h3
-                                className="text-lg sm:text-xl md:text-2xl font-inter-display text-text-primary font-semibold leading-tight tracking-tight"
+                                className="text-lg sm:text-xl md:text-2xl font-inter-display text-white font-semibold leading-tight tracking-tight"
                                 initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
                                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                                 viewport={{ once: false, amount: 0.2 }}
@@ -205,9 +206,9 @@ const WhatTruelySet = () => {
                             staggerDelay={0.1}
                             xOffset={50}
                             containerClassName="space-y-3 md:space-y-4"
-                            contentClassName="text-base sm:text-lg md:text-xl font-montserrat font-medium text-text-primary leading-relaxed"
+                            contentClassName="text-base sm:text-lg md:text-xl font-montserrat font-medium text-neutral-100 leading-relaxed"
                             itemClassName="flex items-center gap-3"
-                            iconClassName="text-text-primary shrink-0 flex items-center"
+                            iconClassName="text-white shrink-0 flex items-center"
                             boldText={false}
                         />
                         </div>
@@ -219,30 +220,12 @@ const WhatTruelySet = () => {
                     initial={{ opacity: 0, y: 24 }}
                     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
                     transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-                    className="relative rounded-xl border border-neutral-200 ring ring-neutral-300 ring-offset-4 md:ring-offset-8 bg-white overflow-hidden shadow-sm"
+                    className="relative   bg-white overflow-hidden rounded-lg border border-neutral-200"
                 >
                     <div
                         className="absolute inset-0 z-0 pointer-events-none"
-                        style={{
-                            backgroundImage: `
-                                linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-                                linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
-                            `,
-                            backgroundSize: "1px 1px",
-                            backgroundPosition: "0 0, 0 0",
-                            maskImage: `
-                                repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-                                repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-                                radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-                            `,
-                            WebkitMaskImage: `
-                                repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-                                repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-                                radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-                            `,
-                            maskComposite: "intersect",
-                            WebkitMaskComposite: "source-in",
-                        }}
+                        style={crosshatchBgStyle}
+                        aria-hidden
                     />
                     <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
                         {/* Image — left side (top on mobile) */}

@@ -1,7 +1,6 @@
 import { useRef } from "react";
-import { useParams } from "react-router";
 import { motion, useInView, type Variants } from "framer-motion";
-import { useBootcamps } from "@/hooks/useBootcamps";
+import { usePageDetail } from "@/hooks/useProgramDetail";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { AnimatedHeading } from "@/components/ui/animated-heading";
 import { AnimatedList } from "@/components/ui/animated-list";
@@ -29,9 +28,7 @@ const dashedCenterFadeGridStyle = {
 };
 
 const BootcampProgramTeaches = () => {
-    const { slug } = useParams();
-    const { getBootcampDetailBySlug } = useBootcamps();
-    const programTeaches = getBootcampDetailBySlug(slug as string)?.programTeaches;
+    const programTeaches = usePageDetail()?.programTeaches;
 
     const containerRef = useRef(null);
     const headingRef = useRef<HTMLDivElement>(null);
@@ -42,6 +39,7 @@ const BootcampProgramTeaches = () => {
 
     const {
         whatYouLearn,
+        whatYouLearnNote,
         readinessIntro,
         readinessSubheading,
         readinessPoints,
@@ -141,6 +139,11 @@ const BootcampProgramTeaches = () => {
                                         contentClassName="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed"
                                         iconClassName="mt-0.5 shrink-0"
                                     />
+                                    {whatYouLearnNote && (
+                                        <p className="mt-4 text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed">
+                                            {whatYouLearnNote}
+                                        </p>
+                                    )}
                                 </CardHeader>
                             </Card>
                         </motion.div>

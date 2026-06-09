@@ -2,6 +2,7 @@ import * as React from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { IoClose } from "react-icons/io5";
 import { cn } from "@/lib/utils";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 
 const DrawerRoot = DialogPrimitive.Root;
 DrawerRoot.displayName = "Drawer";
@@ -52,22 +53,26 @@ const DrawerContent = React.forwardRef<
           className={cn(
             "fixed top-0 z-50 h-full w-full max-w-100 md:max-w-[420px] lg:max-w-[480px]",
             isLeft ? "left-0" : "right-0",
-            "border-neutral-300 border-dashed bg-background",
+            "border-neutral-300 border-dashed bg-white",
             isLeft ? "border-r" : "border-l",
             "data-[state=open]:animate-in data-[state=closed]:animate-out",
             isLeft
               ? "data-[state=closed]:slide-out-to-left-full data-[state=open]:slide-in-from-left-full"
               : "data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-right-full",
             "data-[state=open]:duration-200 data-[state=closed]:duration-200",
+            "overflow-hidden",
             className
           )}
-          style={{
-            background:
-              "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-          }}
           {...rest}
         >
-          <div className="relative flex size-full flex-col">{children}</div>
+          <div className="relative flex size-full flex-col bg-white">
+            <div
+              className="absolute inset-0 z-0 pointer-events-none"
+              style={crosshatchBgStyle}
+              aria-hidden
+            />
+            <div className="relative z-10 flex min-h-0 flex-1 flex-col">{children}</div>
+          </div>
         </DialogPrimitive.Content>
       </DrawerOverlay>
     </DrawerPortal>

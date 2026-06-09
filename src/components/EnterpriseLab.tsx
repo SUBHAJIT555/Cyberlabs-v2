@@ -784,26 +784,25 @@ const EnterpriseLab = () => {
     { text: "Continuously updated enterprise environments", icon: <AnimatedCloudUpIcon /> },
   ];
 
-  const dashedGridStyle = {
-    backgroundImage: `
-      linear-gradient(to right, #e7e5e4 1px, transparent 1px),
-      linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
-    `,
-    backgroundSize: "10px 10px",
-    backgroundPosition: "0 0, 0 0",
-    maskImage: `
-      repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-      repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-      radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-    `,
-    WebkitMaskImage: `
-      repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-      repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-      radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-    `,
-    maskComposite: "intersect" as const,
-    WebkitMaskComposite: "source-in" as const,
+  const horizontalLinesFadeStyle = {
+    WebkitMaskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
+    backgroundImage:
+      "repeating-linear-gradient(0deg, transparent 0px, transparent 3px, #d4d4d8 3px, #d4d4d8 4px)",
+    height: "100%",
+    left: 0,
+    maskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
+    opacity: 0.5,
+    pointerEvents: "none" as const,
+    position: "absolute" as const,
+    top: 0,
+    width: "100%",
   };
+
+  const HorizontalLinesBg = () => (
+    <div className="absolute inset-0 z-0 pointer-events-none">
+      <div style={horizontalLinesFadeStyle} />
+    </div>
+  );
 
   // Section wrapper: card-style like AboutMerged
   const SectionBlock = ({
@@ -814,8 +813,8 @@ const EnterpriseLab = () => {
     className?: string;
   }) => (
     <div className={`w-full mb-8 md:mb-10 ${className}`}>
-      <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
-        <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+      <div className="relative rounded-lg border border-neutral-200 bg-white overflow-hidden">
+        <HorizontalLinesBg />
         <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
           {children}
         </div>
@@ -895,9 +894,9 @@ const EnterpriseLab = () => {
             ].map((text, i) => (
               <div
                 key={i}
-                className="relative p-5 border border-neutral-200 rounded-xl ring ring-neutral-200 ring-offset-2 md:ring-offset-4 bg-linear-to-l from-neutral-200 to-white flex items-center gap-3 overflow-hidden"
+                className="relative p-5 border border-neutral-200 rounded-lg bg-white flex items-center gap-3 overflow-hidden"
               >
-                
+                <HorizontalLinesBg />
                 <div className="relative z-10 flex items-center gap-3">
                   <span className="shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-montserrat font-bold text-sm">
                     {i + 1}
@@ -977,9 +976,9 @@ const EnterpriseLab = () => {
             {["Structured Laboratories", "Real-world Scenarios", "Simulator Investigations", "Assessment & Exercises"].map((label, i) => (
               <div
                 key={i}
-                className="relative p-5 border border-neutral-200 rounded-xl ring ring-neutral-200 ring-offset-2 md:ring-offset-4 bg-linear-to-l from-neutral-200 to-white overflow-hidden"
+                className="relative p-5 border border-neutral-200 rounded-lg bg-white overflow-hidden"
               >
-                
+                <HorizontalLinesBg />
                 <p className="relative z-10 text-sm sm:text-base font-inter-display font-semibold text-text-primary leading-tight">
                   {label}
                 </p>
@@ -1126,9 +1125,9 @@ const EnterpriseLab = () => {
             ].map((label, i) => (
               <div
                 key={i}
-                className="relative p-6 border border-neutral-200 rounded-xl ring ring-neutral-200 ring-offset-2 md:ring-offset-4 bg-linear-to-l from-neutral-200 to-white flex items-center justify-center text-center overflow-hidden"
+                className="relative p-6 border border-neutral-200 rounded-lg bg-white flex items-center justify-center text-center overflow-hidden"
               >
-                
+                <HorizontalLinesBg />
                 <p className="relative z-10 text-base font-inter-display font-semibold text-text-primary leading-relaxed">
                   {label}
                 </p>

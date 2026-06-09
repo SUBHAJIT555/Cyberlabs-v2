@@ -5,6 +5,9 @@ import { MagicText } from "./ui/magic-text";
 import { AnimatedHeading } from "./ui/animated-heading";
 import type { AnimatedListItem } from "./ui/animated-list";
 import openingSvg from "@/assets/img/Learning-Enviorment/opening.svg";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import { FeatureCard } from "./ui/FeatureCard";
+
 
 const styleParagraphWords = (word: string, index: number, words: string[]) => {
   const lower = word.toLowerCase().replace(/[.,-]/g, "");
@@ -290,56 +293,9 @@ const What = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
           transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-          className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 mb-8 sm:mb-10 md:mb-12"
+          className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden  mb-8 sm:mb-10 md:mb-12"
         >
-          {/* Dashed grid background (fade at top) - same as CallToAction */}
-          <div
-            className="absolute inset-0 z-0"
-            style={{
-              backgroundImage: `
-                linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-                linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
-              `,
-              backgroundSize: "1px 1px",
-              backgroundPosition: "0 0, 0 0",
-              maskImage: `
-                repeating-linear-gradient(
-                  to right,
-                  black 0px,
-                  black 3px,
-                  transparent 3px,
-                  transparent 8px
-                ),
-                repeating-linear-gradient(
-                  to bottom,
-                  black 0px,
-                  black 3px,
-                  transparent 3px,
-                  transparent 8px
-                ),
-                radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-              `,
-              WebkitMaskImage: `
-                repeating-linear-gradient(
-                  to right,
-                  black 0px,
-                  black 3px,
-                  transparent 3px,
-                  transparent 8px
-                ),
-                repeating-linear-gradient(
-                  to bottom,
-                  black 0px,
-                  black 3px,
-                  transparent 3px,
-                  transparent 8px
-                ),
-                radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-              `,
-              maskComposite: "intersect",
-              WebkitMaskComposite: "source-in",
-            }}
-          />
+          <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
           <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
             {/* Image — left side (top on mobile) */}
             <div className="order-1 md:order-1 flex justify-center md:justify-start shrink-0">
@@ -375,7 +331,7 @@ const What = () => {
           <AnimatedHeading
             inView={subheadingInView}
             lines={[
-              { text: "THE CYBERLABS LEARNING APPROACH", className: "text-xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold tracking-tight font-inter-display text-text-primary leading-tight", as: "h4" },
+              { text: "THE CYBERLABS LEARNING APPROACH", className: "text-xl sm:text-2xl md:text-4xl lg:text-5xl font-inter-display font-semibold tracking-tighter text-text-primary leading-tight", as: "h4" },
             ]}
           />
         </div>
@@ -396,67 +352,17 @@ const What = () => {
             return (
               <motion.div
                 key={index}
-                className="relative flex lg:flex-col lg:items-center items-start gap-4 md:gap-5 group border border-neutral-200 rounded-md p-6 md:p-8 xl:p-10 transition-all duration-300 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 overflow-hidden bg-white"
+                className="h-full"
                 style={anim.style}
                 initial={anim.initial}
                 whileInView={anim.whileInView}
                 viewport={{ once: false, amount: 0.4 }}
                 transition={anim.transition}
               >
-                {/* Dashed grid background (fade at top) - same as CallToAction */}
-                <div
-                  className="absolute inset-0 z-0"
-                  style={{
-                    backgroundImage: `
-                      linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-                      linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
-                    `,
-                    backgroundSize: "1px 1px",
-                    backgroundPosition: "0 0, 0 0",
-                    maskImage: `
-                      repeating-linear-gradient(
-                        to right,
-                        black 0px,
-                        black 3px,
-                        transparent 3px,
-                        transparent 8px
-                      ),
-                      repeating-linear-gradient(
-                        to bottom,
-                        black 0px,
-                        black 3px,
-                        transparent 3px,
-                        transparent 8px
-                      ),
-                      radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-                    `,
-                    WebkitMaskImage: `
-                      repeating-linear-gradient(
-                        to right,
-                        black 0px,
-                        black 3px,
-                        transparent 3px,
-                        transparent 8px
-                      ),
-                      repeating-linear-gradient(
-                        to bottom,
-                        black 0px,
-                        black 3px,
-                        transparent 3px,
-                        transparent 8px
-                      ),
-                      radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-                    `,
-                    maskComposite: "intersect",
-                    WebkitMaskComposite: "source-in",
-                  }}
+                <FeatureCard
+                  feature={{ title: item.text, icon: item.icon }}
+                  className="h-full"
                 />
-                <div className="relative z-10 flex lg:flex-col lg:items-center items-start gap-4 md:gap-5">
-                  <span className="text-primary shrink-0 flex items-center pt-0.5">{item.icon}</span>
-                  <p className="text-lg lg:text-xl text-text-primary font-inter-display font-medium leading-relaxed text-left lg:text-center">
-                    {item.text}
-                  </p>
-                </div>
               </motion.div>
             );
           })}

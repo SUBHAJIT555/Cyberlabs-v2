@@ -1,3 +1,9 @@
+export interface ProgramWhatsNew {
+  heading: string;
+  items: { title: string; text: string }[];
+  closingParagraph?: string;
+}
+
 export interface Course {
   id: number;
   slug: string;
@@ -12,7 +18,7 @@ export interface Course {
   currentPrice: number;
   discount: number;
   description: string;
-  /** Optional: 3 paragraphs with **bold** phrases for hero-style description block */
+  /** Optional: paragraphs with **bold** phrases for hero-style description block */
   descriptionParagraphs?: string[];
   certifications: string[];
   idealFor: string;
@@ -24,9 +30,13 @@ export interface Course {
   programTagLine: string;
   moduleChart?: ModuleChartItem[];
   careerChart?: CareerChartItem[];
+  careerIntro?: string;
+  careerClosing?: string;
   laymanExplanation?: LaymanExplanation;
   programTeaches?: ProgramTeaches;
   programDeepDive?: ProgramDeepDive;
+  /** Bootcamp-style detail page content for whatsNew section */
+  programWhatsNew?: ProgramWhatsNew;
 }
 
 export interface Hero {

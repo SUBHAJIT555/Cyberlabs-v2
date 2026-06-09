@@ -1,15 +1,12 @@
 import { useRef } from "react";
-import { useParams } from "react-router";
 import { motion, useInView } from "framer-motion";
-import { useBootcamps } from "@/hooks/useBootcamps";
+import { usePageDetail } from "@/hooks/useProgramDetail";
 import { AnimatedHeading } from "@/components/ui/animated-heading";
 
 const BootcampModuleChart = () => {
-    const { slug } = useParams();
     const headingRef = useRef<HTMLDivElement>(null);
     const headingInView = useInView(headingRef, { once: false, margin: "-80px" });
-    const { getBootcampDetailBySlug } = useBootcamps();
-    const detail = getBootcampDetailBySlug(slug as string);
+    const detail = usePageDetail();
     const moduleChart = detail?.moduleChart;
 
     if (!moduleChart || moduleChart.length === 0) return null;

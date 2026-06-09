@@ -6,26 +6,7 @@ import { AnimatedList } from "./ui/animated-list";
 import type { AnimatedListItem } from "./ui/animated-list";
 import { StackOrbit } from "./ui/StackOrbit";
 
-const dashedGridStyle = {
-  backgroundImage: `
-    linear-gradient(to right, #e7e5e4 1px, transparent 1px),
-    linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
-  `,
-  backgroundSize: "10px 10px",
-  backgroundPosition: "0 0, 0 0",
-  maskImage: `
-    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-    radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-  `,
-  WebkitMaskImage: `
-    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-    radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-  `,
-  maskComposite: "intersect" as const,
-  WebkitMaskComposite: "source-in" as const,
-};
+
 
 const CheckIcon = () => (
     <div className="shrink-0 w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 rounded-full bg-primary/10 flex items-center justify-center mt-0.5">
@@ -103,14 +84,14 @@ const WhyThisMatters = () => {
                     <AnimatedHeading
                         inView={headingInView}
                         lines={[
-                            { text: "Why This Matters ?", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight" },
+                            { text: "Why This Matters ?", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter-display text-text-primary font-semibold tracking-tighter leading-tight" },
                         ]}
                     />
                 </div>
 
                 {/* Card wrapper with dashed grid background */}
-                <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 mb-8 md:mb-10">
-                    <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+                <div className="relative  bg-white overflow-hidden  mb-8 md:mb-10">
+                    <div className="absolute inset-0 z-0 pointer-events-none"  />
                     <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
                         {/* Two Column Layout: Text Left, Image Right */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">

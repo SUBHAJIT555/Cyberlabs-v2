@@ -1,8 +1,7 @@
 import { useRef, useState } from "react";
-import { useParams } from "react-router";
 import { motion, useInView } from "framer-motion";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
-import { useBootcamps } from "@/hooks/useBootcamps";
+import { usePageDetail } from "@/hooks/useProgramDetail";
 import { AnimatedHeading } from "@/components/ui/animated-heading";
 import { AnimatedList } from "@/components/ui/animated-list";
 import type { AnimatedListItem } from "@/components/ui/animated-list";
@@ -29,9 +28,7 @@ const dashedGridStyle = {
 };
 
 const BootcampDeepDive = () => {
-    const { slug } = useParams();
-    const { getBootcampDetailBySlug } = useBootcamps();
-    const detail = getBootcampDetailBySlug(slug as string);
+    const detail = usePageDetail();
     const deepDive = detail?.deepDive;
 
     const headerRef = useRef<HTMLDivElement>(null);

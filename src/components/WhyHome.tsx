@@ -8,7 +8,7 @@ import type { AnimatedListItem } from "./ui/animated-list";
 const iconBoxStyle = {
   background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
 };
-const iconBoxClass = "flex items-center justify-center rounded p-0.5 sm:p-1 border border-neutral-200 bg-white shrink-0 group-hover:border-primary/60 group-hover:bg-primary/10 transition-all duration-300 text-primary ring ring-neutral-300 ring-offset-2 md:ring-offset-4 rounded-lg";
+const iconBoxClass = "flex items-center justify-center rounded p-0.5 sm:p-1 border border-neutral-200 bg-white shrink-0 group-hover:border-primary/60 group-hover:bg-primary/10 transition-all duration-300 text-primary ring ring-neutral-300 rounded-lg shadow-sm";
 
 const WhyHome = () => {
   const ref = useRef(null);
@@ -236,7 +236,7 @@ const WhyHome = () => {
         <AnimatedHeading
           inView={titleInView}
           lines={[
-            { text: "WHY CYBERLABS INDIA IS DIFFERENT", className: "text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-montserrat font-semibold text-text-primary leading-tight wrap-break-words tracking-tight", as: "h3" },
+            { text: "WHY CYBERLABS INDIA IS DIFFERENT", className: "text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-inter-display font-semibold text-text-primary leading-tight wrap-break-words tracking-tight", as: "h3" },
           ]}
         />
       </div>

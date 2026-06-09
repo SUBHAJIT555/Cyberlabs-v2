@@ -7,7 +7,7 @@ import { useBootcamps } from "@/hooks/useBootcamps";
 import bootcampImage from "@/assets/img/ProgramPageImage/elitbootcamp.svg";
 
 const headingBaseClass =
-    "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold leading-[1.05] tracking-tight inline";
+    "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold tracking-tighter leading-tight inline";
 
 const HIGHLIGHTS = [
     "30–50 Hour Programs",
@@ -43,7 +43,7 @@ const ElitBootcamp = () => {
             id="elite-bootcamps"
             className="relative w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-20 py-16 md:py-24 border-t border-neutral-200/80 overflow-hidden"
         >
-            <div className="w-full space-y-10 md:space-y-14">
+            <div className="w-full space-y-5 md:space-y-5">
                 <div ref={headingRef} className="text-center md:text-left">
                     <AnimatedHeading
                         inView={headingInView}
@@ -72,7 +72,7 @@ const ElitBootcamp = () => {
                         {HIGHLIGHTS.map((label) => (
                             <span
                                 key={label}
-                                className="inline-flex items-center rounded-full border border-neutral-200 bg-white px-3 py-1 text-xs sm:text-sm font-inter-display font-medium text-text-primary/80"
+                                className="inline-flex items-center rounded-lg border border-neutral-200 bg-white px-3 py-1 text-xs sm:text-sm font-inter-display font-medium text-text-primary/80 shadow-sm"
                             >
                                 {label}
                             </span>
@@ -90,7 +90,7 @@ const ElitBootcamp = () => {
                     >
                         <div className="absolute inset-0 z-0 pointer-events-none"  />
 
-                        <div className="relative z-10 px-5 py-6 sm:px-7 sm:py-8 md:px-8 md:py-9 space-y-4 md:space-y-5 text-left">
+                        <div className="relative z-10  text-left">
                             <motion.p
                                 className="text-lg md:text-xl font-inter-display text-text-primary leading-relaxed text-pretty"
                                 {...paragraphMotion}

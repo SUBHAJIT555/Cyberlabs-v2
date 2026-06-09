@@ -1,42 +1,66 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams, useNavigate } from "react-router";
 import ProgramHero from "../components/ui/ProgramDeatailHero";
 import WhatsNew from "../components/ui/WhatsNew";
 import ModuleExplained from "../components/ui/ModuleExplained";
-// import LevelUp from "../components/LevelUp";
-// import CallToAction from "../components/CallToAction";
 import CallbackModal from "../components/CallbackModal";
 import EnrollmentModal from "../components/EnrollmentModal";
 import ModuleChart from "@/components/ModuleChart";
 import CareerOpertunity from "@/components/CareerOpertunity";
 import LaymanStory from "@/components/LaymanStory";
-// import ProgramDescription from "@/components/ProgramDescription";
-// import GradeFramework from "@/components/GradeFramework";
 import ProgramTeaches from "@/components/ProgramTeaches";
-// import ProgramDeepDive from "@/components/ProgramDeepDive";
+import ProgramDetailHero from "@/components/ProgramDetailHero";
+import BootcampModuleChart from "@/components/bootcamp/BootcampModuleChart";
+import BootcampDeepDive from "@/components/bootcamp/BootcampDeepDive";
+import BootcampProgramTeaches from "@/components/bootcamp/BootcampProgramTeaches";
+import BootcampLaymanStory from "@/components/bootcamp/BootcampLaymanStory";
+import BootcampCareerOpportunity from "@/components/bootcamp/BootcampCareerOpportunity";
+import BootcampWhatsNew from "@/components/bootcamp/BootcampWhatsNew";
 import { useLenis } from "@/hooks/useLenis";
+import { useCourses } from "@/hooks/useCourses";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import FloatingBackButton from "@/components/ui/FloatingBackButton";
 import Portal from "@/components/ui/Portal";
 import { useFloatingBottomBar } from "@/contexts/FloatingBottomBarContext";
 import { useFooterVisibility } from "@/hooks/useFooterVisibility";
 
+const dashedGridStyle = {
+  backgroundImage: `
+    linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+    linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+  `,
+  backgroundSize: "5px 5px",
+  backgroundPosition: "0 0, 0 0",
+  maskImage: `
+    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+    radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+  `,
+  WebkitMaskImage: `
+    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+    radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+  `,
+  maskComposite: "intersect" as const,
+  WebkitMaskComposite: "source-in" as const,
+};
+
 const CourseDetails = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
   const lenis = useLenis();
+  const { getCourseBySlug, getCourseDetailBySlug } = useCourses();
+  const course = slug ? getCourseBySlug(slug) : undefined;
+  const hasBootcampLayout = slug ? Boolean(getCourseDetailBySlug(slug)) : false;
+
   const [showFloatingButton, setShowFloatingButton] = useState(false);
   const [showBackButton, setShowBackButton] = useState(false);
   const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false);
   const [isEnrollmentModalOpen, setIsEnrollmentModalOpen] = useState(false);
-  const heroSectionRef = useRef<HTMLDivElement>(null);
-  const callToActionRef = useRef<HTMLDivElement>(null);
   const isFooterVisible = useFooterVisibility();
   const { setIsActive: setFloatingBottomBarActive } = useFloatingBottomBar();
 
-  // Show back button and Enroll / Request Callback bar after one scroll — uses Lenis like ScrollToTop
-  // Hide floating button when footer is in view
   useEffect(() => {
     if (!lenis) {
       setShowBackButton(false);
@@ -44,7 +68,7 @@ const CourseDetails = () => {
       return;
     }
     const viewportHeight = typeof window !== "undefined" ? window.innerHeight : 800;
-    const scrollThreshold = viewportHeight; // appear after one viewport scroll
+    const scrollThreshold = viewportHeight;
 
     const handleScroll = ({ scroll }: { scroll: number }) => {
       const show = scroll > scrollThreshold && !isFooterVisible;
@@ -64,49 +88,40 @@ const CourseDetails = () => {
     return () => setFloatingBottomBarActive(false);
   }, [showFloatingButton, setFloatingBottomBarActive]);
 
+  useEffect(() => {
+    if (slug && !course) {
+      navigate("/cyber-defense-programs#flagship-programs", { replace: true });
+    }
+  }, [slug, course, navigate]);
+
+  if (!course) return null;
+
   return (
     <>
-      {/* Fixed full-viewport dashed grid background (same as About) */}
-      <div
-        className="fixed inset-0 h-screen w-full z-0 bg-white pointer-events-none"
-        style={{
-          backgroundImage: `
-            linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-            linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
-          `,
-          backgroundSize: "5px 5px",
-          backgroundPosition: "0 0, 0 0",
-          maskImage: `
-            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-          `,
-          WebkitMaskImage: `
-            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-          `,
-          maskComposite: "intersect",
-          WebkitMaskComposite: "source-in",
-        }}
-      />
+      <div className="fixed inset-0 h-screen w-full z-0 bg-white pointer-events-none" style={dashedGridStyle} />
+
       <div className="relative z-10">
-        <div ref={heroSectionRef}>
-          <ProgramHero />
-          {/* <ProgramDescription /> */}
-        </div>
-        <ModuleChart />
-        {/* <ProgramDeepDive /> */}
-        <ModuleExplained />
-        <ProgramTeaches />
-        <LaymanStory />
-        <CareerOpertunity />
-        <WhatsNew />
-        {/* <GradeFramework /> */}
-        {/* <LevelUp /> */}
-        <div ref={callToActionRef}>
-          {/* <CallToAction /> */}
-        </div>
+        {hasBootcampLayout ? (
+          <>
+            <ProgramDetailHero onEnroll={() => setIsEnrollmentModalOpen(true)} />
+            <BootcampModuleChart />
+            <BootcampDeepDive />
+            <BootcampProgramTeaches />
+            <BootcampLaymanStory />
+            <BootcampCareerOpportunity />
+            <BootcampWhatsNew />
+          </>
+        ) : (
+          <>
+            <ProgramHero />
+            <ModuleChart />
+            <ModuleExplained />
+            <ProgramTeaches />
+            <LaymanStory />
+            <CareerOpertunity />
+            <WhatsNew />
+          </>
+        )}
 
         <Portal>
           <AnimatePresence>
@@ -146,13 +161,11 @@ const CourseDetails = () => {
           />
         </Portal>
 
-        {/* Callback Modal */}
         <CallbackModal
           isOpen={isCallbackModalOpen}
           onClose={() => setIsCallbackModalOpen(false)}
         />
 
-        {/* Enrollment Modal */}
         {slug && (
           <EnrollmentModal
             isOpen={isEnrollmentModalOpen}

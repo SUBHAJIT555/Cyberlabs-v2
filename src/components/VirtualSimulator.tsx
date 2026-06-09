@@ -318,7 +318,7 @@ const AiDriven = () => {
             <AnimatedHeading
               inView={headingInView}
               lines={[
-                { text: "Virtual Cyber Simulator (Core Platform)", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat text-text-primary leading-tight tracking-tight font-semibold" },
+                { text: "Virtual Cyber Simulator (Core Platform)", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter-display text-text-primary leading-tight tracking-tighter font-semibold" },  
               ]}
             />
           </div>

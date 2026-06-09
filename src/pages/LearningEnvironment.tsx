@@ -12,7 +12,7 @@ const Platform = () => {
   return (
     <>
       {/* Fixed full-viewport dashed grid background (same as About) */}
-      <div
+      {/* <div
         className="fixed inset-0 h-screen w-full z-0 bg-white pointer-events-none"
         style={{
           backgroundImage: `
@@ -58,7 +58,7 @@ const Platform = () => {
           maskComposite: "intersect",
           WebkitMaskComposite: "source-in",
         }}
-      />
+      /> */}
       <div className="relative z-10">
         <PlatformHero />
         <IntroLearning />

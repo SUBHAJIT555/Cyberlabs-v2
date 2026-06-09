@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { AnimatedHeading } from "../ui/animated-heading";
 import { AnimatedList } from "../ui/animated-list";
 import type { AnimatedListItem } from "../ui/animated-list";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 
 // List item icons
 const TerminalIcon = (
@@ -96,27 +97,6 @@ const BrainIcon = (
 
 
 
-const dashedGridStyle = {
-  backgroundImage: `
-    linear-gradient(to right, #e7e5e4 1px, transparent 1px),
-    linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
-  `,
-  backgroundSize: "1px 1px",
-  backgroundPosition: "0 0, 0 0",
-  maskImage: `
-    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-    radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-  `,
-  WebkitMaskImage: `
-    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-    radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-  `,
-  maskComposite: "intersect" as const,
-  WebkitMaskComposite: "source-in" as const,
-};
-
 const AboutHowDifferent = () => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: false, margin: "-100px" });
@@ -169,7 +149,7 @@ const AboutHowDifferent = () => {
                 {
                   text: "How CYBERLABS Is Different",
                   className:
-                    "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight md:leading-normal mb-6",
+                    "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display text-text-primary font-semibold tracking-tighter leading-tight md:leading-normal mb-6",
                 },
               ]}
             />
@@ -186,7 +166,7 @@ const AboutHowDifferent = () => {
                 transition: { duration: 0.3, ease: "easeOut" }
               }}
             >
-              <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+              <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
               <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-1" />
               <div className="relative z-10 p-6 sm:p-8 md:p-10">
                 <motion.h3
@@ -218,7 +198,7 @@ const AboutHowDifferent = () => {
                 transition: { duration: 0.3, ease: "easeOut" }
               }}
             >
-              <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+              <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
               <div className="absolute inset-0 bg-linear-to-br from-primary/5 via-transparent to-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-1" />
               <div className="relative z-10 p-6 sm:p-8 md:p-10">
                 <motion.h3

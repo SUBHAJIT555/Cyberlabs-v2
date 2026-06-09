@@ -14,7 +14,7 @@ const Home = () => {
   return (
     <>
       {/* Fixed full-viewport dashed grid background (behind everything except hero/footer) */}
-      <div
+      {/* <div
         className="fixed inset-0 h-screen w-full z-0 bg-white pointer-events-none"
         style={{
           backgroundImage: `
@@ -60,7 +60,7 @@ const Home = () => {
           maskComposite: "intersect",
           WebkitMaskComposite: "source-in",
         }}
-      />
+      /> */}
       <div className="relative z-10">
         <HomeHero />
         <HomeOverview />

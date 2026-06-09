@@ -7,6 +7,7 @@ import { IoClose } from "react-icons/io5";
 import { useLenis } from "../hooks/useLenis";
 // import { Parallax } from "react-parallax";
 import { AnimatedHeading } from "./ui/animated-heading";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 
 // Team member images
 import guyKlisman from "../assets/img/TeamMemberImages/GuyKlisman.webp";
@@ -25,20 +26,11 @@ interface TeamMember {
     description: string;
 }
 
-// Slight variations per card so each hovers at a different angle
-const hoverAngles = [
-    { rotateX: -6, rotateY: 4, skewX: 1, skewY: -0.5 },
-    { rotateX: 5, rotateY: -5, skewX: -1.2, skewY: 0.6 },
-    { rotateX: -4, rotateY: -6, skewX: 0.8, skewY: 1 },
-    { rotateX: 6, rotateY: 3, skewX: -0.6, skewY: -0.8 },
-    { rotateX: -5, rotateY: 5, skewX: 1.2, skewY: -0.4 },
-    { rotateX: 4, rotateY: -4, skewX: -0.8, skewY: 0.7 },
-];
-
-// Team Member Card Component with hover effect
+// Team Member Card Component with hover focus effect
 const TeamMemberCard = ({
     member,
-    index = 0,
+    isHovered,
+    isDimmed,
     itemVariants,
     onCardClick,
     onMouseMove,
@@ -46,14 +38,14 @@ const TeamMemberCard = ({
     onMouseLeave,
 }: {
     member: TeamMember;
-    index?: number;
+    isHovered: boolean;
+    isDimmed: boolean;
     itemVariants: Variants;
     onCardClick: (member: TeamMember) => void;
     onMouseMove: (e: React.MouseEvent<HTMLDivElement>) => void;
     onMouseEnter: () => void;
     onMouseLeave: () => void;
 }) => {
-    const angle = hoverAngles[index % hoverAngles.length];
     return (
         <motion.div
             variants={itemVariants}
@@ -61,21 +53,25 @@ const TeamMemberCard = ({
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
             onMouseMove={onMouseMove}
-            whileHover={{
-                y: -8,
-                scale: 1.03,
-                rotateX: angle.rotateX,
-                rotateY: angle.rotateY,
-                skewX: angle.skewX,
-                skewY: angle.skewY,
-                boxShadow: "0 20px 40px -12px rgba(0,0,0,0.15)",
+            animate={{
+                scale: isHovered ? 1.06 : 1,
+                y: isHovered ? -8 : 0,
+                filter: isDimmed ? "blur(4px)" : "blur(0px)",
+                opacity: isDimmed ? 0.5 : 1,
+                boxShadow: isHovered
+                    ? "0 20px 40px -12px rgba(0,0,0,0.15)"
+                    : "0 0 0 0 transparent",
             }}
-            transition={{ type: "spring", stiffness: 350, damping: 22 }}
-            className="relative flex flex-col h-full border border-neutral-200 rounded-xl bg-white overflow-hidden cursor-pointer will-change-transform ring ring-neutral-300 ring-offset-2 md:ring-offset-4"
+            transition={{
+                type: "spring",
+                stiffness: 320,
+                damping: 18,
+                mass: 0.7,
+            }}
+            className="relative flex flex-col h-full w-full border border-neutral-200 rounded-xl bg-white overflow-hidden cursor-pointer will-change-transform ring ring-neutral-300 ring-offset-2 md:ring-offset-4"
             style={{
                 background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                transformStyle: "preserve-3d",
-                backfaceVisibility: "hidden",
+                zIndex: isHovered ? 10 : 1,
             }}
         >
             {/* Image - fixed aspect so all cards align */}
@@ -198,17 +194,20 @@ const CoreFaculty = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const lenis = useLenis();
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [isHovering, setIsHovering] = useState(false);
 
     const handleMouseMove = (e: React.MouseEvent) => {
         setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
-    const handleMouseEnter = () => {
+    const handleCardMouseEnter = (index: number) => {
+        setHoveredIndex(index);
         setIsHovering(true);
     };
 
-    const handleMouseLeave = () => {
+    const handleCardMouseLeave = () => {
+        setHoveredIndex(null);
         setIsHovering(false);
     };
 
@@ -253,7 +252,7 @@ const CoreFaculty = () => {
                     <AnimatedHeading
                         inView={headingInView}
                         lines={[
-                            { text: "Leadership & Core Faculty", className: "text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-montserrat font-semibold text-text-primary leading-tight tracking-tight mb-4" },
+                            { text: "Leadership & Core Faculty", className: "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold text-text-primary leading-tight tracking-tight mb-4" },
                         ]}
                     />
                 </div>
@@ -326,7 +325,6 @@ const CoreFaculty = () => {
                         <motion.div
                             key={index}
                             className="flex h-full min-h-0"
-                            style={{ perspective: 1200 }}
                             initial={{ opacity: 0, y: 48, scale: 0.94 }}
                             whileInView={{ opacity: 1, y: 0, scale: 1 }}
                             viewport={{ once: false, amount: 0.2 }}
@@ -338,12 +336,13 @@ const CoreFaculty = () => {
                         >
                             <TeamMemberCard
                                 member={member}
-                                index={index}
+                                isHovered={hoveredIndex === index}
+                                isDimmed={hoveredIndex !== null && hoveredIndex !== index}
                                 itemVariants={noOpVariants}
                                 onCardClick={handleCardClick}
                                 onMouseMove={handleMouseMove}
-                                onMouseEnter={handleMouseEnter}
-                                onMouseLeave={handleMouseLeave}
+                                onMouseEnter={() => handleCardMouseEnter(index)}
+                                onMouseLeave={handleCardMouseLeave}
                             />
                         </motion.div>
                     ))}
@@ -436,15 +435,15 @@ const CoreFaculty = () => {
                                         onClick={(e) => e.stopPropagation()}
                                     >
                                         {/* Content Container */}
-                                        <div
-                                            className="bg-white relative flex flex-col h-full overflow-hidden"
-                                            style={{
-                                                background:
-                                                    "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                                            }}
-                                        >
+                                        <div className="relative flex flex-col h-full overflow-hidden bg-white">
+                                            <div
+                                                className="absolute inset-0 z-0 pointer-events-none"
+                                                style={crosshatchBgStyle}
+                                                aria-hidden
+                                            />
+                                            <div className="relative z-10 flex flex-col h-full min-h-0">
                                             {/* Clean Header */}
-                                            <div className="border-b border-neutral-300 shrink-0 relative bg-white">
+                                            <div className="border-b border-neutral-300 shrink-0 relative bg-transparent">
                                                 <div className="flex items-center justify-between px-6 sm:px-8 md:px-12 py-4 sm:py-5">
                                                     <div className="flex-1">
                                                         <h2 className="text-lg sm:text-xl text-gray-500 font-montserrat font-semibold uppercase tracking-wider">
@@ -558,6 +557,7 @@ const CoreFaculty = () => {
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                             </div>
                                         </div>
                                     </motion.div>

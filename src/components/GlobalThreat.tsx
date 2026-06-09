@@ -213,13 +213,14 @@ const GlobalThreat = () => {
                 ref={headingRef as React.RefObject<HTMLDivElement>}
                 inView={headingInView}
                 lines={[
-                  { text: "The Global Cyber Threat Reality.", className: "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold text-text-primary mb-6 sm:mb-8 tracking-tight uppercase", },
+                  { text: "The Global Cyber Threat Reality.", className: "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold text-text-primary mb-6 sm:mb-8 tracking-tighter uppercase", },
                 ]}
               />
+        
 
               {/* Crisis Statement */}
               <motion.div variants={itemVariants} className="space-y-2">
-                <p className="text-2xl sm:text-3xl md:text-4xl font-inter-display font-semibold text-primary leading-none">
+                <p className="text-xl sm:text-2xl md:text-3xl font-inter-display font-semibold text-primary leading-none">
                   Cybercrime Is a Global Crisis <span className="text-xl sm:text-2xl md:text-3xl font-inter-display font-semibold text-text-primary">With Real Human Consequences.</span>
                 </p>
 

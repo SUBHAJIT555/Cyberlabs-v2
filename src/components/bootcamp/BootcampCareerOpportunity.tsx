@@ -1,13 +1,10 @@
 import { useRef } from "react";
-import { useParams } from "react-router";
 import { motion, useInView } from "framer-motion";
-import { useBootcamps } from "@/hooks/useBootcamps";
+import { usePageDetail } from "@/hooks/useProgramDetail";
 import { AnimatedHeading } from "@/components/ui/animated-heading";
 
 const BootcampCareerOpportunity = () => {
-    const { slug } = useParams();
-    const { getBootcampDetailBySlug } = useBootcamps();
-    const detail = getBootcampDetailBySlug(slug as string);
+    const detail = usePageDetail();
     const careerChart = detail?.careerChart;
 
     const headingRef = useRef<HTMLDivElement>(null);

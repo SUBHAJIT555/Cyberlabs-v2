@@ -5,26 +5,23 @@ import { AnimatedHeading } from "./ui/animated-heading";
 import { Card, CardContent } from "./ui/card";
 import professionalTranscript from "@/assets/img/ProgramPageImage/performacetranscribe.svg";
 
-const dashedCenterFadeGridStyle = {
-  backgroundImage: `
-    linear-gradient(to right, #e7e5e4 1px, transparent 1px),
-    linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
-  `,
-  backgroundSize: "10px 10px",
-  backgroundPosition: "0 0, 0 0",
-  maskImage: `
-    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-    radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-  `,
-  WebkitMaskImage: `
-    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-    radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-  `,
-  maskComposite: "intersect" as const,
-  WebkitMaskComposite: "source-in" as const,
+const perspectiveGreyGridStyle = {
+  WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%)",
+  backgroundImage:
+    "linear-gradient(#d4d4d8 1px, transparent 1px), linear-gradient(90deg, #d4d4d8 1px, transparent 1px)",
+  backgroundSize: "40px 25px",
+  bottom: 0,
+  height: "60%",
+  left: "50%",
+  maskImage: "linear-gradient(to bottom, transparent 0%, #000 30%, #000 100%)",
+  opacity: 0.45,
+  pointerEvents: "none" as const,
+  position: "absolute" as const,
+  transform: "translateX(-50%) perspective(300px) rotateX(45deg)",
+  width: "150%",
 };
+
+
 
 const PerformanceTranscript = () => {
   const containerRef = useRef(null);
@@ -63,7 +60,7 @@ const PerformanceTranscript = () => {
         <AnimatedHeading
           inView={headingInView}
           lines={[
-            { text: "Professional Performance Transcript (India Program)", className: "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-semibold text-text-primary leading-tight tracking-tight" },
+            { text: "Professional Performance Transcript (India Program)", className: "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold text-text-primary tracking-tighter leading-tight" },
           ]}
         />
       </div>
@@ -76,22 +73,13 @@ const PerformanceTranscript = () => {
         className="grid gap-6 sm:grid-cols-5"
       >
         {/* Card 1: Professional Performance Transcript (India Program) */}
-        <Card className="group relative overflow-hidden border border-neutral-200 ring ring-neutral-200 ring-offset-2 md:ring-offset-4 rounded-xl bg-white sm:col-span-3">
-          <div className="absolute inset-0 z-0 pointer-events-none" style={dashedCenterFadeGridStyle} />
-          <CardContent className="relative z-10 p-6 md:p-8 space-y-4 md:space-y-6">
-            <motion.div variants={cardVariants} className="space-y-3 md:space-y-10">
-              {/* <div>
-                <motion.p
-                  className="text-lg sm:text-xl md:text-2xl font-montserrat font-semibold text-text-primary leading-tight tracking-tight"
-                  initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
-                  whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  viewport={{ once: false, amount: 0.2 }}
-                  transition={{ duration: 1, ease: "easeOut" }}
-                >
-                  Professional Performance Transcript (India Program)
-                </motion.p>
-              </div> */}
-              <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed">
+        <Card className="group relative overflow-hidden border-none rounded-lg bg-white sm:col-span-3">
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <div style={perspectiveGreyGridStyle} />
+          </div>
+          <CardContent className="relative z-10 p-6 md:p-8 space-y-5 md:space-y-10">
+            <motion.div variants={cardVariants} className="space-y-4 md:space-y-12">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter-display font-medium text-text-primary leading-relaxed">
                 To meet the expectations of Indian enterprises, corporates, and institutional employers,
                 CYBERLABS INDIA provides an additional{" "}
                 <span className="font-semibold text-text-primary">
@@ -99,12 +87,12 @@ const PerformanceTranscript = () => {
                 </span>{" "}
                 alongside the primary certificate.
               </p>
-              <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter-display font-medium text-text-primary leading-relaxed">
                 This transcript offers a granular, skills-based evaluation of learner performance across
-                technical execution, investigative capability, and analytical decision-making-allowing
+                technical execution, investigative capability, and analytical decision-making—allowing
                 employers to clearly assess real-world readiness beyond course completion.
               </p>
-              <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter-display font-medium text-text-primary leading-relaxed">
                 The transcript{" "}
                 <span className="font-semibold text-text-primary">
                   complements
@@ -115,10 +103,11 @@ const PerformanceTranscript = () => {
             </motion.div>
           </CardContent>
         </Card>
+   
 
         {/* Card 2: Industry Recognition & Professional Alignment */}
-        <Card className="group relative overflow-hidden border border-neutral-200 ring ring-neutral-200 ring-offset-2 md:ring-offset-4 rounded-xl bg-white sm:col-span-2 flex flex-col min-h-0">
-          <div className="absolute inset-0 z-0 pointer-events-none" style={dashedCenterFadeGridStyle} />
+        <Card className="group relative overflow-hidden border-none bg-white sm:col-span-2 flex flex-col min-h-0">
+          <div className="absolute inset-0 z-0 pointer-events-none"  />
           <CardContent className="relative z-10 flex-1 flex flex-col min-h-0 p-3 md:p-4">
             <div className="relative flex-1 min-h-0 overflow-hidden flex items-center justify-center">
               <img
@@ -150,8 +139,8 @@ const PerformanceTranscript = () => {
         </Card> */}
 
         {/* Card 3: Graded Performance Framework table */}
-        <Card className="group relative overflow-hidden border border-neutral-200 ring ring-neutral-200 ring-offset-2 md:ring-offset-4 rounded-xl bg-white sm:col-span-5">
-          <div className="absolute inset-0 z-0 pointer-events-none" style={dashedCenterFadeGridStyle} />
+        <Card className="group relative overflow-hidden border-none  bg-white sm:col-span-5">
+          <div className="absolute inset-0 z-0 pointer-events-none"  />
           <CardContent className="relative z-10 p-6 md:p-8 space-y-4 md:space-y-6">
             <motion.div variants={cardVariants} className="space-y-3 md:space-y-4">
               <div>

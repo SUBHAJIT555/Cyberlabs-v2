@@ -9,7 +9,7 @@ import type { AnimatedListItem } from "../ui/animated-list";
 import cyberlabsIndiaImage from "../../assets/img/AboutPageImages/cyberlabsIndia.svg";
 
 const mainTitleBaseClass =
-  "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold tracking-tight leading-tight md:leading-normal inline";
+  "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold tracking-tighter leading-tight md:leading-normal inline";
 
 // List item icons
 const BriefcaseIcon = (
@@ -100,7 +100,7 @@ const AboutIndiaSection = () => {
 
   return (
     <section className="w-full px-5 md:px-10 lg:px-16">
-      <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
+      <div className="relative   bg-white overflow-hidden rounded-lg border border-neutral-200 ">
         <div
           className="absolute inset-0 z-0 pointer-events-none"
           style={{

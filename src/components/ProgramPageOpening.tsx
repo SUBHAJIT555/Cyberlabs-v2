@@ -4,7 +4,7 @@ import { AnimatedHeading } from "./ui/animated-heading";
 import { TechStackOrbitCarousel } from "./ui/TechStackOrbitCarousel";
 
 
-const headingBaseClass = "text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-montserrat font-semibold leading-[1.05] tracking-tight inline";
+const headingBaseClass = "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold tracking-tighter leading-tight inline";
 
 const ProgramPageOpening = () => {
     const sectionRef = useRef(null);
@@ -29,12 +29,12 @@ const ProgramPageOpening = () => {
                     />
                 </div>
 
-                {/* CONTENT GRID: Text Left, Tech Stack Carousel Right */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-                    {/* LEFT: TEXT CONTENT - staggered fade + blur on scroll */}
-                    <div className="space-y-6 md:space-y-8">
+                {/* CONTENT GRID: Text left, carousel right */}
+                <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] gap-8 md:gap-10 lg:gap-12 xl:gap-16 lg:items-center">
+                    {/* LEFT: text */}
+                    <div className="space-y-5 sm:space-y-6 md:space-y-8 min-w-0">
                         <motion.p
-                            className="text-lg md:text-xl lg:text-2xl font-inter-display font-medium text-text-primary leading-tight"
+                            className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter-display font-medium text-text-primary leading-snug md:leading-tight max-w-2xl"
                             initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                             viewport={{ once: false, amount: 0.3 }}
@@ -44,7 +44,7 @@ const ProgramPageOpening = () => {
                         </motion.p>
 
                         <motion.p
-                            className="text-lg md:text-xl lg:text-2xl font-inter-display font-medium text-text-primary leading-tight"
+                            className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter-display font-medium text-text-primary leading-snug md:leading-tight max-w-2xl"
                             initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                             viewport={{ once: false, amount: 0.3 }}
@@ -54,7 +54,7 @@ const ProgramPageOpening = () => {
                         </motion.p>
 
                         <motion.p
-                            className="text-2xl md:text-3xl lg:text-4xl font-montserrat font-semibold text-text-primary leading-tight pt-4"
+                            className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-inter-display font-semibold text-text-primary leading-snug md:leading-tight pt-2 sm:pt-4 max-w-2xl"
                             initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                             viewport={{ once: false, amount: 0.3 }}
@@ -65,38 +65,15 @@ const ProgramPageOpening = () => {
                         </motion.p>
                     </div>
 
-                    {/* RIGHT: Tech stack orbit carousel + DottedGlowBackground with masking (like GlobalThreat) */}
+                    {/* RIGHT: tech stack carousel */}
                     <motion.div
-                        className="relative w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] flex items-center justify-center overflow-hidden rounded-lg"
+                        className="relative w-full min-w-0 flex items-center justify-center py-6 sm:py-8 lg:py-0"
                         initial={{ opacity: 0, x: 48 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: false, amount: 0.25 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        {/* Fallback background */}
-                        <div className="absolute inset-0 " />
-
-                        {/* DottedGlowBackground - same as GlobalThreat */}
-                        {/* <div className="absolute inset-0 opacity-100">
-                            <DottedGlowBackground
-                                gap={16}
-                                radius={1.5}
-                                opacity={0.15}
-                                speedScale={0.5}
-                                color="rgba(43, 13, 62, 0.15)"
-                                glowColor="rgba(122, 63, 145, 0.25)"
-                                colorLightVar="--green-light"
-                                glowColorLightVar="--primary"
-                                colorDarkVar="--evening-dark"
-                                glowColorDarkVar="--text-primary"
-                            />
-                        </div> */}
-
-                        {/* Masking overlays - same as GlobalThreat */}
-                       
-
-                        {/* Content */}
-                        <div className="relative z-10 w-full flex items-center justify-center">
+                        <div className="relative z-10 w-full max-w-[min(100%,340px)] sm:max-w-[360px] lg:max-w-[380px] xl:max-w-[400px] mx-auto flex items-center justify-center">
                             <TechStackOrbitCarousel />
                         </div>
                     </motion.div>

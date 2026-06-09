@@ -26,6 +26,8 @@ import {
 } from "@/components/ui/input-group";
 import { Kbd } from "@/components/ui/kbd";
 import { useCourses } from "@/hooks/useCourses";
+import { useBootcamps } from "@/hooks/useBootcamps";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 import CallbackModal from "./CallbackModal";
 import { CONTACT } from "@/constants/contactInfo";
 
@@ -45,7 +47,9 @@ const Navbar: React.FC = () => {
     const navigate = useNavigate();
     const lenis = useLenis();
     const { getCourses } = useCourses();
+    const { getBootcamps } = useBootcamps();
     const courses = getCourses();
+    const bootcamps = getBootcamps();
 
     // Navigation items
     const navigationItems = [
@@ -125,6 +129,13 @@ const Navbar: React.FC = () => {
             filterByQuery(course.title) ||
             filterByQuery(course.category) ||
             filterByQuery(course.slug)
+    );
+
+    const filteredBootcamps = bootcamps.filter(
+        (bootcamp) =>
+            filterByQuery(bootcamp.title) ||
+            filterByQuery(bootcamp.slug) ||
+            filterByQuery(bootcamp.duration)
     );
 
     const filteredLegal = legalItems.filter(
@@ -366,13 +377,8 @@ const Navbar: React.FC = () => {
                                     </motion.button>
                                 </DrawerTrigger>
 
-                                <DrawerContent side="right" className="bg-white border-solid">
-                                    <DrawerHeader className="border-b border-neutral-300 border-solid bg-white"
-                                        style={{
-                                            background:
-                                                "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                                        }}
-                                    >
+                                <DrawerContent side="right" className="border-solid">
+                                    <DrawerHeader className="border-b border-neutral-300 border-solid bg-transparent">
                                         <Link to="/" onClick={() => setIsSidebarOpen(false)}>
                                             <motion.div
                                                 className="w-24 sm:w-28 md:w-32 lg:w-36 h-full relative"
@@ -383,12 +389,7 @@ const Navbar: React.FC = () => {
                                         </Link>
                                     </DrawerHeader>
 
-                                    <DrawerBody className="px-4 sm:px-6 lg:px-8 py-6 bg-white"
-                                        style={{
-                                            background:
-                                                "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                                        }}
-                                    >
+                                    <DrawerBody className="px-4 sm:px-6 lg:px-8 py-6 bg-transparent">
                                         <nav className="w-full">
                                             <div className="flex flex-col gap-2">
                                                 {navigationItems.map((item) => {
@@ -423,13 +424,7 @@ const Navbar: React.FC = () => {
                                         </nav>
                                     </DrawerBody>
 
-                                    <DrawerFooter
-                                        className="flex flex-col gap-4 border-solid"
-                                        style={{
-                                            background:
-                                                "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                                        }}
-                                    >
+                                    <DrawerFooter className="flex flex-col gap-4 border-solid bg-transparent">
                                         {/* Social Links */}
                                         <div className="flex items-center justify-center gap-4">
                                             <motion.a
@@ -501,18 +496,22 @@ const Navbar: React.FC = () => {
                         onTouchStart={(e) => e.stopPropagation()}
                     >
                         <div
-                            className="bg-white border border-neutral-200 ring ring-neutral-300 ring-offset-4 md:ring-offset-8 rounded-xl shadow-xl overflow-hidden flex flex-col"
+                            className="relative bg-white border border-neutral-200 ring ring-neutral-300 ring-offset-4 md:ring-offset-8 rounded-xl shadow-xl overflow-hidden flex flex-col"
                             style={{
-                                background:
-                                    "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                                maxHeight: 'calc(100vh - 160px)',
-                                display: 'flex',
-                                flexDirection: 'column',
+                                maxHeight: "calc(100vh - 160px)",
+                                display: "flex",
+                                flexDirection: "column",
                             }}
                             onKeyDown={handleCommandKeyDown}
                         >
+                            <div
+                                className="absolute inset-0 z-0 pointer-events-none"
+                                style={crosshatchBgStyle}
+                                aria-hidden
+                            />
+                            <div className="relative z-10 flex min-h-0 flex-1 flex-col">
                             {/* Header — CYBERLABS India + close (no search bar) */}
-                            <div className="px-3 sm:px-4 pt-3 pb-2 border-b border-neutral-300 bg-white/90 shrink-0">
+                            <div className="px-3 sm:px-4 pt-3 pb-2 border-b border-neutral-300 bg-transparent shrink-0">
                                 <div className="flex items-center justify-between px-2 py-1.5">
                                     <span className="text-base font-inter-display font-semibold text-text-primary">
                                         CYBERLABS INDIA
@@ -554,7 +553,7 @@ const Navbar: React.FC = () => {
 
                             {/* Modal Body */}
                             <div
-                                className="px-3 sm:px-4 py-2 bg-white"
+                                className="px-3 sm:px-4 py-2 bg-transparent"
                                 ref={commandScrollRef}
                                 onWheel={handleCommandWheel}
                                 onTouchMove={(e) => {
@@ -795,10 +794,10 @@ const Navbar: React.FC = () => {
                                         </ul>
                                     </div>
 
-                                    {/* Programs List */}
+                                    {/* Flagship Programs */}
                                     <div>
                                         <p className="px-1 mb-1 text-[10px] sm:text-xs font-inter-display font-semibold text-neutral-600 uppercase tracking-[0.16em]">
-                                            Cyber  Defence Programs
+                                            Flagship Programs
                                         </p>
                                         <ul className="space-y-0.5">
                                             {filteredCourses.map((course) => {
@@ -836,6 +835,56 @@ const Navbar: React.FC = () => {
                                                                 <span className="font-medium">{course.title}</span>
                                                                 <span className="text-[12px] font-inter-display font-medium sm:text-xs text-neutral-500">
                                                                     {course.category} • {course.duration}
+                                                                </span>
+                                                            </div>
+                                                        </Link>
+                                                    </li>
+                                                );
+                                            })}
+                                        </ul>
+                                    </div>
+
+                                    {/* Elite Bootcamps */}
+                                    <div>
+                                        <p className="px-1 mb-1 text-[10px] sm:text-xs font-inter-display font-semibold text-neutral-600 uppercase tracking-[0.16em]">
+                                            Elite Bootcamps
+                                        </p>
+                                        <ul className="space-y-0.5">
+                                            {filteredBootcamps.map((bootcamp) => {
+                                                const url = `/cyber-defense-programs/bootcamp/${bootcamp.slug}`;
+                                                return (
+                                                    <li key={bootcamp.slug}>
+                                                        <Link
+                                                            to={url}
+                                                            onMouseEnter={() => setActiveCommandUrl(url)}
+                                                            onClick={() => {
+                                                                setIsCommandOpen(false);
+                                                                setSearchQuery("");
+                                                            }}
+                                                            className="flex items-start gap-2 px-2.5 py-1.5 rounded-md hover:bg-neutral-100 text-sm sm:text-base font-inter-display text-text-primary"
+                                                        >
+                                                            <span className="text-neutral-500 shrink-0 mt-0.5">
+                                                                <svg
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    width="18"
+                                                                    height="18"
+                                                                    viewBox="0 0 24 24"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    strokeWidth="2"
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    className="icon icon-tabler icons-tabler-outline icon-tabler-terminal"
+                                                                >
+                                                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                                                    <path d="M5 7l5 5l-5 5" />
+                                                                    <path d="M12 19h7" />
+                                                                </svg>
+                                                            </span>
+                                                            <div className="flex flex-col">
+                                                                <span className="font-medium">{bootcamp.title}</span>
+                                                                <span className="text-[12px] font-inter-display font-medium sm:text-xs text-neutral-500">
+                                                                    Elite Boot Camp • {bootcamp.duration}
                                                                 </span>
                                                             </div>
                                                         </Link>
@@ -1059,7 +1108,7 @@ const Navbar: React.FC = () => {
                             </div>
 
                             {/* Footer hints */}
-                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 border-t border-neutral-300  bg-white/90 shrink-0">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 border-t border-neutral-300 bg-transparent shrink-0">
                                 <p className="text-[10px] sm:text-xs font-inter-display text-neutral-500 text-center sm:text-left">
                                     Use your mouse or keyboard to navigate. Press{" "}
                                     <span className="font-semibold">Enter</span> to open.
@@ -1074,6 +1123,7 @@ const Navbar: React.FC = () => {
                                         <span>Close</span>
                                     </span>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     </div>

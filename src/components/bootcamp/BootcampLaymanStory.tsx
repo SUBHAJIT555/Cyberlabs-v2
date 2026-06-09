@@ -1,7 +1,6 @@
 import { useRef } from "react";
-import { useParams } from "react-router";
 import { motion, useInView, type Variants } from "framer-motion";
-import { useBootcamps } from "@/hooks/useBootcamps";
+import { usePageDetail } from "@/hooks/useProgramDetail";
 import laymansStoryImage from "@/assets/img/ProgramPageImage/LaymansStory.svg";
 
 const getHighlightedHeading = (heading: string) => {
@@ -21,9 +20,7 @@ const getHighlightedHeading = (heading: string) => {
 };
 
 const BootcampLaymanStory = () => {
-    const { slug } = useParams();
-    const { getBootcampDetailBySlug } = useBootcamps();
-    const layman = getBootcampDetailBySlug(slug as string)?.laymanExplanation;
+    const layman = usePageDetail()?.laymanExplanation;
 
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: true, margin: "-100px" });

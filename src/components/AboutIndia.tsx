@@ -3,11 +3,12 @@ import type { Variants } from "framer-motion";
 import { useRef } from "react";
 import aboutIndiaImage from "../assets/img/Home/ABOUTCYBERLABSINDIA.webp";
 import { AnimatedHeading } from "./ui/animated-heading";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 // import weUnderstandYou from "../assets/img/Home/weUnderstand.webp";
 
 
 
-const mainTitleBaseClass = "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold tracking-tight leading-tight md:leading-normal inline";
+const mainTitleBaseClass = "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold tracking-tighter leading-tight md:leading-normal inline";
 
 const AboutIndia = () => {
   const titleRef = useRef<HTMLDivElement>(null);
@@ -108,7 +109,7 @@ const AboutIndia = () => {
           {/* Left side text content */}
           <div ref={leftContentRef} className="space-y-6 md:space-y-8">
             <motion.h3
-              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-inter-display text-primary font-bold mb-3 md:mb-4 leading-tight md:leading-normal tracking-tight"
+              className="text-xl sm:text-2xl md:text-3xl font-inter-display text-primary font-bold mb-3 md:mb-4 leading-tight md:leading-normal tracking-tight"
               initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
               whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={{ once: false, amount: 0.2 }}
@@ -157,12 +158,14 @@ const AboutIndia = () => {
                   <motion.div
                     key={index}
                     variants={tagVariants}
-                    className="px-2 md:px-3 py-1 md:py-1 border border-neutral-200 rounded-xl bg-white text-text-primary text-sm sm:text-base md:text-lg font-inter-display transition-colors ring ring-neutral-300 ring-offset-2 md:ring-offset-4" style={{
-                      background:
-                        "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                    }}
+                    className="relative overflow-hidden px-2 md:px-3 py-1 md:py-1 border border-neutral-200 rounded-lg bg-white text-text-primary text-sm sm:text-base md:text-lg font-inter-display transition-colors font-medium "
                   >
-                    {tag}
+                    <div
+                      className="absolute inset-0 z-0 pointer-events-none"
+                      style={crosshatchBgStyle}
+                      aria-hidden
+                    />
+                    <span className="relative z-10">{tag}</span>
                   </motion.div>
                 ))}
               </motion.div>
@@ -192,7 +195,7 @@ const AboutIndia = () => {
             className="lg:sticky lg:top-24 relative"
           >
 
-            <div className="overflow-hidden rounded-xl border border-neutral-200 ring ring-neutral-300 ring-offset-4 md:ring-offset-8">
+            <div className="overflow-hidden border border-neutral-200 ring ring-neutral-300 shadow-xl">
               {/* <div className="flex absolute bottom-1/3 md:bottom-[60%] -right-10 sm:-right-18 md:-right-20 lg:-right-10  items-center justify-center flex-col animate-float">
                 <img className="lg:w-50 w-40 sm:w-60" alt="" fetchPriority="high" loading="eager" src={weUnderstandYou} />
                 <h2 className="absolute flex w-10 justify-center -mt-5 leading-tight sm:-mt-10 font-inter-display text-white  font-medium text-center">
@@ -203,7 +206,7 @@ const AboutIndia = () => {
               <img
                 src={aboutIndiaImage}
                 alt="About CYBERLABS INDIA"
-                className="w-full h-auto object-cover rounded-xl "
+                className="w-full h-auto object-cover"
               />
             </div>
 

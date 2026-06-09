@@ -9,11 +9,9 @@ import FullStackCyberDefenseAndOffensiveSecurityImage from "@/assets/img/Program
 import {
   TbCompass,
   TbShieldLock,
-  TbBrandPython,
   TbUserShield,
   TbCurrencyBitcoin,
   TbSword,
-  TbRosetteDiscountCheck,
   TbTopologyStar,
   TbAlertTriangle,
   TbChartArrows,
@@ -27,7 +25,6 @@ import {
   TbEyeOff,
   TbFingerprint,
   TbMapSearch,
-  TbListSearch,
 } from "react-icons/tb";
 
 export const courses: Course[] = [
@@ -94,8 +91,9 @@ export const courses: Course[] = [
     description:
       "Most cybersecurity programs stop at prevention-firewalls, alerts, and controls. This 145-hour advanced investigation program is for people who want to understand what happens after the breach. Delivered under the global training framework of CYBERLABS USA, it trains you to operate inside the real business of cybercrime-from dark web marketplaces and scam ecosystems to cryptocurrency laundering, attribution, and intelligence reporting. This is not a hacking course; it is a professional cybercrime investigation program built for the modern digital threat landscape.",
     descriptionParagraphs: [
-      "Most cybersecurity programs stop at prevention-firewalls, alerts, and controls. This **145-hour advanced investigation program** is designed for those who want to understand **what happens after the breach.**",
-      "Delivered under the global training framework of **CYBERLABS USA**, this program trains you to operate inside the **real business of cybercrime**-from dark web marketplaces and scam ecosystems to cryptocurrency laundering, attribution, and intelligence reporting.",
+      "Most cybersecurity programs stop at prevention—firewalls, alerts, and controls.",
+      "This **145-hour advanced investigation program** is designed for those who want to understand **what happens after the breach.**",
+      "Delivered under the global training framework of **CYBERLABS USA**, this program trains you to operate inside the **real business of cybercrime**—from dark web marketplaces and scam ecosystems to cryptocurrency laundering, attribution, and intelligence reporting.",
       "This is not a hacking course. It is a **professional cybercrime investigation program** built for the modern digital threat landscape.",
     ],
     certifications: [
@@ -178,6 +176,32 @@ export const courses: Course[] = [
     ],
 
     // why this program different data
+    programWhatsNew: {
+      heading: "5. Why This Program Stands Apart in the Indian Market",
+      items: [
+        {
+          title: "Investigation Over Exploitation",
+          text: "Most Indian courses teach how to break in. This program teaches how to find who broke in—a rarer and higher-value skill.",
+        },
+        {
+          title: "Closing the Crypto Investigation Gap",
+          text: "India has one of the world's highest crypto adoption and fraud rates, yet very few programs teach blockchain forensics at depth.",
+        },
+        {
+          title: "Simulation-Driven, Remote-First Labs",
+          text: "Training mirrors how global investigation teams actually work—distributed, remote, and evidence-driven.",
+        },
+        {
+          title: "Evidence & Legal Focus",
+          text: "",
+        },
+        {
+          title: "",
+          text: "Many investigations fail due to poor evidence handling. This program trains you to meet Indian IT Act requirements and global legal standards.",
+        },
+      ],
+      closingParagraph: "",
+    },
     whatsNew: {
       heading: {
         title: "Why This Program Stands Apart in the Indian Market",
@@ -230,15 +254,15 @@ export const courses: Course[] = [
 
     // layman story data
     laymanExplanation: {
-      heading: 'The Layman’s Explanation - The "Digital Detective" Story',
+      heading: '3. The Layman\'s Explanation — The "Digital Detective" Story',
       lines: [
         "Imagine a bank robbery.",
-        "Traditional cybersecurity is the guard at the door - trying to stop the thief from getting in.",
+        "Traditional cybersecurity is the guard at the door—trying to stop the thief from getting in.",
         "This program trains you to be the lead detective.",
         "If the thief gets inside and steals the money, your job begins.",
         "You learn how to follow the digital breadcrumbs they leave behind. If they hide behind anonymity (the Dark Web), you learn how to see through it.",
         "If they move the money into cryptocurrency, you learn how to follow the money trail across blockchains.",
-        "You’re not just protecting systems. You’re solving crimes and removing hiding places.",
+        "You're not just protecting systems. You're solving crimes and removing hiding places.",
       ],
     },
 
@@ -265,8 +289,8 @@ export const courses: Course[] = [
 
     // New Component data
     programDeepDive: {
-      title: "Deep Dive: Point-by-Point Program Breakdown",
-      subtitle: "145 Total Academic Hours - A True Investigation Residency",
+      title: "1. Deep Dive: Point-by-Point Program Breakdown",
+      subtitle: "145 Total Academic Hours — A True Investigation Residency",
       paragraphs: [
         "This is not a short certification or overview course. The program is structured as a **deep-dive investigation residency**, where each module is designed to ensure **mastery, not surface familiarity**.",
         "You spend meaningful time inside each investigative domain, working through realistic scenarios, evidence, and intelligence workflows.",
@@ -290,7 +314,7 @@ export const courses: Course[] = [
       },
       {
         id: 2,
-        title: "Dark Web Lab",
+        title: "The Dark Web Lab",
         icon: TbEyeOff,
         content: [
           {
@@ -416,6 +440,8 @@ export const courses: Course[] = [
     ],
 
     // Career opportunities chart data
+    careerIntro:
+      "As organizations shift from pure prevention to active response and investigation, demand for cyber investigators is at an all-time high.",
     careerChart: [
       {
         jobRole: "Crypto Forensic Analyst",
@@ -505,13 +531,13 @@ export const courses: Course[] = [
 
     // program description data
     programTagLine:
-      "Go Beyond Hacking. Learn How Real Platforms Fail - and How They Are Defended.",
+      "Go Beyond Hacking. Learn How Real Platforms Fail — and How They Are Defended.",
     description:
-      'Most cybersecurity courses teach you how to exploit vulnerabilities. Very few teach you how large digital platforms actually break in the real world. This 145-hour advanced program, delivered under the global training framework of CYBERLABS USA, is built for professionals who want to operate at the intersection of platform security, identity systems, abuse prevention, and Trust & Safety engineering. You will not learn how to "hack apps"-you will learn how attackers abuse features, identities, APIs, and business logic at scale, and how real companies detect, prevent, and enforce against that abuse.',
+      'Most cybersecurity courses teach you how to exploit vulnerabilities. Very few teach you how large digital platforms actually break in the real world. This 145-hour advanced program, delivered under the global training framework of CYBERLABS USA, is built for those who want to operate at the intersection of platform security, identity systems, abuse prevention, and Trust & Safety engineering. You will not learn how to "hack apps." You will learn how attackers abuse features, identities, APIs, and business logic at scale—and how real companies detect, prevent, and enforce against that abuse.',
     descriptionParagraphs: [
       "Most cybersecurity courses teach you how to exploit vulnerabilities. Very few teach you how **large digital platforms actually break in the real world.**",
       "This **145-hour advanced program**, delivered under the global training framework of **CYBERLABS USA**, is built for those who want to operate at the intersection of **platform security, identity systems, abuse prevention, and Trust & Safety engineering.**",
-      'You will not learn how to "hack apps." You will learn how **attackers abuse features, identities, APIs, and business logic at scale**-and how real companies detect, prevent, and enforce against that abuse.',
+      'You will not learn how to "hack apps." You will learn how **attackers abuse features, identities, APIs, and business logic at scale**—and how real companies detect, prevent, and enforce against that abuse.',
     ],
     certifications: [
       "Platform Defense",
@@ -539,64 +565,90 @@ export const courses: Course[] = [
         module: "Module 1",
         focusArea: "Platform Architecture",
         whatYouLearn:
-          "SaaS, mobile, and cloud platform design, data flows, and trust boundaries.",
+          "SaaS, mobile, and cloud platform design, data flows, and trust boundaries",
       },
       {
         module: "Module 2",
         focusArea: "Security Failure Modes",
         whatYouLearn:
-          "Why secure designs fail in production and how assumptions break at scale.",
+          "Why secure designs fail in production and how assumptions break at scale",
       },
       {
         module: "Module 3",
         focusArea: "Identity & Authentication Systems",
         whatYouLearn:
-          "Sessions, tokens, OAuth flows, account recovery, and common identity abuse paths.",
+          "Sessions, tokens, OAuth flows, account recovery, and identity abuse",
       },
       {
         module: "Module 4",
         focusArea: "Feature & Business Logic Abuse",
         whatYouLearn:
-          "The difference between exploitation and abuse, attacker ROI, and how legitimate features are misused.",
+          "Abuse vs exploitation, attacker economics, and misuse of legitimate features",
       },
       {
         module: "Module 5",
         focusArea: "Mobile Application Abuse",
         whatYouLearn:
-          "Client-side trust issues, permission abuse, and mobile-specific threat vectors.",
+          "Client-side trust issues, permissions abuse, and mobile threat vectors",
       },
       {
         module: "Module 6",
         focusArea: "API & Backend Abuse",
         whatYouLearn:
-          "Authorization failures, logic flaws, and large-scale abuse of backend and API surfaces.",
+          "Authorization failures, logic flaws, and large-scale abuse scenarios",
       },
       {
         module: "Module 7",
         focusArea: "Automation, Bots & Scam Ops",
         whatYouLearn:
-          "Fraud automation, fake accounts, scam funnels, and detection of abuse at scale.",
+          "Fraud automation, fake accounts, and abuse-at-scale detection",
       },
       {
         module: "Module 8",
         focusArea: "OSINT & Intelligence Correlation",
         whatYouLearn:
-          "Cross-platform identity analysis and confidence-based attribution without over-claiming.",
+          "Cross-platform identity analysis and confidence-based attribution",
       },
       {
         module: "Module 9",
         focusArea: "Detection & Enforcement Engineering",
         whatYouLearn:
-          "Designing detection signals, thresholds, and Trust & Safety enforcement workflows.",
+          "Designing signals, enforcement logic, and Trust & Safety workflows",
       },
       {
         module: "Final Assessment",
         focusArea: "Platform Abuse Investigation",
         whatYouLearn:
-          "End-to-end analysis of a platform abuse case and design of a realistic defense strategy.",
+          "End-to-end platform abuse case analysis and defense strategy",
       },
     ],
 
+    programWhatsNew: {
+      heading: "5. Why This Program Stands Apart in the Indian Market",
+      items: [
+        {
+          title: "Abuse > Exploits",
+          text: "Indian courses focus on hacking. Global platforms hire for abuse defense and Trust & Safety.",
+        },
+        {
+          title: "Built for SaaS & Mobile Reality",
+          text: "India is a SaaS and fintech hub—this program matches that reality.",
+        },
+        {
+          title: "Architecture-First Thinking",
+          text: "You learn why systems fail, not just how to test them.",
+        },
+        {
+          title: "Investigation-Driven, Not Tool-Driven",
+          text: "Tools change. Thinking doesn't.",
+        },
+        {
+          title: "Direct Alignment with Global Platform Roles",
+          text: "This is how Google, Meta, Stripe, and Uber actually defend platforms.",
+        },
+      ],
+      closingParagraph: "",
+    },
     // why this program is different
     whatsNew: {
       heading: {
@@ -655,9 +707,9 @@ export const courses: Course[] = [
 
     // layman story data
     laymanExplanation: {
-      heading: "The Layman’s Explanation - The “Platform Guardian” Story",
+      heading: '3. The Layman\'s Explanation — The "Platform Guardian" Story',
       lines: [
-        "Imagine a large online platform-payments, rides, social media, or e-commerce.",
+        "Imagine a large online platform—payments, rides, social media, or e-commerce.",
         "Traditional security tries to keep hackers out.",
         "This program trains you to protect the platform after users are already inside.",
         "You learn how:",
@@ -691,16 +743,15 @@ export const courses: Course[] = [
         "Operate effectively in Platform Security or Trust & Safety teams",
       ],
       closingStatement:
-        "This is not junior-level knowledge. This is production-relevant capability",
+        "This is not junior-level knowledge. This is production-relevant capability.",
     },
 
-    // New Component data
     programDeepDive: {
-      title: "Deep Dive: Point-by-Point Program Breakdown",
-      subtitle: "145 Total Academic Hours - Platform Defense Residency",
+      title: "1. Deep Dive: Point-by-Point Program Breakdown",
+      subtitle: "145 Total Academic Hours — Platform Defense Residency",
       paragraphs: [
         "This is not a bug bounty or penetration testing course.",
-        "It is a **deep**, **investigation-driven residency** designed to teach how modern SaaS platforms, mobile apps, and APIs fail under real-world conditions-and how defenders respond.",
+        "It is a **deep**, **investigation-driven residency** designed to teach how modern SaaS platforms, mobile apps, and APIs fail under real-world conditions—and how defenders respond.",
         "Each module focuses on **architecture, assumptions, abuse paths, and enforcement logic**, not tools.",
       ],
     },
@@ -738,7 +789,7 @@ export const courses: Course[] = [
         content: [
           {
             paragraphs: [
-              'Secure designs fail-not because they are "bad," but because assumptions don\'t hold at scale.',
+              'Secure designs fail—not because they are "bad," but because assumptions don\'t hold at scale.',
               "This module teaches you how to:",
             ],
             points: [
@@ -762,6 +813,7 @@ export const courses: Course[] = [
           {
             paragraphs: [
               "Identity is the most abused layer in modern platforms.",
+              "You analyze:",
             ],
             points: [
               "OAuth flows, tokens, and sessions",
@@ -778,7 +830,7 @@ export const courses: Course[] = [
       },
       {
         id: 4,
-        title: "Abuse vs Hacking - The Critical Shift",
+        title: "Abuse vs Hacking — The Critical Shift",
         icon: TbChartArrows,
         content: [
           {
@@ -829,7 +881,7 @@ export const courses: Course[] = [
         content: [
           {
             paragraphs: [
-              "APIs are the backbone-and the weakest link-of modern platforms.",
+              "APIs are the backbone—and the weakest link—of modern platforms.",
               "You learn to analyze:",
             ],
             points: [
@@ -931,68 +983,64 @@ export const courses: Course[] = [
     ],
 
     // Career opportunities chart data
+    careerIntro:
+      "Platform abuse defense is one of the fastest-growing cybersecurity domains globally.",
     careerChart: [
       {
         jobRole: "Platform Security Engineer",
-        whatYouDo:
-          "Design and defend SaaS and cloud platforms against abuse and misuse.",
+        whatYouDo: "Defend SaaS and cloud platforms",
         exampleEmployers: "Google, Meta, Amazon",
       },
       {
         jobRole: "Trust & Safety Analyst",
-        whatYouDo:
-          "Detect, investigate, and prevent user and content abuse at scale.",
+        whatYouDo: "Detect and prevent user abuse",
         exampleEmployers: "Uber, Airbnb, Stripe",
       },
       {
         jobRole: "Identity Security Engineer",
-        whatYouDo:
-          "Secure authentication, authorization, and account lifecycle flows.",
+        whatYouDo: "Secure authentication systems",
         exampleEmployers: "Microsoft, Okta",
       },
       {
         jobRole: "Abuse Prevention Specialist",
-        whatYouDo:
-          "Design and operate controls that stop fraud, scams, and automation.",
+        whatYouDo: "Stop fraud and automation",
         exampleEmployers: "Paytm, PhonePe, Razorpay",
       },
       {
         jobRole: "Product Security Analyst",
-        whatYouDo:
-          "Secure product features and business logic for modern SaaS and fintech firms.",
-        exampleEmployers: "Leading fintech & SaaS companies",
+        whatYouDo: "Secure features, not just code",
+        exampleEmployers: "Fintech & SaaS firms",
       },
     ],
   },
 
-  // Full-Stack Cyber Defense & Offensive Security - 3
+  // Cybersecurity Practitioner Program - 3
   {
     id: 3,
     slug: "build-complete-cyber-capability-full-stack-cyber-defense-and-offensive-security",
     title:
-      "Build Complete Cyber Capability: Full-Stack Cyber Defense & Offensive Security",
-    subheading: "Build Complete Cyber Capability",
+      "From Foundations to Operations: Cybersecurity Practitioner Program",
+    subheading: "From Foundations to Operations",
     category: "Full-Stack Cybersecurity",
     language: "English",
     instructor: "Cyber Operations Expert",
-    duration: "430 Hours",
+    duration: "450 Hours",
     image: FullStackCyberDefenseAndOffensiveSecurityImage,
     originalPrice: 3500,
     currentPrice: 2500,
     discount: 29,
 
-    // program hero section data
     hero: {
-      title: "Full-Stack Cyber Defense & Offensive Security",
-      subheading: "Build Complete Cyber Capability",
+      title: "Cybersecurity Practitioner Program",
+      subheading: "From Foundations to Operations",
       tags: [
         { text: "Full-Stack Cybersecurity" },
-        { text: "Offensive & Defensive" },
-        { text: "Cyber Operations" },
-        { text: "430 Hours" },
-        { text: "Multi-Phase Program" },
+        { text: "Cyber Defense" },
+        { text: "Security Operations" },
+        { text: "10 Phases" },
+        { text: "450 Hours" },
         { text: "Hands-on Labs" },
-        { text: "Beginner to Advanced" },
+        { text: "Beginner to Operations" },
         { text: "Capstone Project" },
       ],
       pricing: {
@@ -1013,232 +1061,142 @@ export const courses: Course[] = [
       },
       image: {
         src: FullStackCyberDefenseAndOffensiveSecurityImage,
-        alt: "Full-Stack Cyber Defense & Offensive Security",
+        alt: "From Foundations to Operations: Cybersecurity Practitioner Program",
       },
       details: [
         { label: "Language", value: "English" },
         { label: "Certificate", value: "YES" },
         { label: "Schedule", value: "Flexible" },
-        { label: "Duration", value: "430 Hours" },
+        { label: "Duration", value: "450 Hours" },
       ],
     },
 
-    // program description data
     programTagLine:
-      "Learn How Attacks Really Happen - and How Real Defenders Stop Them.",
+      "Build the Knowledge, Skills, and Operational Mindset Required to Thrive in Modern Cybersecurity.",
     description:
-      "Cybersecurity is not a single skill; it is a stack of disciplines-systems, networks, applications, identity, automation, offense, defense, and investigation. This 430-hour immersive program, delivered under the global training framework of CYBERLABS USA, takes learners from foundational digital literacy to advanced cyber operations, covering both offensive security and defensive response in a single, structured journey. This is not a crash course; it is a full-stack cybersecurity residency built for those who want real, long-term careers in cyber defense, red teaming, and security operations.",
+      "Cybersecurity is no longer a niche technical discipline. Organizations today require professionals who can understand systems, secure networks, analyze threats, investigate incidents, support security operations, and contribute to the protection of critical digital infrastructure. This 450-hour immersive program, delivered under the global training framework of CYBERLABS USA, is designed to take learners from foundational cybersecurity concepts to real-world operational readiness through a structured and comprehensive learning journey. Unlike fragmented programs that focus on isolated technologies, certifications, or tools, this program develops a complete understanding of how modern cybersecurity functions across systems, networks, security controls, monitoring, incident response, investigations, and cyber defense operations. This is not a certification preparation course. It is a professional cybersecurity development pathway designed to build the technical foundations, defensive mindset, investigative thinking, and operational awareness required for long-term success in cybersecurity.",
     descriptionParagraphs: [
-      "Cybersecurity is not a single skill. It is a **stack of disciplines**-systems, networks, applications, identity, automation, offense, defense, and investigation.",
-      "This **430-hour immersive program**, delivered under the global training framework of **CYBERLABS USA**, is designed to take learners from **foundational digital literacy to advanced cyber operations**, covering both **offensive security** and **defensive response** in a single, structured journey.",
-      "This is not a crash course. It is a **full-stack cybersecurity residency** built for those who want real, long-term careers in cyber defense, red teaming, and security operations.",
+      "Cybersecurity is no longer a niche technical discipline.",
+      "Organizations today require professionals who can understand systems, secure networks, analyze threats, investigate incidents, support security operations, and contribute to the protection of critical digital infrastructure.",
+      "This **450-hour immersive program**, delivered under the global training framework of **CYBERLABS USA**, is designed to take learners from foundational cybersecurity concepts to real-world operational readiness through a structured and comprehensive learning journey.",
+      "Unlike fragmented programs that focus on isolated technologies, certifications, or tools, this program develops a complete understanding of how modern cybersecurity functions across systems, networks, security controls, monitoring, incident response, investigations, and cyber defense operations.",
+      "This is not a certification preparation course. It is a **professional cybersecurity development pathway** designed to build the technical foundations, defensive mindset, investigative thinking, and operational awareness required for long-term success in cybersecurity.",
     ],
     certifications: [
-      "Full-Stack Cyber Defense",
-      "Offensive Security",
-      "Cyber Operations",
+      "Cyber Defense",
+      "Security Operations",
+      "Incident Response",
     ],
     idealFor:
-      "Beginners and early-career professionals who want an end-to-end path into cyber defense, red teaming, and security operations, as well as IT professionals transitioning into cybersecurity.",
+      "Beginners and early-career professionals seeking a complete pathway into cybersecurity operations, as well as IT professionals transitioning into cyber defense and security analyst roles.",
     whatYouLearn: [
-      "Core systems, networking, and security fundamentals",
-      "Offensive security and adversary techniques",
-      "Defensive architecture and mitigation strategies",
-      "Automation and scripting for cyber operations",
-      "Investigation, OSINT, and crypto analysis",
-      "Professional reporting and operational discipline",
-      "Readiness for SOC, red team, and security analyst roles.",
-      "Foundation to specialize into platform security or investigations.",
-      "Portfolio of capstone and lab work for real-world interviews.",
+      "Information Security & Cyber Defense Fundamentals",
+      "Systems Administration & Security Hardening",
+      "Networking & Traffic Analysis",
+      "Security Controls & Defensive Architecture",
+      "Threat Detection & Monitoring",
+      "SIEM & Security Operations Fundamentals",
+      "Incident Response & Resilience Planning",
+      "Introductory Offensive Security Methodologies",
+      "Digital Forensics & Investigations",
+      "Professional Reporting & Operational Discipline",
     ],
 
-    // Program Module Chart data
     moduleChart: [
       {
-        module: "Week 1",
-        focusArea: "Course Orientation, Digital Literacy",
-        hours: "10 hours",
+        module: "Phase 1",
+        focusArea: "Foundations & Security Context (40 Hours)",
         whatYouLearn:
-          "Cybersecurity intro, practical course setup, goals, ethics, learning plan",
+          "Information Security, Cyber Defense, Law & Ethics, Professional Responsibility, Physical Security Fundamentals, Threat Modeling & Foundational Labs",
       },
       {
-        module: "Week 2",
-        focusArea: "Core Computing & OS Fundamentals",
-        hours: "10 hours",
+        module: "Phase 2",
+        focusArea: "Systems & Operating Systems (70 Hours)",
         whatYouLearn:
-          "Windows/Linux basics, files/folders, permissions, installations, VMs",
+          "Computer Architecture, Windows & Linux Fundamentals, Access Control, Active Directory, Authentication, Authorization, Server Security & System Hardening",
       },
       {
-        module: "Week 3",
-        focusArea: "Core Computing & OS Fundamentals",
-        hours: "10 hours",
+        module: "Phase 3",
+        focusArea: "Networking Fundamentals (55 Hours)",
         whatYouLearn:
-          "Bash, CLI skills, user management, OS commands, troubleshooting",
+          "OSI Model, TCP/IP, Routing, DNS, DHCP, VLANs, Packet Analysis, Wireshark, Network Troubleshooting & Practical Labs",
       },
       {
-        module: "Week 4",
-        focusArea: "Core Computing & OS Fundamentals",
-        hours: "10 hours",
+        module: "Phase 4",
+        focusArea: "Core Security Controls (55 Hours)",
         whatYouLearn:
-          "System tools, file systems, virtualization, hands-on labs",
+          "Firewalls, IDS/IPS, VPNs, Encryption, Authentication, Secure Communications, Network Segmentation & Zero Trust Concepts",
       },
       {
-        module: "Week 5",
-        focusArea: "Networking & Internet Essentials",
-        hours: "10 hours",
+        module: "Phase 5",
+        focusArea: "Threats & Security Domains (45 Hours)",
         whatYouLearn:
-          "Overview, OSI & TCP/IP, IP addressing, devices, networking basics",
+          "Malware Analysis Concepts, Anomaly Detection, Application Security, OWASP Top 10, Database Security, Data Protection & DLP Awareness",
       },
       {
-        module: "Week 6",
-        focusArea: "Networking & Internet Essentials",
-        hours: "10 hours",
+        module: "Phase 6",
+        focusArea: "Monitoring & Detection – Blue Team Core (55 Hours)",
         whatYouLearn:
-          "Protocols (ARP, DHCP, DNS, HTTP), Wireshark, live demonstrations",
+          "Security Logging, Auditing, SIEM Platforms, Alert Triage, MITRE ATT&CK Mapping, Threat Detection & Advanced Traffic Analysis",
       },
       {
-        module: "Week 7",
-        focusArea: "Networking & Internet Essentials",
-        hours: "10 hours",
-        whatYouLearn: "Routing, subnetting, firewalls, VPNs, troubleshooting",
-      },
-      {
-        module: "Week 8",
-        focusArea: "Networking & Internet Essentials",
-        hours: "5 hours",
-        whatYouLearn: "Advanced network labs, VLANs, defense scenarios",
-      },
-      {
-        module: "Week 9",
-        focusArea: "InfoSec Fundamentals",
-        hours: "10 hours",
+        module: "Phase 7",
+        focusArea: "Incident Response & Resilience (45 Hours)",
         whatYouLearn:
-          "Security concepts, CIA triad, risk assessment, threat modeling",
+          "Incident Response Lifecycle, SOC Operations, Business Continuity, Disaster Recovery, Cloud Security & Operational Resilience",
       },
       {
-        module: "Week 10",
-        focusArea: "InfoSec Fundamentals",
-        hours: "10 hours",
-        whatYouLearn: "Authentication, passwords, security controls",
-      },
-      {
-        module: "Week 11",
-        focusArea: "InfoSec Fundamentals",
-        hours: "10 hours",
-        whatYouLearn: "Basic cryptography, real-world encryption, malware",
-      },
-      {
-        module: "Week 12",
-        focusArea: "InfoSec Fundamentals",
-        hours: "5 hours",
+        module: "Phase 8",
+        focusArea: "Introduction to Offensive Security (35 Hours)",
         whatYouLearn:
-          "Advanced auth, multi-factor, applied crypto/hashing tools",
+          "Penetration Testing Methodology, Reconnaissance, Enumeration, Nmap Scanning, OSINT & Reporting Fundamentals",
       },
       {
-        module: "Week 13",
-        focusArea: "Python & Scripting for Beginners",
-        hours: "10 hours",
-        whatYouLearn: "Python syntax, data types, structures, scripting basics",
-      },
-      {
-        module: "Week 14",
-        focusArea: "Python & Scripting for Beginners",
-        hours: "10 hours",
+        module: "Phase 9",
+        focusArea: "Digital Forensics & Investigations (20 Hours)",
         whatYouLearn:
-          "File I/O, libraries, automating tasks, cyber scripting project",
+          "Evidence Handling, Chain of Custody, Timeline Analysis, Investigation Methodologies & Reporting",
       },
       {
-        module: "Week 15",
-        focusArea: "Python & Scripting for Beginners",
-        hours: "10 hours",
+        module: "Final Phase",
+        focusArea: "Integrated Cybersecurity Operations Capstone (30 Hours)",
         whatYouLearn:
-          "Socket programming, build tools (scanner, keylogger), practice labs",
-      },
-      {
-        module: "Week 16-17",
-        focusArea: "Social Media Security & Intelligence",
-        hours: "20 hours",
-        whatYouLearn:
-          "OSINT, privacy, account protection, social engineering, investigations, impersonation, monitoring",
-      },
-      {
-        module: "Week 18-19",
-        focusArea: "Introduction to Ethical Hacking",
-        hours: "20 hours",
-        whatYouLearn:
-          "Ethics vs. illegal hacking, responsible disclosure, methods, Kali toolkit, OWASP Top 10, threat mod.",
-      },
-      {
-        module: "Week 20-21",
-        focusArea: "Ethical Hacking Tools & Defense",
-        hours: "20 hours",
-        whatYouLearn:
-          "Kali, Nmap, Metasploit, Burp Suite, configuring tools, firewalls, hardening, antivirus, response",
-      },
-      {
-        module: "Week 22-25",
-        focusArea: "Application Hacking: Manual/Automated",
-        hours: "45 hours",
-        whatYouLearn:
-          "Web structures, HTML/JS/CSS, HTTP analysis, SQLi, XSS, CSRF, hands-on labs, CTF, secure coding",
-      },
-      {
-        module: "Week 26-28",
-        focusArea: "Mobile Hacking & Security",
-        hours: "30 hours",
-        whatYouLearn:
-          "Android/iOS, threat landscape, reverse engineering, forensics, pentest labs, API security",
-      },
-      {
-        module: "Week 29-32",
-        focusArea: "Intermediate Pentesting & Exploitation",
-        hours: "40 hours",
-        whatYouLearn:
-          "Scanning, enumeration, buffer overflows, exploitation, privesc, pivoting, reporting",
-      },
-      {
-        module: "Week 33-35",
-        focusArea: "Dark Web Analysis & Investigations",
-        hours: "30 hours",
-        whatYouLearn:
-          "Tor, dark net, privacy, onion OSINT, tools, crypto tracing, legal, case studies, intel",
-      },
-      {
-        module: "Week 36",
-        focusArea: "OSINT Pipeline: Onion-to-Surface Mapping",
-        hours: "10 hours",
-        whatYouLearn:
-          "Harvest usernames/data from onion forums, cross-reference with surface-web handles, report automation",
-      },
-      {
-        module: "Week 37",
-        focusArea: "Blockchain Analytics: Transaction Flow & Mixer Detection",
-        hours: "10 hours",
-        whatYouLearn:
-          "Trace blockchain transactions, clustering wallets, mixing detection, analytic fraud report",
-      },
-      {
-        module: "Week 38-42",
-        focusArea: "Red Teaming & Advanced Topics",
-        hours: "55 hours",
-        whatYouLearn:
-          "Adversary emulation, MITRE, cloud, containers, supply chain, hardware, fuzzing, AI/ML, CTF",
-      },
-      {
-        module: "Week 43",
-        focusArea: "Capstone Project/Professional Practice",
-        hours: "10 hours",
-        whatYouLearn:
-          "Full-scope team/individual scenario, reporting, defense, oral exam, career skills, review",
+          "Full Defensive Security Scenario, Investigation, Reporting, Presentation & Practical Evaluation",
       },
     ],
 
-    // why this program is different
+    programWhatsNew: {
+      heading: "5. Why This Program Stands Apart in the Indian Market",
+      items: [
+        {
+          title: "True End-to-End Cybersecurity Coverage",
+          text: "Most programs teach isolated subjects. This program develops complete cybersecurity understanding.",
+        },
+        {
+          title: "Built Around Operational Readiness",
+          text: "The focus is on how cybersecurity functions inside modern organizations—not simply on passing examinations.",
+        },
+        {
+          title: "Strong Technical Foundations",
+          text: "Participants develop knowledge across systems, networking, security controls, monitoring, investigations, and operations.",
+        },
+        {
+          title: "Defensive Security First",
+          text: "The program emphasizes cyber defense, operational awareness, and responsible security practices.",
+        },
+        {
+          title: "Designed for Long-Term Career Growth",
+          text: "This pathway provides the foundation required for future specialization and sustained professional development.",
+        },
+      ],
+      closingParagraph:
+        "The strongest cybersecurity professionals are not defined by a single skill. They are defined by their ability to understand, defend, investigate, and operate across the complete cybersecurity ecosystem.",
+    },
     whatsNew: {
       heading: {
         title: "Why This Program Stands Apart in the Indian Market",
-        subtitle: "Full-Stack Cyber Capability",
-        highlightedText: "Built for Real Operations",
+        subtitle: "Complete Cybersecurity",
+        highlightedText: "Professional Development",
       },
       differenceLabel: "The Difference",
       cards: [
@@ -1249,38 +1207,39 @@ export const courses: Course[] = [
           priceColor: "text-blue-600",
           features: [
             {
-              title: "True Full-Stack Coverage",
-              text: "Most programs teach fragments. This program builds complete cyber capability.",
+              title: "True End-to-End Cybersecurity Coverage",
+              text: "Most programs teach isolated subjects. This program develops complete cybersecurity understanding.",
             },
             {
-              title: "Offense with Responsibility",
-              text: "Attacks are taught to improve defense-not glorify hacking.",
+              title: "Built Around Operational Readiness",
+              text: "The focus is on how cybersecurity functions inside modern organizations—not simply on passing examinations.",
             },
             {
-              title: "Built for Beginners, Respected by Professionals",
-              text: "The structure supports newcomers while remaining rigorous.",
+              title: "Strong Technical Foundations",
+              text: "Participants develop knowledge across systems, networking, security controls, monitoring, investigations, and operations.",
             },
             {
-              title: "Investigation & Evidence Awareness",
-              text: "Learners understand legal, ethical, and operational boundaries.",
+              title: "Defensive Security First",
+              text: "The program emphasizes cyber defense, operational awareness, and responsible security practices.",
             },
             {
-              title: "Aligned with Global Cyber Roles",
-              text: "This mirrors how modern security teams are trained internationally.",
+              title: "Designed for Long-Term Career Growth",
+              text: "This pathway provides the foundation required for future specialization and sustained professional development.",
             },
           ],
           careerPreparation: {
             title: "What You Learn",
             items: [
-              "Core systems, networking, and security fundamentals",
-              "Offensive security and adversary techniques",
-              "Defensive architecture and mitigation strategies",
-              "Automation and scripting for cyber operations",
-              "Investigation, OSINT, and crypto analysis",
-              "Professional reporting and operational discipline",
-              "Readiness for SOC, red team, and security analyst roles.",
-              "Foundation to specialize into platform security or investigations.",
-              "Portfolio of capstone and lab work for real-world interviews.",
+              "Information Security & Cyber Defense Fundamentals",
+              "Systems Administration & Security Hardening",
+              "Networking & Traffic Analysis",
+              "Security Controls & Defensive Architecture",
+              "Threat Detection & Monitoring",
+              "SIEM & Security Operations Fundamentals",
+              "Incident Response & Resilience Planning",
+              "Introductory Offensive Security Methodologies",
+              "Digital Forensics & Investigations",
+              "Professional Reporting & Operational Discipline",
             ],
           },
         },
@@ -1288,248 +1247,385 @@ export const courses: Course[] = [
     },
     syllabusLink: "",
 
-    // layman story data
     laymanExplanation: {
-      heading: "The Layman’s Explanation - The “Cyber Professional” Story",
+      heading: '3. The Layman\'s Explanation — The Cybersecurity Practitioner Story',
       lines: [
-        "Imagine cybersecurity as a battlefield.",
-        "Some people only know how to attack.",
-        "Some only know how to defend.",
-        "This program trains you to understand the entire battlefield.",
-        "You learn:",
-        "• How attackers find weaknesses",
-        "• How systems are supposed to protect themselves",
-        "• Why defenses fail",
-        "• How investigations uncover the truth",
-        "You are not trained for one moment in an attack. You are trained for the entire lifecycle of cyber conflict.",
+        "Imagine a modern city.",
+        "It requires architects, engineers, law enforcement, emergency services, and infrastructure teams working together to keep everything operating safely.",
+        "Cybersecurity works in much the same way.",
+        "Before becoming a specialist in threat intelligence, digital forensics, cloud security, threat hunting, or incident response, professionals must first understand how the entire digital ecosystem functions.",
+        "This program builds that understanding.",
+        "You are not trained for one specific task.",
+        "You are trained to understand the complete cybersecurity ecosystem.",
+        "You learn how systems work, how networks communicate, how security controls protect environments, how threats emerge, how incidents are investigated, and how organizations respond.",
+        "You are not trained for one moment in a cyber attack.",
+        "You are trained for the entire cybersecurity lifecycle.",
       ],
     },
 
-    // program teaches data
     programTeaches: {
       whatYouLearn: [
-        "Core systems, networking, and security fundamentals",
-        "Offensive security and adversary techniques",
-        "Defensive architecture and mitigation strategies",
-        "Automation and scripting for cyber operations",
-        "Investigation, OSINT, and crypto analysis",
-        "Professional reporting and operational discipline",
+        "Information Security & Cyber Defense Fundamentals",
+        "Systems Administration & Security Hardening",
+        "Networking & Traffic Analysis",
+        "Security Controls & Defensive Architecture",
+        "Threat Detection & Monitoring",
+        "SIEM & Security Operations Fundamentals",
+        "Incident Response & Resilience Planning",
+        "Introductory Offensive Security Methodologies",
+        "Digital Forensics & Investigations",
+        "Professional Reporting & Operational Discipline",
       ],
       whatYouLearnNote:
-        "This is full-stack cybersecurity capability, not narrow specialization.",
-      readinessIntro:
-        "By the end of the program, you are job-ready for real cyber roles.",
-      readinessSubheading: "You will be able to:",
+        "This is complete cybersecurity capability—not narrow specialization.",
+      readinessIntro: "By the end of the program, you will be able to:",
+      readinessSubheading: "",
       readinessPoints: [
-        "Analyze and exploit vulnerabilities with defensive awareness",
-        "Assist in incident response and investigation tasks",
-        "Contribute to red-team, blue-team, or security operations teams",
-        "Transition into specialized tracks such as platform security, investigations, or advanced defense",
+        "Understand how modern organizations secure systems, networks, and digital assets.",
+        "Analyze security events and support threat detection activities.",
+        "Participate in incident response and investigation workflows.",
+        "Contribute to Security Operations Center (SOC) and cyber defense teams.",
+        "Progress confidently into advanced cybersecurity specialization pathways.",
       ],
       closingStatement:
-        'You do not graduate as a "tool user." You graduate as a cyber operator.',
+        "You do not graduate as a tool user. You graduate with the mindset and operational awareness of a cybersecurity practitioner.",
     },
 
-    // New Component data
     programDeepDive: {
-      title: "Deep Dive: Point-by-Point Program Breakdown",
-      subtitle: "430 Total Academic Hours - A True Cyber Operations Residency",
+      title: "1. Deep Dive: Point-by-Point Program Breakdown",
+      subtitle:
+        "450 Total Academic Hours — A Complete Cybersecurity Professional Development Journey",
       paragraphs: [
-        "This program is intentionally long because **real capability takes time**.",
-        "Rather than fragmenting learning into disconnected certifications, the program builds skills **layer by layer**, ensuring learners understand not just *how* attacks work, but *why* systems fail and *how* defenses must evolve.",
-        "The structure moves from **core foundations** → **applied offense** → **defensive thinking** → **advanced operations**.",
+        "Modern cybersecurity professionals are expected to understand far more than security products and technologies.",
+        "They must understand how systems operate, how users interact with technology, how networks communicate, how security controls function, how threats emerge, how incidents are investigated, and how organizations respond when things go wrong.",
+        "This program is intentionally designed to build that complete understanding.",
+        "Rather than teaching disconnected topics, the learning journey follows the natural evolution of cybersecurity itself:",
+        "Security Foundations → Infrastructure → Security Controls → Detection → Response → Investigation → Operations",
       ],
     },
 
-    // Program Module Discussion data
     syllabus: [
       {
         id: 1,
-        title: "Foundations: Computing, Systems & Networks",
+        title: "Foundations & Security Context",
         icon: TbCompass,
         content: [
           {
             paragraphs: [
-              "You begin by mastering the fundamentals most people skip:",
+              "Every successful cybersecurity professional begins with a strong understanding of security itself.",
+              "You begin by developing knowledge in:",
             ],
             points: [
-              "Operating systems (Windows & Linux)",
-              "Command-line proficiency",
-              "Virtualization and lab environments",
-              "Networking architecture, protocols, and traffic analysis",
+              "Information Security & Cyber Defense Principles",
+              "CIA Triad, DAD Triad & Parkerian Hexad",
+              "Security Controls & Security Domains",
+              "Threat Actors, Threat Landscapes & Risk Concepts",
+              "Security Frameworks & Governance Principles",
+              "Cybersecurity Laws & Regulatory Awareness",
+              "Professional Ethics & Responsible Disclosure",
+              "Physical Security & Facility Protection",
+              "Threat Modeling Methodologies",
             ],
           },
           {
             paragraphs: [
-              "This phase ensures every learner can **operate confidently inside real systems**, regardless of background.",
+              "Through practical exercises and mini-labs, learners begin developing the mindset required to think like cybersecurity professionals rather than technology users.",
             ],
           },
         ],
       },
       {
         id: 2,
-        title: "Security Fundamentals & Defensive Thinking",
+        title: "Systems & Operating Systems",
         icon: TbShieldLock,
         content: [
           {
             paragraphs: [
-              "Before learning how attacks work, you learn how security is supposed to work:",
+              "Technology cannot be secured without understanding how it works.",
+              "Participants develop practical knowledge of:",
             ],
             points: [
-              "Threat modeling and risk assessment",
-              "Authentication and access control",
-              "Cryptography and malware fundamentals",
-              "Defensive controls and security architecture",
+              "Computer Architecture & Operating System Fundamentals",
+              "Windows & Linux Operating Systems",
+              "Active Directory Fundamentals",
+              "Authentication & Authorization Models",
+              "Users, Groups & Permissions",
+              "Access Control Methodologies",
+              "System Hardening Principles",
+              "Patch Management Strategies",
+              "Windows & Linux Security Tools",
+              "Server Security Best Practices",
             ],
           },
           {
             paragraphs: [
-              "This builds **defender intuition**, not just attacker curiosity.",
+              "Extensive practical exercises help learners understand how modern systems are deployed, administered, and secured.",
             ],
           },
         ],
       },
       {
         id: 3,
-        title: "Scripting, Automation & Intelligence Foundations",
-        icon: TbBrandPython,
+        title: "Networking Fundamentals",
+        icon: TbTopologyStar,
         content: [
           {
-            paragraphs: ["Modern cybersecurity is automated.", "You learn to:"],
+            paragraphs: [
+              "Cyber attacks travel through networks.",
+              "Defenders must understand those networks better than attackers.",
+              "Participants learn:",
+            ],
             points: [
-              "Script security tasks in Python",
-              "Automate reconnaissance and analysis",
-              "Build tools for investigation and defense",
-              "Understand systems through code",
+              "OSI Model & TCP/IP Architecture",
+              "IP Addressing, Subnetting & CIDR",
+              "Routing & Switching Fundamentals",
+              "DNS, DHCP, NAT & VLAN Concepts",
+              "Packet Encapsulation & Traffic Flow",
+              "Access Control Lists (ACLs)",
+              "Network Troubleshooting Methodologies",
+              "Wireshark Traffic Analysis",
+              "Packet Capture & Investigation Techniques",
             ],
           },
           {
             paragraphs: [
-              "This is where learners shift from **users** to **operators**.",
+              "Networking is one of the most important foundations of modern cybersecurity, and this phase ensures learners develop a strong understanding of how communication occurs across digital environments.",
             ],
           },
         ],
       },
       {
         id: 4,
-        title: "Offensive Security & Adversary Techniques",
-        icon: TbUserShield,
+        title: "Core Security Controls",
+        icon: TbShieldCheck,
         content: [
           {
             paragraphs: [
-              "Offense is taught as a **means of understanding systems**, not glorifying attacks.",
-              "You cover:",
+              "Strong cybersecurity relies on layered security controls.",
+              "Participants gain practical exposure to:",
             ],
             points: [
-              "Application security and OWASP risks",
-              "Manual and automated exploitation",
-              "Mobile and API security",
-              "Privilege escalation and attack chaining",
+              "Secure Communications & Internet Security",
+              "HTTPS, SSH & TLS Fundamentals",
+              "Firewalls & Traffic Filtering Technologies",
+              "IDS & IPS Concepts",
+              "VPN Architecture & Secure Connectivity",
+              "Encryption & Authentication Models",
+              "Hashing, PKI & Digital Certificates",
+              "Network Segmentation Strategies",
+              "Zero Trust Security Concepts",
             ],
           },
           {
             paragraphs: [
-              "Every offensive concept is paired with **defensive context and mitigation**.",
+              "This phase helps learners understand how modern organizations build defensive architecture to reduce risk and improve resilience.",
             ],
           },
         ],
       },
       {
         id: 5,
-        title: "Advanced Cyber Operations & Red Team Concepts",
-        icon: TbSword,
+        title: "Threats & Security Domains",
+        icon: TbAlertTriangle,
         content: [
           {
-            paragraphs: ["As the program progresses, learners explore:"],
+            paragraphs: [
+              "To defend effectively, professionals must first understand what they are defending against.",
+              "Participants explore:",
+            ],
             points: [
-              "Adversary emulation and MITRE ATT&CK",
-              "Cloud, container, and supply-chain risks",
-              "Red-team vs blue-team dynamics",
-              "Advanced attack simulations",
+              "Malware Types & Attack Lifecycles",
+              "Indicators of Compromise (IOCs)",
+              "Endpoint Detection & Response (EDR) Concepts",
+              "Behavioral & Signature-Based Detection",
+              "OWASP Top 10 Security Risks",
+              "Application Security Fundamentals",
+              "Database Security Concepts",
+              "Data Leakage Prevention (DLP)",
+              "Insider Threat Awareness",
             ],
           },
           {
             paragraphs: [
-              "The focus is on **how real attackers think and adapt**, not just tools.",
+              "This phase introduces the most common threats facing modern organizations and how security teams identify them.",
             ],
           },
         ],
       },
       {
         id: 6,
-        title: "Dark Web, OSINT & Crypto Investigations",
-        icon: TbListSearch,
+        title: "Monitoring & Detection – Blue Team Core",
+        icon: TbEyeOff,
         content: [
           {
             paragraphs: [
-              "Cyber operations do not stop at the breach.",
-              "You are trained to:",
+              "Visibility is the foundation of modern cyber defense.",
+              "Participants develop practical understanding of:",
             ],
             points: [
-              "Analyze dark web ecosystems",
-              "Perform OSINT and identity correlation",
-              "Trace cryptocurrency transactions",
-              "Understand laundering and fraud workflows",
+              "Security Event Logging & Auditing",
+              "Windows & Linux Log Analysis",
+              "SIEM Platforms & Correlation Rules",
+              "Alert Triage Methodologies",
+              "MITRE ATT&CK Mapping Concepts",
+              "Threat Detection Fundamentals",
+              "Network Traffic Analysis",
+              "Beaconing Detection",
+              "Lateral Movement Identification",
+              "Security Investigation Workflows",
             ],
           },
           {
             paragraphs: [
-              "This connects offensive activity to **real-world impact and investigation**.",
+              "This phase introduces learners to the operational realities of Security Operations Centers (SOC) and modern defensive security teams.",
             ],
           },
         ],
       },
       {
         id: 7,
-        title: "Capstone: Full-Scope Cyber Operations Scenario",
-        icon: TbRosetteDiscountCheck,
+        title: "Incident Response & Operational Resilience",
+        icon: TbMapSearch,
         content: [
           {
             paragraphs: [
-              "The program concludes with a **comprehensive capstone**, where learners:",
+              "Cyber incidents are inevitable.",
+              "The ability to respond effectively determines the outcome.",
+              "Participants learn:",
             ],
             points: [
-              "Operate inside a realistic cyber environment",
-              "Execute offensive and defensive tasks",
-              "Analyze incidents and produce reports",
-              "Defend technical and strategic decisions",
+              "Incident Response Lifecycle (NIST-Based)",
+              "Triage, Containment & Recovery Processes",
+              "SOC Operations & Security Workflows",
+              "Security Playbooks & Automation Concepts",
+              "Business Continuity Planning (BCP)",
+              "Disaster Recovery Planning (DRP)",
+              "Cloud Computing Fundamentals",
+              "Cloud Security Concepts",
+              "Operational Resilience Strategies",
             ],
           },
           {
             paragraphs: [
-              "You finish with **professional-grade outputs**, not just completion status.",
+              "The focus is on helping learners understand how organizations prepare for, manage, and recover from cyber incidents.",
+            ],
+          },
+        ],
+      },
+      {
+        id: 8,
+        title: "Introduction to Offensive Security",
+        icon: TbSword,
+        content: [
+          {
+            paragraphs: [
+              "Effective defenders understand how attackers operate.",
+              "Participants are introduced to:",
+            ],
+            points: [
+              "Penetration Testing Methodology",
+              "Reconnaissance Techniques",
+              "Passive & Active Information Gathering",
+              "Enumeration Concepts",
+              "Nmap Scanning Methodologies",
+              "Vulnerability Discovery Fundamentals",
+              "Reporting & Documentation Practices",
+              "OSINT Fundamentals",
+            ],
+          },
+          {
+            paragraphs: [
+              "The purpose of this phase is not exploitation.",
+              "It is understanding attacker methodology to improve defensive capability.",
+            ],
+          },
+        ],
+      },
+      {
+        id: 9,
+        title: "Digital Forensics & Investigations",
+        icon: TbFingerprint,
+        content: [
+          {
+            paragraphs: [
+              "Cybersecurity does not end when an incident is detected.",
+              "Professionals must understand how investigations are conducted and how evidence is preserved.",
+              "Participants learn:",
+            ],
+            points: [
+              "Digital Forensics Fundamentals",
+              "Evidence Preservation Concepts",
+              "Chain of Custody Principles",
+              "File System Artifacts",
+              "Timeline Analysis Techniques",
+              "Investigation Methodologies",
+              "Security Reporting Practices",
+            ],
+          },
+          {
+            paragraphs: [
+              "This phase introduces learners to the investigative discipline that supports incident response, legal processes, and post-incident analysis.",
+            ],
+          },
+        ],
+      },
+      {
+        id: 10,
+        title: "Final Phase: Integrated Cybersecurity Operations Capstone",
+        icon: TbTrophy,
+        content: [
+          {
+            paragraphs: [
+              "The program concludes with a comprehensive practical capstone designed to bring together knowledge gained throughout the entire learning journey.",
+              "Participants will:",
+            ],
+            points: [
+              "Analyze security incidents using network and endpoint evidence",
+              "Investigate suspicious activity across multiple systems",
+              "Review logs, alerts, and indicators of compromise",
+              "Produce professional incident reports and recommendations",
+              "Present findings and defend investigative conclusions",
+              "Demonstrate operational decision-making under realistic conditions",
+            ],
+          },
+          {
+            paragraphs: [
+              "This final assessment simulates how cybersecurity professionals operate in real-world environments where detection, investigation, analysis, communication, and decision-making must work together.",
             ],
           },
         ],
       },
     ],
 
-    // Career opportunities chart data
+    careerIntro:
+      "Graduates of this program are positioned for multiple cybersecurity career pathways.",
+    careerClosing:
+      "This program also provides a strong foundation for advanced specialization in Threat Hunting, Detection Engineering, Cyber Intelligence, Platform Security, Digital Investigations, AI Security, and Cybercrime Operations.",
     careerChart: [
       {
         jobRole: "Cybersecurity Analyst",
-        whatYouDo: "Monitor, analyze, and respond to threats.",
-        exampleEmployers: "SOCs, enterprises",
+        whatYouDo: "Monitor, analyze, and support security operations",
+        exampleEmployers: "SOCs, Enterprises",
       },
       {
-        jobRole: "Security Operations Engineer",
-        whatYouDo: "Defend infrastructure and platforms.",
-        exampleEmployers: "Banks, SaaS firms",
+        jobRole: "Security Operations Analyst",
+        whatYouDo: "Investigate alerts and support incident response",
+        exampleEmployers: "MSSPs, Financial Institutions",
       },
       {
-        jobRole: "Offensive Security Analyst",
-        whatYouDo: "Test and validate security controls.",
-        exampleEmployers: "Consulting firms",
+        jobRole: "Cyber Defense Associate",
+        whatYouDo: "Support defensive security operations",
+        exampleEmployers: "Technology Firms",
       },
       {
         jobRole: "Incident Response Associate",
-        whatYouDo: "Assist in breach response and analysis.",
-        exampleEmployers: "IR & DFIR teams",
+        whatYouDo: "Assist with investigations and containment activities",
+        exampleEmployers: "Consulting Firms",
       },
       {
-        jobRole: "Junior Red / Blue Team Member",
-        whatYouDo: "Support advanced security operations.",
-        exampleEmployers: "Global tech firms",
+        jobRole: "Information Security Coordinator",
+        whatYouDo: "Support governance, risk, and compliance initiatives",
+        exampleEmployers: "Enterprise Organizations",
       },
     ],
   },

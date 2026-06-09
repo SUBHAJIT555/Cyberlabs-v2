@@ -1,13 +1,10 @@
 import { useRef } from "react";
-import { useParams } from "react-router";
 import { motion, useInView, type Variants } from "framer-motion";
-import { useBootcamps } from "@/hooks/useBootcamps";
+import { usePageDetail } from "@/hooks/useProgramDetail";
 import buildingFutureImage from "@/assets/img/ProgramPageImage/buildingfuture.svg";
 
 const BootcampWhatsNew = () => {
-    const { slug } = useParams();
-    const { getBootcampDetailBySlug } = useBootcamps();
-    const whatsNew = getBootcampDetailBySlug(slug as string)?.whatsNew;
+    const whatsNew = usePageDetail()?.whatsNew;
 
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: false, margin: "-100px" });
@@ -75,7 +72,7 @@ const BootcampWhatsNew = () => {
                         <ol className="space-y-8 sm:space-y-10">
                             {whatsNew.items.map((item, index) => (
                                 <li
-                                    key={item.title}
+                                    key={`${item.title}-${index}`}
                                     className={`relative pb-6 ${
                                         index !== whatsNew.items.length - 1
                                             ? "border-b border-neutral-300"
@@ -87,26 +84,31 @@ const BootcampWhatsNew = () => {
                                             {index + 1}.
                                         </span>
                                         <div className="flex-1">
-                                            <h4 className="text-text-primary font-bold text-lg sm:text-xl md:text-2xl font-montserrat mb-2 sm:mb-3">
-                                                {item.title}
-                                            </h4>
-                                            {item.text.split("\n").map((line, lineIdx) => (
-                                                <p
-                                                    key={lineIdx}
-                                                    className="text-text-primary text-base sm:text-lg md:text-xl font-inter-display leading-relaxed"
-                                                >
-                                                    {line}
-                                                </p>
-                                            ))}
+                                            {item.title && (
+                                                <h4 className="text-text-primary font-bold text-lg sm:text-xl md:text-2xl font-montserrat mb-2 sm:mb-3">
+                                                    {item.title}
+                                                </h4>
+                                            )}
+                                            {item.text &&
+                                                item.text.split("\n").map((line, lineIdx) => (
+                                                    <p
+                                                        key={lineIdx}
+                                                        className="text-text-primary text-base sm:text-lg md:text-xl font-inter-display leading-relaxed"
+                                                    >
+                                                        {line}
+                                                    </p>
+                                                ))}
                                         </div>
                                     </div>
                                 </li>
                             ))}
                         </ol>
 
-                        <p className="mt-8 sm:mt-10 text-text-primary text-base sm:text-lg md:text-xl font-inter-display leading-relaxed">
-                            {whatsNew.closingParagraph}
-                        </p>
+                        {whatsNew.closingParagraph && (
+                            <p className="mt-8 sm:mt-10 text-text-primary text-base sm:text-lg md:text-xl font-inter-display leading-relaxed">
+                                {whatsNew.closingParagraph}
+                            </p>
+                        )}
                     </div>
                 </motion.div>
             </div>

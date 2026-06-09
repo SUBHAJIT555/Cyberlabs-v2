@@ -228,7 +228,7 @@ const FoundationFaculty = () => {
                     <AnimatedHeading
                         inView={headingInView}
                         lines={[
-                            { text: "Israel-Founded Cybersecurity DNA", className: "text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight" },
+                            { text: "Israel-Founded Cybersecurity DNA", className: "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display text-text-primary font-semibold tracking-tighter leading-tight" },
                         ]}
                     />
                 </div>

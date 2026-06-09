@@ -20,6 +20,7 @@ export interface BootcampDeepDive {
 
 export interface BootcampProgramTeaches {
     whatYouLearn: string[];
+    whatYouLearnNote?: string;
     readinessIntro?: string;
     readinessSubheading?: string;
     readinessPoints: string[];

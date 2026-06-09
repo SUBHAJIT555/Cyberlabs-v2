@@ -17,7 +17,7 @@ import type { AnimatedListItem } from "./ui/animated-list";
 
 
 
-const baseTitleClass = "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold tracking-tight leading-tight md:leading-normal inline";
+const baseTitleClass = "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold tracking-tighter leading-tight md:leading-normal inline";
 
 // List item icons (no border)
 const CurrentLocationIcon = (
@@ -119,7 +119,7 @@ const WhyIsrael = () => {
             {/* Left Side - Text Content */}
             <div className="space-y-6">
               <motion.h3
-                className="text-2xl sm:text-3xl md:text-4xl font-inter-display text-primary tracking-tight font-bold leading-tight"
+                className="text-xl sm:text-2xl md:text-3xl font-inter-display text-primary tracking-tight font-bold leading-tight"
                 initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: false, amount: 0.2 }}

@@ -70,7 +70,7 @@ const For = () => {
         <AnimatedHeading
           inView={headingInView}
           lines={[
-            { text: "Who this environment is built for ?", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold tracking-tight text-text-primary leading-tight" },
+            { text: "Who this environment is built for ?", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-inter-display font-semibold tracking-tighter text-text-primary leading-tight " },
           ]}
         />
       </div>
@@ -79,7 +79,7 @@ const For = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.5, delay: 0.15 }}
-        className="text-xl xs:text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl mb-6 sm:mb-8 text-text-primary font-inter-display font-medium leading-tight"
+        className="text-xl xs:text-2xl sm:text-2xl md:text-3xl  mb-6 sm:mb-8 text-text-primary font-inter-display font-medium leading-tight"
       >
         The CYBERLABS cyber learning environment supports:
       </motion.p>

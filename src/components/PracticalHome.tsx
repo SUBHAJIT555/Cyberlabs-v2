@@ -11,7 +11,7 @@ const iconBoxStyle = {
   background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
 };
 const iconBoxClass =
-  "flex items-center justify-center rounded p-1 border border-neutral-200 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 rounded-lg shrink-0 group-hover:border-primary/60 group-hover:bg-primary/10 transition-all duration-300 text-primary";
+  "flex items-center justify-center rounded p-1 border border-neutral-200 ring ring-neutral-300 rounded-lg shadow-sm shrink-0 group-hover:border-primary/60 group-hover:bg-primary/10 transition-all duration-300 text-primary";
 
 const PracticalHome = () => {
   const ref = useRef(null);
@@ -237,9 +237,9 @@ const PracticalHome = () => {
         <AnimatedHeading
           inView={titleInView}
           lines={[
-            { text: "PRACTICAL. OPERATIONAL. REAL.", className: "text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-montserrat font-semibold text-text-primary leading-tight wrap-break-words tracking-tight mb-4", as: "h3" },
-            { text: "Israeli Cyber Defense Training", className: "text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-montserrat text-primary leading-tight wrap-break-words tracking-tight inline font-semibold", as: "h2" },
-            { text: ", Delivered Hands-On", className: "text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-montserrat text-text-primary leading-tight wrap-break-words tracking-tight inline font-semibold", as: "h2" },
+            { text: "PRACTICAL. OPERATIONAL. REAL.", className: "text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-inter-display font-semibold text-text-primary leading-tight wrap-break-words tracking-tight mb-4", as: "h3" },
+            { text: "Israeli Cyber Defense Training", className: "text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-inter-display text-primary leading-tight wrap-break-words tracking-tight inline font-semibold", as: "h2" },
+            { text: ", Delivered Hands-On", className: "text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-inter-display text-text-primary leading-tight wrap-break-words tracking-tight inline font-semibold", as: "h2" },
           ]}
         />
       </div>
@@ -296,7 +296,7 @@ const PracticalHome = () => {
             <AnimatedHeading
               inView={rightTitleInView}
               lines={[
-                { text: "WHO OUR TRAINING SERVES", className: "text-text-primary text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-montserrat font-semibold", as: "h4" },
+                { text: "WHO OUR TRAINING SERVES", className: "text-text-primary text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-inter-display font-semibold", as: "h4" },
               ]}
             />
           </div>

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { FlowStepCard } from "./ui/FlowStepCard";
 
 const flowSteps = [
   { label: "Structured training", sub: "Theory & methodology" },
@@ -9,27 +10,6 @@ const flowSteps = [
   { label: "Formal assessment", sub: "Evaluation & grading" },
   { label: "Official credential", sub: "CYBERLABS USA certificate" },
 ];
-
-const dashedGridStyle = {
-  backgroundImage: `
-    linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-    linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
-  `,
-  backgroundSize: "1px 1px",
-  backgroundPosition: "0 0, 0 0",
-  maskImage: `
-    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-    radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-  `,
-  WebkitMaskImage: `
-    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-    radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-  `,
-  maskComposite: "intersect" as const,
-  WebkitMaskComposite: "source-in" as const,
-};
 
 const LevelUp = () => {
   const ref = useRef(null);
@@ -83,10 +63,10 @@ const LevelUp = () => {
           >
             <motion.h2
               variants={itemVariants}
-              className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold text-text-primary tracking-tight leading-tight"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold text-text-primary tracking-tighter leading-tight"
             >
               Certification & Professional{" "}
-              <motion.span variants={textMaskVariants} className="text-primary font-montserrat">
+              <motion.span variants={textMaskVariants} className="text-primary font-inter-display">
                 {" "} Grading
               </motion.span>
             </motion.h2>
@@ -97,7 +77,7 @@ const LevelUp = () => {
             variants={itemVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
-            className="text-xl md:text-2xl lg:text-3xl text-text-primary font-montserrat font-semibold mb-6 md:mb-8"
+            className="text-xl md:text-2xl lg:text-3xl text-text-primary font-inter-display font-semibold mb-6 md:mb-8"
           >
             Official Credentials Issued by CYBERLABS USA
           </motion.h3>
@@ -136,23 +116,13 @@ const LevelUp = () => {
           className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
         >
           {flowSteps.map((step, index) => (
-            <motion.div
-              key={step.label}
-              variants={itemVariants}
-              className="relative rounded-lg border border-neutral-200 ring ring-neutral-200 ring-offset-2 md:ring-offset-4 overflow-hidden bg-white p-4 md:p-5 transition-colors hover:border-primary/40"
-            >
-              <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
-              <div className="relative z-10">
-                <span className="inline-flex items-center justify-center w-9 h-9 rounded-lg ring ring-neutral-300 ring-offset-2 border border-neutral-200 bg-neutral-500 text-white font-montserrat font-bold text-base mb-2">
-                  {index + 1}
-                </span>
-                <p className="font-montserrat font-semibold text-text-primary text-base md:text-lg mb-0.5">
-                  {step.label}
-                </p>
-                <p className="text-neutral-500 text-sm md:text-base font-inter-display">
-                  {step.sub}
-                </p>
-              </div>
+            <motion.div key={step.label} variants={itemVariants}>
+              <FlowStepCard
+                stepNumber={index + 1}
+                label={step.label}
+                sub={step.sub}
+                className="h-full"
+              />
             </motion.div>
           ))}
         </motion.div>

@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useMemo } from "react";
 import { courses } from "../constants/programData";
+import { getCourseDetailBySlug as resolveCourseDetailBySlug } from "@/lib/courseToBootcampDetail";
+import type { BootcampDetail } from "@/interface/bootcampDetail";
 import type {
   Bus,
   Course,
@@ -24,6 +26,7 @@ const stripCourse = (course: Course): CleanedCourse => {
 
 type UseCoursesReturn = {
   getCourses: () => CleanedCourse[];
+  getCourseBySlug: (slug: string) => Course | undefined;
   getCourseHeroBySlug: (slug: string) => Hero | undefined;
   getCourseWhatsNewBySlug: (slug: string) => WhatsNew | undefined;
   getCourseSyllabusBySlug: (slug: string) => Bus[] | undefined;
@@ -32,19 +35,26 @@ type UseCoursesReturn = {
   getCourseCareerChartBySlug: (slug: string) => CareerChartItem[] | undefined;
   getCourseProgramTeachesBySlug: (slug: string) => ProgramTeaches | undefined;
   getCourseProgramDeepDiveBySlug: (slug: string) => ProgramDeepDive | undefined;
+  getCourseDetailBySlug: (slug: string) => BootcampDetail | undefined;
 };
 
 export const useCourses = (): UseCoursesReturn => {
   const getCourses = () => courses.map(stripCourse);
 
+  const getCourseBySlug = (slug: string) =>
+    courses.find((course) => course.slug === slug);
+
   const getCourseHeroBySlug = (slug: string) => {
-    const course = courses.find((course) => course.slug === slug);
+    const course = getCourseBySlug(slug);
     if (!course) return undefined;
     return {
       ...course.hero,
       subheading: course.subheading,
     };
   };
+
+  const getCourseDetailBySlug = (slug: string) =>
+    resolveCourseDetailBySlug(courses, slug);
 
   const getCourseWhatsNewBySlug = (slug: string) =>
     courses.find((course) => course.slug === slug)?.whatsNew;
@@ -70,6 +80,7 @@ export const useCourses = (): UseCoursesReturn => {
   return useMemo<UseCoursesReturn>(
     () => ({
       getCourses,
+      getCourseBySlug,
       getCourseHeroBySlug,
       getCourseWhatsNewBySlug,
       getCourseSyllabusBySlug,
@@ -78,6 +89,7 @@ export const useCourses = (): UseCoursesReturn => {
       getCourseCareerChartBySlug,
       getCourseProgramTeachesBySlug,
       getCourseProgramDeepDiveBySlug,
+      getCourseDetailBySlug,
     }),
     []
   );

@@ -55,39 +55,39 @@ const getResponsiveValues = (screenSize: ScreenSize) => {
   switch (screenSize) {
     case "xs":
       return {
-        containerRadius: 100,
-        iconSize: 45,
+        containerRadius: 72,
+        iconSize: 34,
+        cardWidth: "w-28",
+        iconSizeCard: "w-10 h-10",
+        iconMargin: "-mt-6",
+        fontSize: { name: "text-xs", role: "text-[10px]" },
+      };
+    case "sm":
+      return {
+        containerRadius: 88,
+        iconSize: 40,
+        cardWidth: "w-32",
+        iconSizeCard: "w-11 h-11",
+        iconMargin: "-mt-7",
+        fontSize: { name: "text-sm", role: "text-xs" },
+      };
+    case "md":
+      return {
+        containerRadius: 110,
+        iconSize: 48,
         cardWidth: "w-36",
         iconSizeCard: "w-12 h-12",
         iconMargin: "-mt-8",
         fontSize: { name: "text-sm", role: "text-xs" },
       };
-    case "sm":
+    default:
       return {
-        containerRadius: 120,
-        iconSize: 55,
+        containerRadius: 140,
+        iconSize: 58,
         cardWidth: "w-40",
         iconSizeCard: "w-14 h-14",
         iconMargin: "-mt-9",
         fontSize: { name: "text-base", role: "text-xs" },
-      };
-    case "md":
-      return {
-        containerRadius: 150,
-        iconSize: 65,
-        cardWidth: "w-44",
-        iconSizeCard: "w-16 h-16",
-        iconMargin: "-mt-10",
-        fontSize: { name: "text-base", role: "text-sm" },
-      };
-    default:
-      return {
-        containerRadius: 200,
-        iconSize: 80,
-        cardWidth: "w-52",
-        iconSizeCard: "w-20 h-20",
-        iconMargin: "-mt-12",
-        fontSize: { name: "text-lg", role: "text-sm" },
       };
   }
 };
@@ -143,7 +143,7 @@ export function TechStackOrbitCarousel() {
     iconMargin,
     fontSize,
   } = getResponsiveValues(screenSize);
-  const containerSize = containerRadius * 2 + 100;
+  const containerSize = containerRadius * 2 + 56;
 
   const getRotation = useCallback(
     (index: number): number =>
@@ -189,7 +189,7 @@ export function TechStackOrbitCarousel() {
 
   return (
     <div
-      className="flex flex-col items-center p-2 sm:p-4 relative min-h-[350px] sm:min-h-[400px] transition-colors duration-300 rounded-xl "
+      className="flex flex-col items-center p-1 sm:p-2 relative min-h-[260px] sm:min-h-[300px] transition-colors duration-300 rounded-xl "
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}
     >
@@ -209,13 +209,13 @@ export function TechStackOrbitCarousel() {
               stiffness: 300,
               damping: 25,
             }}
-            className={`z-10 bg-white backdrop-blur-sm shadow-xl rounded-xl p-2 sm:p-3 md:p-4 ${cardWidth} text-center border border-neutral-100`}
+            className={`z-10 bg-white backdrop-blur-sm shadow-xl rounded-xl p-1.5 sm:p-2 md:p-3 ${cardWidth} text-center border border-neutral-100`}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              className={`${iconSizeCard} rounded-full mx-auto ${iconMargin} border-4 border-white bg-text-primary/20 backdrop-blur-sm flex items-center justify-center text-primary object-cover shadow-md`}
+              className={`${iconSizeCard} rounded-full mx-auto ${iconMargin} border-[3px] border-white bg-text-primary/20 backdrop-blur-sm flex items-center justify-center text-primary object-cover shadow-md`}
             >
               <ActiveIcon className="w-1/2 h-1/2 shrink-0" aria-hidden />
             </motion.div>
@@ -234,7 +234,7 @@ export function TechStackOrbitCarousel() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.2 }}
-              className="flex justify-center items-center mt-2 sm:mt-3 gap-1 sm:gap-2"
+              className="flex justify-center items-center mt-1.5 sm:mt-2 gap-1"
             >
               <button
                 type="button"
@@ -297,8 +297,8 @@ export function TechStackOrbitCarousel() {
                   type="button"
                   onClick={() => handleItemClick(i)}
                   className={`w-full h-full flex items-center justify-center rounded-full cursor-pointer transition-all duration-300 ${isActive
-                      ? "border-4 border-primary shadow-lg bg-primary text-white"
-                      : "border-2 border-neutral-300 text-primary hover:border-primary hover:bg-primary/5"
+                      ? "border-[3px] border-primary shadow-lg bg-primary text-white"
+                      : "border border-neutral-300 text-primary hover:border-primary hover:bg-primary/5"
                     }`}
                   whileHover={{
                     scale: 1.15,
@@ -317,7 +317,7 @@ export function TechStackOrbitCarousel() {
       </div>
 
       {/* Progress dots - same as OrbitCarousel */}
-      <div className="flex justify-center mt-4 sm:mt-6 gap-1.5 sm:gap-2">
+      <div className="flex justify-center mt-2 sm:mt-3 gap-1 sm:gap-1.5">
         {techStacks.map((_, index) => (
           <motion.button
             key={techStacks[index].id}

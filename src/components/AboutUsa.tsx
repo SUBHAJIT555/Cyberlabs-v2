@@ -3,8 +3,9 @@ import type { Variants } from "framer-motion";
 import { useRef } from "react";
 import aboutUsaImage from "../assets/img/Home/ABOUTCYBERLABSUSA.webp";
 import { AnimatedHeading } from "./ui/animated-heading";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 // import buildYour from "../assets/img/Home/buildYour.webp";
-const mainTitleBaseClass = "text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-montserrat font-semibold tracking-tight leading-tight md:leading-normal inline";
+const mainTitleBaseClass = "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold tracking-tighter leading-tight md:leading-normal inline";
 
 const AboutUsa = () => {
   const titleRef = useRef<HTMLDivElement>(null);
@@ -109,13 +110,13 @@ const AboutUsa = () => {
             animate={imageInView ? "visible" : "hidden"}
             className="lg:sticky lg:top-24 order-1 lg:order-1 relative"
           >
-            <div className="overflow-hidden rounded-xl border border-neutral-200 ring ring-neutral-300 ring-offset-4 md:ring-offset-8">
+            <div className="overflow-hidden border border-neutral-200 ring ring-neutral-300 shadow-xl">
               {/* <div className="flex absolute text-2xl items-center justify-center -top-[5%] lg:-top-[3%] -left-10 sm:-left-18 md:-left-20 animate-float"><img className=" lg:w-65 w-40  sm:w-60" alt="" fetchPriority="high" loading="eager" src={buildYour} /><h1 className="absolute font-medium text-center leading-tight text-sm lg:text-2xl sm:text-xl flex justify-center flex-wrap -mt-7 sm:-mt-14 font-inter-display text-text-primary">Build your<span className="font-light w-full -mt-1  tracking-tight">career</span></h1></div> */}
 
               <img
                 src={aboutUsaImage}
                 alt="About CYBERLABS USA"
-                className="w-full h-auto object-cover rounded-xl "
+                className="w-full h-auto object-cover"
               />
             </div>
           </motion.div>
@@ -123,7 +124,7 @@ const AboutUsa = () => {
           {/* Right side text content */}
           <div ref={rightContentRef} className="space-y-6 md:space-y-8 order-2 lg:order-2">
             <motion.h3
-              className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-inter-display text-primary font-bold mb-5 md:mb-6 leading-tight md:leading-normal"
+              className="text-xl sm:text-2xl md:text-3xl font-inter-display text-primary font-bold mb-5 md:mb-6 leading-tight md:leading-normal"
               initial={{ opacity: 0, y: 24, filter: "blur(12px)" }}
               whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               viewport={{ once: false, amount: 0.2 }}
@@ -161,13 +162,14 @@ const AboutUsa = () => {
                   <motion.div
                     key={index}
                     variants={tagVariants}
-                    className="px-2 md:px-3 py-1 md:py-2 border border-neutral-200  rounded-xl ring ring-neutral-300 ring-offset-2 md:ring-offset-4 bg-white text-text-primary text-sm sm:text-base md:text-lg font-inter-display transition-colors shadow-[2px_2px_6px_0_rgba(0,0,0,0.05)]"
-                    style={{
-                      background:
-                        "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                    }}
+                    className="relative overflow-hidden px-2 md:px-3 py-1 md:py-1 border border-neutral-200 rounded-lg bg-white text-text-primary text-sm sm:text-base md:text-lg font-inter-display transition-colors font-medium "
                   >
-                    {tag}
+                    <div
+                      className="absolute inset-0 z-0 pointer-events-none"
+                      style={crosshatchBgStyle}
+                      aria-hidden
+                    />
+                    <span className="relative z-10">{tag}</span>
                   </motion.div>
                 ))}
               </motion.div>
