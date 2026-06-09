@@ -341,6 +341,8 @@ const CourseCardCategories1 = () => {
                 )}
             </AnimatePresence>
 
+            
+
             {/* Callback Modal */}
             <CallbackModal
                 isOpen={isCallbackModalOpen}
