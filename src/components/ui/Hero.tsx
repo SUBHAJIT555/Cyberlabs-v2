@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router";
+import { shinyButtonClasses } from "@/components/ui/shiny-button";
 // import textmask from "../../assets/img/text/text-mask.webp";
 // import WrapButton from "./WrapButton";
 
@@ -102,7 +103,7 @@ const Hero: React.FC<HeroProps> = ({
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center cursor-pointer"
+              className="mt-8 flex flex-col sm:flex-row gap-4 justify-center items-center"
             >
               {ctaButtons.map((button, index) => (
                 <motion.div
@@ -111,19 +112,16 @@ const Hero: React.FC<HeroProps> = ({
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.6 + index * 0.2 }}
                 >
-                  {button.variant === "secondary" ? (
-                    <Link to={button.link}>
-                      <button className="bg-text-primary text-bg px-4 py-2 rounded-md font-montserrat text-base sm:text-lg md:text-xl lg:text-2xl hover:bg-white transition-all duration-300 cursor-pointer">
-                        {button.text}
-                      </button>
-                    </Link>
-                  ) : (
-                    <Link to={button.link}>
-                      <button className="bg-background/40 backdrop-blur-sm border border-neutral-300 border-dashed text-background px-4 py-2 rounded-md hover:bg-background hover:text-text-primary font-montserrat text-base sm:text-lg md:text-xl lg:text-2xl transition-all duration-300 cursor-pointer">
-                        {button.text}
-                      </button>
-                    </Link>
-                  )}
+                  <Link
+                    to={button.link}
+                    className={shinyButtonClasses({
+                      variant: button.variant === "secondary" ? "default" : "light",
+                      className:
+                        "rounded-lg! font-montserrat! text-base sm:text-lg md:text-xl shadow-lg! active:scale-95! no-underline",
+                    })}
+                  >
+                    <span>{button.text}</span>
+                  </Link>
                 </motion.div>
               ))}
             </motion.div>

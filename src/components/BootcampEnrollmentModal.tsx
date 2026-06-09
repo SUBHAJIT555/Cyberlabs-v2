@@ -1,33 +1,29 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useCourses } from "@/hooks/useCourses";
+import { FaCheckCircle } from "react-icons/fa";
 import CheckoutForm from "./CheckoutForm";
 import { ShinyButton } from "@/components/ui/shiny-button";
-import { FaCheckCircle } from "react-icons/fa";
+import { useBootcamps } from "@/hooks/useBootcamps";
+import { bootcampToHero } from "@/lib/bootcamp";
 import { CONTACT } from "@/constants/contactInfo";
 
-
-interface EnrollmentModalProps {
+interface BootcampEnrollmentModalProps {
     isOpen: boolean;
     onClose: () => void;
     slug: string;
 }
 
-const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
-    const { getCourseHeroBySlug, getCourses } = useCourses();
-    const heroData = getCourseHeroBySlug(slug);
-    const courses = getCourses();
-    const course = courses.find((c) => c.slug === slug);
+const BootcampEnrollmentModal = ({ isOpen, onClose, slug }: BootcampEnrollmentModalProps) => {
+    const { getBootcampBySlug } = useBootcamps();
+    const bootcamp = getBootcampBySlug(slug);
     const [showCheckoutForm, setShowCheckoutForm] = useState(false);
 
-    // Reset form state when modal opens/closes
     useEffect(() => {
         if (!isOpen) {
             setShowCheckoutForm(false);
         }
     }, [isOpen]);
 
-    // Prevent body scroll when modal is open
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden";
@@ -39,19 +35,12 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
         };
     }, [isOpen]);
 
-    if (!heroData) {
+    if (!bootcamp) {
         return null;
     }
 
-    // const currency = heroData.pricing.currency || "₹";
-
-    const handleProceedToCheckout = () => {
-        setShowCheckoutForm(true);
-    };
-
-    const handleBackToCheckout = () => {
-        setShowCheckoutForm(false);
-    };
+    const heroData = bootcampToHero(bootcamp);
+    const formattedPrice = bootcamp.price.toLocaleString("en-IN");
 
     const handleClose = () => {
         setShowCheckoutForm(false);
@@ -62,7 +51,6 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
         <AnimatePresence>
             {isOpen && (
                 <>
-                    {/* Backdrop */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -71,7 +59,6 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                         className="fixed inset-0 bg-black/30 backdrop-blur-sm z-9999"
                     />
 
-                    {/* Modal */}
                     <motion.div
                         initial={{ opacity: 0, scale: 0.96, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -81,7 +68,6 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                         onClick={(e) => e.stopPropagation()}
                     >
                         <div className="relative w-full max-w-2xl max-h-[90vh] text-text-primary overflow-hidden shadow-xl border border-neutral-200 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl bg-white">
-                            {/* Dashed grid background (fade at top) - same as CallToAction */}
                             <div
                                 className="absolute inset-0 z-0 pointer-events-none"
                                 style={{
@@ -105,85 +91,72 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                                     WebkitMaskComposite: "source-in",
                                 }}
                             />
-                            {/* Close Button */}
+
                             <button
                                 onClick={handleClose}
                                 className="absolute top-4 right-4 z-50 p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-700 transition-colors"
                                 aria-label="Close modal"
                             >
-                                <svg
-                                    className="w-5 h-5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </button>
 
-                            {/* Scrollable Content */}
                             <div className="relative z-10 overflow-y-auto max-h-[90vh]">
                                 {!showCheckoutForm ? (
                                     <div className="p-6 sm:p-8 md:p-10">
-                                        {/* Header */}
                                         <div className="mb-8">
-                                            <h2 className="text-2xl sm:text-3xl font-montserrat font-semibold tracking-tight text-text-primary mb-2  w-fit">
-                                                Program Overview
+                                            <h2 className="text-2xl sm:text-3xl font-montserrat font-semibold tracking-tight text-text-primary mb-2 w-fit">
+                                                Boot Camp Overview
                                             </h2>
-                                            <div className="w-12 h-0.5 bg-primary"></div>
+                                            <div className="w-12 h-0.5 bg-primary" />
                                         </div>
 
-                                        {/* Course Info */}
                                         <div className="mb-10">
                                             <div className="flex flex-col sm:flex-row gap-6 mb-6">
-                                                {/* Course Image */}
                                                 <div className="w-full sm:w-40 md:w-48 h-auto overflow-hidden flex items-center justify-center p-3 shrink-0 ring ring-neutral-300 rounded-xl bg-white">
                                                     <img
-                                                        src={heroData.image.src}
-                                                        alt={heroData.image.alt}
+                                                        src={bootcamp.image}
+                                                        alt={bootcamp.title}
                                                         className="w-full h-auto object-contain rounded-lg"
                                                     />
                                                 </div>
 
-                                                {/* Course Details */}
                                                 <div className="flex-1">
                                                     <h3 className="text-xl sm:text-2xl font-inter-display font-medium text-text-primary mb-2 leading-tight">
-                                                        {course?.title || heroData.title}
+                                                        {bootcamp.title}
                                                     </h3>
-                                                    {heroData.subheading && (
-                                                        <p className="text-primary text-base sm:text-lg font-inter-display font-medium mb-4">
-                                                            {heroData.subheading}
+                                                    <p className="text-primary text-base sm:text-lg font-inter-display font-medium mb-2">
+                                                        {bootcamp.duration} · {bootcamp.language}
+                                                    </p>
+                                                    {bootcamp.launchNote && (
+                                                        <p className="text-sm font-inter-display text-primary/90 mb-3">
+                                                            {bootcamp.launchNote}
                                                         </p>
                                                     )}
-                                                    {/* <div className="mt-4">
-                                                        <span className="text-sm md:text-base text-text-primary font-medium font-inter-display">Price</span>
-                                                        <p className="text-3xl sm:text-4xl font-inter-display font-medium text-primary mt-1">
-                                                            {currency} {heroData.pricing.currentPrice}
-                                                        </p>
-                                                    </div> */}
+                                                    <p className="text-sm text-text-primary font-inter-display">
+                                                        Price:{" "}
+                                                        <span className="text-lg font-semibold text-primary">
+                                                            ₹{formattedPrice} {bootcamp.currency}
+                                                        </span>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        {/* Support Info */}
                                         <div className="mb-8">
                                             <h3 className="text-lg font-inter-display bg-white w-fit font-medium text-text-primary mb-4">
-                                                What's Included
+                                                What&apos;s Included
                                             </h3>
                                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                                                 <div className="flex items-start gap-3 p-4 border border-neutral-300 rounded-lg bg-white ring ring-neutral-300 ring-offset-2 md:ring-offset-4">
                                                     <FaCheckCircle className="text-primary text-xl shrink-0 mt-0.5" />
                                                     <div>
                                                         <p className="text-sm md:text-base font-inter-display font-medium text-text-primary mb-1 leading-tight">
-                                                            Lifetime Achievement
+                                                            Intensive Training
                                                         </p>
                                                         <p className="text-xs md:text-sm text-gray-600 font-inter-display leading-tight">
-                                                            Track Your Progress
+                                                            {bootcamp.duration} hands-on learning
                                                         </p>
                                                     </div>
                                                 </div>
@@ -193,8 +166,13 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                                                         <p className="text-sm md:text-base font-inter-display font-medium text-text-primary mb-1 leading-tight">
                                                             Support
                                                         </p>
-                                                        <a href={`mailto:${CONTACT.supportEmail}`} className="text-xs md:text-sm text-gray-600 font-inter-display hover:text-primary transition-colors leading-tight">
-                                                            <span className="underline underline-offset-2 decoration-1 decoration-gray-400 hover:decoration-primary">{CONTACT.supportEmail}</span>
+                                                        <a
+                                                            href={`mailto:${CONTACT.supportEmail}`}
+                                                            className="text-xs md:text-sm text-gray-600 font-inter-display hover:text-primary transition-colors leading-tight"
+                                                        >
+                                                            <span className="underline underline-offset-2 decoration-1 decoration-gray-400 hover:decoration-primary">
+                                                                {CONTACT.supportEmail}
+                                                            </span>
                                                         </a>
                                                     </div>
                                                 </div>
@@ -214,7 +192,7 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
 
                                         <ShinyButton
                                             type="button"
-                                            onClick={handleProceedToCheckout}
+                                            onClick={() => setShowCheckoutForm(true)}
                                             className="w-full rounded-lg! font-montserrat! text-base font-medium shadow-lg! active:scale-95!"
                                         >
                                             Proceed to Enrollment
@@ -223,9 +201,10 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                                 ) : (
                                     <CheckoutForm
                                         courseData={heroData}
-                                        courseTitle={course?.title || heroData.title}
-                                        onBack={handleBackToCheckout}
-                                        courseSlug={slug}
+                                        courseTitle={bootcamp.title}
+                                        onBack={() => setShowCheckoutForm(false)}
+                                        courseSlug={`bootcamp/${bootcamp.slug}`}
+                                        formType="bootcamp-enrollment"
                                         onSuccess={handleClose}
                                     />
                                 )}
@@ -238,4 +217,4 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
     );
 };
 
-export default EnrollmentModal;
+export default BootcampEnrollmentModal;

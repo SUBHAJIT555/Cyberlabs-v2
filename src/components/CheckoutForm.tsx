@@ -6,6 +6,7 @@ import { z } from "zod";
 import { useSearchParams } from "react-router";
 import type { Hero } from "@/interface/program";
 import { MAIL_API_URL } from "@/lib/api";
+import { ShinyButton } from "@/components/ui/shiny-button";
 
 // Zod validation schema
 const checkoutFormSchema = z.object({
@@ -191,6 +192,7 @@ interface CheckoutFormProps {
   };
   onBack: () => void;
   courseSlug?: string;
+  formType?: string;
   onSuccess?: () => void;
 }
 
@@ -199,6 +201,7 @@ const CheckoutForm = ({
   courseTitle,
   onBack,
   courseSlug: propSlug,
+  formType = "enrollment-modal",
   onSuccess,
 }: Omit<CheckoutFormProps, 'pricing'>) => {
   const [searchParams] = useSearchParams();
@@ -239,7 +242,7 @@ const CheckoutForm = ({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          formType: "enrollment-modal",
+          formType,
           fullName: data.fullName,
           email: data.email,
           phoneNumber: data.phoneNumber,
@@ -580,13 +583,13 @@ const CheckoutForm = ({
             register={register}
           />
 
-          <button
+          <ShinyButton
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-primary hover:bg-primary/90 disabled:bg-primary/50 disabled:cursor-not-allowed text-white py-4 px-6 rounded-lg font-medium text-base font-montserrat transition-colors mt-6"
+            className="mt-6 w-full rounded-lg! font-montserrat! text-base font-medium shadow-lg! active:scale-95! disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSubmitting ? "Submitting..." : "Submit Details"}
-          </button>
+          </ShinyButton>
         </form>
       </div>
     </motion.div>

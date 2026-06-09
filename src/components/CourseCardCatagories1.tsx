@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import CallbackModal from "./CallbackModal";
 import CTAButton from "./ui/CTAButton";
+import { ShinyButton } from "@/components/ui/shiny-button";
+import { useFloatingBottomBar } from "@/contexts/FloatingBottomBarContext";
 import { useCourses } from "@/hooks/useCourses";
 import type { Course } from "@/interface/program";
 import { parseBoldText } from "@/lib/utils";
@@ -70,6 +72,7 @@ const AnimatedClockIcon = ({ isInView }: { isInView: boolean }) => (
 const CourseCardCategories1 = () => {
     const [showFloatingButton, setShowFloatingButton] = useState(false);
     const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false);
+    const { setIsActive: setFloatingBottomBarActive } = useFloatingBottomBar();
     const coursesSectionRef = useRef<HTMLDivElement>(null);
     const cardsGridRef = useRef<HTMLDivElement>(null);
     const cardsInView = useInView(cardsGridRef, { once: false, margin: "-80px" });
@@ -107,6 +110,11 @@ const CourseCardCategories1 = () => {
             window.removeEventListener("resize", handleScroll);
         };
     }, []);
+
+    useEffect(() => {
+        setFloatingBottomBarActive(showFloatingButton);
+        return () => setFloatingBottomBarActive(false);
+    }, [showFloatingButton, setFloatingBottomBarActive]);
 
     return (
         <div ref={coursesSectionRef} className="min-h-screen pt-6 md:pt-10 px-5 md:px-10 lg:px-16" id="courses">
@@ -319,14 +327,16 @@ const CourseCardCategories1 = () => {
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 100, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50"
+                        className="fixed bottom-4 left-1/2 z-1000 -translate-x-1/2 sm:bottom-6"
                     >
-                        <button
+                        <ShinyButton
+                            type="button"
+                            size="compact"
                             onClick={() => setIsCallbackModalOpen(true)}
-                            className="bg-neutral-600 hover:bg-neutral-800 text-background px-6 sm:px-8 md:px-10 py-2 sm:py-2.5 shadow-lg font-montserrat font-medium tracking-tight text-sm sm:text-base md:text-base transition-all duration-300 text-center whitespace-nowrap rounded-md cursor-pointer ring ring-neutral-300 ring-offset-2 md:ring-offset-4"
+                            className="rounded-lg! font-montserrat! text-xs font-medium whitespace-nowrap shadow-lg! active:scale-95! sm:text-sm px-10! py-3!"
                         >
                             Request Callback
-                        </button>
+                        </ShinyButton>
                     </motion.div>
                 )}
             </AnimatePresence>

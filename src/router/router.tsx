@@ -12,6 +12,7 @@ const LearningEnvironment = lazy(() => import("@/pages/LearningEnvironment"));
 const Programs = lazy(() => import("@/pages/Programs"));
 const About = lazy(() => import("@/pages/About"));
 const CourseDetails = lazy(() => import("@/pages/CourseDetails"));
+const BootcampDetails = lazy(() => import("@/pages/BootcampDetails"));
 const Contact = lazy(() => import("@/pages/Contact"));
 const TermsAndCondition = lazy(() => import("@/pages/TermsAndCondition"));
 const PrivacyPolicy = lazy(() => import("@/pages/PrivacyPolicy"));
@@ -46,6 +47,11 @@ const router = createBrowserRouter([
         path: "/contact-cyberlabs",
         element: <Contact />,
       },
+      {
+        path: "/cyber-defense-programs/bootcamp/:slug",
+        element: <BootcampDetails />,
+      },
+
       {
         path: "/cyber-defense-programs/:slug",
         element: <CourseDetails />,

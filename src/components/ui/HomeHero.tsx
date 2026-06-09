@@ -2,7 +2,8 @@ import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { parseBoldText } from "@/lib/utils";
-import CTAButton from "@/components/ui/CTAButton";
+import { ShinyButton } from "@/components/ui/shiny-button";
+import { useNavigate } from "react-router";
 // import backgroundImage from "../../assets/img/backgrounds/bg.webp";
 import backgroundVideo from "../../assets/img/Hero_vid_02.webm";
 
@@ -40,6 +41,7 @@ const AnimatedGlobeIcon = ({ isInView }: { isInView: boolean }) => (
 );
 
 const HomeHero = () => {
+  const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const featuresRef = useRef(null);
@@ -303,8 +305,22 @@ const HomeHero = () => {
           {/* PRIMARY ACTIONS */}
 
           <div className="flex flex-wrap gap-3 sm:gap-4 justify-center items-center pb-8 sm:pb-12">
-            <CTAButton to="/leadership-and-faculty" label="Leadership Team" variant="light" className="shrink-0 bg-linear-to-l from-neutral-100 to-neutral-500 font-inter-display" />
-            <CTAButton to="/about-cyberlabs" label="About CYBERLABS" variant="dark" className="shrink-0 bg-linear-to-l from-neutral-600 to-neutral-900 font-inter-display" />
+            <ShinyButton
+              type="button"
+              variant="light"
+              onClick={() => navigate("/leadership-and-faculty")}
+              className="shrink-0 rounded-2xl! font-montserrat! text-sm sm:text-base shadow-lg! active:scale-95!  "
+            >
+              Leadership Team
+            </ShinyButton>
+            <ShinyButton
+              type="button"
+              variant="default"
+              onClick={() => navigate("/about-cyberlabs")}
+              className="shrink-0 rounded-2xl! font-montserrat! text-sm sm:text-base shadow-lg! active:scale-95!  shadow-white! shadow-inset!"
+            >
+              About CYBERLABS
+            </ShinyButton>
           </div>
         </div>
       </div>

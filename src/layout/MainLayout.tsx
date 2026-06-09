@@ -1,5 +1,6 @@
 import { Outlet } from "react-router";
 import ScrollToTopButton from "../components/ScrollToTop";
+import { FloatingBottomBarProvider } from "@/contexts/FloatingBottomBarContext";
 // import MobileMenu from "../components/MobileMenu";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -35,18 +36,19 @@ const MainLayout = () => {
   useLenisScrollRestoration({ duration: 0.6 });
 
   return (
-    <div className="min-h-screen w-full overflow-x-clip">
-
-      <Navbar />
-      {/* <MobileMenu /> */}
-      <main className="w-full overflow-x-clip">
-        <Outlet />
-      </main>
-      {/* <TextHoverEffect text="CYBERLABS INDIA" /> */}
-      <Footer />
-      <ScrollToTopButton />
-      {/* ScrollRestoration REMOVED - conflicts with Lenis */}
-    </div>
+    <FloatingBottomBarProvider>
+      <div className="min-h-screen w-full overflow-x-clip">
+        <Navbar />
+        {/* <MobileMenu /> */}
+        <main className="w-full overflow-x-clip">
+          <Outlet />
+        </main>
+        {/* <TextHoverEffect text="CYBERLABS INDIA" /> */}
+        <Footer />
+        <ScrollToTopButton />
+        {/* ScrollRestoration REMOVED - conflicts with Lenis */}
+      </div>
+    </FloatingBottomBarProvider>
   );
 };
 

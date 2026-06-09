@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams, useNavigate } from "react-router";
-import { IoArrowBack } from "react-icons/io5";
 import ProgramHero from "../components/ui/ProgramDeatailHero";
 import WhatsNew from "../components/ui/WhatsNew";
 import ModuleExplained from "../components/ui/ModuleExplained";
@@ -17,6 +16,11 @@ import LaymanStory from "@/components/LaymanStory";
 import ProgramTeaches from "@/components/ProgramTeaches";
 // import ProgramDeepDive from "@/components/ProgramDeepDive";
 import { useLenis } from "@/hooks/useLenis";
+import { ShinyButton } from "@/components/ui/shiny-button";
+import FloatingBackButton from "@/components/ui/FloatingBackButton";
+import Portal from "@/components/ui/Portal";
+import { useFloatingBottomBar } from "@/contexts/FloatingBottomBarContext";
+import { useFooterVisibility } from "@/hooks/useFooterVisibility";
 
 const CourseDetails = () => {
   const { slug } = useParams();
@@ -28,31 +32,8 @@ const CourseDetails = () => {
   const [isEnrollmentModalOpen, setIsEnrollmentModalOpen] = useState(false);
   const heroSectionRef = useRef<HTMLDivElement>(null);
   const callToActionRef = useRef<HTMLDivElement>(null);
-  const [isFooterVisible, setIsFooterVisible] = useState(false);
-
-  // Observe footer visibility using IntersectionObserver
-  useEffect(() => {
-    const footer = document.querySelector("footer");
-    if (!footer) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          setIsFooterVisible(entry.isIntersecting);
-        });
-      },
-      {
-        threshold: 0.1, // Trigger when 10% of footer is visible
-        rootMargin: "0px 0px -100px 0px", // Start hiding slightly before footer enters viewport
-      }
-    );
-
-    observer.observe(footer);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+  const isFooterVisible = useFooterVisibility();
+  const { setIsActive: setFloatingBottomBarActive } = useFloatingBottomBar();
 
   // Show back button and Enroll / Request Callback bar after one scroll — uses Lenis like ScrollToTop
   // Hide floating button when footer is in view
@@ -66,15 +47,9 @@ const CourseDetails = () => {
     const scrollThreshold = viewportHeight; // appear after one viewport scroll
 
     const handleScroll = ({ scroll }: { scroll: number }) => {
-      const show = scroll > scrollThreshold;
+      const show = scroll > scrollThreshold && !isFooterVisible;
       setShowBackButton(show);
-
-      // Hide floating button when footer is visible
-      if (isFooterVisible) {
-        setShowFloatingButton(false);
-      } else {
-        setShowFloatingButton(show);
-      }
+      setShowFloatingButton(show);
     };
 
     handleScroll({ scroll: lenis.scroll || 0 });
@@ -83,6 +58,11 @@ const CourseDetails = () => {
       lenis.off("scroll", handleScroll);
     };
   }, [lenis, isFooterVisible]);
+
+  useEffect(() => {
+    setFloatingBottomBarActive(showFloatingButton);
+    return () => setFloatingBottomBarActive(false);
+  }, [showFloatingButton, setFloatingBottomBarActive]);
 
   return (
     <>
@@ -128,51 +108,43 @@ const CourseDetails = () => {
           {/* <CallToAction /> */}
         </div>
 
-        {/* Floating Action Button - Appears when scrolling */}
-        <AnimatePresence>
-          {showFloatingButton && (
-            <motion.div
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 100, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-998 flex flex-row items-center gap-3 bg-neutral-200/20 backdrop-blur-sm text-background p-1.5 sm:p-2 border border-neutral-300 rounded-md w-[calc(100%-2rem)] sm:w-auto min-w-[280px] sm:min-w-[400px] max-w-[95vw] sm:max-w-[600px] "
-            >
-              {/* Enroll Now Button */}
-              <button
-                onClick={() => setIsEnrollmentModalOpen(true)}
-                className="bg-primary hover:bg-white text-background hover:text-text-primary px-6 sm:px-8 md:px-10 py-1.5 sm:py-2 shadow-lg font-montserrat font-medium tracking-tight text-md sm:text-md md:text-base transition-all duration-300 text-center whitespace-nowrap flex-1 cursor-pointer rounded-md"
+        <Portal>
+          <AnimatePresence>
+            {showFloatingButton && (
+              <motion.div
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 100, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="fixed bottom-4 sm:bottom-6 left-1/2 z-1000 flex w-[calc(100%-2rem)] max-w-[95vw] -translate-x-1/2 transform flex-row items-center gap-3 rounded-lg border border-neutral-300 bg-neutral-200/20 p-1.5 text-background shadow-lg backdrop-blur-sm sm:w-auto sm:min-w-[400px] sm:max-w-[600px] sm:p-2"
               >
-                Enroll Now
-              </button>
+                <ShinyButton
+                  type="button"
+                  size="compact"
+                  onClick={() => setIsEnrollmentModalOpen(true)}
+                  className="min-w-0 flex-1 rounded-lg! font-montserrat! text-xs font-semibold whitespace-nowrap shadow-lg! active:scale-95! sm:text-sm"
+                >
+                  Enroll Now
+                </ShinyButton>
 
-              {/* Request Callback Button */}
-              <button
-                onClick={() => setIsCallbackModalOpen(true)}
-                className="bg-text-primary/80 hover:bg-text-primary text-background hover:text-background px-6 sm:px-8 md:px-10 py-1.5 sm:py-2 shadow-lg font-montserrat font-medium tracking-tight text-md sm:text-md md:text-base transition-all duration-300 text-center whitespace-nowrap rounded-md flex-1 cursor-pointer"
-              >
-                Request Callback
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                <ShinyButton
+                  type="button"
+                  variant="light"
+                  size="compact"
+                  onClick={() => setIsCallbackModalOpen(true)}
+                  className="min-w-0 flex-1 rounded-lg! font-montserrat! text-xs font-medium whitespace-nowrap shadow-lg! active:scale-95! sm:text-sm"
+                >
+                  Request Callback
+                </ShinyButton>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-        {/* Floating Back Button - Left bottom, same height as ScrollToTop (right bottom), appears after two scrolls */}
-        <button
-          type="button"
-          aria-label="Go back"
-          onClick={() => navigate(-1)}
-          className={`fixed bottom-20 left-4 sm:bottom-24 sm:left-6 md:bottom-8 md:left-8 inline-flex p-0.5 md:p-1 items-center justify-center rounded-md bg-white border border-neutral-300 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 text-text-primary shadow-lg transition-all duration-300 ease-out hover:opacity-90 cursor-pointer z-999 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary/50 motion-reduce:transition-none ${showBackButton
-            ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
-            : "opacity-0 translate-y-8 sm:translate-y-10 scale-95 pointer-events-none"
-            }`}
-          style={{
-            background:
-              "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-          }}
-        >
-          <IoArrowBack className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-neutral-500" />
-        </button>
+          <FloatingBackButton
+            isVisible={showBackButton}
+            onClick={() => navigate(-1)}
+          />
+        </Portal>
 
         {/* Callback Modal */}
         <CallbackModal

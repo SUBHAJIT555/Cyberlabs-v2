@@ -1,615 +1,397 @@
 import { Link } from "react-router";
-
 import { useForm, type FieldValues } from "react-hook-form";
-
-import { useState, useRef } from "react";
-import { motion } from "framer-motion";
-import CTAButton from "./ui/CTAButton";
-
+import { useRef, useState, type BaseSyntheticEvent, type ReactNode } from "react";
+import {
+    FaFacebookF,
+    FaHeart,
+    FaInstagram,
+    FaLinkedinIn,
+    FaWhatsapp,
+} from "react-icons/fa";
 import footerlogo from "../assets/img/logo/Cyberlabs-logo-03.svg";
-// import { PiTrademarkRegisteredFill } from "react-icons/pi";
 import { CONTACT } from "@/constants/contactInfo";
 import { MAIL_API_URL } from "@/lib/api";
+import { cn } from "@/lib/utils";
+import ShinyText from "@/components/ui/ShinyText";
 
+const usefulLinks = [
+    { label: "CYBERLABS Home", to: "/" },
+    { label: "About CYBERLABS", to: "/about-cyberlabs" },
+    { label: "Leadership and Faculty", to: "/leadership-and-faculty" },
+    { label: "Cyber Defense Programs", to: "/cyber-defense-programs" },
+    { label: "Learning Environment", to: "/learning-environment" },
+    {
+        label: "Certification & Evaluation Framework",
+        to: "/certification-and-evaluation-framework",
+    },
+    { label: "Who Should Apply", to: "/who-should-apply" },
+    { label: "Request Call Back", to: "/request-callback" },
+    { label: "Contact CYBERLABS", to: "/contact-cyberlabs" },
+    { label: "FAQs", to: "/frequently-asked-questions" },
+];
 
+const legalLinks = [
+    { label: "Terms & Condition", to: "/terms-and-conditions" },
+    { label: "Privacy Policy", to: "/privacy-policy" },
+    { label: "Cookie Policy", to: "/cookie-policy" },
+    { label: "Refund Policy", to: "/refund-and-cancellation" },
+    { label: "Support", to: `mailto:${CONTACT.supportEmail}`, external: true },
+];
 
-import {
-  FaFacebookF,
-  FaHeart,
-  FaInstagram,
-  FaLinkedinIn,
-  FaWhatsapp,
-} from "react-icons/fa";
+const socialLinks = [
+    {
+        label: "Instagram",
+        href: "https://www.instagram.com/cyberlabsindia",
+        icon: FaInstagram,
+    },
+    { label: "Facebook", href: "#", icon: FaFacebookF },
+    {
+        label: "LinkedIn",
+        href: "https://www.linkedin.com/company/cyberlabs-india/",
+        icon: FaLinkedinIn,
+    },
+    { label: "WhatsApp", href: "#", icon: FaWhatsapp },
+];
+
+const inputClassName =
+    "w-full rounded-xl border border-dashed border-zinc-200 bg-zinc-50/60 px-3.5 py-2.5 font-inter-display text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-zinc-400 focus:bg-white focus:ring-2 focus:ring-zinc-200/80";
 
 const Footer = () => {
-  const [message, setMessage] = useState<string>("");
-  const formRef = useRef<HTMLFormElement>(null);
+    const [message, setMessage] = useState<string>("");
+    const formRef = useRef<HTMLFormElement>(null);
 
-  const {
-    register,
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+        reset,
+    } = useForm({
+        defaultValues: { email: "" },
+    });
 
-    handleSubmit,
+    const onSubmit = async (data: FieldValues) => {
+        try {
+            const response = await fetch(MAIL_API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    formType: "newsletter",
+                    email: data.email,
+                }),
+            });
 
-    formState: { errors, isSubmitting },
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result?.error ?? "Subscription failed");
+            }
+            setMessage(result.message ?? "Subscribed successfully.");
+            setTimeout(() => setMessage(""), 3000);
+            reset();
+        } catch (error) {
+            setMessage(
+                error instanceof Error ? error.message : "Something went wrong.",
+            );
+        }
+    };
 
-    reset,
-  } = useForm({
-    defaultValues: {
-      email: "",
-    },
-  });
+    return (
+        <footer className="relative z-0 overflow-hidden border-t border-zinc-200 bg-zinc-50/80">
+            <FooterBackground />
 
-  const onSubmit = async (data: FieldValues) => {
-    try {
-      const response = await fetch(MAIL_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          formType: "newsletter",
-          email: data.email,
-        }),
-      });
-      console.log(response);
+            <div className="relative z-10 w-full px-4 py-12 sm:px-6 md:py-16 lg:px-12 xl:px-16">
+                <NewsletterSignup
+                    formRef={formRef}
+                    register={register}
+                    handleSubmit={handleSubmit(onSubmit)}
+                    isSubmitting={isSubmitting}
+                    message={message}
+                    emailError={errors.email?.message}
+                />
 
-      // Check if response is actually JSON before parsing
-      // const contentType = response.headers.get("content-type");
-      // if (!contentType || !contentType.includes("application/json")) {
-      //   const text = await response.text();
-      //   throw new Error(`Server returned non-JSON response: ${text.substring(0, 100)}`);
-      // }
+                <div className="mt-10 grid gap-10 md:mt-14 md:grid-cols-12 md:gap-8 lg:gap-10">
+                    <div className="md:col-span-5 lg:col-span-4">
+                        <Link to="/">
+                            <img
+                                src={footerlogo}
+                                alt="CYBERLABS INDIA Logo"
+                                className="h-10 w-auto"
+                            />
+                        </Link>
+                        <p className="mt-5 max-w-sm font-inter-display text-sm leading-relaxed text-zinc-600 md:text-base">
+                            An Israeli Cyber Defense Training Ecosystem, Launched by{" "}
+                            <span className="font-semibold text-zinc-800">
+                                {CONTACT.registeredEntity.replace(" LLP", "")}.
+                            </span>{" "}
+                            Training Real Cyber Defenders for a Real World.
+                        </p>
+                    </div>
 
-      const result = await response.json();
-      console.log(result);
-      if (!response.ok) {
-        throw new Error(result?.error ?? "Subscription failed");
-      }
-      setMessage(result.message ?? "Subscribed successfully.");
-      setTimeout(() => setMessage(""), 3000);
-      reset();
-    } catch (error) {
-      console.error(error);
-      setMessage(error instanceof Error ? error.message : "Something went wrong.");
-    }
-  };
+                    <div className="grid gap-8 sm:grid-cols-2 md:col-span-7 md:grid-cols-3 lg:col-span-8">
+                        <FooterColumn title="Useful Links">
+                            <ul className="space-y-2.5">
+                                {usefulLinks.map((item) => (
+                                    <li key={item.to}>
+                                        <FooterLink to={item.to}>{item.label}</FooterLink>
+                                    </li>
+                                ))}
+                            </ul>
+                        </FooterColumn>
 
-  return (
-    <>
-      <footer className="w-full bg-neutral-100 relative overflow-hidden"
-        style={{
-          background: "repeating-linear-gradient(90deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-        }}
-      >
-        {/* Two Dashed Border Lines */}
-        <div className="w-full border-t border-neutral-200"></div>
-        <div className="w-full border-t border-neutral-200 mt-2 "></div>
+                        <FooterColumn title="Legals">
+                            <ul className="space-y-2.5">
+                                {legalLinks.map((item) => (
+                                    <li key={item.label}>
+                                        {item.external ? (
+                                            <FooterLink href={item.to} external>
+                                                {item.label}
+                                            </FooterLink>
+                                        ) : (
+                                            <FooterLink to={item.to}>{item.label}</FooterLink>
+                                        )}
+                                    </li>
+                                ))}
+                            </ul>
+                        </FooterColumn>
 
-        <div className="w-full mx-auto px-5 py-2 lg:py-5 sm:px-6 lg:px-8 xl:px-12 relative z-10">
-          <div className="relative">
-            {/* Vertical Dividers - Desktop Only - Extend from top to bottom border only */}
-            <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[25%] border-l border-neutral-200"></div>
-            <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[41.666%] border-l border-neutral-200"></div>
-            <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[58.333%] border-l border-neutral-200"></div>
-            <div className="hidden lg:block absolute -top-[calc(1.25rem+0.5rem+2px)] bottom-0 left-[75%] border-l border-neutral-200"></div>
-
-            <div className="grid grid-cols-2 lg:grid-cols-12 lg:gap-y-8 relative">
-
-              {/* About / Logo */}
-              <div className="col-span-2 lg:col-span-3 border-b lg:border-b-0 border-neutral-200 pb-8 lg:pb-0 pr-5 lg:pr-8">
-                <div className="text-text-primary md:text-5xl text-3xl font-montserrat flex items-center gap-2 tracking-tighter">
-                  <Link to="/">
-                    <img
-                      src={footerlogo}
-                      alt="CYBERLABS INDIA Logo"
-                      className="w-50 h-25"
-                    />
-                  </Link>
+                        <FooterColumn title="Socials">
+                            <ul className="space-y-2.5">
+                                {socialLinks.map((item) => (
+                                    <li key={item.label}>
+                                        <FooterLink href={item.href} external>
+                                            <item.icon className="h-4 w-4 shrink-0" aria-hidden />
+                                            <span>{item.label}</span>
+                                        </FooterLink>
+                                    </li>
+                                ))}
+                            </ul>
+                        </FooterColumn>
+                    </div>
                 </div>
 
-                {/* <a target="_blank" href="/">
-                  <h3 className="text-text-primary text-sm md:text-xl  font-inter-display tracking-widest mt-2 px-2 py-1 rounded-md w-fit border border-neutral-300 border-dashed"
-                    style={{
-                      background:
-                        "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                    }}>
-                    CYBERLABS INDIA{" "}
-                    <PiTrademarkRegisteredFill className="inline-block text-text-primary text-lg" />
-                  </h3>
-                </a> */}
-
-                <p className="mt-4 text-text-primary text-base md:text-2xl font-montserrat leading-tight max-w-sm">
-                  <span>
-                    An Israeli Cyber Defense Training Ecosystem, Launched by
-                    <span className="font-semibold">{" "}{CONTACT.registeredEntity.replace(" LLP", "")}.</span>
-                  </span>
-                  <br />
-                  <span className="font-bold">Training Real Cyber Defenders for a Real World.</span>
-                </p>
-
-                {/* <div className="flex items-center gap-10 mt-6  ">
-                <div className="border border-zinc-700 rounded-full p-2 backdrop-blur-sm">
-                  <a
-                    href="https://facebook.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-text-primary hover:text-primary transition-colors duration-300"
-                  >
-                    <FaFacebookF size={24} />
-                  </a>
+                <div className="mt-8 border-t border-dashed border-zinc-200 pt-6 text-center text-xs text-zinc-500 md:text-sm">
+                    <p className="inline-flex flex-wrap items-center justify-center gap-x-1 gap-y-0.5 font-inter-display leading-relaxed">
+                        <span>© {new Date().getFullYear()}</span>
+                        <Link
+                            to="/"
+                            className="font-montserrat font-medium text-zinc-700 transition hover:text-zinc-900"
+                        >
+                            CYBERLABS INDIA
+                        </Link>
+                        <span>| All rights reserved. Made with</span>
+                        <FaHeart className="h-3.5 w-3.5 shrink-0 text-zinc-500" aria-hidden />
+                        <span>
+                            by{" "}
+                            <a
+                                href="https://codecobble.com/"
+                                target="_blank"
+                                rel="noreferrer"
+                                className="font-medium text-zinc-700 underline underline-offset-2 transition hover:text-zinc-900"
+                            >
+                                CodeCobble
+                            </a>
+                        </span>
+                    </p>
                 </div>
-
-                <div className="border border-zinc-700 rounded-full p-2 backdrop-blur-sm">
-                  <a
-                    href="https://instagram.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-text-primary hover:text-primary transition-colors duration-300"
-                  >
-                    <FaInstagram size={24} />
-                  </a>
-                </div>
-
-                <div className="border border-zinc-700 rounded-full p-2 backdrop-blur-sm">
-                  <a
-                    href="https://linkedin.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-text-primary hover:text-primary transition-colors duration-300"
-                  >
-                    <FaLinkedinIn size={24} />
-                  </a>
-                </div>
-
-                <div className="border border-zinc-700 rounded-full p-2 backdrop-blur-sm">
-                  <a
-                    href="https://wa.me/919876543210"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-text-primary hover:text-primary transition-colors duration-300"
-                  >
-                    <FaWhatsapp size={24} />
-                  </a>
-                </div>
-              </div> */}
-              </div>
-
-              {/* Useful Links */}
-
-              <div className="col-span-2 sm:col-span-1 lg:col-span-2 border-b lg:border-b-0 border-neutral-300  pb-8 lg:pb-0 pr-5 lg:pr-8 pl-2">
-                <h3 className="text-primary text-xl md:text-2xl font-montserrat tracking-tighter font-bold mb-5 ">
-                  Useful Links
-                </h3>
-
-                <ul className="text-text-primary text-sm md:text-xl font-inter-display mt-2">
-                  <li>
-                    <Link
-                      to="/"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out flex items-center">
-                        CYBERLABS Home
-                      </span>
-                      <span
-                        className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      to="/about-cyberlabs"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out flex items-center">
-                        About CYBERLABS
-                      </span>
-                      <span
-                        className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      to="/leadership-and-faculty"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out flex items-center">
-                        Leadership and Faculty
-                      </span>
-                      <span
-                        className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      to="/cyber-defense-programs"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out flex items-center">
-                        Cyber Defense Programs
-                      </span>
-                      <span
-                        className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      to="/learning-environment"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out flex items-center">
-                        Learning Environment
-                      </span>
-                      <span
-                        className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/certification-and-evaluation-framework"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out flex items-center">
-                        Certification & Evaluation Framework
-                      </span>
-                      <span
-                        className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      to="/who-should-apply"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out flex items-center">
-                        Who Should Apply
-                      </span>
-                      <span
-                        className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-
-
-
-
-
-                  <li>
-                    <Link
-                      to="/request-callback"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out flex items-center">
-                        Request Call Back
-                      </span>
-                      <span
-                        className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      to="/contact-cyberlabs"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out flex items-center">
-                        Contact CYBERLABS
-                      </span>
-                      <span
-                        className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      to="/frequently-asked-questions"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out flex items-center">
-                        FAQs
-                      </span>
-                      <span
-                        className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Legals */}
-
-              <div className="col-span-2 sm:col-span-1 lg:col-span-2 border-b lg:border-b-0 border-neutral-300  pb-8 lg:pb-0 pr-5 lg:pr-8 pl-2">
-                <h3 className="text-primary text-xl md:text-2xl font-montserrat tracking-tighter font-bold mb-5 ">
-                  Legals
-                </h3>
-
-                <ul className="text-text-primary text-sm md:text-xl font-inter-display mt-2">
-                  <li>
-                    <Link
-                      to="/terms-and-conditions"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out  flex items-center">
-                        Terms & Condition
-                      </span>
-                      <span className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      to="/privacy-policy"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out  flex items-center">
-                        Privacy Policy
-                      </span>
-                      <span className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      to="/cookie-policy"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out  flex items-center">
-                        Cookie Policy
-                      </span>
-                      <span className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      to="/refund-and-cancellation"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out  flex items-center">
-                        Refund Policy
-                      </span>
-                      <span className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      to={`mailto:${CONTACT.supportEmail}`}
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out  flex items-center">
-                        Support
-                      </span>
-                      <span className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Socials */}
-
-              <div className="col-span-2 sm:col-span-1 lg:col-span-2 border-b lg:border-b-0 border-neutral-300  pb-8 lg:pb-0 pr-5 lg:pr-8 pl-2">
-                <h3 className="text-primary text-xl md:text-2xl font-montserrat tracking-tighter font-bold mb-5 ">
-                  Socials
-                </h3>
-
-                <ul className="text-text-primary text-sm md:text-xl font-inter-display mt-2">
-                  <li>
-                    <a
-                      href="https://www.instagram.com/cyberlabsindia"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out  flex items-center">
-                        <FaInstagram className="mr-2 text-lg shrink-0" />
-                        Instagram
-                      </span>
-                      <span className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      href="#"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out  flex items-center">
-                        <FaFacebookF className="mr-2 text-lg shrink-0" />
-                        Facebook
-                      </span>
-                      <span className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      href="https://www.linkedin.com/company/cyberlabs-india/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out  flex items-center">
-                        <FaLinkedinIn className="mr-2 text-lg shrink-0" />
-                        LinkedIn
-                      </span>
-                      <span className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </a>
-                  </li>
-
-                  <li>
-                    <a
-                      href="#"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="relative inline-block pl-1 pr-5 text-text-primary text-sm md:text-xl font-inter-display group overflow-hidden"
-                    >
-                      <span className="relative z-10 transition-colors duration-500 group-hover:text-white ease-out  flex items-center">
-                        <FaWhatsapp className="mr-2 text-lg shrink-0" />
-                        WhatsApp
-                      </span>
-                      <span className="absolute left-0 top-0 bottom-0 right-0 bg-neutral-600 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out origin-left"
-
-                      ></span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-
-              {/* Newsletter */}
-
-              <div className="col-span-2 sm:col-span-1 lg:col-span-3 border-b lg:border-b-0 border-neutral-300  pb-8 lg:pb-1 pl-2 lg:pl-2">
-                <h3 className="text-primary text-xl md:text-2xl font-montserrat tracking-tighter font-bold mb-5 ">
-                  Newsletter
-                </h3>
-
-                <p className="text-text-primary text-sm md:text-lg font-montserrat">
-                  Stay updated with our latest news, industry insights, and
-                  exclusive offers.
-                </p>
-
-                <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
-                  <input type="hidden" name="formType" value="newsletter" />
-
-                  <label
-                    htmlFor="newsletter-email"
-                    className="block text-text-primary text-sm md:text-lg font-inter-display mt-5 mb-2"
-                  >
-                    Enter Your Email id :
-                  </label>
-
-                  <input
-                    id="newsletter-email"
-                    type="email"
-                    required
-                    {...register("email")}
-                    placeholder="username@example.com"
-                    className="w-full px-4 py-3 bg-transparent backdrop-blur-sm border border-neutral-200 rounded-xl ring ring-neutral-300 ring-offset-2 md:ring-offset-3 text-text-primary placeholder:text-text-primary/50 text-sm md:text-lg focus:outline-none focus:border-b-neutral-400 hover:border-b-neutral-400 transition-all duration-300 ease-in-out font-inter-display!"
-                  />
-
-                  <div className="flex justify-end mt-5">
-                    <CTAButton
-                      label={isSubmitting ? "Submitting..." : "Subscribe Us"}
-                      onClick={() => {
-                        if (formRef.current && !isSubmitting) {
-                          formRef.current.requestSubmit();
-                        }
-                      }}
-                      variant="light"
-                      className={isSubmitting ? "opacity-70 cursor-not-allowed" : " font-inter-display font-semibold ring ring-neutral-300 ring-offset-2 md:ring-offset-3"}
-                    />
-                  </div>
-                </form>
-
-                {message && (
-                  <p className="text-green-500 text-base mt-2">{message}</p>
-                )}
-
-                {errors.email && (
-                  <p className="text-red-500 text-base mt-2">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
             </div>
-
-            {/* Bottom Border */}
-            <div className="w-full border-t border-neutral-300 "></div>
-          </div>
-
-          {/* Bottom Bar */}
-
-          <div className="w-full flex justify-center items-center py-5 px-10 font-inter-display tracking-tighter">
-            <div className="text-text-primary text-sm md:text-lg leading-none text-center">
-              &copy; {new Date().getFullYear()}{" "}
-              <motion.div
-                className="inline-block relative group"
-                whileHover="hover"
-                initial="initial"
-              >
-                <Link
-                  to="/"
-                  className="text-primary text-sm md:text-lg font-medium relative inline-block"
-                >
-                  CYBERLABS INDIA
-                  <motion.span
-                    className="absolute bottom-0 left-0 h-px bg-primary"
-                    variants={{
-                      initial: { width: 0 },
-                      hover: { width: "100%" }
-                    }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                  />
-                </Link>
-              </motion.div>{" "}
-              All rights reserved | Made with{" "}
-              <FaHeart className="inline text-primary text-sm md:text-base animate-pulse" />{" "}
-              by:&nbsp;
-              <motion.div
-                className="inline-block relative group"
-                whileHover="hover"
-                initial="initial"
-              >
-                <a
-                  href="https://codecobble.com/"
-                  target="_blank"
-                  className="text-primary text-sm md:text-lg font-medium relative inline-block"
-                  rel="noopener noreferrer"
-                >
-                  CodeCobble
-                  <motion.span
-                    className="absolute bottom-0 left-0 h-px bg-primary"
-                    variants={{
-                      initial: { width: 0 },
-                      hover: { width: "100%" }
-                    }}
-                    transition={{ duration: 0.3, ease: "easeOut" }}
-                  />
-                </a>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </>
-  );
+        </footer>
+    );
 };
+
+type NewsletterSignupProps = {
+    formRef: React.RefObject<HTMLFormElement | null>;
+    register: ReturnType<typeof useForm<{ email: string }>>["register"];
+    handleSubmit: (event?: BaseSyntheticEvent) => Promise<void>;
+    isSubmitting: boolean;
+    message: string;
+    emailError?: string;
+};
+
+function NewsletterSignup({
+    formRef,
+    register,
+    handleSubmit,
+    isSubmitting,
+    message,
+    emailError,
+}: NewsletterSignupProps) {
+    return (
+        <div className="relative overflow-hidden border border-dashed border-zinc-300 bg-white px-6 py-8 md:px-10 md:py-10">
+            <NewsletterBackground />
+
+            <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+                <div className="max-w-lg">
+                    <ShinyText
+                        text="Newsletter"
+                        className="font-montserrat text-xs font-semibold uppercase tracking-[0.14em] md:text-sm"
+                        speed={3}
+                        color="#52525b"
+                        shineColor="#53565a"
+                    />
+                    <h3 className="mt-2 font-montserrat text-xl font-semibold text-zinc-900 md:text-2xl">
+                        Stay ahead in cybersecurity
+                    </h3>
+                    <p className="mt-2 font-inter-display text-sm leading-relaxed text-zinc-600 md:text-base">
+                        Stay updated with our latest news, industry insights, and
+                        exclusive offers.
+                    </p>
+                </div>
+
+                <form
+                    ref={formRef}
+                    onSubmit={handleSubmit}
+                    className="w-full max-w-md shrink-0 space-y-2"
+                    noValidate
+                >
+                    <input type="hidden" name="formType" value="newsletter" />
+                    <div className="flex flex-col gap-2 sm:flex-row">
+                        <input
+                            id="newsletter-email"
+                            type="email"
+                            placeholder="you@company.com"
+                            aria-label="Email address"
+                            className={cn(inputClassName, "sm:flex-1")}
+                            {...register("email", {
+                                required: "Email is required",
+                            })}
+                        />
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="inline-flex shrink-0 items-center justify-center rounded-xl border border-zinc-900 bg-zinc-900 px-5 py-2.5 font-inter-display text-sm font-medium text-white transition hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-70"
+                        >
+                            {isSubmitting ? "Submitting..." : "Subscribe"}
+                        </button>
+                    </div>
+                    {message && (
+                        <p className="font-inter-display text-xs text-emerald-600 md:text-sm">{message}</p>
+                    )}
+                    {emailError && (
+                        <p className="font-inter-display text-xs text-red-600 md:text-sm">{emailError}</p>
+                    )}
+                </form>
+            </div>
+        </div>
+    );
+}
+
+function FooterColumn({
+    title,
+    children,
+}: {
+    title: string;
+    children: ReactNode;
+}) {
+    return (
+        <div>
+            <p className="font-montserrat text-xs font-semibold uppercase tracking-[0.14em] text-zinc-800 md:text-sm">
+                {title}
+            </p>
+            <div className="mt-3 border-t border-dashed border-zinc-200 pt-4">
+                {children}
+            </div>
+        </div>
+    );
+}
+
+function FooterLink({
+    to,
+    href,
+    children,
+    external,
+}: {
+    to?: string;
+    href?: string;
+    children: ReactNode;
+    external?: boolean;
+}) {
+    const className =
+        "group inline-flex w-fit items-center gap-2 font-inter-display text-sm text-zinc-600 transition hover:text-zinc-900 md:text-base";
+
+    if (href || external) {
+        const linkHref = href ?? to ?? "#";
+        return (
+            <a
+                href={linkHref}
+                target={external || linkHref.startsWith("http") ? "_blank" : undefined}
+                rel={
+                    external || linkHref.startsWith("http")
+                        ? "noreferrer"
+                        : undefined
+                }
+                className={className}
+            >
+                {children}
+                <ArrowIcon />
+            </a>
+        );
+    }
+
+    return (
+        <Link to={to ?? "/"} className={className}>
+            {children}
+            <ArrowIcon />
+        </Link>
+    );
+}
+
+function FooterBackground() {
+    return (
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div
+                className="absolute inset-0 opacity-[0.35]"
+                style={{
+                    backgroundImage:
+                        "linear-gradient(90deg, #e4e4e7 1px, transparent 1px)",
+                    backgroundSize: "10px 100%",
+                    WebkitMaskImage:
+                        "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 65%)",
+                    maskImage:
+                        "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 65%)",
+                }}
+            />
+        </div>
+    );
+}
+
+function NewsletterBackground() {
+    return (
+        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div
+                className="absolute inset-0 opacity-30"
+                style={{
+                    backgroundImage:
+                        "repeating-conic-gradient(from 0deg at 100% 0%, #d4d4d8 0deg, #d4d4d8 1deg, transparent 1deg, transparent 12deg)",
+                    WebkitMaskImage:
+                        "linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 55%)",
+                    maskImage:
+                        "linear-gradient(to left, rgba(0,0,0,0.5) 0%, transparent 55%)",
+                }}
+            />
+        </div>
+    );
+}
+
+function ArrowIcon() {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="translate-x-[-3px] opacity-0 transition duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+            aria-hidden="true"
+        >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M5 12h.5m3 0h1.5m3 0h6" />
+            <path d="M13 18l6 -6" />
+            <path d="M13 6l6 6" />
+        </svg>
+    );
+}
 
 export default Footer;

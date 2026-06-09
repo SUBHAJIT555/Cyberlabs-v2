@@ -1,72 +1,114 @@
 import { useEffect, useState } from "react";
-import { IoArrowUp } from "react-icons/io5";
+import { useFloatingBottomBar } from "@/contexts/FloatingBottomBarContext";
 import { useLenis } from "../hooks/useLenis";
+import { cn } from "@/lib/utils";
 
-/**
- * ScrollToTop Button Component
- * 
- * ARCHITECTURE RULES:
- * - ONLY observes scroll state (never triggers scroll except on click)
- * - ONLY reads from Lenis (never window.scrollY when Lenis is active)
- * - No polling, no setInterval, no timeouts
- * - Pure observer pattern
- */
+const PROGRESS_RADIUS = 46;
+const PROGRESS_CIRCUMFERENCE = 2 * Math.PI * PROGRESS_RADIUS;
+
 const ScrollToTopButton = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const lenis = useLenis();
+  const { isActive: hasBottomBar } = useFloatingBottomBar();
+  const [isVisible, setIsVisible] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    if (!lenis) {
-      // No Lenis available, hide button
-      setIsVisible(false);
-      return;
-    }
+    if (!lenis) return;
 
-    // ONLY observe Lenis scroll events
-    // Never read window.scrollY or use polling
-    const handleScroll = ({ scroll }: { scroll: number }) => {
-      setIsVisible(scroll > 100);
+    const update = (instance: { scroll: number; limit: number }) => {
+      const scrollY = instance.scroll;
+      const maxScroll = instance.limit;
+      const nextVisible = scrollY > 0;
+      const nextProgress = maxScroll > 0 ? (scrollY / maxScroll) * 100 : 0;
+
+      setIsVisible((prev) => (prev === nextVisible ? prev : nextVisible));
+      setProgress((prev) =>
+        Math.abs(prev - nextProgress) < 0.25 ? prev : nextProgress,
+      );
     };
 
-    // Initial check
-    handleScroll({ scroll: lenis.scroll || 0 });
-
-    // Subscribe to Lenis scroll events
-    lenis.on("scroll", handleScroll);
+    update(lenis);
+    lenis.on("scroll", update);
 
     return () => {
-      // Cleanup: unsubscribe from Lenis events
-      lenis.off("scroll", handleScroll);
+      lenis.off("scroll", update);
     };
   }, [lenis]);
 
-  const scrollToTop = () => {
-    if (lenis) {
-      // Use Lenis to scroll (single source of truth)
-      lenis.scrollTo(0, {
-        duration: 1.5,
-        immediate: false,
-      });
-    }
-  };
+  const strokeDashoffset =
+    PROGRESS_CIRCUMFERENCE - (progress / 100) * PROGRESS_CIRCUMFERENCE;
 
   return (
-    <button
-      type="button"
-      aria-label="Scroll to top"
-      onClick={scrollToTop}
-      className={`fixed bottom-20 right-4 sm:bottom-24 sm:right-6 md:bottom-8 md:right-8 z-900 inline-flex p-0.5 md:p-1 items-center justify-center rounded-lg bg-white border border-neutral-200 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 text-text-primary shadow-lg transition-all duration-300 ease-out hover:opacity-90 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-primary/50 motion-reduce:transition-none motion-reduce:transform-none motion-reduce:duration-0 group ${isVisible
-          ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
-          : "opacity-0 translate-y-8 sm:translate-y-10 scale-95 pointer-events-none"
-        }`}
-      style={{
-        background:
-          "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-      }}
+    <div
+      className={cn(
+        "fixed bottom-4 right-4 z-1000 transition-[bottom,opacity] duration-300 sm:bottom-6 sm:right-6 md:bottom-8 md:right-8",
+        hasBottomBar && "max-sm:bottom-23",
+        isVisible
+          ? "pointer-events-auto opacity-100"
+          : "pointer-events-none opacity-0",
+      )}
     >
-      <IoArrowUp className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 transition-transform duration-300 ease-out group-hover:-translate-y-1 text-neutral-500" />
-    </button>
+      <button
+        type="button"
+        onClick={() => lenis?.scrollTo(0, { duration: 1.2 })}
+        aria-label="Scroll to top"
+        className="group relative flex h-11 w-11 cursor-pointer items-center justify-center rounded-full md:h-14 md:w-14"
+      >
+        <svg
+          aria-hidden
+          className="absolute inset-0 h-full w-full -rotate-90"
+          viewBox="0 0 100 100"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            r={PROGRESS_RADIUS}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            className="text-zinc-200"
+          />
+          <circle
+            cx="50"
+            cy="50"
+            r={PROGRESS_RADIUS}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="5"
+            strokeLinecap="round"
+            strokeDasharray={PROGRESS_CIRCUMFERENCE}
+            strokeDashoffset={strokeDashoffset}
+            className="text-[#C072E0] transition-[stroke-dashoffset] duration-150 md:stroke-7"
+          />
+        </svg>
+
+        <span className="relative flex h-8 w-8 items-center justify-center rounded-full border border-dashed border-zinc-200 bg-white text-zinc-700 shadow-sm transition-colors group-hover:border-zinc-300 group-hover:text-zinc-900 md:h-10 md:w-10">
+          <ArrowUpIcon className="h-4 w-4 md:h-5 md:w-5" />
+        </span>
+      </button>
+    </div>
   );
 };
+
+function ArrowUpIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 5v6m0 3v1.5m0 3v.5" />
+      <path d="M16 9l-4 -4" />
+      <path d="M8 9l4 -4" />
+    </svg>
+  );
+}
 
 export default ScrollToTopButton;

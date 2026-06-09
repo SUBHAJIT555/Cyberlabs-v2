@@ -8,6 +8,7 @@ import PerformanceTranscript from "@/components/PerformanceTranscript";
 import ProgramPageOpening from "@/components/ProgramPageOpening";
 import IndustryRecognition from "@/components/IndustryRecognition";
 import ProgramHero from "@/components/ProgramHero";
+import ElitBootcamp from "@/components/ElitBootcamp";
 
 const Programs = () => {
   return (
@@ -63,6 +64,7 @@ const Programs = () => {
       <div className="relative z-10">
         <ProgramHero />
         <ProgramPageOpening />
+        <ElitBootcamp />
         <CourseCard />
         <Certification />
         <PerformanceTranscript />

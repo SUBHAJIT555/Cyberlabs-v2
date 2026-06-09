@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import CallbackModal from "./CallbackModal";
-import CTAButton from "./ui/CTAButton";
+import { ShinyButton } from "@/components/ui/shiny-button";
 
 const CallToAction = () => {
+  const navigate = useNavigate();
   const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false);
 
   const handleCallbackModalOpen = () => {
@@ -308,18 +310,22 @@ const CallToAction = () => {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
             >
-              <CTAButton
-                label="Request a Callback"
+              <ShinyButton
+                type="button"
+                variant="default"
                 onClick={handleCallbackModalOpen}
-                variant="dark"
-                className="shrink-0 bg-linear-to-l from-neutral-600 to-neutral-900 font-inter-display font-semibold ring ring-neutral-300 ring-offset-2 md:ring-offset-4 shadow-lg cursor-pointer"
-              />
-              <CTAButton
-                to="/cyber-defense-programs"
-                label="Explore Programs"
+                className="shrink-0 rounded-lg! font-montserrat! text-sm sm:text-base font-semibold shadow-lg! active:scale-95!"
+              >
+                Request a Callback
+              </ShinyButton>
+              <ShinyButton
+                type="button"
                 variant="light"
-                className="shrink-0 bg-linear-to-l from-neutral-100 to-neutral-300 font-inter-display font-semibold ring ring-neutral-300 ring-offset-2 md:ring-offset-4 shadow-lg cursor-pointer"
-              />
+                onClick={() => navigate("/cyber-defense-programs")}
+                className="shrink-0 rounded-lg! font-montserrat! text-sm sm:text-base font-semibold shadow-lg! active:scale-95!"
+              >
+                Explore Programs
+              </ShinyButton>
             </motion.div>
           </motion.div>
         </div>

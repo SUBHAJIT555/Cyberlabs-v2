@@ -23,8 +23,8 @@ const ProgramPageOpening = () => {
                     <AnimatedHeading
                         inView={headingInView}
                         lines={[
-                            { text: "Secure the Future: Master the Frontlines of ", className: `${headingBaseClass} text-text-primary`, as: "h1" },
-                            { text: "Cyber Defense & Investigation", className: `${headingBaseClass} text-primary mt-1 md:mt-0`, as: "h1" },
+                            { text: "Train Beyond the Tools. Think Like a Cyber Operator. ", className: `${headingBaseClass} text-text-primary`, as: "h1" },
+                            
                         ]}
                     />
                 </div>
@@ -40,7 +40,7 @@ const ProgramPageOpening = () => {
                             viewport={{ once: false, amount: 0.3 }}
                             transition={{ duration: 0.7, ease: "easeOut" }}
                         >
-                            Welcome to the next generation of cybersecurity training. At <span className="font-semibold text-primary">CYBERLABS</span>, we move beyond the industry-standard &ldquo;tool-centric&rdquo; approach to deliver a curriculum driven by <span className="font-bold">architecture, investigation, and strategic decision-making.</span>
+                            The future of cybersecurity belongs to professionals who can <span className="font-bold">investigate, analyze, detect, defend, and make decisions under pressure.</span>
                         </motion.p>
 
                         <motion.p
@@ -50,17 +50,7 @@ const ProgramPageOpening = () => {
                             viewport={{ once: false, amount: 0.3 }}
                             transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
                         >
-                            Whether you are an absolute beginner looking to become a professional practitioner through our <span className="font-bold">430-hour Full-Stack Cyber Defense & Offensive Security journey,</span> or a professional aiming to master the complexities of <span className="font-bold">Cybercrime, Dark Web & Crypto Investigations or Platform, Identity & Abuse Defense,</span> our programs are built for the modern threat landscape.
-                        </motion.p>
-
-                        <motion.p
-                            className="text-lg md:text-xl lg:text-2xl font-inter-display font-medium text-text-primary leading-tight"
-                            initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-                            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                            viewport={{ once: false, amount: 0.3 }}
-                            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
-                        >
-                            Delivered via a fully remote, simulation-driven environment, we equip you with the <span className="font-bold">operational thinking</span> required to unmask digital actors, secure global platforms, and lead high-stakes cyber investigations.
+                            <span className="font-semibold text-primary">CYBERLABS</span> Elite Boot Camps and Flagship Programs are built to develop operational capability across <span className="font-bold">cyber defense, threat intelligence, platform security, cybercrime investigations, AI security, and modern security operations.</span>
                         </motion.p>
 
                         <motion.p
@@ -68,10 +58,10 @@ const ProgramPageOpening = () => {
                             initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
                             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                             viewport={{ once: false, amount: 0.3 }}
-                            transition={{ duration: 0.7, ease: "easeOut", delay: 0.25 }}
+                            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
                         >
-                            Don&apos;t just learn the tools -{" "}
-                            <span className="text-primary tracking-wide text-shadow-lg">master the mindset.</span>
+                            This is not about learning tools. It&apos;s about{" "}
+                            <span className="text-primary tracking-wide text-shadow-lg">mastering how cyber defense actually works.</span>
                         </motion.p>
                     </div>
 
