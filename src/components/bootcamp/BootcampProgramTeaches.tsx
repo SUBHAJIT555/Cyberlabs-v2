@@ -6,27 +6,26 @@ import { AnimatedHeading } from "@/components/ui/animated-heading";
 import { AnimatedList } from "@/components/ui/animated-list";
 import type { AnimatedListItem } from "@/components/ui/animated-list";
 
-const dashedCenterFadeGridStyle = {
-    backgroundImage: `
-        linear-gradient(to right, #e7e5e4 1px, transparent 1px),
-        linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
-    `,
-    backgroundSize: "10px 10px",
-    backgroundPosition: "0 0, 0 0",
-    maskImage: `
-        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-        radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-    `,
-    WebkitMaskImage: `
-        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-        radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-    `,
-    maskComposite: "intersect" as const,
-    WebkitMaskComposite: "source-in" as const,
-};
-
+const VerticalStripesBg = ({
+    lineColor,
+    opacity = 0.22,
+}: {
+    lineColor: string;
+    opacity?: number;
+}) => (
+    <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
+        <div
+            className="absolute inset-0"
+            style={{
+                WebkitMaskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
+                maskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
+                backgroundImage: `linear-gradient(90deg, ${lineColor} 1px, transparent 1px)`,
+                backgroundSize: "4px 100%",
+                opacity,
+            }}
+        />
+    </div>
+);
 const BootcampProgramTeaches = () => {
     const programTeaches = usePageDetail()?.programTeaches;
 
@@ -79,13 +78,13 @@ const BootcampProgramTeaches = () => {
                                 {
                                     text: "What the Program Teaches You &",
                                     className:
-                                        "text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-text-primary font-montserrat font-semibold tracking-tight leading-tight",
+                                        "text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-text-primary font-inter-display font-semibold tracking-tight leading-tight",
                                     as: "h2",
                                 },
                                 {
                                     text: "Your Career Readiness",
                                     className:
-                                        "text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-primary font-montserrat font-semibold tracking-tight leading-tight",
+                                        "text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-primary font-inter-display font-semibold tracking-tight leading-tight",
                                     as: "h2",
                                     startDelay: 0.15,
                                 },
@@ -97,16 +96,13 @@ const BootcampProgramTeaches = () => {
                         variants={containerVariants}
                         initial="hidden"
                         animate={isInView ? "visible" : "hidden"}
-                        className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-36 py-6 md:py-10"
+                        className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 py-6 md:py-10"
                     >
                         <motion.div variants={itemVariants}>
-                            <Card className="relative h-full border border-neutral-200 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl bg-white overflow-hidden">
-                                <div
-                                    className="absolute inset-0 z-0 pointer-events-none"
-                                    style={dashedCenterFadeGridStyle}
-                                />
+                            <Card className="relative h-full border border-neutral-200 bg-white shadow-sm overflow-hidden">
+                                <VerticalStripesBg lineColor="#d4d4d8" opacity={0.22} />
                                 <CardHeader className="relative z-10 p-6 md:p-8">
-                                    <h3 className="text-xl sm:text-2xl md:text-3xl font-montserrat font-semibold tracking-tight text-text-primary mb-4">
+                                    <h3 className="text-xl sm:text-2xl md:text-3xl font-inter-display font-semibold tracking-tight text-text-primary mb-4">
                                         What You Learn
                                     </h3>
                                     <AnimatedList
@@ -135,7 +131,7 @@ const BootcampProgramTeaches = () => {
                                         viewportOnce={false}
                                         boldText={false}
                                         containerClassName="space-y-3 sm:space-y-4"
-                                        itemClassName="flex items-start gap-2 sm:gap-3"
+                                        itemClassName="flex items-start gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-neutral-200 last:border-b-0 last:pb-0"
                                         contentClassName="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed"
                                         iconClassName="mt-0.5 shrink-0"
                                     />
@@ -149,22 +145,19 @@ const BootcampProgramTeaches = () => {
                         </motion.div>
 
                         <motion.div variants={itemVariants}>
-                            <Card className="relative h-full border border-neutral-200 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl bg-white overflow-hidden">
-                                <div
-                                    className="absolute inset-0 z-0 pointer-events-none"
-                                    style={dashedCenterFadeGridStyle}
-                                />
+                            <Card className="relative h-full border border-neutral-600 bg-text-primary shadow-sm overflow-hidden">
+                                <VerticalStripesBg lineColor="rgba(255, 255, 255, 0.25)" opacity={0.28} />
                                 <CardHeader className="relative z-10 p-6 md:p-8">
-                                    <h3 className="text-xl sm:text-2xl md:text-3xl font-montserrat font-semibold tracking-tight text-text-primary mb-4">
+                                    <h3 className="text-xl sm:text-2xl md:text-3xl font-inter-display font-semibold tracking-tight text-white mb-4">
                                         Your Readiness After Completion
                                     </h3>
                                     {readinessIntro && (
-                                        <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed mb-4">
+                                        <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-neutral-100 leading-relaxed mb-4">
                                             {readinessIntro}
                                         </p>
                                     )}
                                     {readinessSubheading && (
-                                        <p className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-text-primary mb-4">
+                                        <p className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-white mb-4">
                                             {readinessSubheading}
                                         </p>
                                     )}
@@ -173,7 +166,7 @@ const BootcampProgramTeaches = () => {
                                             (point, index): AnimatedListItem => ({
                                                 text: point,
                                                 icon: (
-                                                    <span className="text-primary font-semibold text-sm sm:text-base tabular-nums">
+                                                    <span className="text-white font-semibold text-sm sm:text-base tabular-nums">
                                                         {index + 1}.
                                                     </span>
                                                 ),
@@ -182,14 +175,14 @@ const BootcampProgramTeaches = () => {
                                         viewportOnce={false}
                                         boldText={false}
                                         containerClassName="space-y-3 sm:space-y-4"
-                                        itemClassName="flex items-start gap-2 sm:gap-3"
-                                        contentClassName="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed"
+                                        itemClassName="flex items-start gap-2 sm:gap-3 pb-3 sm:pb-4 border-b border-neutral-600 last:border-b-0 last:pb-0"
+                                        contentClassName="text-sm sm:text-base md:text-lg font-inter-display font-medium text-neutral-100 leading-relaxed"
                                         iconClassName="shrink-0 pt-0.5"
                                     />
                                 </CardHeader>
                                 <CardContent className="relative z-10 p-6 md:p-8 pt-0">
                                     <motion.p
-                                        className="text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed pt-4 border-t border-neutral-300"
+                                        className="text-sm sm:text-base md:text-lg font-inter-display font-semibold text-white leading-relaxed pt-4 border-t border-neutral-600 border-dashed"
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={
                                             isInView
@@ -202,8 +195,7 @@ const BootcampProgramTeaches = () => {
                                     </motion.p>
                                 </CardContent>
                             </Card>
-                        </motion.div>
-                    </motion.div>
+                        </motion.div>                    </motion.div>
                 </motion.div>
             </div>
         </section>

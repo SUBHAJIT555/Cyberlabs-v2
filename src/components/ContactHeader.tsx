@@ -1,7 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
     FaLinkedinIn,
     FaFacebookF,
@@ -12,6 +11,53 @@ import { Course } from "@/interface/program";
 import { CONTACT } from "@/constants/contactInfo";
 import { MAIL_API_URL } from "@/lib/api";
 import { LetterSwapPingPong } from "@/components/ui/LetterSwap";
+import { ShinyButton } from "@/components/ui/shiny-button";
+
+const inputBase =
+    "w-full px-4 py-3 rounded-lg border bg-white/95 text-text-primary placeholder:text-neutral-400 font-inter-display text-base focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors";
+const inputError = "border-red-300 focus:border-red-500 focus:ring-red-500/20";
+const inputNormal = "border-neutral-200";
+
+const horizontalLinesFadeStyle = {
+    WebkitMaskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
+    backgroundImage:
+        "repeating-linear-gradient(0deg, transparent 0px, transparent 3px, #d4d4d8 3px, #d4d4d8 4px)",
+    height: "100%",
+    left: 0,
+    maskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
+    opacity: 0.5,
+    pointerEvents: "none" as const,
+    position: "absolute" as const,
+    top: 0,
+    width: "100%",
+};
+
+const HorizontalLinesBg = () => (
+    <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
+        <div style={horizontalLinesFadeStyle} />
+    </div>
+);
+
+const VerticalStripesBg = ({
+    lineColor,
+    opacity = 0.22,
+}: {
+    lineColor: string;
+    opacity?: number;
+}) => (
+    <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
+        <div
+            className="absolute inset-0"
+            style={{
+                WebkitMaskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
+                maskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
+                backgroundImage: `linear-gradient(90deg, ${lineColor} 1px, transparent 1px)`,
+                backgroundSize: "4px 100%",
+                opacity,
+            }}
+        />
+    </div>
+);
 
 interface FormData {
     fullName: string;
@@ -95,26 +141,21 @@ const ContactHeader = () => {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                         className="w-full lg:w-[400px] xl:w-[600px] shrink-0 mb-8 lg:mb-0 xl:sticky xl:top-24 xl:self-start"
                     >
-                        <Card
-                            className="border border-neutral-200 bg-white overflow-hidden h-full ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl"
-                            style={{
-                                background:
-                                    "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                            }}
-                        >
-                            <CardHeader className="p-6 md:p-8">
-                                <h3 className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-3">
+                        <div className="relative border border-neutral-200 bg-white overflow-hidden h-full shadow-sm rounded-xl">
+                            <HorizontalLinesBg />
+                            <div className="relative z-10 p-6 md:p-8 pb-0">
+                                <h3 className="text-2xl sm:text-3xl md:text-4xl font-inter-display text-text-primary font-semibold tracking-tight leading-tight mb-3">
                                     CYBERLABS INDIA
                                 </h3>
                                 <p className="text-base sm:text-lg font-inter-display text-text-primary/80 leading-relaxed">
                                     (A division of {CONTACT.registeredEntity})
                                 </p>
-                            </CardHeader>
+                            </div>
 
-                            <CardContent className="p-6 md:p-8 pt-0 space-y-6">
+                            <div className="relative z-10 p-6 md:p-8 pt-0 space-y-6">
                                 {/* Registered Entity */}
                                 <div>
-                                    <h4 className="text-sm sm:text-base font-montserrat font-semibold text-text-primary mb-2 uppercase tracking-wide">
+                                    <h4 className="text-sm sm:text-base font-inter-display font-semibold text-text-primary mb-2 uppercase tracking-wide">
                                         Registered Entity:
                                     </h4>
                                     <p className="text-base sm:text-lg font-inter-display text-text-primary leading-relaxed">
@@ -124,7 +165,7 @@ const ContactHeader = () => {
 
                                 {/* Office Address */}
                                 <div>
-                                    <h4 className="text-sm sm:text-base font-montserrat font-semibold text-text-primary mb-2 uppercase tracking-wide">
+                                    <h4 className="text-sm sm:text-base font-inter-display font-semibold text-text-primary mb-2 uppercase tracking-wide">
                                         Office Address:
                                     </h4>
                                     <p className="text-base sm:text-lg font-inter-display text-text-primary leading-relaxed">
@@ -136,7 +177,7 @@ const ContactHeader = () => {
 
                                 {/* Email */}
                                 <div>
-                                    <h4 className="text-sm sm:text-base font-montserrat font-semibold text-text-primary mb-2 uppercase tracking-wide">
+                                    <h4 className="text-sm sm:text-base font-inter-display font-semibold text-text-primary mb-2 uppercase tracking-wide">
                                         Email:
                                     </h4>
                                     <a
@@ -153,7 +194,7 @@ const ContactHeader = () => {
 
                                 {/* Social Media */}
                                 <div>
-                                    <h4 className="text-sm sm:text-base font-montserrat font-semibold text-text-primary mb-3 uppercase tracking-wide">
+                                    <h4 className="text-sm sm:text-base font-inter-display font-semibold text-text-primary mb-3 uppercase tracking-wide">
                                         Social Media:
                                     </h4>
                                     <div className="flex flex-col gap-6">
@@ -163,7 +204,7 @@ const ContactHeader = () => {
                                             rel="noopener noreferrer"
                                             className="flex items-center gap-3 text-base sm:text-lg font-inter-display text-text-primary hover:text-primary transition-colors group"
                                         >
-                                            <FaLinkedinIn className="w-7 h-7 bg-neutral-100 p-1 border border-neutral-200 rounded-lg  transition-transform ring ring-neutral-300 ring-offset-2 md:ring-offset-4" />
+                                            <FaLinkedinIn className="w-7 h-7 bg-white/95 p-1 border border-neutral-200 rounded-lg transition-colors" />
                                             <LetterSwapPingPong
                                                 label="LinkedIn"
                                                 reverse={true}
@@ -176,7 +217,7 @@ const ContactHeader = () => {
                                             rel="noopener noreferrer"
                                             className="flex items-center gap-3 text-base sm:text-lg font-inter-display text-text-primary hover:text-primary transition-colors group"
                                         >
-                                            <FaFacebookF className="w-7 h-7 bg-neutral-100 p-1 border border-neutral-200 rounded-lg  transition-transform ring ring-neutral-300 ring-offset-2 md:ring-offset-4" />
+                                            <FaFacebookF className="w-7 h-7 bg-white/95 p-1 border border-neutral-200 rounded-lg transition-colors" />
                                             <LetterSwapPingPong
                                                 label="Facebook"
                                                 reverse={true}
@@ -189,7 +230,7 @@ const ContactHeader = () => {
                                             rel="noopener noreferrer"
                                             className="flex items-center gap-3 text-base sm:text-lg font-inter-display text-text-primary hover:text-primary transition-colors group"
                                         >
-                                            <FaInstagram className="w-7 h-7 bg-neutral-100 p-1 border border-neutral-200 rounded-lg  transition-transform ring ring-neutral-300 ring-offset-2 md:ring-offset-4" />
+                                            <FaInstagram className="w-7 h-7 bg-white/95 p-1 border border-neutral-200 rounded-lg transition-colors" />
                                             <LetterSwapPingPong
                                                 label="Instagram"
                                                 reverse={true}
@@ -198,8 +239,8 @@ const ContactHeader = () => {
                                         </a>
                                     </div>
                                 </div>
-                            </CardContent>
-                        </Card>
+                            </div>
+                        </div>
                     </motion.div>
 
                     {/* RIGHT COLUMN - Contact Form */}
@@ -209,34 +250,27 @@ const ContactHeader = () => {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                         className="flex-1 min-w-0"
                     >
-                        <Card
-                            className="border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl"
-                            style={{
-                                background:
-                                    "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                            }}
-                        >
-                            <CardHeader className="p-6 md:p-8">
-                                <h2 className="text-2xl sm:text-3xl md:text-4xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight mb-2">
-                                    Connect with CYBERLABS
-                                </h2>
-                                <p className="text-sm sm:text-base md:text-lg font-inter-display text-text-primary/80 leading-relaxed">
-                                    Fill out the form below and we'll get back to you as soon as possible.
-                                </p>
-                            </CardHeader>
-
-                            <CardContent className="p-6 md:p-8 pt-0">
+                        <div className="relative border border-neutral-200 bg-white overflow-hidden shadow-sm rounded-xl">
+                            <VerticalStripesBg lineColor="#d4d4d8" opacity={0.22} />
+                            <div className="relative z-10 p-6 md:p-8">
+                                <div className="mb-6 sm:mb-8 pb-6 border-b border-neutral-200 border-dashed">
+                                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-inter-display text-text-primary font-semibold tracking-tight leading-tight mb-2">
+                                        Connect with CYBERLABS
+                                    </h2>
+                                    <p className="text-sm sm:text-base md:text-lg font-inter-display text-text-primary/70 leading-relaxed">
+                                        Fill out the form below and we&apos;ll get back to you as soon as possible.
+                                    </p>
+                                </div>
                                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 sm:space-y-6">
                                     {/* Success Message */}
                                     {submitStatus === "success" && (
-                                        <div className="bg-green-50 border border-green-200  rounded-lg p-4 text-green-700 text-sm font-inter-display">
-                                            Thank you! We've received your message and will contact you soon.
+                                        <div className="rounded-lg bg-green-50/95 border border-green-200/80 border-dashed px-4 py-3.5 text-green-700 text-sm font-inter-display">
+                                            Thank you! We&apos;ve received your message and will contact you soon.
                                         </div>
                                     )}
 
-                                    {/* Error Message */}
                                     {submitStatus === "error" && (
-                                        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-600 text-sm font-inter-display">
+                                        <div className="rounded-lg bg-amber-50/95 border border-amber-200/80 border-dashed px-4 py-3.5 text-amber-800 text-sm font-inter-display">
                                             Something went wrong. Please try again later.
                                         </div>
                                     )}
@@ -245,7 +279,7 @@ const ContactHeader = () => {
                                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6">
                                         {/* Full Name */}
                                         <div>
-                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-montserrat mb-2">
+                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
                                                 Full Name <span className="text-red-500">*</span>
                                             </label>
                                             <input
@@ -253,10 +287,7 @@ const ContactHeader = () => {
                                                 {...register("fullName", {
                                                     required: "Full name is required",
                                                 })}
-                                                className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display ${errors.fullName
-                                                    ? "border-red-300 focus:border-red-500"
-                                                    : "border-neutral-300 focus:border-primary"
-                                                    }`}
+                                                className={`${inputBase} ${errors.fullName ? inputError : inputNormal}`}
                                                 placeholder="Enter your full name"
                                             />
                                             {errors.fullName && (
@@ -268,7 +299,7 @@ const ContactHeader = () => {
 
                                         {/* Email Address */}
                                         <div>
-                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-montserrat mb-2">
+                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
                                                 Email Address <span className="text-red-500">*</span>
                                             </label>
                                             <input
@@ -280,10 +311,7 @@ const ContactHeader = () => {
                                                         message: "Invalid email address",
                                                     },
                                                 })}
-                                                className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display ${errors.email
-                                                    ? "border-red-300 focus:border-red-500"
-                                                    : "border-neutral-300 focus:border-primary"
-                                                    }`}
+                                                className={`${inputBase} ${errors.email ? inputError : inputNormal}`}
                                                 placeholder="Enter your email address"
                                             />
                                             {errors.email && (
@@ -296,7 +324,7 @@ const ContactHeader = () => {
 
                                     {/* Mobile Number */}
                                     <div>
-                                        <label className="block text-text-primary text-sm sm:text-base font-medium font-montserrat mb-2">
+                                        <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
                                             Mobile Number (with country code) <span className="text-red-500">*</span>
                                         </label>
                                         <input
@@ -308,10 +336,7 @@ const ContactHeader = () => {
                                                     message: "Please enter a valid mobile number with country code",
                                                 },
                                             })}
-                                            className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display ${errors.mobileNumber
-                                                ? "border-red-300 focus:border-red-500"
-                                                : "border-neutral-300 focus:border-primary"
-                                                }`}
+                                            className={`${inputBase} ${errors.mobileNumber ? inputError : inputNormal}`}
                                             placeholder="e.g., +91 9876543210"
                                         />
                                         {errors.mobileNumber && (
@@ -322,20 +347,17 @@ const ContactHeader = () => {
                                     </div>
 
                                     {/* Two-column layout for background and experience */}
-                                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6">
+                                    <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6 pt-2 border-t border-neutral-200 border-dashed">
                                         {/* Current Background */}
-                                        <div>
-                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-montserrat mb-2">
+                                        <div className="sm:pt-4">
+                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
                                                 Current Background <span className="text-red-500">*</span>
                                             </label>
                                             <select
                                                 {...register("currentBackground", {
                                                     required: "Please select your current background",
                                                 })}
-                                                className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display appearance-none cursor-pointer ${errors.currentBackground
-                                                    ? "border-red-300 focus:border-red-500"
-                                                    : "border-neutral-300 focus:border-primary"
-                                                    }`}
+                                                className={`${inputBase} appearance-none cursor-pointer ${errors.currentBackground ? inputError : inputNormal}`}
                                             >
                                                 <option value="">Select your current background</option>
                                                 <option value="Student">Student</option>
@@ -351,18 +373,15 @@ const ContactHeader = () => {
                                         </div>
 
                                         {/* Years of Experience */}
-                                        <div>
-                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-montserrat mb-2">
+                                        <div className="sm:pt-4">
+                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
                                                 Years of Experience <span className="text-red-500">*</span>
                                             </label>
                                             <select
                                                 {...register("yearsOfExperience", {
                                                     required: "Please select years of experience",
                                                 })}
-                                                className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display appearance-none cursor-pointer ${errors.yearsOfExperience
-                                                    ? "border-red-300 focus:border-red-500"
-                                                    : "border-neutral-300 focus:border-primary"
-                                                    }`}
+                                                className={`${inputBase} appearance-none cursor-pointer ${errors.yearsOfExperience ? inputError : inputNormal}`}
                                             >
                                                 <option value="">Select years of experience</option>
                                                 <option value="0-1">0–1</option>
@@ -380,17 +399,14 @@ const ContactHeader = () => {
 
                                     {/* Program of Interest */}
                                     <div>
-                                        <label className="block text-text-primary text-sm sm:text-base font-medium font-montserrat mb-2">
+                                        <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
                                             Program of Interest <span className="text-red-500">*</span>
                                         </label>
                                         <select
                                             {...register("programOfInterest", {
                                                 required: "Please select a program of interest",
                                             })}
-                                            className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display appearance-none cursor-pointer ${errors.programOfInterest
-                                                ? "border-red-300 focus:border-red-500"
-                                                : "border-neutral-300 focus:border-primary"
-                                                }`}
+                                            className={`${inputBase} appearance-none cursor-pointer ${errors.programOfInterest ? inputError : inputNormal}`}
                                         >
                                             <option value="">Select a program</option>
                                             {allCourses.map((course) => (
@@ -408,7 +424,7 @@ const ContactHeader = () => {
 
                                     {/* Preferred Time for Call */}
                                     <div>
-                                        <label className="block text-text-primary text-sm sm:text-base font-medium font-montserrat mb-2">
+                                        <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
                                             Preferred Time for Call <span className="text-red-500">*</span>
                                         </label>
                                         <input
@@ -416,10 +432,7 @@ const ContactHeader = () => {
                                             {...register("preferredTime", {
                                                 required: "Please specify your preferred time for call",
                                             })}
-                                            className={`w-full px-4 py-3 bg-white border border-neutral-200 rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display ${errors.preferredTime
-                                                ? "border-red-300 focus:border-red-500"
-                                                : "border-neutral-300 focus:border-primary"
-                                                }`}
+                                            className={`${inputBase} ${errors.preferredTime ? inputError : inputNormal}`}
                                             placeholder="e.g., Weekdays 10 AM - 2 PM IST"
                                         />
                                         {errors.preferredTime && (
@@ -430,32 +443,31 @@ const ContactHeader = () => {
                                     </div>
 
                                     {/* Questions or Goals (Optional) */}
-                                    <div>
-                                        <label className="block text-text-primary text-sm sm:text-base font-medium font-montserrat mb-2">
+                                    <div className="space-y-2 pt-2 border-t border-neutral-200 border-dashed">
+                                        <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2 pt-4">
                                             Any specific questions or goals{" "}
-                                            <span className="text-text-primary/60 text-xs">(Optional)</span>
+                                            <span className="text-text-primary/50 text-xs font-normal">(Optional)</span>
                                         </label>
                                         <textarea
                                             {...register("questionsOrGoals")}
                                             rows={4}
-                                            className="w-full px-4 py-3 bg-white border  border-neutral-300 rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-inter-display resize-none"
+                                            className={`${inputBase} resize-none ${inputNormal}`}
                                             placeholder="Share any specific questions or goals you'd like to discuss..."
                                         />
                                     </div>
 
-                                    {/* Submit Button */}
-                                    <div className="pt-4">
-                                        <button
+                                    <div className="pt-2">
+                                        <ShinyButton
                                             type="submit"
                                             disabled={isSubmitting}
-                                            className="w-full px-6 py-3 bg-primary text-background font-montserrat font-semibold rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+                                            className="w-full rounded-lg! font-inter-display! text-base font-medium shadow-lg! active:scale-95! disabled:cursor-not-allowed disabled:opacity-50"
                                         >
                                             {isSubmitting ? "Submitting..." : "Submit"}
-                                        </button>
+                                        </ShinyButton>
                                     </div>
                                 </form>
-                            </CardContent>
-                        </Card>
+                            </div>
+                        </div>
                     </motion.div>
                 </div>
             </div>

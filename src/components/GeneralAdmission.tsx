@@ -6,6 +6,7 @@ import generaladmission2Svg from "@/assets/img/Learning-Enviorment/generaladmiss
 import { AnimatedHeading } from "./ui/animated-heading";
 import { AnimatedList } from "./ui/animated-list";
 import type { AnimatedListItem } from "./ui/animated-list";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 
 const iconClass = "w-5 h-5 sm:w-6 sm:h-6 text-primary shrink-0 mt-0.5";
 
@@ -36,71 +37,25 @@ const GeneralAdmission = () => {
         },
     };
 
-    const dashedGridStyle = {
-        backgroundImage: `
-            linear-gradient(to right, #e7e5e4 1px, transparent 1px),
-            linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
-        `,
-        backgroundSize: "10px 10px",
-        backgroundPosition: "0 0, 0 0",
-        maskImage: `
-            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-        `,
-        WebkitMaskImage: `
-            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-        `,
-        maskComposite: "intersect" as const,
-        WebkitMaskComposite: "source-in" as const,
+    const horizontalLinesFadeStyle = {
+        WebkitMaskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
+        backgroundImage:
+            "repeating-linear-gradient(0deg, transparent 0px, transparent 3px, #d4d4d8 3px, #d4d4d8 4px)",
+        height: "100%",
+        left: 0,
+        maskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
+        opacity: 0.5,
+        pointerEvents: "none" as const,
+        position: "absolute" as const,
+        top: 0,
+        width: "100%",
     };
 
-    const callToActionGridStyle = {
-        backgroundImage: `
-            linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-            linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
-        `,
-        backgroundSize: "1px 1px",
-        backgroundPosition: "0 0, 0 0",
-        maskImage: `
-            repeating-linear-gradient(
-                to right,
-                black 0px,
-                black 3px,
-                transparent 3px,
-                transparent 8px
-            ),
-            repeating-linear-gradient(
-                to bottom,
-                black 0px,
-                black 3px,
-                transparent 3px,
-                transparent 8px
-            ),
-            radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-        `,
-        WebkitMaskImage: `
-            repeating-linear-gradient(
-                to right,
-                black 0px,
-                black 3px,
-                transparent 3px,
-                transparent 8px
-            ),
-            repeating-linear-gradient(
-                to bottom,
-                black 0px,
-                black 3px,
-                transparent 3px,
-                transparent 8px
-            ),
-            radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-        `,
-        maskComposite: "intersect" as const,
-        WebkitMaskComposite: "source-in" as const,
-    };
+    const HorizontalLinesBg = () => (
+        <div className="absolute inset-0 z-0 pointer-events-none">
+            <div style={horizontalLinesFadeStyle} />
+        </div>
+    );
 
     const SectionBlock = ({
         children,
@@ -110,8 +65,8 @@ const GeneralAdmission = () => {
         className?: string;
     }) => (
         <div className={`w-full mb-8 md:mb-10 ${className}`}>
-            <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
-                <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+            <div className="relative rounded-lg border border-neutral-200 bg-white overflow-hidden">
+                <HorizontalLinesBg />
                 <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
                     {children}
                 </div>
@@ -125,8 +80,8 @@ const GeneralAdmission = () => {
                 <AnimatedHeading
                     inView={headingInView}
                     lines={[
-                        { text: "General Admission Expectations ", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter-display text-text-primary leading-tight tracking-tight font-semibold" },
-                        { text: "(All Programs)", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter-display text-primary leading-tight tracking-tight font-semibold", startDelay: 0.15 },
+                        { text: "General Admission Expectations ", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-inter-display text-text-primary leading-tight tracking-tight font-semibold" },
+                        { text: "(All Programs)", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-inter-display text-primary leading-tight tracking-tight font-semibold", startDelay: 0.15 },
                     ]}
                 />
             </div>
@@ -224,12 +179,8 @@ const GeneralAdmission = () => {
 
                 {/* 3. Closing statement — no heading, only two paragraphs */}
                 <div className="w-full mb-8 md:mb-10">
-                    <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
-                        {/* Dashed grid background (fade at top) - same as CallToAction */}
-                        <div
-                            className="absolute inset-0 z-0 pointer-events-none"
-                            style={callToActionGridStyle}
-                        />
+                    <div className="relative rounded-lg border border-neutral-200 bg-white overflow-hidden">
+                        <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
                         <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
                             <motion.div
                                 initial={{ opacity: 0, y: 24 }}

@@ -6,6 +6,7 @@ import { AnimatedHeading } from "./ui/animated-heading";
 import { AnimatedList } from "./ui/animated-list";
 import type { AnimatedListItem } from "./ui/animated-list";
 import closingSvg from "@/assets/img/Learning-Enviorment/reqcallback.svg";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 
 const WhatThisCall = () => {
     const containerRef = useRef(null);
@@ -123,7 +124,7 @@ const WhatThisCall = () => {
     const stepsListItems: AnimatedListItem[] = steps.map((step) => ({
         text: step.title,
         icon: (
-            <div className="shrink-0 w-8 h-8 sm:w-8 sm:h-8 rounded-lg ring ring-neutral-200 ring-offset-2 md:ring-offset-4 flex items-center justify-center font-montserrat font-bold text-sm sm:text-base bg-primary text-background">
+            <div className="shrink-0 w-8 h-8 sm:w-8 sm:h-8 rounded-lg  flex items-center justify-center font-montserrat font-bold text-sm sm:text-base bg-primary text-background">
                 {step.number}
             </div>
         )
@@ -132,7 +133,7 @@ const WhatThisCall = () => {
     const whoShouldCallListItems: AnimatedListItem[] = whoShouldCall.map((item) => ({
         text: item.title,
         icon: (
-            <div className="shrink-0 w-8 h-8 sm:w-8 sm:h-8 rounded-lg ring ring-neutral-200 ring-offset-2 md:ring-offset-4 flex items-center justify-center bg-primary text-background [&_svg]:text-background">
+            <div className="shrink-0 w-8 h-8 sm:w-8 sm:h-8 rounded-lg  flex items-center justify-center bg-primary text-background [&_svg]:text-background">
                 {item.icon}
             </div>
         ),
@@ -161,50 +162,26 @@ const WhatThisCall = () => {
         },
     };
 
-    const dashedCenterFadeGridStyle = {
-        backgroundImage: `
-            linear-gradient(to right, #e7e5e4 1px, transparent 1px),
-            linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
-        `,
-        backgroundSize: "10px 10px",
-        backgroundPosition: "0 0, 0 0",
-        maskImage: `
-            repeating-linear-gradient(
-                to right,
-                black 0px,
-                black 3px,
-                transparent 3px,
-                transparent 8px
-            ),
-            repeating-linear-gradient(
-                to bottom,
-                black 0px,
-                black 3px,
-                transparent 3px,
-                transparent 8px
-            ),
-            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-        `,
-        WebkitMaskImage: `
-            repeating-linear-gradient(
-                to right,
-                black 0px,
-                black 3px,
-                transparent 3px,
-                transparent 8px
-            ),
-            repeating-linear-gradient(
-                to bottom,
-                black 0px,
-                black 3px,
-                transparent 3px,
-                transparent 8px
-            ),
-            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-        `,
-        maskComposite: "intersect" as const,
-        WebkitMaskComposite: "source-in" as const,
-    };
+    const VerticalStripesBg = ({
+        lineColor,
+        opacity = 0.1,
+    }: {
+        lineColor: string;
+        opacity?: number;
+    }) => (
+        <div className="absolute inset-0 z-0 pointer-events-none" aria-hidden>
+            <div
+                className="absolute inset-0"
+                style={{
+                    WebkitMaskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
+                    maskImage: "linear-gradient(to top, #000 0%, transparent 80%)",
+                    backgroundImage: `linear-gradient(90deg, ${lineColor} 1px, transparent 1px)`,
+                    backgroundSize: "4px 100%",
+                    opacity,
+                }}
+            />
+        </div>
+    );
 
     return (
         <section className="w-full py-4 md:py-8" ref={containerRef}>
@@ -221,56 +198,9 @@ const WhatThisCall = () => {
                         initial={{ opacity: 0, y: 24 }}
                         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
                         transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 mb-8 md:mb-10"
+                        className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden mb-8 md:mb-10"
                     >
-                        {/* Dashed grid background (fade at top) */}
-                        <div
-                            className="absolute inset-0 z-0"
-                            style={{
-                                backgroundImage: `
-                                    linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-                                    linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
-                                `,
-                                backgroundSize: "1px 1px",
-                                backgroundPosition: "0 0, 0 0",
-                                maskImage: `
-                                    repeating-linear-gradient(
-                                        to right,
-                                        black 0px,
-                                        black 3px,
-                                        transparent 3px,
-                                        transparent 8px
-                                    ),
-                                    repeating-linear-gradient(
-                                        to bottom,
-                                        black 0px,
-                                        black 3px,
-                                        transparent 3px,
-                                        transparent 8px
-                                    ),
-                                    radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-                                `,
-                                WebkitMaskImage: `
-                                    repeating-linear-gradient(
-                                        to right,
-                                        black 0px,
-                                        black 3px,
-                                        transparent 3px,
-                                        transparent 8px
-                                    ),
-                                    repeating-linear-gradient(
-                                        to bottom,
-                                        black 0px,
-                                        black 3px,
-                                        transparent 3px,
-                                        transparent 8px
-                                    ),
-                                    radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-                                `,
-                                maskComposite: "intersect",
-                                WebkitMaskComposite: "source-in",
-                            }}
-                        />
+                        <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
                         <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
                             <div className="order-1 md:order-1 flex justify-center md:justify-start shrink-0">
                                 <img src={closingSvg} alt="" className="w-full max-w-[200px] sm:max-w-[240px] md:w-[200px] md:max-w-none lg:w-[260px] h-auto" />
@@ -307,16 +237,16 @@ const WhatThisCall = () => {
                         animate={isInView ? "visible" : "hidden"}
                         className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
                     >
-                        {/* Card 1: What This Call Is For */}
+                        {/* Card 1: What This Call Is For — light */}
                         <motion.div variants={itemVariants}>
-                            <Card className="relative h-full border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl">
-                                <div className="absolute inset-0 z-0 pointer-events-none" style={dashedCenterFadeGridStyle} />
+                            <Card className="relative h-full border border-neutral-200 bg-white shadow-sm overflow-hidden">
+                                <VerticalStripesBg lineColor="#d4d4d8" opacity={0.22} />
                                 <CardHeader className="relative z-10 p-6 md:p-8">
                                     <div ref={card1TitleRef} className="mb-4">
                                         <AnimatedHeading
                                             inView={card1TitleInView}
                                             lines={[
-                                                { text: "What This Call is For", className: "text-xl sm:text-3xl md:text-4xl font-montserrat font-semibold text-text-primary leading-tight tracking-tight", as: "h3" },
+                                                { text: "What This Call is For", className: "text-xl sm:text-3xl md:text-4xl font-inter-display font-semibold text-text-primary leading-tight tracking-tight", as: "h3" },
                                             ]}
                                         />
                                     </div>
@@ -347,16 +277,16 @@ const WhatThisCall = () => {
                             </Card>
                         </motion.div>
 
-                        {/* Card 2: Who Should Request a Call Back */}
+                        {/* Card 2: Who Should Request a Call Back — dark */}
                         <motion.div variants={itemVariants}>
-                            <Card className="relative h-full border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl">
-                                <div className="absolute inset-0 z-0 pointer-events-none" style={dashedCenterFadeGridStyle} />
+                            <Card className="relative h-full border border-neutral-600 bg-text-primary shadow-sm overflow-hidden">
+                                <VerticalStripesBg lineColor="rgba(255, 255, 255, 0.25)" opacity={0.28} />
                                 <CardHeader className="relative z-10 p-6 md:p-8">
                                     <div ref={card2TitleRef} className="mb-8 md:mb-10">
                                         <AnimatedHeading
                                             inView={card2TitleInView}
                                             lines={[
-                                                { text: "Who Should Request a Call Back", className: "text-xl sm:text-3xl md:text-4xl font-montserrat font-semibold text-text-primary leading-tight tracking-tight", as: "h3" },
+                                                { text: "Who Should Request a Call Back", className: "text-xl sm:text-3xl md:text-4xl font-inter-display font-semibold text-white leading-tight tracking-tight", as: "h3" },
                                             ]}
                                         />
                                     </div>
@@ -368,14 +298,14 @@ const WhatThisCall = () => {
                                         staggerDelay={0.1}
                                         xOffset={50}
                                         containerClassName="space-y-3 sm:space-y-4"
-                                        contentClassName="flex-1 text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-relaxed"
-                                        itemClassName="flex items-center gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-neutral-200 last:border-b-0 last:pb-0"
-                                        iconClassName="shrink-0 flex items-center justify-center pt-0.5 [&_svg]:text-background"
+                                        contentClassName="flex-1 text-sm sm:text-base md:text-lg font-inter-display font-medium text-neutral-100 leading-relaxed"
+                                        itemClassName="flex items-center gap-3 sm:gap-4 pb-3 sm:pb-4 border-b border-neutral-600 last:border-b-0 last:pb-0"
+                                        iconClassName="shrink-0 flex items-center justify-center pt-0.5 text-white [&_svg]:text-white"
                                         boldText={false}
                                     />
                                 </CardHeader>
                                 <CardContent className="relative z-10 p-6 md:p-8 pt-0 -mt-2 sm:-mt-3">
-                                    <p className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-text-primary leading-relaxed">
+                                    <p className="text-base sm:text-lg md:text-xl font-inter-display font-semibold text-white leading-relaxed">
                                         If you are serious about building real cybersecurity capability, this call is for you.
                                     </p>
                                 </CardContent>

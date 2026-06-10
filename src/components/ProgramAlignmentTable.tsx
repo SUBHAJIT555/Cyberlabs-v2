@@ -83,8 +83,8 @@ const ProgramAlignmentTable = () => {
                 <AnimatedHeading
                     inView={headingInView}
                     lines={[
-                        { text: "Who Should Apply – ", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter-display text-text-primary leading-tight tracking-tight font-semibold" },
-                        { text: "Program Alignment Guide", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-inter-display text-primary leading-tight tracking-tight font-semibold", startDelay: 0.2 },
+                        { text: "Who Should Apply – ", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-inter-display text-text-primary leading-tight tracking-tight font-semibold" },
+                        { text: "Program Alignment Guide", className: "text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-inter-display text-primary leading-tight tracking-tight font-semibold", startDelay: 0.2 },
                     ]}
                 />
             </div>

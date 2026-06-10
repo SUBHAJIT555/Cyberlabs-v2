@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useBootcamps } from "@/hooks/useBootcamps";
-import { ShinyButton, shinyButtonClasses } from "@/components/ui/shiny-button";
+import { ShinyButton } from "@/components/ui/shiny-button";
+import GradientText from "@/components/ui/GradientText";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 
 type BootcampDetailHeroProps = {
     onEnroll: () => void;
@@ -28,19 +30,31 @@ const BootcampDetailHero = ({ onEnroll }: BootcampDetailHeroProps) => {
         }
     };
 
+    const metaChips = [
+        { label: "Duration", value: bootcamp.duration, highlight: true },
+        { label: "Date", value: bootcamp.date },
+        { label: "Language", value: bootcamp.language },
+        { label: "Price", value: `₹${formattedPrice} ${bootcamp.currency}`, emphasis: true },
+    ];
+
     return (
-        <div className="w-full min-h-[80vh] flex items-center pt-16 pb-12 md:pt-20 md:pb-16 lg:py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-            <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 lg:items-stretch">
-                <div className="min-w-0 lg:col-start-1 lg:row-start-1 flex flex-col justify-start">
-                    <div className="space-y-6">
-                        <p className="text-sm font-inter-display font-semibold uppercase tracking-widest text-primary">
+        <div className="w-full pt-16 pb-12 md:pt-20 md:pb-16 lg:py-20 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(280px,420px)] xl:grid-cols-[minmax(0,1fr)_minmax(320px,460px)] gap-8 lg:gap-10 xl:gap-14 items-start">
+                {/* Left — all content */}
+                <div className="min-w-0 flex flex-col gap-6 md:gap-8 order-2 lg:order-1">
+                    <div className="space-y-3 md:space-y-4">
+                        <GradientText
+                            colors={["#0a0a0f", "#0f172a", "#1e3a8a", "#2563eb", "#0ea5e9"]}
+                            animationSpeed={8}
+                            className="font-inter-display text-sm font-semibold! uppercase tracking-widest w-fit border border-neutral-200 rounded-lg! px-2! py-1!"
+                        >
                             Elite Boot Camp
-                        </p>
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] text-text-primary font-montserrat font-bold tracking-tight">
+                        </GradientText>
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] xl:text-[2.75rem] text-text-primary font-inter-display font-bold tracking-tight leading-tight">
                             {bootcamp.title}
                         </h1>
                         {detail?.hero.tagLine && (
-                            <p className="text-primary text-lg md:text-xl font-inter-display font-semibold">
+                            <p className="text-primary text-lg md:text-xl font-inter-display font-semibold leading-snug">
                                 {detail.hero.tagLine}
                             </p>
                         )}
@@ -60,19 +74,7 @@ const BootcampDetailHero = ({ onEnroll }: BootcampDetailHeroProps) => {
                             </p>
                         )}
                     </div>
-                </div>
 
-                <div className="min-w-0 flex items-center lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:items-stretch">
-                    <div className="w-full overflow-hidden bg-neutral-50/80 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.06)] aspect-4/3 lg:aspect-auto lg:min-h-[380px] rounded-xl ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
-                        <img
-                            src={bootcamp.image}
-                            alt={bootcamp.title}
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-                </div>
-
-                <div className="min-w-0 lg:col-start-1 lg:row-start-2 flex flex-col justify-center">
                     <div className="space-y-4">
                         {introParagraphs.map((paragraph, index) => (
                             <p
@@ -84,116 +86,84 @@ const BootcampDetailHero = ({ onEnroll }: BootcampDetailHeroProps) => {
                         ))}
                     </div>
 
-                    <div className="mt-6 flex flex-wrap gap-2">
-                        <span className="inline-flex items-center rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-sm font-inter-display text-text-primary">
-                            Duration:{" "}
-                            <span className="ml-1 font-semibold text-primary">
-                                {bootcamp.duration}
+                    <div className="flex flex-wrap gap-2">
+                        {metaChips.map((chip) => (
+                            <span
+                                key={chip.label}
+                                className={`inline-flex items-center rounded-lg border border-neutral-200 px-3 py-1.5 text-sm font-inter-display text-text-primary ${
+                                    chip.emphasis ? "bg-neutral-100 font-semibold" : "bg-white"
+                                }`}
+                            >
+                                {chip.label}:{" "}
+                                <span
+                                    className={`ml-1 ${
+                                        chip.highlight ? "font-semibold text-primary" : "font-semibold"
+                                    }`}
+                                >
+                                    {chip.value}
+                                </span>
                             </span>
-                        </span>
-                        <span className="inline-flex items-center rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-sm font-inter-display text-text-primary">
-                            Date: <span className="ml-1 font-semibold">{bootcamp.date}</span>
-                        </span>
-                        <span className="inline-flex items-center rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-sm font-inter-display text-text-primary">
-                            Language:{" "}
-                            <span className="ml-1 font-semibold">{bootcamp.language}</span>
-                        </span>
-                        <span className="inline-flex items-center rounded-lg border border-neutral-200 bg-neutral-100 px-3 py-1.5 text-sm font-inter-display font-semibold text-text-primary">
-                            Price:{" "}
-                            <span className="ml-1">
-                                ₹{formattedPrice} {bootcamp.currency}
-                            </span>
-                        </span>
+                        ))}
                     </div>
 
-                    <div className="mt-8 lg:mt-10 space-y-5">
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 0.5 }}
-                            className="flex items-center gap-2 text-text-primary text-base md:text-lg font-inter-display font-semibold"
+                    <div className="flex flex-wrap gap-3 pt-1">
+                        <ShinyButton
+                            type="button"
+                            size="compact"
+                            onClick={onEnroll}
+                            className="font-montserrat! font-semibold text-xs sm:text-sm rounded-lg! shadow-lg! active:scale-95! px-10! py-3!"
                         >
-                            <motion.svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="text-primary shrink-0"
-                                aria-hidden
-                            >
-                                <motion.path
-                                    stroke="none"
-                                    d="M0 0h24v24H0z"
-                                    fill="none"
-                                    initial={{ pathLength: 0 }}
-                                    animate={{ pathLength: 1 }}
-                                    transition={{ duration: 0.3, delay: 0 }}
-                                />
-                                <motion.path
-                                    d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"
-                                    initial={{ pathLength: 0 }}
-                                    animate={{ pathLength: 1 }}
-                                    transition={{
-                                        duration: 1,
-                                        delay: 0.2,
-                                        repeat: Infinity,
-                                        repeatDelay: 2,
-                                    }}
-                                />
-                                <motion.path
-                                    d="M12 7v5l3 3"
-                                    initial={{ pathLength: 0 }}
-                                    animate={{ pathLength: 1 }}
-                                    transition={{
-                                        duration: 0.8,
-                                        delay: 1.2,
-                                        repeat: Infinity,
-                                        repeatDelay: 2,
-                                    }}
-                                />
-                            </motion.svg>
-                            Duration: <span className="text-primary">{bootcamp.duration}</span>
-                        </motion.p>
-
-                        <div className="flex flex-wrap gap-3">
+                            Enroll Now
+                        </ShinyButton>
+                        {detail && (
                             <ShinyButton
                                 type="button"
+                                variant="light"
                                 size="compact"
-                                onClick={onEnroll}
-                                className="font-montserrat! font-semibold text-xs sm:text-sm rounded-lg! shadow-lg! active:scale-95! px-10! py-3!"
+                                onClick={scrollToDeepDive}
+                                className="font-montserrat! font-medium text-xs sm:text-sm rounded-lg! shadow-lg! active:scale-95! px-10! py-3!"
                             >
-                                Enroll Now
+                                View Module
                             </ShinyButton>
-                            {detail && (
-                                <ShinyButton
-                                    type="button"
-                                    variant="light"
-                                    size="compact"
-                                    onClick={scrollToDeepDive}
-                                    className="font-montserrat! font-medium text-xs sm:text-sm rounded-lg! shadow-lg! active:scale-95! px-10! py-3!"
-                                >
-                                    View Module
-                                </ShinyButton>
-                            )}
-                            <Link
-                                to="/cyber-defense-programs#elite-bootcamps"
-                                className={shinyButtonClasses({
-                                    variant: "light",
-                                    size: "compact",
-                                    className:
-                                        "font-montserrat! font-medium text-xs sm:text-sm no-underline rounded-lg! shadow-lg! active:scale-95! px-10! py-3!",
-                                })}
-                            >
-                                <span>All Boot Camps</span>
-                            </Link>
-                        </div>
+                        )}
                     </div>
                 </div>
+
+                {/* Right — fixed-ratio image, independent height */}
+                <motion.div
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="w-full min-w-0 order-1 lg:order-2 lg:sticky lg:top-24"
+                >
+                    <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+                        <div className="relative overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 shadow-sm aspect-4/3">
+                            <img
+                                src={bootcamp.image}
+                                alt={bootcamp.title}
+                                className="absolute inset-0 h-full w-full object-cover"
+                            />
+                            <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/55 via-black/20 to-transparent px-4 py-4 sm:px-5 sm:py-5">
+                                <p className="font-inter-display text-xs font-semibold uppercase tracking-widest text-white/80">
+                                    Elite Boot Camp
+                                </p>
+                                <p className="mt-1 line-clamp-2 font-inter-display text-sm font-semibold leading-snug text-white sm:text-base">
+                                    {bootcamp.title}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="relative mt-3 overflow-hidden rounded-lg border border-neutral-200 border-dashed bg-white shadow-sm">
+                            <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
+                            <div className="relative z-10 flex items-center justify-between gap-3 px-4 py-3 text-sm font-inter-display">
+                                <span className="text-text-primary/70">Starting at</span>
+                                <span className="font-semibold text-text-primary">
+                                    ₹{formattedPrice}{" "}
+                                    <span className="font-medium text-text-primary/60">{bootcamp.currency}</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
         </div>
     );

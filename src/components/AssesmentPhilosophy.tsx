@@ -25,26 +25,38 @@ const AssesmentPhilosophy = () => {
         },
     };
 
-    const dashedGridStyle = {
-        backgroundImage: `
-            linear-gradient(to right, #e7e5e4 1px, transparent 1px),
-            linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
-        `,
-        backgroundSize: "10px 10px",
-        backgroundPosition: "0 0, 0 0",
-        maskImage: `
-            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-        `,
-        WebkitMaskImage: `
-            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-        `,
-        maskComposite: "intersect" as const,
-        WebkitMaskComposite: "source-in" as const,
+    const horizontalLinesFadeStyle = {
+        WebkitMaskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
+        backgroundImage:
+            "repeating-linear-gradient(0deg, transparent 0px, transparent 3px, #d4d4d8 3px, #d4d4d8 4px)",
+        height: "100%",
+        left: 0,
+        maskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
+        opacity: 0.5,
+        pointerEvents: "none" as const,
+        position: "absolute" as const,
+        top: 0,
+        width: "100%",
     };
+
+    const HorizontalLinesBg = () => (
+        <div className="absolute inset-0 z-0 pointer-events-none">
+            <div style={horizontalLinesFadeStyle} />
+        </div>
+    );
+
+    const cardDotGridStyle = {
+        backgroundImage:
+            "radial-gradient(circle, #d4d4d8 1px, transparent 1px), radial-gradient(circle, color-mix(in srgb, #d4d4d8 45%, transparent) 1px, transparent 1px)",
+        backgroundPosition: "0 0, 4px 4px",
+        backgroundSize: "8px 8px, 8px 8px",
+        opacity: 0.28,
+        pointerEvents: "none" as const,
+    };
+
+    const CardDotBg = () => (
+        <div className="absolute inset-0 z-0 pointer-events-none" style={cardDotGridStyle} />
+    );
 
     const SectionBlock = ({
         children,
@@ -54,8 +66,8 @@ const AssesmentPhilosophy = () => {
         className?: string;
     }) => (
         <div className={`w-full mb-8 md:mb-10 ${className}`}>
-            <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
-                <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+            <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden">
+                <HorizontalLinesBg />
                 <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
                     {children}
                 </div>
@@ -433,48 +445,40 @@ const AssesmentPhilosophy = () => {
                                 ].map((org) => (
                                     <motion.div
                                         key={org.name}
-                                        className="rounded-xl border border-neutral-300 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow"
-                                        style={{
-                                            background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                                        }}
+                                        className="relative rounded-xl border border-neutral-200 overflow-hidden bg-white hover:shadow-md transition-shadow"
                                         initial={{ opacity: 0, y: 12 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true, amount: 0.3 }}
                                         transition={{ duration: 0.4 }}
                                     >
-                                        <p className="text-center font-montserrat font-semibold text-text-primary text-sm sm:text-base pt-4 px-3 pb-2 border-b border-neutral-200/80">
-                                            {org.name}
-                                        </p>
-                                        <div className="p-3 sm:p-4 flex justify-center items-center min-h-[140px] sm:min-h-[160px]">
-                                            <img
-                                                src={org.src}
-                                                alt={org.alt}
-                                                className="w-full max-w-[140px] sm:max-w-[160px] h-auto object-contain"
-                                            />
+                                        <CardDotBg />
+                                        <div className="relative z-10">
+                                            <p className="text-center font-montserrat font-semibold text-text-primary text-sm sm:text-base pt-4 px-3 pb-2 border-b border-neutral-200/80">
+                                                {org.name}
+                                            </p>
+                                            <div className="p-3 sm:p-4 flex justify-center items-center min-h-[140px] sm:min-h-[160px]">
+                                                <img
+                                                    src={org.src}
+                                                    alt={org.alt}
+                                                    className="w-full max-w-[140px] sm:max-w-[160px] h-auto object-contain"
+                                                />
+                                            </div>
                                         </div>
                                     </motion.div>
                                 ))}
                             </div>
-                            <div
-                                className="p-4 sm:p-5 md:p-6 rounded-xl border border-neutral-300 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 mb-6"
-                                style={{
-                                    background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                                }}
-                            >
-                                <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-tight">
+                            <div className="relative p-4 sm:p-5 md:p-6 rounded-xl border border-neutral-200 mb-6 overflow-hidden bg-white">
+                                <CardDotBg />
+                                <p className="relative z-10 text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-tight">
                                     This alignment ensures that learners develop capabilities that are <span className="font-bold">relevant, transferable, and compatible</span> with internationally recognized cybersecurity career pathways, while maintaining CYBERLABS' own investigation-driven and operational training standards.
                                 </p>
                             </div>
-                            <div
-                                className="p-4 sm:p-5 md:p-6 rounded-xl border border-neutral-300 ring ring-neutral-300 ring-offset-2 md:ring-offset-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6"
-                                style={{
-                                    background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
-                                }}
-                            >
-                                <p className="text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-tight flex-1">
+                            <div className="relative p-4 sm:p-5 md:p-6 rounded-xl border border-neutral-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 overflow-hidden bg-white">
+                                <CardDotBg />
+                                <p className="relative z-10 text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-tight flex-1">
                                     CYBERLABS certifications emphasize <span className="font-bold">practical capability and operational readiness</span>, rather than exam-only credentialing.
                                 </p>
-                                <div className="flex justify-center sm:justify-end shrink-0">
+                                <div className="relative z-10 flex justify-center sm:justify-end shrink-0">
                                     <div className="scale-150 sm:scale-[1.75] md:scale-[2]">
                                         <AnimatedRosetteCheckIcon />
                                     </div>

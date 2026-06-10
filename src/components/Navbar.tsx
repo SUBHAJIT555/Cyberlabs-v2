@@ -33,14 +33,12 @@ import { CONTACT } from "@/constants/contactInfo";
 
 const Navbar: React.FC = () => {
     const [isScrolled, setIsScrolled] = useState(false);
-    const [isVisible, setIsVisible] = useState(true);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isCommandOpen, setIsCommandOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [activeCommandUrl, setActiveCommandUrl] = useState<string | null>(null);
     const [isCallbackModalOpen, setIsCallbackModalOpen] = useState(false);
 
-    const lastScrollY = useRef(0);
     const commandInputRef = useRef<HTMLInputElement | null>(null);
     const commandScrollRef = useRef<HTMLDivElement | null>(null);
     const location = useLocation();
@@ -72,7 +70,7 @@ const Navbar: React.FC = () => {
         { name: "Refund & Cancellation", path: "/refund-and-cancellation" },
     ];
 
-    // Handle scroll behavior
+    // Handle scroll styling (backdrop blur when scrolled)
     useEffect(() => {
         if (!lenis) return;
 
@@ -82,18 +80,6 @@ const Navbar: React.FC = () => {
             if (!ticking) {
                 window.requestAnimationFrame(() => {
                     setIsScrolled(scroll > 50);
-
-                    const scrollingDown = scroll > lastScrollY.current;
-                    const scrollDifference = Math.abs(scroll - lastScrollY.current);
-
-                    if (scrollDifference > 10) {
-                        if (scrollingDown && scroll > 150) {
-                            setIsVisible(false);
-                        } else if (!scrollingDown || scroll <= 100) {
-                            setIsVisible(true);
-                        }
-                        lastScrollY.current = scroll;
-                    }
                     ticking = false;
                 });
                 ticking = true;
@@ -103,17 +89,13 @@ const Navbar: React.FC = () => {
         lenis.on("scroll", handleScroll);
 
         if (lenis.scroll !== undefined) {
-            lastScrollY.current = lenis.scroll;
             setIsScrolled(lenis.scroll > 50);
-            setIsVisible(lenis.scroll <= 100);
         }
 
         return () => {
             lenis.off("scroll", handleScroll);
         };
-    }, [
-        lenis
-    ]);
+    }, [lenis]);
 
     const normalizedQuery = searchQuery.toLowerCase().trim();
 
@@ -231,13 +213,10 @@ const Navbar: React.FC = () => {
     return (
         <>
             <motion.header
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/80 backdrop-blur-md " : "bg-background"
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/30 backdrop-blur-md " : "bg-background"
                     }`}
                 initial={{ y: -100 }}
-                animate={{
-                    y: isVisible ? 0 : -100,
-                    opacity: isVisible ? 1 : 0,
-                }}
+                animate={{ y: 0, opacity: 1 }}
                 transition={{
                     duration: 0.4,
                     ease: [0.25, 0.46, 0.45, 0.94],
@@ -261,7 +240,7 @@ const Navbar: React.FC = () => {
                             {/* Search Input Group - Desktop Only */}
                             <div className="hidden lg:block">
                                 <InputGroup
-                                    className="w-full max-w-xs cursor-pointer"
+                                    className="w-full max-w-xs cursor-pointer ring-0 ring-offset-0 focus-within:ring-0 rounded-lg"
                                     style={{
                                         background:
                                             "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
@@ -298,7 +277,7 @@ const Navbar: React.FC = () => {
                                 className="flex items-center gap-2"
                             >
                                 <motion.button
-                                    className="hidden lg:flex items-center gap-2 md:px-3 px-2 md:py-1.5 p-1 text-sm font-inter-display font-medium text-neutral-500 hover:text-primary transition-colors border border-neutral-200 ring ring-neutral-300 ring-offset-2 rounded-xl cursor-pointer"
+                                    className="hidden lg:flex items-center gap-2 md:px-3 px-2 md:py-1.5 p-1 text-sm font-inter-display font-medium text-neutral-500 hover:text-primary transition-colors border border-neutral-200  rounded-lg cursor-pointer"
                                     style={{
                                         background:
                                             "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white",
@@ -355,7 +334,7 @@ const Navbar: React.FC = () => {
                             <DrawerRoot open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
                                 <DrawerTrigger asChild>
                                     <motion.button
-                                        className="md:p-1 p-0.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors lg:border lg:border-neutral-200 md:ring md:ring-neutral-300 ring-offset-2 relative cursor-pointer"
+                                        className="md:p-1 p-0.5 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors lg:border lg:border-neutral-200  relative cursor-pointer"
                                         style={{
                                             background: "transparent",
                                         }}

@@ -3,6 +3,7 @@ import type { Variants } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 import officialCertSvg from "../assets/img/Official certification/officialcertification.svg";
 import performanceTranscriptSvg from "../assets/img/Official certification/performancetranscript.svg";
+import { FlowStepCard } from "./ui/FlowStepCard";
 
 const OfficialCertificate = () => {
   const containerRef = useRef(null);
@@ -19,47 +20,25 @@ const OfficialCertificate = () => {
     },
   };
 
-  const dashedGridStyle = {
-    backgroundImage: `
-      linear-gradient(to right, #e7e5e4 1px, transparent 1px),
-      linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
-    `,
-    backgroundSize: "10px 10px",
-    backgroundPosition: "0 0, 0 0",
-    maskImage: `
-      repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-      repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-      radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-    `,
-    WebkitMaskImage: `
-      repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-      repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-      radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-    `,
-    maskComposite: "intersect" as const,
-    WebkitMaskComposite: "source-in" as const,
+  const horizontalLinesFadeStyle = {
+    WebkitMaskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
+    backgroundImage:
+      "repeating-linear-gradient(0deg, transparent 0px, transparent 3px, #d4d4d8 3px, #d4d4d8 4px)",
+    height: "100%",
+    left: 0,
+    maskImage: "linear-gradient(to bottom, #000 0%, transparent 75%)",
+    opacity: 0.5,
+    pointerEvents: "none" as const,
+    position: "absolute" as const,
+    top: 0,
+    width: "100%",
   };
 
-  // const cardDashedGridStyle = {
-  //   backgroundImage: `
-  //     linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-  //     linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
-  //   `,
-  //   backgroundSize: "1px 1px",
-  //   backgroundPosition: "0 0, 0 0",
-  //   maskImage: `
-  //     repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-  //     repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-  //     radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-  //   `,
-  //   WebkitMaskImage: `
-  //     repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-  //     repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-  //     radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-  //   `,
-  //   maskComposite: "intersect" as const,
-  //   WebkitMaskComposite: "source-in" as const,
-  // };
+  const HorizontalLinesBg = () => (
+    <div className="absolute inset-0 z-0 pointer-events-none">
+      <div style={horizontalLinesFadeStyle} />
+    </div>
+  );
 
   const SectionBlock = ({
     children,
@@ -69,8 +48,8 @@ const OfficialCertificate = () => {
     className?: string;
   }) => (
     <div className={`w-full mb-8 md:mb-10 ${className}`}>
-      <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8">
-        <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+      <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ">
+        <HorizontalLinesBg />
         <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
           {children}
         </div>
@@ -106,48 +85,26 @@ const OfficialCertificate = () => {
               <p className="text-lg sm:text-xl md:text-2xl font-inter-display font-semibold text-text-primary leading-tight mb-6">
                 These certificates are issued under CYBERLABS USA&apos;s global training and evaluation framework and represent a rigorous standard of cybersecurity competence, with strong emphasis on:
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6">
                 {[
                   "Practical Execution",
                   "Investigation & Analytical Thinking",
                   "Operational Decision Making",
                   "Real-world Cyber Scenarios",
-                ].map((text, i) => (
-                  <div
-                    key={i}
-                    className="relative p-5 border border-neutral-200 rounded-xl ring ring-neutral-200 ring-offset-2 md:ring-offset-4 bg-white overflow-hidden"
-                  >
-                    <div
-                      className="absolute inset-0 z-0 pointer-events-none"
-                     
-                    />
-                    <p className="relative z-10 text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed">
-                      {text}
-                    </p>
-                  </div>
+                ].map((text) => (
+                  <FlowStepCard key={text} label={text} className="h-full" />
                 ))}
               </div>
               <p className="text-lg sm:text-xl md:text-2xl font-inter-display font-semibold text-text-primary leading-relaxed mb-6">
                 The certification confirms that the learner has successfully completed:
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-6">
                 {[
                   "Structured Academic Instruction",
                   "Extensive Hands-on Labs and Simulations",
                   "Formal Assessments Aligned with CYBERLABS USA Standards",
-                ].map((text, i) => (
-                  <div
-                    key={i}
-                    className="relative p-5 border border-neutral-200 rounded-xl ring ring-neutral-200 ring-offset-2 md:ring-offset-4 bg-white overflow-hidden"
-                  >
-                    <div
-                      className="absolute inset-0 z-0 pointer-events-none"
-                      // style={cardDashedGridStyle}
-                    />
-                    <p className="relative z-10 text-sm sm:text-base md:text-lg font-inter-display font-semibold text-text-primary leading-relaxed">
-                      {text}
-                    </p>
-                  </div>
+                ].map((text) => (
+                  <FlowStepCard key={text} label={text} className="h-full" />
                 ))}
               </div>
             </div>
@@ -192,25 +149,18 @@ const OfficialCertificate = () => {
                 <p className="text-base sm:text-lg font-inter-display font-medium text-text-primary leading-tight mb-4">
                   The Professional Performance Transcript provides granular insight into performance across:
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-4">
                   {[
                     "Practical lab execution",
                     "Investigation and analytical work",
                     "Scenario-based assessments",
                     "Professional reporting and documentation",
                   ].map((text, i) => (
-                    <div
-                      key={i}
-                      className={`relative p-4 sm:p-5 border border-neutral-200 rounded-xl ring ring-neutral-200 ring-offset-2 md:ring-offset-4 bg-white overflow-hidden ${i === 3 ? "sm:col-span-3" : ""}`}
-                    >
-                      <div
-                        className="absolute inset-0 z-0 pointer-events-none"
-                        // style={cardDashedGridStyle}
-                      />
-                      <p className="relative z-10 text-sm sm:text-base md:text-lg font-inter-display font-medium text-text-primary leading-tight">
-                        {text}
-                      </p>
-                    </div>
+                    <FlowStepCard
+                      key={text}
+                      label={text}
+                      className={`h-full ${i === 3 ? "sm:col-span-3" : ""}`}
+                    />
                   ))}
                 </div>
                 <p className="text-base sm:text-lg font-inter-display font-medium text-text-primary leading-tight">

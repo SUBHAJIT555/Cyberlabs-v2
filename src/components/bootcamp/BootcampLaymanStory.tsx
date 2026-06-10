@@ -47,7 +47,7 @@ const BootcampLaymanStory = () => {
                 <motion.div variants={itemVariants} className="relative z-10 order-2 lg:order-1">
                     <div className="relative">
                         <motion.h3
-                            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-bold tracking-tight leading-tight mb-4 sm:mb-6 md:mb-8 text-left"
+                            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-bold tracking-tight leading-tight mb-4 sm:mb-6 md:mb-8 text-left"
                             initial={{ opacity: 0, y: 20 }}
                             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}

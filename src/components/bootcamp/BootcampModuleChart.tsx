@@ -21,7 +21,7 @@ const BootcampModuleChart = () => {
                             {
                                 text: "Program Structure & Modules",
                                 className:
-                                    "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-semibold tracking-tight leading-tight",
+                                    "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold tracking-tight leading-tight",
                                 as: "h3",
                             },
                         ]}

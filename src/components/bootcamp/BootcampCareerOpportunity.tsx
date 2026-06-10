@@ -24,13 +24,13 @@ const BootcampCareerOpportunity = () => {
                             {
                                 text: "Career Opportunities & Hiring Landscape",
                                 className:
-                                    "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-semibold tracking-tight leading-tight",
+                                    "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-semibold tracking-tight leading-tight",
                                 as: "h3",
                             },
                             {
                                 text: "(2026+)",
                                 className:
-                                    "text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-primary font-montserrat font-medium tracking-tight leading-tight",
+                                    "text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-primary font-inter-display font-medium tracking-tight leading-tight",
                                 as: "h3",
                                 startDelay: 0.12,
                             },

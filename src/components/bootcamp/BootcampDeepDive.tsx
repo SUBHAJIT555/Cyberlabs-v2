@@ -5,28 +5,7 @@ import { usePageDetail } from "@/hooks/useProgramDetail";
 import { AnimatedHeading } from "@/components/ui/animated-heading";
 import { AnimatedList } from "@/components/ui/animated-list";
 import type { AnimatedListItem } from "@/components/ui/animated-list";
-
-const dashedGridStyle = {
-    backgroundImage: `
-        linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-        linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
-    `,
-    backgroundSize: "1px 1px",
-    backgroundPosition: "0 0, 0 0",
-    maskImage: `
-        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-        radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-    `,
-    WebkitMaskImage: `
-        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-        radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-    `,
-    maskComposite: "intersect" as const,
-    WebkitMaskComposite: "source-in" as const,
-};
-
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 const BootcampDeepDive = () => {
     const detail = usePageDetail();
     const deepDive = detail?.deepDive;
@@ -55,7 +34,7 @@ const BootcampDeepDive = () => {
                         {
                             text: deepDive.title,
                             className:
-                                "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat font-medium text-text-primary leading-tight mb-8 sm:leading-none tracking-tight",
+                                "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display font-medium text-text-primary leading-tight mb-8 sm:leading-none tracking-tight",
                             as: "h3",
                         },
                     ]}
@@ -63,12 +42,12 @@ const BootcampDeepDive = () => {
 
                 <motion.div
                     ref={introRef}
-                    className="relative border border-neutral-200 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl w-full overflow-hidden bg-white"
+                    className="relative border border-neutral-200 rounded-lg w-full overflow-hidden bg-white shadow-sm"
                     initial={{ opacity: 0, y: 20 }}
                     animate={introInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
                 >
-                    <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+                    <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
                     <div className="relative z-10 p-3 sm:p-4 md:p-4 lg:p-5">
                         <h4 className="flex items-center gap-2 text-lg sm:text-xl md:text-2xl lg:text-3xl text-text-primary font-inter-display font-bold tracking-tight leading-tight mb-6 sm:mb-8 md:mb-10">
                             <div className="bg-background shadow-sm rounded-md p-2">

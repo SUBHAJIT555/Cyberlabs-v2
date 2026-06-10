@@ -256,7 +256,7 @@ const Faq = () => {
       transition={{ duration: 0.8 }}
       viewport={{ once: true, margin: "-100px" }}
     >
-      <h2 className=" text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-semibold  mb-6 sm:mb-8 font-montserrat tracking-tight text-text-primary leading-tight">
+      <h2 className=" text-3xl xs:text-4xl sm:text-5xl font-semibold  mb-6 sm:mb-8 font-inter-display tracking-tight text-text-primary leading-tight">
         Frequently Asked Questions.
       </h2>
       <p className="text-text-primary text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-inter-display font-medium  mb-8 sm:mb-12 lg:mb-16  max-w-5xl">

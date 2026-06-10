@@ -95,7 +95,7 @@ const Footer = () => {
     };
 
     return (
-        <footer className="relative z-0 overflow-hidden border-t border-zinc-200 bg-zinc-50/80">
+        <footer className="relative z-0 overflow-hidden border-t border-zinc-200 bg-background">
             <FooterBackground />
 
             <div className="relative z-10 w-full px-4 py-12 sm:px-6 md:py-16 lg:px-12 xl:px-16">
@@ -168,7 +168,7 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="mt-8 border-t border-dashed border-zinc-200 pt-6 text-center text-xs text-zinc-500 md:text-sm">
+                <div className="mt-8 border-t border-dashed border-zinc-200 pt-6 text-center text-xs text-zinc-800 md:text-sm">
                     <p className="inline-flex flex-wrap items-center justify-center gap-x-1 gap-y-0.5 font-inter-display leading-relaxed">
                         <span>© {new Date().getFullYear()}</span>
                         <Link
@@ -336,17 +336,31 @@ function FooterLink({
 
 function FooterBackground() {
     return (
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 z-0"
+            style={{
+                background:
+                    "linear-gradient(to bottom, var(--background) 0%, var(--background) 60%, rgba(255,255,255,0) 100%), radial-gradient(ellipse at 50% 120%, var(--primary) 0%, var(--background) 75%)",
+                opacity: 0.7,
+            }}
+        >
             <div
-                className="absolute inset-0 opacity-[0.35]"
                 style={{
-                    backgroundImage:
-                        "linear-gradient(90deg, #e4e4e7 1px, transparent 1px)",
-                    backgroundSize: "10px 100%",
                     WebkitMaskImage:
-                        "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 65%)",
+                        "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.45) 75%)",
+                    backgroundImage:
+                        "repeating-conic-gradient(from 0deg at 50% 100%, var(--primary) 0deg, var(--primary) 1deg, transparent 1deg, transparent 6deg)",
+                    bottom: "-15%",
+                    height: "100%",
+                    left: "50%",
                     maskImage:
-                        "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 65%)",
+                        "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.45) 75%)",
+                    opacity: 0.1,
+                    pointerEvents: "none",
+                    position: "absolute",
+                    transform: "translateX(-50%)",
+                    width: "250%",
                 }}
             />
         </div>

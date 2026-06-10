@@ -3,9 +3,9 @@ import { cn } from "@/lib/utils";
 import { GridPattern, genRandomPattern } from "./grid-pattern";
 
 type FlowStepCardProps = React.ComponentProps<"div"> & {
-  stepNumber: number;
+  stepNumber?: number;
   label: string;
-  sub: string;
+  sub?: string;
 };
 
 export function FlowStepCard({
@@ -43,16 +43,25 @@ export function FlowStepCard({
       </div>
 
       <div className="relative z-10 flex flex-1 flex-col">
-        <span className="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-500 text-white font-inter-display font-bold text-base transition duration-300 group-hover:border-neutral-300">
-          {stepNumber}
-        </span>
+        {stepNumber != null && (
+          <span className="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-neutral-200 bg-neutral-500 text-white font-inter-display font-bold text-base transition duration-300 group-hover:border-neutral-300">
+            {stepNumber}
+          </span>
+        )}
 
-        <p className="relative z-20 mt-6 md:mt-8 font-inter-display font-semibold text-text-primary text-sm md:text-base lg:text-lg">
+        <p
+          className={cn(
+            "relative z-20 font-inter-display font-semibold text-text-primary text-sm md:text-base lg:text-lg",
+            stepNumber != null && "mt-6 md:mt-8",
+          )}
+        >
           {label}
         </p>
-        <p className="text-neutral-500 text-xs sm:text-sm md:text-base font-inter-display mt-0.5">
-          {sub}
-        </p>
+        {sub ? (
+          <p className="text-neutral-500 text-xs sm:text-sm md:text-base font-inter-display mt-0.5">
+            {sub}
+          </p>
+        ) : null}
       </div>
     </div>
   );

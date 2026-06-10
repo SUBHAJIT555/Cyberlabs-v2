@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { AnimatedHeading } from "./ui/animated-heading";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 // import certificateImage from "../assets/img/about/CyberlabsCertificate.webp"
 // import comtia from "../assets/img/CertificateTag/cyberlab_ceritificate_comptia.webp"
 // import ec from "../assets/img/CertificateTag/cyberlab_ceritificate_ec-council.webp"
@@ -11,27 +12,6 @@ const GradePerformance = () => {
     const isInView = useInView(containerRef, { once: false, margin: "-100px" });
     const headingRef = useRef<HTMLDivElement>(null);
     const headingInView = useInView(headingRef, { once: false, margin: "-100px" });
-
-    const dashedGridStyle = {
-        backgroundImage: `
-            linear-gradient(to right, #e7e5e4 1px, transparent 1px),
-            linear-gradient(to bottom, #e7e5e4 1px, transparent 1px)
-        `,
-        backgroundSize: "10px 10px",
-        backgroundPosition: "0 0, 0 0",
-        maskImage: `
-            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-        `,
-        WebkitMaskImage: `
-            repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-            repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-            radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
-        `,
-        maskComposite: "intersect" as const,
-        WebkitMaskComposite: "source-in" as const,
-    };
 
     return (
         <section className="w-full px-5 md:px-10 lg:px-16 py-4 sm:py-6 lg:py-6" ref={containerRef}>
@@ -47,7 +27,7 @@ const GradePerformance = () => {
                         <AnimatedHeading
                             inView={headingInView}
                             lines={[
-                                { text: "Graded Performance Framework (Indicative)", className: "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-montserrat text-text-primary font-semibold tracking-tight leading-tight" },
+                                { text: "Graded Performance Framework (Indicative)", className: "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-inter-display text-text-primary font-semibold tracking-tight leading-tight" },
                             ]}
                         />
                     </div>
@@ -100,8 +80,8 @@ const GradePerformance = () => {
                     </div>
 
                     {/* Performance classifications & assessment note */}
-                    <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden ring ring-neutral-200 ring-offset-4 md:ring-offset-8 mb-8 md:mb-10">
-                        <div className="absolute inset-0 z-0 pointer-events-none" style={dashedGridStyle} />
+                    <div className="relative rounded-xl border border-neutral-200 bg-white overflow-hidden  mb-8 md:mb-10">
+                        <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
                         <div className="relative z-10 p-6 sm:p-8 md:p-10 lg:p-12">
                         <h3 className="text-base sm:text-lg font-inter-display font-semibold text-text-primary leading-snug mb-3 sm:mb-4">
                             Performance classifications may include:
