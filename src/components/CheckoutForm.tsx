@@ -7,6 +7,12 @@ import { useSearchParams } from "react-router";
 import type { Hero } from "@/interface/program";
 import { MAIL_API_URL } from "@/lib/api";
 import { ShinyButton } from "@/components/ui/shiny-button";
+import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
+
+const parsePriceValue = (value: string) => Number(value.replace(/[^\d]/g, "")) || 0;
+
+const normalizeCurrency = (currency: string) =>
+  currency === "₹" || currency === "INR" ? "INR" : currency;
 
 // Zod validation schema
 const checkoutFormSchema = z.object({
@@ -281,6 +287,9 @@ const CheckoutForm = ({
 
   // Get current year for graduation year validation
   const currentYear = new Date().getFullYear();
+  const originalPrice = parsePriceValue(courseData.pricing.originalPrice);
+  const launchPrice = parsePriceValue(courseData.pricing.currentPrice);
+  const currency = normalizeCurrency(courseData.pricing.currency);
 
   return (
     <motion.div
@@ -295,7 +304,7 @@ const CheckoutForm = ({
         <button
           type="button"
           onClick={onBack}
-          className="mb-6 flex items-center gap-2 text-sm sm:text-base font-montserrat font-medium text-gray-600 hover:text-text-primary transition-colors"
+          className="mb-6 hidden items-center gap-2 text-sm font-montserrat font-medium text-gray-600 transition-colors hover:text-text-primary sm:flex sm:text-base"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -325,9 +334,19 @@ const CheckoutForm = ({
             <h3 className="text-lg sm:text-xl font-inter-display font-medium text-text-primary mb-2 leading-tight">
               {courseTitle}
             </h3>
-            <p className="text-primary text-base font-inter-display font-medium">
-              {courseData.subheading}
-            </p>
+            {courseData.subheading && (
+              <p className="text-primary text-base font-inter-display font-medium mb-3">
+                {courseData.subheading}
+              </p>
+            )}
+            {originalPrice > 0 && launchPrice > 0 && (
+              <BootcampPriceBlock
+                originalPrice={originalPrice}
+                launchPrice={launchPrice}
+                currency={currency}
+                variant="strip"
+              />
+            )}
           </div>
         </div>
       </div>

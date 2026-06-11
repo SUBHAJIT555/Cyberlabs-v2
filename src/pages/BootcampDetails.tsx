@@ -140,6 +140,7 @@ const BootcampDetails = () => {
                 <CallbackModal
                     isOpen={isCallbackModalOpen}
                     onClose={() => setIsCallbackModalOpen(false)}
+                    bootcampSlug={bootcamp.slug}
                 />
 
                 <BootcampEnrollmentModal

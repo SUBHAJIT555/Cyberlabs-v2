@@ -139,6 +139,7 @@ const CourseDetails = () => {
                 <CallbackModal
                     isOpen={isCallbackModalOpen}
                     onClose={() => setIsCallbackModalOpen(false)}
+                    programSlug={slug}
                 />
 
                 {slug && (

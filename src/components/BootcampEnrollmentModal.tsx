@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCheckCircle } from "react-icons/fa";
 import CheckoutForm from "./CheckoutForm";
@@ -6,6 +7,8 @@ import { ShinyButton } from "@/components/ui/shiny-button";
 import { useBootcamps } from "@/hooks/useBootcamps";
 import { bootcampToHero } from "@/lib/bootcamp";
 import { CONTACT } from "@/constants/contactInfo";
+import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 
 interface BootcampEnrollmentModalProps {
     isOpen: boolean;
@@ -40,14 +43,16 @@ const BootcampEnrollmentModal = ({ isOpen, onClose, slug }: BootcampEnrollmentMo
     }
 
     const heroData = bootcampToHero(bootcamp);
-    const formattedPrice = bootcamp.price.toLocaleString("en-IN");
-
     const handleClose = () => {
         setShowCheckoutForm(false);
         onClose();
     };
 
-    return (
+    if (typeof document === "undefined") {
+        return null;
+    }
+
+    return createPortal(
         <AnimatePresence>
             {isOpen && (
                 <>
@@ -56,7 +61,7 @@ const BootcampEnrollmentModal = ({ isOpen, onClose, slug }: BootcampEnrollmentMo
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={handleClose}
-                        className="fixed inset-0 bg-black/30 backdrop-blur-sm z-9999"
+                        className="fixed inset-0 z-10049 bg-black/30 backdrop-blur-sm"
                     />
 
                     <motion.div
@@ -64,37 +69,46 @@ const BootcampEnrollmentModal = ({ isOpen, onClose, slug }: BootcampEnrollmentMo
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.96, y: 20 }}
                         transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                        className="fixed inset-0 z-10000 flex items-center justify-center p-4 sm:p-6 md:p-8"
+                        className="fixed inset-0 z-10050 flex items-center justify-center overflow-hidden p-4 sm:items-start sm:overflow-y-auto sm:p-6 sm:pt-24 md:p-8"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="relative w-full max-w-2xl max-h-[90vh] text-text-primary overflow-hidden shadow-xl border border-neutral-200 ring ring-neutral-200 ring-offset-4 md:ring-offset-8 rounded-xl bg-white">
+                        <div className="relative mx-auto flex w-full max-w-2xl max-h-[calc(100dvh-2rem)] flex-col overflow-hidden text-text-primary shadow-xl border border-neutral-200 ring ring-neutral-200 ring-offset-0 sm:max-h-[calc(100vh-6rem)] sm:ring-offset-4 md:ring-offset-8 rounded-xl bg-white">
                             <div
                                 className="absolute inset-0 z-0 pointer-events-none"
-                                style={{
-                                    backgroundImage: `
-                                        linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-                                        linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
-                                    `,
-                                    backgroundSize: "1px 1px",
-                                    backgroundPosition: "0 0, 0 0",
-                                    maskImage: `
-                                        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-                                        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-                                        radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-                                    `,
-                                    WebkitMaskImage: `
-                                        repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-                                        repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-                                        radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-                                    `,
-                                    maskComposite: "intersect",
-                                    WebkitMaskComposite: "source-in",
-                                }}
+                                style={crosshatchBgStyle}
                             />
 
+                            <div className="relative z-30 flex shrink-0 items-center justify-between border-b border-neutral-200 bg-white/95 px-4 py-3 backdrop-blur-sm sm:hidden">
+                                {showCheckoutForm ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowCheckoutForm(false)}
+                                        className="flex items-center gap-1.5 text-sm font-montserrat font-medium text-gray-600 hover:text-text-primary transition-colors"
+                                    >
+                                        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                        </svg>
+                                        Back to Overview
+                                    </button>
+                                ) : (
+                                    <span className="h-9 w-9" aria-hidden />
+                                )}
+                                <button
+                                    type="button"
+                                    onClick={handleClose}
+                                    className="rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700"
+                                    aria-label="Close modal"
+                                >
+                                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+                            </div>
+
                             <button
+                                type="button"
                                 onClick={handleClose}
-                                className="absolute top-4 right-4 z-50 p-1.5 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-gray-700 transition-colors"
+                                className="absolute top-4 right-4 z-50 hidden rounded-lg p-1.5 text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700 sm:block"
                                 aria-label="Close modal"
                             >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -102,7 +116,7 @@ const BootcampEnrollmentModal = ({ isOpen, onClose, slug }: BootcampEnrollmentMo
                                 </svg>
                             </button>
 
-                            <div className="relative z-10 overflow-y-auto max-h-[90vh]">
+                            <div className="relative z-10 min-h-0 flex-1 overflow-y-auto">
                                 {!showCheckoutForm ? (
                                     <div className="p-6 sm:p-8 md:p-10">
                                         <div className="mb-8">
@@ -134,12 +148,12 @@ const BootcampEnrollmentModal = ({ isOpen, onClose, slug }: BootcampEnrollmentMo
                                                             {bootcamp.launchNote}
                                                         </p>
                                                     )}
-                                                    <p className="text-sm text-text-primary font-inter-display">
-                                                        Price:{" "}
-                                                        <span className="text-lg font-semibold text-primary">
-                                                            ₹{formattedPrice} {bootcamp.currency}
-                                                        </span>
-                                                    </p>
+                                                    <BootcampPriceBlock
+                                                        originalPrice={bootcamp.originalPrice}
+                                                        launchPrice={bootcamp.launchPrice}
+                                                        currency={bootcamp.currency}
+                                                        variant="strip"
+                                                    />
                                                 </div>
                                             </div>
                                         </div>
@@ -213,7 +227,8 @@ const BootcampEnrollmentModal = ({ isOpen, onClose, slug }: BootcampEnrollmentMo
                     </motion.div>
                 </>
             )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        document.body,
     );
 };
 

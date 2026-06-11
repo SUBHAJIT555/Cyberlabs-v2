@@ -5,7 +5,8 @@ export interface Bootcamp {
     duration: string;
     date: string;
     language: string;
-    price: number;
+    originalPrice: number;
+    launchPrice: number;
     currency: string;
     description: string;
     image: string;

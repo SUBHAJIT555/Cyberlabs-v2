@@ -6,6 +6,8 @@ import type { Bootcamp } from "@/interface/bootcamp";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import GradientText from "@/components/ui/GradientText";
+import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
+import BootcampDiscountRibbon from "@/components/ui/BootcampDiscountRibbon";
 
 type ElitBootcampCardProps = {
     bootcamp: Bootcamp;
@@ -53,7 +55,6 @@ const ElitBootcampCard = ({ bootcamp, index, onEnroll }: ElitBootcampCardProps) 
     const cardRef = useRef(null);
     const navigate = useNavigate();
     const isInView = useInView(cardRef, { once: false, margin: "-50px" });
-    const formattedPrice = bootcamp.price.toLocaleString("en-IN");
     const detailsPath = `/cyber-defense-programs/bootcamp/${bootcamp.slug}`;
 
     const goToDetails = () => navigate(detailsPath);
@@ -90,6 +91,10 @@ const ElitBootcampCard = ({ bootcamp, index, onEnroll }: ElitBootcampCardProps) 
                     src={bootcamp.image}
                     alt={bootcamp.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+                />
+                <BootcampDiscountRibbon
+                    originalPrice={bootcamp.originalPrice}
+                    launchPrice={bootcamp.launchPrice}
                 />
                 <div className="absolute top-3 left-3 z-10 pointer-events-none">
                     <GradientText
@@ -131,10 +136,12 @@ const ElitBootcampCard = ({ bootcamp, index, onEnroll }: ElitBootcampCardProps) 
                         </span>
                     </div>
 
-                    <p className="inline-flex items-center rounded-lg border border-neutral-200 bg-neutral-100 px-3 py-2 text-sm font-inter-display font-semibold text-text-primary shadow-sm mb-3 w-full text-center! justify-center!">
-                        Price:{" "}
-                        <span className="font-bold text-base sm:text-lg ml-1">₹{formattedPrice} {bootcamp.currency}</span>
-                    </p>
+                    <BootcampPriceBlock
+                        originalPrice={bootcamp.originalPrice}
+                        launchPrice={bootcamp.launchPrice}
+                        currency={bootcamp.currency}
+                        className="mb-3"
+                    />
 
                     {bootcamp.launchNote && (
                         <p className="text-[11px] sm:text-xs font-inter-display font-medium text-primary mb-2 underline underline-offset-2 decoration-1 decoration-primary">

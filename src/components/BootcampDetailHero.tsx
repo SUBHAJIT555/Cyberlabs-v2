@@ -4,6 +4,7 @@ import { useBootcamps } from "@/hooks/useBootcamps";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import GradientText from "@/components/ui/GradientText";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
 
 type BootcampDetailHeroProps = {
     onEnroll: () => void;
@@ -17,7 +18,7 @@ const BootcampDetailHero = ({ onEnroll }: BootcampDetailHeroProps) => {
 
     if (!bootcamp) return null;
 
-    const formattedPrice = bootcamp.price.toLocaleString("en-IN");
+    const formattedLaunch = bootcamp.launchPrice.toLocaleString("en-IN");
     const introParagraphs =
         detail?.hero.introParagraphs?.length
             ? detail.hero.introParagraphs
@@ -34,7 +35,7 @@ const BootcampDetailHero = ({ onEnroll }: BootcampDetailHeroProps) => {
         { label: "Duration", value: bootcamp.duration, highlight: true },
         { label: "Date", value: bootcamp.date },
         { label: "Language", value: bootcamp.language },
-        { label: "Price", value: `₹${formattedPrice} ${bootcamp.currency}`, emphasis: true },
+        { label: "Price", value: `₹${formattedLaunch} ${bootcamp.currency}`, emphasis: true },
     ];
 
     return (
@@ -154,12 +155,13 @@ const BootcampDetailHero = ({ onEnroll }: BootcampDetailHeroProps) => {
                         </div>
                         <div className="relative mt-3 overflow-hidden rounded-lg border border-neutral-200 border-dashed bg-white shadow-sm">
                             <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
-                            <div className="relative z-10 flex items-center justify-between gap-3 px-4 py-3 text-sm font-inter-display">
-                                <span className="text-text-primary/70">Starting at</span>
-                                <span className="font-semibold text-text-primary">
-                                    ₹{formattedPrice}{" "}
-                                    <span className="font-medium text-text-primary/60">{bootcamp.currency}</span>
-                                </span>
+                            <div className="relative z-10 px-4 py-3">
+                                <BootcampPriceBlock
+                                    originalPrice={bootcamp.originalPrice}
+                                    launchPrice={bootcamp.launchPrice}
+                                    currency={bootcamp.currency}
+                                    variant="strip"
+                                />
                             </div>
                         </div>
                     </div>

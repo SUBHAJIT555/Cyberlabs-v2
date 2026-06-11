@@ -1,4 +1,51 @@
-import type { Course } from "@/interface/program";
+import type { Card, Course } from "@/interface/program";
+import { getFlagshipProgramPricing } from "@/constants/flagshipProgramData";
+
+type RawCourseCard = Omit<Card, "price">;
+type RawCourse = Omit<
+  Course,
+  "originalPrice" | "currentPrice" | "discount" | "hero" | "whatsNew"
+> & {
+  hero: Omit<Course["hero"], "pricing"> & {
+    pricing: {
+      taxNote: string;
+      image?: string;
+    };
+  };
+  whatsNew: Omit<Course["whatsNew"], "cards"> & {
+    cards: RawCourseCard[];
+  };
+};
+
+const applyFlagshipProgramPricing = (courseList: RawCourse[]): Course[] =>
+  courseList.map((course) => {
+    const pricing = getFlagshipProgramPricing(course.slug);
+    if (!pricing) {
+      throw new Error(`Missing flagship program pricing for slug: ${course.slug}`);
+    }
+
+    return {
+      ...course,
+      originalPrice: pricing.originalPrice,
+      currentPrice: pricing.launchPrice,
+      discount: pricing.discountPercent,
+      hero: {
+        ...course.hero,
+        pricing: {
+          ...pricing.heroPricing,
+          taxNote: course.hero.pricing.taxNote,
+          image: course.hero.pricing.image,
+        },
+      },
+      whatsNew: {
+        ...course.whatsNew,
+        cards: course.whatsNew.cards.map((card) => ({
+          ...card,
+          price: pricing.formattedLaunchLabel,
+        })),
+      },
+    };
+  });
 // Import images
 
 import CybercrimeDarkWebImage from "@/assets/img/ProgramImage/CybercrimeDarkWebAndFinancialIntelligenceOperations.webp";
@@ -27,7 +74,7 @@ import {
   TbMapSearch,
 } from "react-icons/tb";
 
-export const courses: Course[] = [
+const rawCourses: RawCourse[] = [
   // Cybercrime, Dark Web & Financial Intelligence Operations - 1
   {
     id: 1,
@@ -40,9 +87,6 @@ export const courses: Course[] = [
     instructor: "Cybercrime Investigation Expert",
     duration: "145 Hours",
     image: CybercrimeDarkWebImage,
-    originalPrice: 3500,
-    currentPrice: 2500,
-    discount: 29,
 
     // program hero section data
     hero: {
@@ -58,11 +102,7 @@ export const courses: Course[] = [
         { text: "Capstone Project" },
       ],
       pricing: {
-        currentPrice: "2500",
-        originalPrice: "3500",
-        currency: "$",
         taxNote: "",
-        discountText: "Flat 29% OFF on Launch Offer",
         image: CybercrimeDarkWebImage,
       },
       buttons: [
@@ -212,7 +252,6 @@ export const courses: Course[] = [
       cards: [
         {
           title: "CYBERLABS INDIA",
-          price: "$ 2,500",
           titleColor: "text-blue-600",
           priceColor: "text-blue-600",
           features: [
@@ -483,9 +522,6 @@ export const courses: Course[] = [
     instructor: "Platform Security Expert",
     duration: "145 Hours",
     image: PlatformIdentityAndAbuseDefenseEngineeringImage,
-    originalPrice: 3500,
-    currentPrice: 2500,
-    discount: 29,
 
     // program hero section data
     hero: {
@@ -502,11 +538,7 @@ export const courses: Course[] = [
         { text: "Capstone Project" },
       ],
       pricing: {
-        currentPrice: "2500",
-        originalPrice: "3500",
-        currency: "$",
         taxNote: "",
-        discountText: "Flat 29% OFF on Launch Offer",
         image: PlatformIdentityAndAbuseDefenseEngineeringImage,
       },
       buttons: [
@@ -660,7 +692,6 @@ export const courses: Course[] = [
       cards: [
         {
           title: "Our Program",
-          price: "$ 2,500",
           titleColor: "text-blue-600",
           priceColor: "text-blue-600",
           features: [
@@ -1026,9 +1057,6 @@ export const courses: Course[] = [
     instructor: "Cyber Operations Expert",
     duration: "450 Hours",
     image: FullStackCyberDefenseAndOffensiveSecurityImage,
-    originalPrice: 3500,
-    currentPrice: 2500,
-    discount: 29,
 
     hero: {
       title: "Cybersecurity Practitioner Program",
@@ -1044,11 +1072,7 @@ export const courses: Course[] = [
         { text: "Capstone Project" },
       ],
       pricing: {
-        currentPrice: "2500",
-        originalPrice: "3500",
-        currency: "$",
         taxNote: "",
-        discountText: "Flat 29% OFF on Launch Offer",
         image: FullStackCyberDefenseAndOffensiveSecurityImage,
       },
       buttons: [
@@ -1202,7 +1226,6 @@ export const courses: Course[] = [
       cards: [
         {
           title: "Our Program",
-          price: "$ 2,500",
           titleColor: "text-blue-600",
           priceColor: "text-blue-600",
           features: [
@@ -1630,3 +1653,5 @@ export const courses: Course[] = [
     ],
   },
 ];
+
+export const courses: Course[] = applyFlagshipProgramPricing(rawCourses);

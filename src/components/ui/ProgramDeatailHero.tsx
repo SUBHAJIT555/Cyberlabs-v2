@@ -5,6 +5,7 @@ import { parseBoldText } from "@/lib/utils";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import GradientText from "@/components/ui/GradientText";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
 
 type ProgramHeroProps = {
     onEnroll: () => void;
@@ -22,7 +23,7 @@ const ProgramHero = ({ onEnroll }: ProgramHeroProps) => {
     const title = course?.title || data?.title || "";
     const imageSrc = course?.image || data?.image.src || "";
     const imageAlt = data?.image.alt ?? course?.title ?? "Program";
-    const formattedPrice = course?.currentPrice.toLocaleString("en-IN") ?? "";
+    const formattedLaunch = course?.currentPrice.toLocaleString("en-IN") ?? "";
 
     const scrollToModule = () => {
         const element = document.getElementById("explained-module");
@@ -35,7 +36,7 @@ const ProgramHero = ({ onEnroll }: ProgramHeroProps) => {
         ? [
               { label: "Duration", value: course.duration, highlight: true },
               { label: "Language", value: course.language },
-              { label: "Price", value: `₹${formattedPrice}`, emphasis: true },
+              { label: "Price", value: `₹${formattedLaunch} INR`, emphasis: true },
           ]
         : [];
 
@@ -145,12 +146,16 @@ const ProgramHero = ({ onEnroll }: ProgramHeroProps) => {
                                 </p>
                             </div>
                         </div>
-                        {formattedPrice && (
+                        {course && (
                             <div className="relative mt-3 overflow-hidden rounded-lg border border-neutral-200 border-dashed bg-white shadow-sm">
                                 <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
-                                <div className="relative z-10 flex items-center justify-between gap-3 px-4 py-3 text-sm font-inter-display">
-                                    <span className="text-text-primary/70">Starting at</span>
-                                    <span className="font-semibold text-text-primary">₹{formattedPrice}</span>
+                                <div className="relative z-10 px-4 py-3">
+                                    <BootcampPriceBlock
+                                        originalPrice={course.originalPrice}
+                                        launchPrice={course.currentPrice}
+                                        currency="INR"
+                                        variant="strip"
+                                    />
                                 </div>
                             </div>
                         )}

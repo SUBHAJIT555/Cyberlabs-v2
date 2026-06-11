@@ -6,8 +6,8 @@ export const bootcampToHero = (bootcamp: Bootcamp): Hero => ({
     subheading: `${bootcamp.duration} · ${bootcamp.language}`,
     tags: [],
     pricing: {
-        currentPrice: bootcamp.price.toLocaleString("en-IN"),
-        originalPrice: bootcamp.price.toLocaleString("en-IN"),
+        currentPrice: bootcamp.launchPrice.toLocaleString("en-IN"),
+        originalPrice: bootcamp.originalPrice.toLocaleString("en-IN"),
         currency: bootcamp.currency === "INR" ? "₹" : bootcamp.currency,
         taxNote: "",
         discountText: "",

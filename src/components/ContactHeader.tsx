@@ -7,6 +7,7 @@ import {
     FaInstagram,
 } from "react-icons/fa";
 import { useCourses } from "@/hooks/useCourses";
+import { useBootcamps } from "@/hooks/useBootcamps";
 import { Course } from "@/interface/program";
 import { CONTACT } from "@/constants/contactInfo";
 import { MAIL_API_URL } from "@/lib/api";
@@ -66,13 +67,25 @@ interface FormData {
     currentBackground: string;
     yearsOfExperience: string;
     programOfInterest: string;
+    bootCampOfInterest: string;
     preferredTime: string;
     questionsOrGoals?: string;
 }
 
+const validateProgramOrBootCamp = (_value: string, formValues: FormData): true | string => {
+    const hasProgram = Boolean(formValues.programOfInterest);
+    const hasBootcamp = Boolean(formValues.bootCampOfInterest);
+    if (!hasProgram && !hasBootcamp) {
+        return "Please select at least one program or boot camp";
+    }
+    return true;
+};
+
 const ContactHeader = () => {
     const { getCourses } = useCourses();
+    const { getBootcamps } = useBootcamps();
     const allCourses = getCourses() as unknown as Course[];
+    const allBootcamps = getBootcamps();
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: true, margin: "-100px" });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -91,6 +104,7 @@ const ContactHeader = () => {
             currentBackground: "",
             yearsOfExperience: "",
             programOfInterest: "",
+            bootCampOfInterest: "",
             preferredTime: "",
             questionsOrGoals: "",
         },
@@ -112,6 +126,7 @@ const ContactHeader = () => {
                     currentBackground: data.currentBackground,
                     yearsOfExperience: data.yearsOfExperience,
                     programOfInterest: data.programOfInterest,
+                    bootCampOfInterest: data.bootCampOfInterest,
                     preferredTime: data.preferredTime,
                     questionsOrGoals: data.questionsOrGoals ?? "",
                 }),
@@ -397,29 +412,60 @@ const ContactHeader = () => {
                                         </div>
                                     </div>
 
-                                    {/* Program of Interest */}
-                                    <div>
-                                        <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
-                                            Program of Interest <span className="text-red-500">*</span>
-                                        </label>
-                                        <select
-                                            {...register("programOfInterest", {
-                                                required: "Please select a program of interest",
-                                            })}
-                                            className={`${inputBase} appearance-none cursor-pointer ${errors.programOfInterest ? inputError : inputNormal}`}
-                                        >
-                                            <option value="">Select a program</option>
-                                            {allCourses.map((course) => (
-                                                <option key={course.id} value={course.title}>
-                                                    {course.title}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        {errors.programOfInterest && (
-                                            <p className="mt-1 text-sm text-red-500 font-inter-display">
-                                                {errors.programOfInterest.message}
-                                            </p>
-                                        )}
+                                    <div className="space-y-4 pt-2 border-t border-neutral-200 border-dashed">
+                                        <p className="pt-4 text-sm font-inter-display text-text-primary/70">
+                                            Select at least one program or boot camp <span className="text-red-500">*</span>
+                                        </p>
+
+                                        <div>
+                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
+                                                Program of Interest
+                                            </label>
+                                            <select
+                                                {...register("programOfInterest", {
+                                                    validate: (value, formValues) =>
+                                                        validateProgramOrBootCamp(value, formValues as FormData),
+                                                })}
+                                                className={`${inputBase} appearance-none cursor-pointer ${errors.programOfInterest ? inputError : inputNormal}`}
+                                            >
+                                                <option value="">Select a program</option>
+                                                {allCourses.map((course) => (
+                                                    <option key={course.id} value={course.title}>
+                                                        {course.title}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            {errors.programOfInterest && (
+                                                <p className="mt-1 text-sm text-red-500 font-inter-display">
+                                                    {errors.programOfInterest.message}
+                                                </p>
+                                            )}
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
+                                                Boot Camp of Interest
+                                            </label>
+                                            <select
+                                                {...register("bootCampOfInterest", {
+                                                    validate: (value, formValues) =>
+                                                        validateProgramOrBootCamp(value, formValues as FormData),
+                                                })}
+                                                className={`${inputBase} appearance-none cursor-pointer ${errors.bootCampOfInterest ? inputError : inputNormal}`}
+                                            >
+                                                <option value="">Select a boot camp</option>
+                                                {allBootcamps.map((bootcamp) => (
+                                                    <option key={bootcamp.id} value={bootcamp.title}>
+                                                        {bootcamp.title}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                            {errors.bootCampOfInterest && (
+                                                <p className="mt-1 text-sm text-red-500 font-inter-display">
+                                                    {errors.bootCampOfInterest.message}
+                                                </p>
+                                            )}
+                                        </div>
                                     </div>
 
                                     {/* Preferred Time for Call */}

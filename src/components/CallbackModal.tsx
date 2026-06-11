@@ -4,20 +4,37 @@ import { motion, AnimatePresence } from "framer-motion";
 import { IoClose } from "react-icons/io5";
 import { createPortal } from "react-dom";
 import { useCourses } from "@/hooks/useCourses";
+import { useBootcamps } from "@/hooks/useBootcamps";
 import type { Course } from "@/interface/program";
 import { MAIL_API_URL } from "@/lib/api";
+import { crosshatchBgStyle } from "@/constants/bootcampStyles";
+import { ShinyButton } from "@/components/ui/shiny-button";
+import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
 
 interface CallbackModalProps {
   isOpen: boolean;
   onClose: () => void;
+  programSlug?: string;
+  bootcampSlug?: string;
 }
 
 interface FormData {
   name: string;
+  email: string;
   phone: string;
   callbackTime: string;
   enquiryFor: string;
+  bootCampOfInterest: string;
 }
+
+const validateProgramOrBootCamp = (_value: string, formValues: FormData): true | string => {
+  const hasProgram = Boolean(formValues.enquiryFor);
+  const hasBootcamp = Boolean(formValues.bootCampOfInterest);
+  if (!hasProgram && !hasBootcamp) {
+    return "Please select at least one program or boot camp";
+  }
+  return true;
+};
 
 const defaultCallbackTime = () => {
   const d = new Date();
@@ -26,10 +43,19 @@ const defaultCallbackTime = () => {
   return d.toISOString().slice(0, 16);
 };
 
-const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
-  const { getCourses } = useCourses();
-  // Memoize allCourses to prevent infinite re-renders
+const CallbackModal: React.FC<CallbackModalProps> = ({
+  isOpen,
+  onClose,
+  programSlug,
+  bootcampSlug,
+}) => {
+  const { getCourses, getCourseBySlug } = useCourses();
+  const { getBootcamps, getBootcampBySlug } = useBootcamps();
   const allCourses = useMemo(() => getCourses() as unknown as Course[], [getCourses]);
+  const allBootcamps = useMemo(() => getBootcamps(), [getBootcamps]);
+  const course = programSlug ? getCourseBySlug(programSlug) : undefined;
+  const bootcamp = bootcampSlug ? getBootcampBySlug(bootcampSlug) : undefined;
+  const hasContext = Boolean(course || bootcamp);
   const [isMobile, setIsMobile] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
@@ -42,9 +68,11 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
   } = useForm<FormData>({
     defaultValues: {
       name: "",
+      email: "",
       phone: "",
       callbackTime: defaultCallbackTime(),
       enquiryFor: "",
+      bootCampOfInterest: "",
     },
   });
 
@@ -59,14 +87,15 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
     if (isOpen) {
       reset({
         name: "",
+        email: "",
         phone: "",
         callbackTime: defaultCallbackTime(),
-        enquiryFor: allCourses.length > 0 ? allCourses[0].title : "",
+        enquiryFor: course?.title ?? "",
+        bootCampOfInterest: bootcamp?.title ?? "",
       });
       setSubmitStatus(null);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]); // Only depend on isOpen - reset is stable from react-hook-form, allCourses is memoized
+  }, [isOpen, course?.title, bootcamp?.title, reset]);
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
@@ -79,9 +108,11 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
         body: JSON.stringify({
           formType: "callback-modal",
           name: data.name,
+          email: data.email,
           phone: data.phone.startsWith("+") ? data.phone : `+91${data.phone.replace(/\D/g, "")}`,
           callbackTime: data.callbackTime,
           enquiryFor: data.enquiryFor,
+          bootCampOfInterest: data.bootCampOfInterest,
         }),
       });
       const result = await response.json();
@@ -160,34 +191,14 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
                 width: isMobile ? "auto" : "28rem",
               }}
             >
-              {/* Dashed grid background (fade at top) - same as CallToAction */}
               <div
                 className="absolute inset-0 z-0 pointer-events-none"
-                style={{
-                  backgroundImage: `
-                    linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-                    linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
-                  `,
-                  backgroundSize: "1px 1px",
-                  backgroundPosition: "0 0, 0 0",
-                  maskImage: `
-                    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-                    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-                    radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-                  `,
-                  WebkitMaskImage: `
-                    repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
-                    repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
-                    radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 80%)
-                  `,
-                  maskComposite: "intersect",
-                  WebkitMaskComposite: "source-in",
-                }}
+                style={crosshatchBgStyle}
               />
               {/* Header */}
               <div className="relative z-10 p-4 sm:p-6 pb-4">
                 <div className="flex items-center justify-between mb-2">
-                  <h2 className="text-text-primary text-lg sm:text-xl md:text-2xl lg:text-3xl font-montserrat">
+                  <h2 className="text-text-primary text-lg sm:text-xl md:text-2xl lg:text-3xl font-inter-display font-bold">
                     Request a callback
                   </h2>
                   <motion.button
@@ -220,6 +231,83 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
                   </div>
                 )}
 
+                {hasContext && course && (
+                  <div className="rounded-lg border border-neutral-200 bg-white/95 p-3 sm:p-4">
+                    <p className="mb-2 text-xs font-inter-display font-semibold uppercase tracking-wide text-primary">
+                      Flagship Program
+                    </p>
+                    <div className="flex gap-3">
+                      <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50">
+                        <img
+                          src={course.image}
+                          alt={course.title}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-sm font-inter-display font-semibold text-text-primary leading-snug line-clamp-2">
+                          {course.title}
+                        </h3>
+                        {course.subheading && (
+                          <p className="mt-1 text-xs font-inter-display font-medium text-primary line-clamp-1">
+                            {course.subheading}
+                          </p>
+                        )}
+                        {course.originalPrice > 0 && course.currentPrice > 0 && (
+                          <div className="mt-2">
+                            <BootcampPriceBlock
+                              originalPrice={course.originalPrice}
+                              launchPrice={course.currentPrice}
+                              currency="INR"
+                              variant="strip"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {hasContext && bootcamp && (
+                  <div className="rounded-lg border border-neutral-200 bg-white/95 p-3 sm:p-4">
+                    <p className="mb-2 text-xs font-inter-display font-semibold uppercase tracking-wide text-primary">
+                      Elite Boot Camp
+                    </p>
+                    <div className="flex gap-3">
+                      <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50">
+                        <img
+                          src={bootcamp.image}
+                          alt={bootcamp.title}
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-sm font-inter-display font-semibold text-text-primary leading-snug line-clamp-2">
+                          {bootcamp.title}
+                        </h3>
+                        <p className="mt-1 text-xs font-inter-display font-medium text-primary">
+                          {bootcamp.duration} · {bootcamp.language}
+                        </p>
+                        <div className="mt-2">
+                          <BootcampPriceBlock
+                            originalPrice={bootcamp.originalPrice}
+                            launchPrice={bootcamp.launchPrice}
+                            currency={bootcamp.currency}
+                            variant="strip"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {hasContext && (
+                  <>
+                    <input type="hidden" {...register("enquiryFor")} />
+                    <input type="hidden" {...register("bootCampOfInterest")} />
+                  </>
+                )}
+
                 {/* Name Field */}
                 <div>
                   <label className="block text-text-primary text-sm font-medium font-inter-display mb-2">
@@ -234,6 +322,29 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
                   />
                   {errors.name && (
                     <p className="mt-1 text-sm text-red-500 font-inter-display">{errors.name.message}</p>
+                  )}
+                </div>
+
+                {/* Email Field */}
+                <div>
+                  <label className="block text-text-primary text-sm font-medium font-inter-display mb-2">
+                    Email Address <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    {...register("email", {
+                      required: "Email address is required",
+                      pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                        message: "Invalid email address",
+                      },
+                    })}
+                    placeholder="Enter your email address"
+                    className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-background border text-text-primary placeholder-neutral-400 focus:outline-none rounded-lg focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 transition-colors text-sm sm:text-base font-inter-display ${errors.email ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"
+                      }`}
+                  />
+                  {errors.email && (
+                    <p className="mt-1 text-sm text-red-500 font-inter-display">{errors.email.message}</p>
                   )}
                 </div>
 
@@ -328,37 +439,69 @@ const CallbackModal: React.FC<CallbackModalProps> = ({ isOpen, onClose }) => {
                   )}
                 </div>
 
-                {/* Enquiry For Field */}
-                <div>
-                  <label className="block text-text-primary text-sm font-medium font-inter-display mb-2">
-                    Enquiry For <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    {...register("enquiryFor", { required: "Please select a program" })}
-                    className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-background border text-text-primary focus:outline-none focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 rounded-lg transition-colors appearance-none cursor-pointer text-sm sm:text-base font-inter-display ${errors.enquiryFor ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"
-                      }`}
-                  >
-                    <option value="">Select a program</option>
-                    {allCourses.map((course) => (
-                      <option key={course.id} value={course.title}>
-                        {course.title}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.enquiryFor && (
-                    <p className="mt-1 text-sm text-red-500 font-inter-display">{errors.enquiryFor.message}</p>
-                  )}
-                </div>
+                {!hasContext && (
+                <div className="space-y-4 pt-2 border-t border-neutral-200 border-dashed">
+                  <p className="text-sm font-inter-display text-text-primary/70">
+                    Select at least one program or boot camp <span className="text-red-500">*</span>
+                  </p>
 
-                {/* Submit Button */}
-                <motion.button
+                  <div>
+                    <label className="block text-text-primary text-sm font-medium font-inter-display mb-2">
+                      Program Enquiry
+                    </label>
+                    <select
+                      {...register("enquiryFor", {
+                        validate: (value, formValues) =>
+                          validateProgramOrBootCamp(value, formValues as FormData),
+                      })}
+                      className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-background border text-text-primary focus:outline-none focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 rounded-lg transition-colors appearance-none cursor-pointer text-sm sm:text-base font-inter-display ${errors.enquiryFor ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"
+                        }`}
+                    >
+                      <option value="">Select a program</option>
+                      {allCourses.map((c) => (
+                        <option key={c.id} value={c.title}>
+                          {c.title}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.enquiryFor && (
+                      <p className="mt-1 text-sm text-red-500 font-inter-display">{errors.enquiryFor.message}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-text-primary text-sm font-medium font-inter-display mb-2">
+                      Boot Camp Enquiry
+                    </label>
+                    <select
+                      {...register("bootCampOfInterest", {
+                        validate: (value, formValues) =>
+                          validateProgramOrBootCamp(value, formValues as FormData),
+                      })}
+                      className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-background border text-text-primary focus:outline-none focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 rounded-lg transition-colors appearance-none cursor-pointer text-sm sm:text-base font-inter-display ${errors.bootCampOfInterest ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"
+                        }`}
+                    >
+                      <option value="">Select a boot camp</option>
+                      {allBootcamps.map((b) => (
+                        <option key={b.id} value={b.title}>
+                          {b.title}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.bootCampOfInterest && (
+                      <p className="mt-1 text-sm text-red-500 font-inter-display">{errors.bootCampOfInterest.message}</p>
+                    )}
+                  </div>
+                </div>
+                )}
+
+                <ShinyButton
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-primary text-background font-medium font-montserrat py-2 sm:py-3 px-4 sm:px-6 rounded-lg hover:bg-primary/80  transition-colors disabled:opacity-50 disabled:cursor-not-allowed text-lg sm:text-xl cursor-pointer"
-                  whileTap={{ scale: 0.98 }}
+                  className="w-full rounded-lg! font-inter-display! text-base sm:text-lg font-medium shadow-lg! active:scale-95! disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isSubmitting ? "Submitting..." : "Submit"}
-                </motion.button>
+                </ShinyButton>
               </form>
             </motion.div>
           </motion.div>

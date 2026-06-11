@@ -124,7 +124,7 @@ if ($formType === 'newsletter') {
     if ($msg = required(['email' => 'Email'])) {
         sendJsonError($msg, 422);
     }
-} elseif ($formType === 'contact' || $formType === 'request-callback') {
+} elseif ($formType === 'contact') {
     if (
         $msg = required([
             'fullName' => 'Full name',
@@ -132,13 +132,35 @@ if ($formType === 'newsletter') {
             'mobileNumber' => 'Mobile number',
             'currentBackground' => 'Current background',
             'yearsOfExperience' => 'Years of experience',
-            'programOfInterest' => 'Program of interest',
             'preferredTime' => 'Preferred time for call',
         ])
     ) {
         sendJsonError($msg, 422);
     }
-    // Mobile: allow digits, +, spaces (international or +91 10 digits)
+    if (v('programOfInterest') === '' && v('bootCampOfInterest') === '') {
+        sendJsonError('Please select at least one program or boot camp.', 422);
+    }
+    $mobile = v('mobileNumber');
+    $mobileDigits = preg_replace('/[^0-9]/', '', $mobile);
+    if (strlen($mobileDigits) < 10) {
+        sendJsonError('Please enter a valid mobile number.', 422);
+    }
+} elseif ($formType === 'request-callback') {
+    if (
+        $msg = required([
+            'fullName' => 'Full name',
+            'email' => 'Email address',
+            'mobileNumber' => 'Mobile number',
+            'currentBackground' => 'Current background',
+            'yearsOfExperience' => 'Years of experience',
+            'preferredTime' => 'Preferred time for call',
+        ])
+    ) {
+        sendJsonError($msg, 422);
+    }
+    if (v('programOfInterest') === '' && v('bootCampOfInterest') === '') {
+        sendJsonError('Please select at least one program or boot camp.', 422);
+    }
     $mobile = v('mobileNumber');
     $mobileDigits = preg_replace('/[^0-9]/', '', $mobile);
     if (strlen($mobileDigits) < 10) {
@@ -148,12 +170,15 @@ if ($formType === 'newsletter') {
     if (
         $msg = required([
             'name' => 'Name',
+            'email' => 'Email address',
             'phone' => 'Phone number',
             'callbackTime' => 'Preferred callback time',
-            'enquiryFor' => 'Enquiry for',
         ])
     ) {
         sendJsonError($msg, 422);
+    }
+    if (v('enquiryFor') === '' && v('bootCampOfInterest') === '') {
+        sendJsonError('Please select at least one program or boot camp.', 422);
     }
     $phoneDigits = preg_replace('/[^0-9]/', '', v('phone'));
     if (strlen($phoneDigits) < 10) {
@@ -194,7 +219,7 @@ if ($formType === 'newsletter') {
 }
 
 // --- Email validation (only when form has email) ---
-if (in_array($formType, ['newsletter', 'contact', 'request-callback', 'enrollment-modal'], true)) {
+if (in_array($formType, ['newsletter', 'contact', 'request-callback', 'callback-modal', 'enrollment-modal'], true)) {
     $email = v('email');
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         sendJsonError('Invalid email address.', 422);
@@ -272,7 +297,8 @@ if ($formType === 'contact' || $formType === 'request-callback') {
     $details .= '<p><strong>Mobile Number:</strong> ' . clean($phone) . '</p>';
     $details .= '<p><strong>Current Background:</strong> ' . clean(v('currentBackground')) . '</p>';
     $details .= '<p><strong>Years of Experience:</strong> ' . clean(v('yearsOfExperience')) . '</p>';
-    $details .= '<p><strong>Program of Interest:</strong> ' . clean(v('programOfInterest')) . '</p>';
+    $details .= '<p><strong>Program of Interest:</strong> ' . (v('programOfInterest') !== '' ? clean(v('programOfInterest')) : '—') . '</p>';
+    $details .= '<p><strong>Boot Camp of Interest:</strong> ' . (v('bootCampOfInterest') !== '' ? clean(v('bootCampOfInterest')) : '—') . '</p>';
     $details .= '<p><strong>Preferred Time for Call:</strong> ' . clean(v('preferredTime')) . '</p>';
     if (v('questionsOrGoals') !== '') {
         $details .= '<p><strong>Questions or Goals:</strong><br>' . nl2br(clean(v('questionsOrGoals'))) . '</p>';
@@ -290,9 +316,11 @@ if ($formType === 'contact' || $formType === 'request-callback') {
 } elseif ($formType === 'callback-modal') {
     $details = '';
     $details .= '<p><strong>Name:</strong> ' . clean($name) . '</p>';
+    $details .= '<p><strong>Email:</strong> ' . clean($email) . '</p>';
     $details .= '<p><strong>Phone:</strong> ' . clean($phone) . '</p>';
     $details .= '<p><strong>Preferred Callback Time:</strong> ' . clean(v('callbackTime')) . '</p>';
-    $details .= '<p><strong>Enquiry For:</strong> ' . clean(v('enquiryFor')) . '</p>';
+    $details .= '<p><strong>Program Enquiry:</strong> ' . (v('enquiryFor') !== '' ? clean(v('enquiryFor')) : '—') . '</p>';
+    $details .= '<p><strong>Boot Camp Enquiry:</strong> ' . (v('bootCampOfInterest') !== '' ? clean(v('bootCampOfInterest')) : '—') . '</p>';
     $mainContent = '
     <tr>
       <td style="padding:0 24px 24px;">
@@ -483,15 +511,18 @@ if ($formType === 'contact' || $formType === 'request-callback') {
     $alt .= "Phone: " . $phone . "\n";
     $alt .= "Current Background: " . v('currentBackground') . "\n";
     $alt .= "Years of Experience: " . v('yearsOfExperience') . "\n";
-    $alt .= "Program of Interest: " . v('programOfInterest') . "\n";
+    $alt .= "Program of Interest: " . (v('programOfInterest') !== '' ? v('programOfInterest') : '—') . "\n";
+    $alt .= "Boot Camp of Interest: " . (v('bootCampOfInterest') !== '' ? v('bootCampOfInterest') : '—') . "\n";
     $alt .= "Preferred Time: " . v('preferredTime') . "\n";
     if (v('questionsOrGoals') !== '')
         $alt .= "Questions or Goals: " . strip_tags(v('questionsOrGoals')) . "\n";
 } elseif ($formType === 'callback-modal') {
     $alt .= "Name: " . $name . "\n";
+    $alt .= "Email: " . $email . "\n";
     $alt .= "Phone: " . $phone . "\n";
     $alt .= "Callback Time: " . v('callbackTime') . "\n";
-    $alt .= "Enquiry For: " . v('enquiryFor') . "\n";
+    $alt .= "Program Enquiry: " . (v('enquiryFor') !== '' ? v('enquiryFor') : '—') . "\n";
+    $alt .= "Boot Camp Enquiry: " . (v('bootCampOfInterest') !== '' ? v('bootCampOfInterest') : '—') . "\n";
 } elseif ($formType === 'newsletter') {
     $alt .= "Email: " . $email . "\n";
 } elseif ($formType === 'enrollment-modal') {

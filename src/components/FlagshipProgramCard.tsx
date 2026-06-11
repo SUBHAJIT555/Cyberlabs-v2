@@ -6,6 +6,8 @@ import type { FlagshipProgramCard as FlagshipProgramCardData } from "@/constants
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import GradientText from "@/components/ui/GradientText";
+import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
+import BootcampDiscountRibbon from "@/components/ui/BootcampDiscountRibbon";
 
 type FlagshipProgramCardProps = {
     program: FlagshipProgramCardData;
@@ -54,7 +56,6 @@ const FlagshipProgramCard = ({ program, image, index, onEnroll }: FlagshipProgra
     const cardRef = useRef(null);
     const navigate = useNavigate();
     const isInView = useInView(cardRef, { once: false, margin: "-50px" });
-    const formattedPrice = program.price.toLocaleString("en-IN");
     const detailsPath = `/cyber-defense-programs/${program.slug}`;
 
     const goToDetails = () => navigate(detailsPath);
@@ -96,6 +97,10 @@ const FlagshipProgramCard = ({ program, image, index, onEnroll }: FlagshipProgra
                     alt={program.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
                 />
+                <BootcampDiscountRibbon
+                    originalPrice={program.originalPrice}
+                    launchPrice={program.launchPrice}
+                />
                 <div className="absolute top-3 left-3 z-10 pointer-events-none">
                     <GradientText
                         showBorder
@@ -131,12 +136,12 @@ const FlagshipProgramCard = ({ program, image, index, onEnroll }: FlagshipProgra
                         </span>
                     </div>
 
-                    <p className="inline-flex items-center rounded-lg border border-neutral-200 bg-neutral-100 px-3 py-2 text-sm font-inter-display font-semibold text-text-primary shadow-sm mb-3 w-full text-center! justify-center!">
-                        Price:{" "}
-                        <span className="font-bold text-base sm:text-lg ml-1">
-                            ₹{formattedPrice} {program.currency}
-                        </span>
-                    </p>
+                    <BootcampPriceBlock
+                        originalPrice={program.originalPrice}
+                        launchPrice={program.launchPrice}
+                        currency={program.currency}
+                        className="mb-3"
+                    />
 
                     <p className="text-xs sm:text-sm font-inter-display text-text-primary font-medium leading-relaxed flex-1">
                         {program.description}
