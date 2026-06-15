@@ -113,6 +113,8 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
           callbackTime: data.callbackTime,
           enquiryFor: data.enquiryFor,
           bootCampOfInterest: data.bootCampOfInterest,
+          programSlug: programSlug ?? "",
+          bootcampSlug: bootcampSlug ?? "",
         }),
       });
       const result = await response.json();

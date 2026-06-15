@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $formTypeRaw = v('formType');
 $formType = strtolower($formTypeRaw);
-if (!in_array($formType, ['contact', 'request-callback', 'newsletter', 'callback-modal', 'enrollment-modal'], true)) {
+if (!in_array($formType, ['contact', 'request-callback', 'newsletter', 'callback-modal', 'enrollment-modal', 'bootcamp-enrollment'], true)) {
     if (ob_get_level() > 0) {
         ob_end_clean();
     }
@@ -184,7 +184,7 @@ if ($formType === 'newsletter') {
     if (strlen($phoneDigits) < 10) {
         sendJsonError('Please enter a valid phone number.', 422);
     }
-} elseif ($formType === 'enrollment-modal') {
+} elseif ($formType === 'enrollment-modal' || $formType === 'bootcamp-enrollment') {
     if (
         $msg = required([
             'fullName' => 'Full name',
@@ -219,7 +219,7 @@ if ($formType === 'newsletter') {
 }
 
 // --- Email validation (only when form has email) ---
-if (in_array($formType, ['newsletter', 'contact', 'request-callback', 'callback-modal', 'enrollment-modal'], true)) {
+if (in_array($formType, ['newsletter', 'contact', 'request-callback', 'callback-modal', 'enrollment-modal', 'bootcamp-enrollment'], true)) {
     $email = v('email');
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         sendJsonError('Invalid email address.', 422);
@@ -227,8 +227,8 @@ if (in_array($formType, ['newsletter', 'contact', 'request-callback', 'callback-
 }
 
 // --- Capture values (unified name/phone/email per form type) ---
-$name = in_array($formType, ['contact', 'request-callback', 'enrollment-modal'], true) ? v('fullName') : v('name');
-$phone = in_array($formType, ['contact', 'request-callback'], true) ? v('mobileNumber') : (in_array($formType, ['enrollment-modal'], true) ? v('phoneNumber') : v('phone'));
+$name = in_array($formType, ['contact', 'request-callback', 'enrollment-modal', 'bootcamp-enrollment'], true) ? v('fullName') : v('name');
+$phone = in_array($formType, ['contact', 'request-callback'], true) ? v('mobileNumber') : (in_array($formType, ['enrollment-modal', 'bootcamp-enrollment'], true) ? v('phoneNumber') : v('phone'));
 $email = v('email');
 $serverip = $_SERVER['HTTP_X_FORWARDED_FOR']
     ?? $_SERVER['HTTP_CLIENT_IP']
@@ -279,7 +279,10 @@ switch ($formType) {
         $subject = "New Callback Request – " . clean($name) . " – CYBERLABS India";
         break;
     case 'enrollment-modal':
-        $subject = "New Enrollment Request – " . clean($name) . " – CYBERLABS India";
+        $subject = "New Program Enrollment – " . clean($name) . " – CYBERLABS India";
+        break;
+    case 'bootcamp-enrollment':
+        $subject = "New Boot Camp Enrollment – " . clean($name) . " – CYBERLABS India";
         break;
     default:
         $subject = "Form Submission – CYBERLABS India";
@@ -321,6 +324,12 @@ if ($formType === 'contact' || $formType === 'request-callback') {
     $details .= '<p><strong>Preferred Callback Time:</strong> ' . clean(v('callbackTime')) . '</p>';
     $details .= '<p><strong>Program Enquiry:</strong> ' . (v('enquiryFor') !== '' ? clean(v('enquiryFor')) : '—') . '</p>';
     $details .= '<p><strong>Boot Camp Enquiry:</strong> ' . (v('bootCampOfInterest') !== '' ? clean(v('bootCampOfInterest')) : '—') . '</p>';
+    if (v('programSlug') !== '') {
+        $details .= '<p><strong>Program Slug:</strong> ' . clean(v('programSlug')) . '</p>';
+    }
+    if (v('bootcampSlug') !== '') {
+        $details .= '<p><strong>Boot Camp Slug:</strong> ' . clean(v('bootcampSlug')) . '</p>';
+    }
     $mainContent = '
     <tr>
       <td style="padding:0 24px 24px;">
@@ -342,8 +351,10 @@ if ($formType === 'contact' || $formType === 'request-callback') {
         </table>
       </td>
     </tr>';
-} elseif ($formType === 'enrollment-modal') {
+} elseif ($formType === 'enrollment-modal' || $formType === 'bootcamp-enrollment') {
+    $enrollmentLabel = $formType === 'bootcamp-enrollment' ? 'Boot Camp Enrollment Request' : 'Program Enrollment Request';
     $details = '';
+    $details .= '<p><strong>Enrollment Type:</strong> ' . ($formType === 'bootcamp-enrollment' ? 'Elite Boot Camp' : 'Flagship Program') . '</p>';
     $details .= '<p><strong>Full Name:</strong> ' . clean($name) . '</p>';
     $details .= '<p><strong>Email:</strong> ' . clean($email) . '</p>';
     $details .= '<p><strong>Phone Number:</strong> ' . clean($phone) . '</p>';
@@ -364,7 +375,7 @@ if ($formType === 'contact' || $formType === 'request-callback') {
     <tr>
       <td style="padding:0 24px 24px;">
         <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid ' . $border . ';border-radius:4px;">
-          <tr><td style="background:#f3f4f6;padding:8px 10px;font-family:Arial,Helvetica,sans-serif;font-weight:600;color:#0a2540;">Enrollment Request</td></tr>
+          <tr><td style="background:#f3f4f6;padding:8px 10px;font-family:Arial,Helvetica,sans-serif;font-weight:600;color:#0a2540;">' . $enrollmentLabel . '</td></tr>
           <tr><td style="padding:12px;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#333;">' . $details . '</td></tr>
         </table>
       </td>
@@ -523,9 +534,16 @@ if ($formType === 'contact' || $formType === 'request-callback') {
     $alt .= "Callback Time: " . v('callbackTime') . "\n";
     $alt .= "Program Enquiry: " . (v('enquiryFor') !== '' ? v('enquiryFor') : '—') . "\n";
     $alt .= "Boot Camp Enquiry: " . (v('bootCampOfInterest') !== '' ? v('bootCampOfInterest') : '—') . "\n";
+    if (v('programSlug') !== '') {
+        $alt .= "Program Slug: " . v('programSlug') . "\n";
+    }
+    if (v('bootcampSlug') !== '') {
+        $alt .= "Boot Camp Slug: " . v('bootcampSlug') . "\n";
+    }
 } elseif ($formType === 'newsletter') {
     $alt .= "Email: " . $email . "\n";
-} elseif ($formType === 'enrollment-modal') {
+} elseif ($formType === 'enrollment-modal' || $formType === 'bootcamp-enrollment') {
+    $alt .= "Enrollment Type: " . ($formType === 'bootcamp-enrollment' ? 'Elite Boot Camp' : 'Flagship Program') . "\n";
     $alt .= "Name: " . $name . "\n";
     $alt .= "Email: " . $email . "\n";
     $alt .= "Phone: " . $phone . "\n";
@@ -571,7 +589,7 @@ try {
     $mail->send();
 
     // --- Auto-reply to customer (only when form has email) ---
-    if ($email !== '' && in_array($formType, ['newsletter', 'contact', 'request-callback', 'enrollment-modal'], true)) {
+    if ($email !== '' && in_array($formType, ['newsletter', 'contact', 'request-callback', 'callback-modal', 'enrollment-modal', 'bootcamp-enrollment'], true)) {
         try {
             $mail->clearAllRecipients();
             $mail->clearAttachments();
