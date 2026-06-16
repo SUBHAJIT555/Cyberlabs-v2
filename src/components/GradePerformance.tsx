@@ -147,7 +147,7 @@ const GradePerformance = () => {
                                             }}
                                         >
                                             <img
-                                                src={comtia}
+                                                src={assetSrc(comtia)}
                                                 alt="CompTIA Authorized Partner"
                                                 className="w-full h-full object-contain"
                                             />
@@ -163,7 +163,7 @@ const GradePerformance = () => {
                                             }}
                                         >
                                             <img
-                                                src={ec}
+                                                src={assetSrc(ec)}
                                                 alt="EC-Council Training Partner"
                                                 className="w-full h-full object-contain"
                                             />
@@ -179,7 +179,7 @@ const GradePerformance = () => {
                                             }}
                                         >
                                             <img
-                                                src={isc}
+                                                src={assetSrc(isc)}
                                                 alt="ISC² Preferred Training Provider"
                                                 className="w-full h-full object-contain"
                                             />
@@ -204,7 +204,7 @@ const GradePerformance = () => {
                                 }}
                             >
                                 <img
-                                    src={certificateImage}
+                                    src={assetSrc(certificateImage)}
                                     alt="Cyberlabs Certificate of Excellence"
                                     className="w-full h-auto object-contain"
                                 />

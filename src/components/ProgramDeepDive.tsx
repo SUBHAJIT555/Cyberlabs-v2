@@ -1,5 +1,5 @@
 import { useRef, ReactNode } from "react";
-import { useParams } from "react-router";
+import { useParams } from "@/lib/react-router";
 import { motion, useInView } from "framer-motion";
 import { useCourses } from "@/hooks/useCourses";
 

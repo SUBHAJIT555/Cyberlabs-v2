@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSearchParams } from "react-router";
+import { useSearchParams } from "@/lib/react-router";
 import { useCourses } from "@/hooks/useCourses";
 import Checkout from "@/components/Checkout";
 import CheckoutForm from "@/components/CheckoutForm";

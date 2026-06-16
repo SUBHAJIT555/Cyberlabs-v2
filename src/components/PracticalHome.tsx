@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
@@ -280,7 +281,7 @@ const PracticalHome = () => {
         <motion.div variants={rightCardVariants} className="lg:sticky lg:top-24 order-1 lg:order-2 relative">
           <div className="flex items-center justify-center">
             <img
-              src={cyberDefenseTraining}
+              src={assetSrc(cyberDefenseTraining)}
               alt="Cyber defense training - programs"
               className="w-full max-w-[420px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[560px] h-auto"
             />
@@ -309,7 +310,7 @@ const PracticalHome = () => {
         <motion.div variants={leftCardVariants} className="lg:sticky lg:top-24 lg:row-span-2 order-2 lg:order-1 relative flex items-center justify-center">
           <div className="flex items-center justify-center">
             <img
-              src={whoourtraining}
+              src={assetSrc(whoourtraining)}
               alt="Who our training serves"
               className="w-full max-w-[420px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[560px] h-auto"
             />

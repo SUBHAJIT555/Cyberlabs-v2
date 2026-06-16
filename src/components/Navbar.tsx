@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Link, useLocation, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "@/lib/react-router";
 import { IoSearch } from "react-icons/io5";
 import { SearchIcon } from "lucide-react";
 import { MenuToggleIcon } from "@/components/ui/menu-toggle-icon";

@@ -1,6 +1,7 @@
+import { assetSrc } from "@/lib/utils";
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Link } from "react-router";
+import { Link } from "@/lib/react-router";
 import { shinyButtonClasses } from "@/components/ui/shiny-button";
 // import textmask from "../../assets/img/text/text-mask.webp";
 // import WrapButton from "./WrapButton";
@@ -11,10 +12,12 @@ interface CTAButton {
   variant?: "primary" | "secondary";
 }
 
+import type { StaticImageData } from "next/image";
+
 interface HeroProps {
   headline: string;
   subtext: string;
-  backgroundImage: string;
+  backgroundImage: string | StaticImageData;
   ctaButtons?: CTAButton[];
   height?: "sm" | "md" | "lg" | "full";
   showDivider?: boolean;
@@ -58,7 +61,7 @@ const Hero: React.FC<HeroProps> = ({
         style={{ y }}
       >
         <img
-          src={backgroundImage}
+          src={assetSrc(backgroundImage)}
           alt="Hero Background"
           className="w-full h-full object-cover"
         />

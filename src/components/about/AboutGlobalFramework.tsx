@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
@@ -148,7 +149,7 @@ const AboutGlobalFramework = () => {
           >
             <div className="flex items-center justify-center">
               <img
-                src={oneGlobal}
+                src={assetSrc(oneGlobal)}
                 alt="One Global Framework"
                 className="
       w-full

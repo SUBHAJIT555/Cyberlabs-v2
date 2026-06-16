@@ -3,8 +3,14 @@ import type { ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import React from "react";
 
+import type { StaticImageData } from "next/image";
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export function assetSrc(source: string | StaticImageData): string {
+  return typeof source === "string" ? source : source.src;
 }
 
 /** Parses text with **bold** markers and returns React nodes (string + <strong>) */

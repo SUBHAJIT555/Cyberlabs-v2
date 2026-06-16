@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { AnimatedHeading } from "./ui/animated-heading";
@@ -35,27 +36,27 @@ const For = () => {
 
   const targetAudiences: TargetAudience[] = [
     {
-      image: aspiringImage,
+      image: assetSrc(aspiringImage),
       title: "Aspiring cybersecurity professionals.",
       description: "Individuals starting their journey in cybersecurity, seeking structured learning and hands-on experience to build foundational skills.",
     },
     {
-      image: workingImage,
+      image: assetSrc(workingImage),
       title: "Working professionals transitioning into cyber roles.",
       description: "Experienced professionals from other fields looking to pivot into cybersecurity, needing practical training and industry-relevant skills.",
     },
     {
-      image: advancedImage,
+      image: assetSrc(advancedImage),
       title: "Advanced learners building investigative capability.",
       description: "Cybersecurity practitioners aiming to enhance their investigation and analysis skills through advanced scenarios and real-world simulations.",
     },
     {
-      image: enterpriseImage,
+      image: assetSrc(enterpriseImage),
       title: "Enterprises developing internal cybersecurity skills.",
       description: "Organizations building internal cybersecurity capabilities through team training and skill development programs.",
     },
     {
-      image: academicImage,
+      image: assetSrc(academicImage),
       title: "Academic institutions seeking industry-grade virtual labs.",
       description: "Educational institutions requiring enterprise-level virtual lab environments to provide students with practical, industry-aligned training.",
     },
@@ -111,7 +112,7 @@ const For = () => {
                 {/* Image */}
                 <div className="mb-3 sm:mb-4 shrink-0 ring ring-neutral-200 ring-offset-2 md:ring-offset-4 rounded-md">
                   <img
-                    src={audience.image}
+                    src={assetSrc(audience.image)}
                     alt={audience.title}
                     className="w-full h-auto object-cover rounded-md"
                   />

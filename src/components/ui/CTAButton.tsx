@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
-import { Link } from "react-router";
+import { Link } from "@/lib/react-router";
 import { LetterSwapPingPong } from "./LetterSwap";
 import { useState } from "react";
 

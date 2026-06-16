@@ -1,5 +1,6 @@
+import { assetSrc } from "@/lib/utils";
 import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
+import Portal from "@/components/ui/Portal";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCheckCircle } from "react-icons/fa";
 import CheckoutForm from "./CheckoutForm";
@@ -52,7 +53,8 @@ const BootcampEnrollmentModal = ({ isOpen, onClose, slug }: BootcampEnrollmentMo
         return null;
     }
 
-    return createPortal(
+    return (
+        <Portal>
         <AnimatePresence>
             {isOpen && (
                 <>
@@ -130,7 +132,7 @@ const BootcampEnrollmentModal = ({ isOpen, onClose, slug }: BootcampEnrollmentMo
                                             <div className="flex flex-col sm:flex-row gap-6 mb-6">
                                                 <div className="w-full sm:w-40 md:w-48 h-auto overflow-hidden flex items-center justify-center p-3 shrink-0 ring ring-neutral-300 rounded-xl bg-white">
                                                     <img
-                                                        src={bootcamp.image}
+                                                        src={assetSrc(bootcamp.image)}
                                                         alt={bootcamp.title}
                                                         className="w-full h-auto object-contain rounded-lg"
                                                     />
@@ -227,8 +229,8 @@ const BootcampEnrollmentModal = ({ isOpen, onClose, slug }: BootcampEnrollmentMo
                     </motion.div>
                 </>
             )}
-        </AnimatePresence>,
-        document.body,
+        </AnimatePresence>
+        </Portal>
     );
 };
 

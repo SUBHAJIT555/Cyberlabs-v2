@@ -1,9 +1,10 @@
+import { assetSrc } from "@/lib/utils";
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm, UseFormRegister } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useSearchParams } from "react-router";
+import { useSearchParams } from "@/lib/react-router";
 import type { Hero } from "@/interface/program";
 import { MAIL_API_URL } from "@/lib/api";
 import { ShinyButton } from "@/components/ui/shiny-button";
@@ -325,7 +326,7 @@ const CheckoutForm = ({
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="w-full sm:w-40 md:w-48 h-auto overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center p-3 shrink-0">
             <img
-              src={courseData.image.src}
+              src={assetSrc(courseData.image.src)}
               alt={courseData.image.alt}
               className="w-full h-auto object-contain"
             />

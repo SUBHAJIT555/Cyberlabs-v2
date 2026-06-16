@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import {
   TbBrandJavascript,
   TbBrandPython,
@@ -46,7 +47,7 @@ export function StackOrbit({ className }: { className?: string }) {
       <div className="relative w-full h-full min-w-0 min-h-0 aspect-square max-w-[320px] max-h-[320px] sm:max-w-[450px] sm:max-h-[450px] flex items-center justify-center">
         {/* Center Circle - replace with your icon when provided */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-background border-2 border-primary/20 shadow-md flex items-center justify-center shrink-0 z-10">
-          <img src={CyberIcon} alt="Cyberlabs Logo" className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
+          <img src={assetSrc(CyberIcon)} alt="Cyberlabs Logo" className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
         </div>
 
         {/* Orbits - full round, theme borders */}

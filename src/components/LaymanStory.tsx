@@ -1,5 +1,6 @@
+import { assetSrc } from "@/lib/utils";
 import { useRef } from "react";
-import { useParams } from "react-router";
+import { useParams } from "@/lib/react-router";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 
@@ -109,7 +110,7 @@ const LaymanStory = () => {
                 >
                     <div className="flex items-center justify-center">
                         <img
-                            src={laymansStoryImage}
+                            src={assetSrc(laymansStoryImage)}
                             alt="Layman's Story"
                             className="w-full max-w-[420px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[560px] h-auto"
                         />

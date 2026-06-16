@@ -1,28 +1,31 @@
-import { Outlet } from "react-router";
+"use client";
+
 import ScrollToTopButton from "../components/ScrollToTop";
 import { FloatingBottomBarProvider } from "@/contexts/FloatingBottomBarContext";
-// import MobileMenu from "../components/MobileMenu";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-// import { TextHoverEffect } from "../components/ui/text-hover-effect";
 import { useScrollRestoreDebug } from "@/hooks/useScrollRestoreDebug";
 import { useLenisHashScroll } from "../hooks/useLenisHashScroll";
 import { useLenisScrollRestoration } from "../hooks/useLenisScrollRestoration";
+import type { ReactNode } from "react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+type MainLayoutProps = {
+  children: ReactNode;
+};
+
 /**
  * MainLayout Component
- * 
+ *
  * ARCHITECTURE RULES:
  * - Lenis is the ONLY scroll authority
- * - React Router's ScrollRestoration is REMOVED (conflicts with Lenis)
  * - Hash scrolling takes priority over normal scroll restoration
  * - Order matters: hash scroll hook runs first, then scroll restoration
  */
-const MainLayout = () => {
+const MainLayout = ({ children }: MainLayoutProps) => {
   useScrollRestoreDebug("MainLayout");
 
   // Handle hash-based scrolling (e.g. /page#section)
@@ -41,7 +44,7 @@ const MainLayout = () => {
         <Navbar />
         {/* <MobileMenu /> */}
         <main className="w-full overflow-x-clip">
-          <Outlet />
+          {children}
         </main>
         {/* <TextHoverEffect text="CYBERLABS INDIA" /> */}
         <Footer />

@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
@@ -65,7 +66,7 @@ const AboutClosingPerspective = () => {
             <div className="grid md:grid-cols-3 gap-0 relative">
               <div className="relative h-64 md:h-auto min-h-[280px] overflow-hidden order-2 md:order-1">
                 <img
-                  src={enterpriseImage}
+                  src={assetSrc(enterpriseImage)}
                   alt="Enterprise"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                 />

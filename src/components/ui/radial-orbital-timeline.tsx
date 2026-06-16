@@ -1,4 +1,5 @@
 "use client";
+import { assetSrc } from "@/lib/utils";
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Link } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -172,7 +173,7 @@ export default function RadialOrbitalTimeline({
             ></div>
             <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full bg-white/90 backdrop-blur-md shadow-md border border-neutral-200  relative z-10 flex items-center justify-center overflow-hidden p-1 sm:p-1.5 md:p-2">
               <img
-                src={brandicon}
+                src={assetSrc(brandicon)}
                 alt="Cyberlabs Brand"
                 className="w-full h-full object-contain"
               />

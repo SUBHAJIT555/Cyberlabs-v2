@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "@/lib/react-router";
 import { useForm, type FieldValues } from "react-hook-form";
 import { useRef, useState, type BaseSyntheticEvent, type ReactNode } from "react";
 import {
@@ -11,7 +11,7 @@ import {
 import footerlogo from "../assets/img/logo/Cyberlabs-logo-03.svg";
 import { CONTACT } from "@/constants/contactInfo";
 import { MAIL_API_URL } from "@/lib/api";
-import { cn } from "@/lib/utils";
+import { cn, assetSrc } from "@/lib/utils";
 import ShinyText from "@/components/ui/ShinyText";
 
 const usefulLinks = [
@@ -112,7 +112,7 @@ const Footer = () => {
                     <div className="md:col-span-5 lg:col-span-4">
                         <Link to="/">
                             <img
-                                src={footerlogo}
+                                src={assetSrc(footerlogo)}
                                 alt="CYBERLABS INDIA Logo"
                                 className="h-10 w-auto"
                             />

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "@/lib/react-router";
 
 export function useScrollRestoration() {
     const location = useLocation();

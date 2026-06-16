@@ -1,4 +1,4 @@
-// import { Link } from "react-router";
+// import { Link } from "@/lib/react-router";
 import CourseCard from "../components/CourseCardCatagories1";
 // import HowPrograms from "../components/HowPrograms";
 // import Testimonials from "../components/Testimonial";

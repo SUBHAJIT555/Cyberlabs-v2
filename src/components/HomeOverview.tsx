@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
@@ -114,7 +115,7 @@ const HomeOverview = () => {
           {/* Image — left side (top on mobile). Replace src with your image when ready. */}
           <div className="order-1 md:order-1 flex justify-center md:justify-start shrink-0">
             <img
-              src={overviewImage}
+              src={assetSrc(overviewImage)}
               alt=""
               className="w-full max-w-[240px] sm:max-w-[280px] md:w-[260px] md:max-w-none lg:w-[320px] h-auto"
             />

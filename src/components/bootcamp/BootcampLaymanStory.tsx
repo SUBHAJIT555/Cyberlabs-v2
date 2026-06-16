@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { useRef } from "react";
 import { motion, useInView, type Variants } from "framer-motion";
 import { usePageDetail } from "@/hooks/useProgramDetail";
@@ -83,7 +84,7 @@ const BootcampLaymanStory = () => {
                     className="relative z-10 order-1 lg:order-2 flex items-center justify-center"
                 >
                     <img
-                        src={laymansStoryImage}
+                        src={assetSrc(laymansStoryImage)}
                         alt="Layman's explanation illustration"
                         className="w-full max-w-[420px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[560px] h-auto"
                     />

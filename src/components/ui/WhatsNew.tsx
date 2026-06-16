@@ -1,7 +1,7 @@
 import { useCourses } from "@/hooks/useCourses";
 import type { Card, Feature } from "@/interface/program";
-import { useParams } from "react-router";
-import { parseBoldText } from "@/lib/utils";
+import { useParams } from "@/lib/react-router";
+import { parseBoldText, assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
@@ -166,7 +166,7 @@ const WhatsNew = () => {
         >
           <div className="flex items-center justify-center">
             <img
-              src={buildingFutureImage}
+              src={assetSrc(buildingFutureImage)}
               alt="What's New"
               className="w-full max-w-[420px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[560px] h-auto"
             />

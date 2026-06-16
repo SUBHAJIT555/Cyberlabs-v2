@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef, type ReactNode } from "react";
@@ -408,7 +409,7 @@ const AssesmentPhilosophy = () => {
                             </div>
                         </div>
                         <div className="order-1 md:order-2 flex justify-center md:justify-end">
-                            <img src={assesmentSvg} alt="" className="w-full max-w-md h-auto" />
+                            <img src={assetSrc(assesmentSvg)} alt="" className="w-full max-w-md h-auto" />
                         </div>
                     </div>
                 </SectionBlock>
@@ -417,7 +418,7 @@ const AssesmentPhilosophy = () => {
                 <SectionBlock>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
                         <div className="order-1 md:order-1 flex justify-center md:justify-start">
-                            <img src={industryallignmentSvg} alt="" className="w-full max-w-md h-auto" />
+                            <img src={assetSrc(industryallignmentSvg)} alt="" className="w-full max-w-md h-auto" />
                         </div>
                         <div className="space-y-6 order-2 md:order-2">
                             <motion.h2
@@ -458,7 +459,7 @@ const AssesmentPhilosophy = () => {
                                             </p>
                                             <div className="p-3 sm:p-4 flex justify-center items-center min-h-[140px] sm:min-h-[160px]">
                                                 <img
-                                                    src={org.src}
+                                                    src={assetSrc(org.src)}
                                                     alt={org.alt}
                                                     className="w-full max-w-[140px] sm:max-w-[160px] h-auto object-contain"
                                                 />

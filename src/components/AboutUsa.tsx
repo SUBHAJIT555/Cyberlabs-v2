@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
@@ -111,10 +112,10 @@ const AboutUsa = () => {
             className="lg:sticky lg:top-24 order-1 lg:order-1 relative"
           >
             <div className="overflow-hidden border border-neutral-200 ring ring-neutral-300 shadow-xl">
-              {/* <div className="flex absolute text-2xl items-center justify-center -top-[5%] lg:-top-[3%] -left-10 sm:-left-18 md:-left-20 animate-float"><img className=" lg:w-65 w-40  sm:w-60" alt="" fetchPriority="high" loading="eager" src={buildYour} /><h1 className="absolute font-medium text-center leading-tight text-sm lg:text-2xl sm:text-xl flex justify-center flex-wrap -mt-7 sm:-mt-14 font-inter-display text-text-primary">Build your<span className="font-light w-full -mt-1  tracking-tight">career</span></h1></div> */}
+              {/* <div className="flex absolute text-2xl items-center justify-center -top-[5%] lg:-top-[3%] -left-10 sm:-left-18 md:-left-20 animate-float"><img className=" lg:w-65 w-40  sm:w-60" alt="" fetchPriority="high" loading="eager" src={assetSrc(buildYour)} /><h1 className="absolute font-medium text-center leading-tight text-sm lg:text-2xl sm:text-xl flex justify-center flex-wrap -mt-7 sm:-mt-14 font-inter-display text-text-primary">Build your<span className="font-light w-full -mt-1  tracking-tight">career</span></h1></div> */}
 
               <img
-                src={aboutUsaImage}
+                src={assetSrc(aboutUsaImage)}
                 alt="About CYBERLABS USA"
                 className="w-full h-auto object-cover"
               />

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation, useNavigationType } from "react-router";
+import { useLocation, useNavigationType } from "@/lib/react-router";
 
 export function useScrollRestoreDebug(tag: string) {
     const location = useLocation();

@@ -1,5 +1,5 @@
 import TermsHero from "@/components/TermsHero";
-import { Link } from "react-router";
+import { Link } from "@/lib/react-router";
 import { CONTACT } from "@/constants/contactInfo";
 
 const TermsAndCondition = () => {

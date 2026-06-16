@@ -1,8 +1,9 @@
+import { assetSrc } from "@/lib/utils";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Variants } from "framer-motion";
 
-import { Link } from "react-router";
+import { Link } from "@/lib/react-router";
 import CallbackModal from "./CallbackModal";
 import { useCourses } from "@/hooks/useCourses";
 import type { Course } from "@/interface/program";
@@ -175,7 +176,7 @@ const CourseCardCategories = () => {
                       {/* Course Thumbnail */}
                       <div className="relative h-40 sm:h-44 md:h-48 overflow-hidden">
                         <img
-                          src={course.image}
+                          src={assetSrc(course.image)}
                           alt={course.title}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                         />

@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
@@ -230,7 +231,7 @@ const WhatTruelySet = () => {
                     <div className="relative z-10 grid grid-cols-1 md:grid-cols-[auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center p-6 sm:p-8 md:p-10 lg:p-12">
                         {/* Image — left side (top on mobile) */}
                         <div className="order-1 md:order-1 flex justify-center md:justify-start shrink-0">
-                            <img src={closingSvg} alt="" className="w-full max-w-[200px] sm:max-w-[240px] md:w-[200px] md:max-w-none lg:w-[260px] h-auto" />
+                            <img src={assetSrc(closingSvg)} alt="" className="w-full max-w-[200px] sm:max-w-[240px] md:w-[200px] md:max-w-none lg:w-[260px] h-auto" />
                         </div>
                         {/* Content — right side */}
                         <div className="order-2 md:order-2 space-y-5 sm:space-y-6 text-center md:text-left">

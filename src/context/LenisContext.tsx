@@ -1,6 +1,13 @@
-import { useEffect, useRef, useState, ReactNode } from "react";
+"use client";
+
+import { createContext, useEffect, useRef, useState, type ReactNode } from "react";
 import Lenis from "lenis";
-import { LenisContext } from "./lenisContext";
+
+export interface LenisContextType {
+  lenis: Lenis | null;
+}
+
+export const LenisContext = createContext<LenisContextType>({ lenis: null });
 
 interface LenisProviderProps {
   children: ReactNode;

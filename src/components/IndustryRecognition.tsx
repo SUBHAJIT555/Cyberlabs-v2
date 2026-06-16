@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { AnimatedHeading } from "./ui/animated-heading";
@@ -81,7 +82,7 @@ const IndustryRecognition = () => {
                                    
                                         <div className="flex min-h-[140px] sm:min-h-[160px] items-center justify-center p-3 sm:p-4 w-full">
                                             <img
-                                                src={org.src}
+                                                src={assetSrc(org.src)}
                                                 alt={org.alt}
                                                 className="w-full max-w-[140px] sm:max-w-[160px] h-auto object-contain"
                                             />

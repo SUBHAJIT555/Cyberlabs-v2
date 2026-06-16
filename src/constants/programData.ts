@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import type { Card, Course } from "@/interface/program";
 import { getFlagshipProgramPricing } from "@/constants/flagshipProgramData";
 
@@ -48,9 +49,9 @@ const applyFlagshipProgramPricing = (courseList: RawCourse[]): Course[] =>
   });
 // Import images
 
-import CybercrimeDarkWebImage from "@/assets/img/ProgramImage/CybercrimeDarkWebAndFinancialIntelligenceOperations.webp";
-import PlatformIdentityAndAbuseDefenseEngineeringImage from "@/assets/img/ProgramImage/PlatformIdentityAndAbuseDefenseEngineering.webp";
-import FullStackCyberDefenseAndOffensiveSecurityImage from "@/assets/img/ProgramImage/FullStackCyberDefenseAndOffensiveSecurity.webp";
+import masterTheModernUnderworldImage from "@/assets/img/Program/MastertheModernUnderworld.webp";
+import defendDigitalPlatformsAtScaleImage from "@/assets/img/Program/DefendDigitalPlatformsatScale.webp";
+import fromFoundationsToOperationsImage from "@/assets/img/Program/FromFoundationstoOperations.webp";
 
 // icons import
 import {
@@ -86,7 +87,7 @@ const rawCourses: RawCourse[] = [
     language: "English",
     instructor: "Cybercrime Investigation Expert",
     duration: "145 Hours",
-    image: CybercrimeDarkWebImage,
+    image: assetSrc(masterTheModernUnderworldImage),
 
     // program hero section data
     hero: {
@@ -103,7 +104,7 @@ const rawCourses: RawCourse[] = [
       ],
       pricing: {
         taxNote: "",
-        image: CybercrimeDarkWebImage,
+        image: assetSrc(masterTheModernUnderworldImage),
       },
       buttons: [
         { text: "Enroll Now", variant: "primary" },
@@ -114,7 +115,7 @@ const rawCourses: RawCourse[] = [
         highlightedText: "Launch Price!",
       },
       image: {
-        src: CybercrimeDarkWebImage,
+        src: assetSrc(masterTheModernUnderworldImage),
         alt: "Cybercrime, Dark Web & Financial Intelligence Operations",
       },
       details: [
@@ -521,7 +522,7 @@ const rawCourses: RawCourse[] = [
     language: "English",
     instructor: "Platform Security Expert",
     duration: "145 Hours",
-    image: PlatformIdentityAndAbuseDefenseEngineeringImage,
+    image: assetSrc(defendDigitalPlatformsAtScaleImage),
 
     // program hero section data
     hero: {
@@ -539,7 +540,7 @@ const rawCourses: RawCourse[] = [
       ],
       pricing: {
         taxNote: "",
-        image: PlatformIdentityAndAbuseDefenseEngineeringImage,
+        image: assetSrc(defendDigitalPlatformsAtScaleImage),
       },
       buttons: [
         { text: "Enroll Now", variant: "primary" },
@@ -550,7 +551,7 @@ const rawCourses: RawCourse[] = [
         highlightedText: "Launch Price!",
       },
       image: {
-        src: PlatformIdentityAndAbuseDefenseEngineeringImage,
+        src: assetSrc(defendDigitalPlatformsAtScaleImage),
         alt: "Platform, Identity & Abuse Defense Engineering",
       },
       details: [
@@ -1056,7 +1057,7 @@ const rawCourses: RawCourse[] = [
     language: "English",
     instructor: "Cyber Operations Expert",
     duration: "450 Hours",
-    image: FullStackCyberDefenseAndOffensiveSecurityImage,
+    image: assetSrc(fromFoundationsToOperationsImage),
 
     hero: {
       title: "Cybersecurity Practitioner Program",
@@ -1073,7 +1074,7 @@ const rawCourses: RawCourse[] = [
       ],
       pricing: {
         taxNote: "",
-        image: FullStackCyberDefenseAndOffensiveSecurityImage,
+        image: assetSrc(fromFoundationsToOperationsImage),
       },
       buttons: [
         { text: "Enroll Now", variant: "primary" },
@@ -1084,7 +1085,7 @@ const rawCourses: RawCourse[] = [
         highlightedText: "Launch Price!",
       },
       image: {
-        src: FullStackCyberDefenseAndOffensiveSecurityImage,
+        src: assetSrc(fromFoundationsToOperationsImage),
         alt: "From Foundations to Operations: Cybersecurity Practitioner Program",
       },
       details: [

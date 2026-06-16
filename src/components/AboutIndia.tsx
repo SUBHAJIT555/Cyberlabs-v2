@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
@@ -197,14 +198,14 @@ const AboutIndia = () => {
 
             <div className="overflow-hidden border border-neutral-200 ring ring-neutral-300 shadow-xl">
               {/* <div className="flex absolute bottom-1/3 md:bottom-[60%] -right-10 sm:-right-18 md:-right-20 lg:-right-10  items-center justify-center flex-col animate-float">
-                <img className="lg:w-50 w-40 sm:w-60" alt="" fetchPriority="high" loading="eager" src={weUnderstandYou} />
+                <img className="lg:w-50 w-40 sm:w-60" alt="" fetchPriority="high" loading="eager" src={assetSrc(weUnderstandYou)} />
                 <h2 className="absolute flex w-10 justify-center -mt-5 leading-tight sm:-mt-10 font-inter-display text-white  font-medium text-center">
                   
                   We understand you
                 </h2>
               </div> */}
               <img
-                src={aboutIndiaImage}
+                src={assetSrc(aboutIndiaImage)}
                 alt="About CYBERLABS INDIA"
                 className="w-full h-auto object-cover"
               />

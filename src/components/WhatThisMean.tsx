@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef, type ReactNode } from "react";
@@ -575,7 +576,7 @@ const WhatThisMean = () => {
                             </p>
                         </div>
                         <div className="order-1 md:order-2 flex justify-center md:justify-end">
-                            <img src={employeemeanSvg} alt="" className="w-full max-w-md h-auto" />
+                            <img src={assetSrc(employeemeanSvg)} alt="" className="w-full max-w-md h-auto" />
                         </div>
                     </div>
                 </SectionBlock>
@@ -584,7 +585,7 @@ const WhatThisMean = () => {
                 <SectionBlock>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
                         <div className="order-1 md:order-1 flex justify-center md:justify-start">
-                            <img src={learnermeanSvg} alt="" className="w-full max-w-md h-auto" />
+                            <img src={assetSrc(learnermeanSvg)} alt="" className="w-full max-w-md h-auto" />
                         </div>
                         <div className="space-y-6 order-2 md:order-2">
                             <motion.h2
@@ -647,7 +648,7 @@ const WhatThisMean = () => {
                             </p>
                         </div>
                         <div className="order-1 md:order-2 flex justify-center md:justify-end">
-                            <img src={intrigitySvg} alt="" className="w-full max-w-md h-auto" />
+                            <img src={assetSrc(intrigitySvg)} alt="" className="w-full max-w-md h-auto" />
                         </div>
                     </div>
                 </SectionBlock>

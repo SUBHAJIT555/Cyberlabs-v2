@@ -1,5 +1,6 @@
+import { assetSrc } from "@/lib/utils";
 import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
+import Portal from "@/components/ui/Portal";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCourses } from "@/hooks/useCourses";
 import CheckoutForm from "./CheckoutForm";
@@ -65,7 +66,8 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
         return null;
     }
 
-    return createPortal(
+    return (
+        <Portal>
         <AnimatePresence>
             {isOpen && (
                 <>
@@ -161,7 +163,7 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                                                 {/* Course Image */}
                                                 <div className="w-full sm:w-40 md:w-48 h-auto overflow-hidden flex items-center justify-center p-3 shrink-0 ring ring-neutral-300 rounded-xl bg-white">
                                                     <img
-                                                        src={heroData.image.src}
+                                                        src={assetSrc(heroData.image.src)}
                                                         alt={heroData.image.alt}
                                                         className="w-full h-auto object-contain rounded-lg"
                                                     />
@@ -253,8 +255,8 @@ const EnrollmentModal = ({ isOpen, onClose, slug }: EnrollmentModalProps) => {
                     </motion.div>
                 </>
             )}
-        </AnimatePresence>,
-        document.body,
+        </AnimatePresence>
+        </Portal>
     );
 };
 

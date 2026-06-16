@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router";
+import { Link } from "@/lib/react-router";
 import CountUp from "react-countup";
 import { DottedGlowBackground } from "@/components/ui/dotted-glow-background";
 

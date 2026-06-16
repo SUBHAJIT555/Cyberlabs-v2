@@ -1,37 +1,50 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useNavigate, useParams } from "react-router";
-import ProgramHero from "@/components/ui/ProgramDeatailHero";
-import WhatsNew from "@/components/ui/WhatsNew";
-import ModuleExplained from "@/components/ui/ModuleExplained";
-import CallbackModal from "@/components/CallbackModal";
-import EnrollmentModal from "@/components/EnrollmentModal";
-import ModuleChart from "@/components/ModuleChart";
-import CareerOpertunity from "@/components/CareerOpertunity";
-import LaymanStory from "@/components/LaymanStory";
-import ProgramTeaches from "@/components/ProgramTeaches";
-import ProgramDetailHero from "@/components/ProgramDetailHero";
+import { useNavigate, useParams } from "@/lib/react-router";
+import BootcampDetailHero from "@/components/BootcampDetailHero";
+import BootcampEnrollmentModal from "@/components/BootcampEnrollmentModal";
 import BootcampModuleChart from "@/components/bootcamp/BootcampModuleChart";
 import BootcampDeepDive from "@/components/bootcamp/BootcampDeepDive";
 import BootcampProgramTeaches from "@/components/bootcamp/BootcampProgramTeaches";
 import BootcampLaymanStory from "@/components/bootcamp/BootcampLaymanStory";
 import BootcampCareerOpportunity from "@/components/bootcamp/BootcampCareerOpportunity";
 import BootcampWhatsNew from "@/components/bootcamp/BootcampWhatsNew";
+import CallbackModal from "@/components/CallbackModal";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import FloatingBackButton from "@/components/ui/FloatingBackButton";
 import Portal from "@/components/ui/Portal";
-import { useLenis } from "@/hooks/useLenis";
-import { useCourses } from "@/hooks/useCourses";
+import { useBootcamps } from "@/hooks/useBootcamps";
 import { useFloatingBottomBar } from "@/contexts/FloatingBottomBarContext";
 import { useFooterVisibility } from "@/hooks/useFooterVisibility";
+import { useLenis } from "@/hooks/useLenis";
 
-const CourseDetails = () => {
+// const dashedGridStyle = {
+//     backgroundImage: `
+//         linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+//         linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
+//     `,
+//     backgroundSize: "5px 5px",
+//     backgroundPosition: "0 0, 0 0",
+//     maskImage: `
+//         repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+//         repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+//         radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+//     `,
+//     WebkitMaskImage: `
+//         repeating-linear-gradient(to right, black 0px, black 3px, transparent 3px, transparent 8px),
+//         repeating-linear-gradient(to bottom, black 0px, black 3px, transparent 3px, transparent 8px),
+//         radial-gradient(ellipse 60% 60% at 50% 50%, #000 30%, transparent 70%)
+//     `,
+//     maskComposite: "intersect" as const,
+//     WebkitMaskComposite: "source-in" as const,
+// };
+
+const BootcampDetails = () => {
     const { slug } = useParams();
     const navigate = useNavigate();
     const lenis = useLenis();
-    const { getCourseBySlug, getCourseDetailBySlug } = useCourses();
-    const course = slug ? getCourseBySlug(slug) : undefined;
-    const hasBootcampLayout = slug ? Boolean(getCourseDetailBySlug(slug)) : false;
+    const { getBootcampBySlug } = useBootcamps();
+    const bootcamp = getBootcampBySlug(slug as string);
 
     const [showFloatingButton, setShowFloatingButton] = useState(false);
     const [showBackButton, setShowBackButton] = useState(false);
@@ -41,10 +54,10 @@ const CourseDetails = () => {
     const { setIsActive: setFloatingBottomBarActive } = useFloatingBottomBar();
 
     useEffect(() => {
-        if (slug && !course) {
-            navigate("/cyber-defense-programs#flagship-programs", { replace: true });
+        if (!bootcamp) {
+            navigate("/cyber-defense-programs#elite-bootcamps", { replace: true });
         }
-    }, [slug, course, navigate]);
+    }, [bootcamp, navigate]);
 
     useEffect(() => {
         if (!lenis) {
@@ -72,32 +85,20 @@ const CourseDetails = () => {
         return () => setFloatingBottomBarActive(false);
     }, [showFloatingButton, setFloatingBottomBarActive]);
 
-    if (!course) return null;
+    if (!bootcamp) return null;
 
     return (
         <>
+            {/* <div className="fixed inset-0 h-screen w-full z-0 bg-white pointer-events-none" style={dashedGridStyle} /> */}
+
             <div className="relative z-10">
-                {hasBootcampLayout ? (
-                    <>
-                        <ProgramDetailHero onEnroll={() => setIsEnrollmentModalOpen(true)} />
-                        <BootcampModuleChart />
-                        <BootcampDeepDive />
-                        <BootcampProgramTeaches />
-                        <BootcampLaymanStory />
-                        <BootcampCareerOpportunity />
-                        <BootcampWhatsNew />
-                    </>
-                ) : (
-                    <>
-                        <ProgramHero onEnroll={() => setIsEnrollmentModalOpen(true)} />
-                        <ModuleChart />
-                        <ModuleExplained />
-                        <ProgramTeaches />
-                        <LaymanStory />
-                        <CareerOpertunity />
-                        <WhatsNew />
-                    </>
-                )}
+                <BootcampDetailHero onEnroll={() => setIsEnrollmentModalOpen(true)} />
+                <BootcampModuleChart />
+                <BootcampDeepDive />
+                <BootcampProgramTeaches />
+                <BootcampLaymanStory />
+                <BootcampCareerOpportunity />
+                <BootcampWhatsNew />
 
                 <Portal>
                     <AnimatePresence>
@@ -139,19 +140,17 @@ const CourseDetails = () => {
                 <CallbackModal
                     isOpen={isCallbackModalOpen}
                     onClose={() => setIsCallbackModalOpen(false)}
-                    programSlug={slug}
+                    bootcampSlug={bootcamp.slug}
                 />
 
-                {slug && (
-                    <EnrollmentModal
-                        isOpen={isEnrollmentModalOpen}
-                        onClose={() => setIsEnrollmentModalOpen(false)}
-                        slug={slug}
-                    />
-                )}
+                <BootcampEnrollmentModal
+                    isOpen={isEnrollmentModalOpen}
+                    onClose={() => setIsEnrollmentModalOpen(false)}
+                    slug={bootcamp.slug}
+                />
             </div>
         </>
     );
 };
 
-export default CourseDetails;
+export default BootcampDetails;

@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { useRef } from "react";
 import { motion, useInView, type Variants } from "framer-motion";
 import { usePageDetail } from "@/hooks/useProgramDetail";
@@ -60,7 +61,7 @@ const BootcampWhatsNew = () => {
                 >
                     <div className="flex items-center justify-center">
                         <img
-                            src={buildingFutureImage}
+                            src={assetSrc(buildingFutureImage)}
                             alt="Why this program stands apart"
                             className="w-full max-w-[420px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[560px] h-auto"
                         />

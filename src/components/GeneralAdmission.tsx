@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef, type ReactNode } from "react";
@@ -127,7 +128,7 @@ const GeneralAdmission = () => {
                         </div>
                         <div className="order-1 md:order-2 flex justify-center md:justify-end">
                             <img
-                                src={generaladmission1Svg}
+                                src={assetSrc(generaladmission1Svg)}
                                 alt=""
                                 className="w-full max-w-md aspect-square object-contain rounded-lg"
                             />
@@ -140,7 +141,7 @@ const GeneralAdmission = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
                         <div className="order-1 md:order-1 flex justify-center md:justify-start">
                             <img
-                                src={generaladmission2Svg}
+                                src={assetSrc(generaladmission2Svg)}
                                 alt=""
                                 className="w-full max-w-md aspect-square object-contain rounded-lg"
                             />

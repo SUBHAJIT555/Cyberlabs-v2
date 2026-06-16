@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router";
+import { Link } from "@/lib/react-router";
 import { useMobileMenuStore } from "../store/mobileMenuStore";
 import { IoClose, IoMailOutline } from "react-icons/io5";
 import {

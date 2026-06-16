@@ -1,8 +1,9 @@
+import { assetSrc } from "@/lib/utils";
 import React, { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import { IoClose } from "react-icons/io5";
-import { createPortal } from "react-dom";
+import Portal from "@/components/ui/Portal";
 import { useCourses } from "@/hooks/useCourses";
 import { useBootcamps } from "@/hooks/useBootcamps";
 import type { Course } from "@/interface/program";
@@ -133,8 +134,9 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
     }
   };
 
-  return createPortal(
-    <AnimatePresence>
+  return (
+    <Portal>
+      <AnimatePresence>
       {isOpen && (
         <>
           {/* Backdrop */}
@@ -241,7 +243,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
                     <div className="flex gap-3">
                       <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50">
                         <img
-                          src={course.image}
+                          src={assetSrc(course.image)}
                           alt={course.title}
                           className="h-full w-full object-cover"
                         />
@@ -278,7 +280,7 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
                     <div className="flex gap-3">
                       <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-neutral-200 bg-neutral-50">
                         <img
-                          src={bootcamp.image}
+                          src={assetSrc(bootcamp.image)}
                           alt={bootcamp.title}
                           className="h-full w-full object-cover"
                         />
@@ -509,8 +511,8 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
           </motion.div>
         </>
       )}
-    </AnimatePresence>,
-    document.body
+      </AnimatePresence>
+    </Portal>
   );
 };
 

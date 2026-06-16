@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import contactClosingSvg from "@/assets/img/Learning-Enviorment/contactclosing.svg";
@@ -20,7 +21,7 @@ const HowReachUs = () => {
                     >
                         <div className="order-1 md:order-1 flex justify-center md:justify-start shrink-0">
                             <img
-                                src={contactClosingSvg}
+                                src={assetSrc(contactClosingSvg)}
                                 alt=""
                                 className="w-full max-w-[200px] sm:max-w-[260px] md:w-[220px] md:max-w-none lg:w-[280px] h-auto object-contain"
                             />

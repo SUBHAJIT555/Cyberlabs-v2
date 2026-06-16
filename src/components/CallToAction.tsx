@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "@/lib/react-router";
 import CallbackModal from "./CallbackModal";
 import { ShinyButton } from "@/components/ui/shiny-button";
 

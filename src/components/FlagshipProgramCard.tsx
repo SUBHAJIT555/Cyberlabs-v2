@@ -1,7 +1,8 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import { useRef, type MouseEvent } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
-import { useNavigate } from "react-router";
+import { useNavigate } from "@/lib/react-router";
 import type { FlagshipProgramCard as FlagshipProgramCardData } from "@/constants/flagshipProgramData";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 import { ShinyButton } from "@/components/ui/shiny-button";
@@ -93,7 +94,7 @@ const FlagshipProgramCard = ({ program, image, index, onEnroll }: FlagshipProgra
         >
             <div className="relative h-46 sm:h-50 w-full shrink-0 overflow-hidden bg-neutral-100">
                 <img
-                    src={image}
+                    src={assetSrc(image)}
                     alt={program.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.05]"
                 />

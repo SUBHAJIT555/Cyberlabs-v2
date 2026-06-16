@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView, useAnimationControls } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
@@ -138,7 +139,7 @@ const AiDriven = () => {
           {/* Logo/Icon */}
           {tech.imageUrl ? (
             <img
-              src={tech.imageUrl}
+              src={assetSrc(tech.imageUrl)}
               alt={tech.name}
               className="object-contain"
               style={{ width: iconSize, height: iconSize, minWidth: iconSize, minHeight: iconSize }}

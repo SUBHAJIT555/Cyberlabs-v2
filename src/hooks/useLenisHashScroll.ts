@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useLocation } from "react-router";
+import { useLocation } from "@/lib/react-router";
 import { useLenis } from "./useLenis";
 interface UseLenisHashScrollOptions {
   defaultOffset?: number;

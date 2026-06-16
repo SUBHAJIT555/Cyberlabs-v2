@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import React from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import type { Variants } from "framer-motion";
@@ -196,7 +197,7 @@ const HowPrograms = () => {
         <motion.div variants={imageVariants} className="relative w-3/4 mx-auto">
           <div className="relative overflow-hidden aspect-5/4 group cursor-pointer border border-neutral-300 border-dashed">
             <img
-              src={howProgramsImage}
+              src={assetSrc(howProgramsImage)}
               alt="Cybersecurity learning process and career development"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 p-2 "
             />
@@ -285,7 +286,7 @@ const HowPrograms = () => {
         <motion.div variants={imageVariants} className="mb-8 px-5">
           <div className="relative overflow-hidden  aspect-16/10 group cursor-pointer border border-neutral-300 border-dashed">
             <img
-              src={howProgramsImage}
+              src={assetSrc(howProgramsImage)}
               alt="Cybersecurity learning process and career development"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 p-2"
             />

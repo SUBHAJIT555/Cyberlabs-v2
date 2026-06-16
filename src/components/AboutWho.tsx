@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
@@ -332,7 +333,7 @@ const AboutWho = () => {
                                 {/* Image Side */}
                                 <div className="relative h-64 md:h-full min-h-[300px] overflow-hidden">
                                     <img
-                                        src={aspiringImage}
+                                        src={assetSrc(aspiringImage)}
                                         alt="Aspiring professionals"
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                     />
@@ -383,7 +384,7 @@ const AboutWho = () => {
                             {/* Background Image */}
                             <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity duration-300">
                                 <img
-                                    src={workingImage}
+                                    src={assetSrc(workingImage)}
                                     alt=""
                                     className="w-full h-full object-cover"
                                 />
@@ -431,7 +432,7 @@ const AboutWho = () => {
                                 {/* Image */}
                                 <div className="relative h-64 md:h-auto min-h-[300px] overflow-hidden order-2 md:order-1">
                                     <img
-                                        src={enterpriseImage}
+                                        src={assetSrc(enterpriseImage)}
                                         alt="Enterprise"
                                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                     />

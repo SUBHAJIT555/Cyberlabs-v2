@@ -5,7 +5,7 @@ import aspiringImage from "../../assets/img/whoThis/aspiring.webp";
 import { AnimatedHeading } from "../ui/animated-heading";
 import { AnimatedList } from "../ui/animated-list";
 import type { AnimatedListItem } from "../ui/animated-list";
-import { parseBoldText } from "@/lib/utils";
+import { parseBoldText, assetSrc } from "@/lib/utils";
 
 const bulletIcon = (
   <span className="text-primary text-sm sm:text-base mt-0.5 shrink-0">•</span>
@@ -90,7 +90,7 @@ const AboutWhoBuiltFor = () => {
                 <div className="relative h-64 md:h-full min-h-[300px] overflow-hidden">
 
                   <img
-                    src={aspiringImage}
+                    src={assetSrc(aspiringImage)}
                     alt="Aspiring professionals"
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
                   />

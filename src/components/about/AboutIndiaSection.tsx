@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
@@ -198,7 +199,7 @@ const AboutIndiaSection = () => {
 
 
               <img
-                src={cyberlabsIndiaImage}
+                src={assetSrc(cyberlabsIndiaImage)}
                 alt="About CYBERLABS INDIA"
                 className="w-full max-w-[420px] sm:max-w-[480px] md:max-w-[520px] lg:max-w-[560px] h-auto"
               />

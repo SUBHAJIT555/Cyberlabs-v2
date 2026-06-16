@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { useInViewOnce } from "../hooks/useInViewOnce.tsx";
+import { useInViewOnce } from "../hooks/useInViewOnce";
 import type { Variants } from "framer-motion";
 import { AnimatedHeading } from "./ui/animated-heading";
 import { AnimatedList } from "./ui/animated-list";

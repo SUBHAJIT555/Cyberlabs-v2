@@ -1,10 +1,11 @@
+import { assetSrc } from "@/lib/utils";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 
 import certificate from "@/assets/img/about/CyberlabsCertificate.webp";
-import { Link } from "react-router";
+import { Link } from "@/lib/react-router";
 
 import iscCertificate from "@/assets/img/CertificateTag/cyberlab_ceritificate_isc.webp";
 import ecCouncilCertificate from "@/assets/img/CertificateTag/cyberlab_ceritificate_ec-council.webp";
@@ -858,7 +859,7 @@ const LevelUp = () => {
                   <div className="p-4 transition-all duration-300 h-full relative bg-white border border-neutral-300 border-dashed rounded-md" style={{ background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white", }}>
                     <div className="relative z-20 flex items-center justify-center h-full min-h-[140px] md:min-h-[160px] gap-4">
                       <img
-                        src={cert.src}
+                        src={assetSrc(cert.src)}
                         alt={cert.alt}
                         className="w-full h-auto max-w-[140px] md:max-w-[160px] object-contain border-r pr-4 border-zinc-300 border-dashed"
                       />
@@ -930,7 +931,7 @@ const LevelUp = () => {
               variants={certificateVariants}
               className="flex justify-center lg:justify-end font-switzer"
             >
-              <img src={certificate} alt="Level Up" />
+              <img src={assetSrc(certificate)} alt="Level Up" />
             </motion.div>
           </div>
         </motion.section>

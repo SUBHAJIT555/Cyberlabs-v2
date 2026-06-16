@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation } from "@/lib/react-router";
 import { Logo } from "./index";
 import { useMobileMenuStore } from "../store/mobileMenuStore";
 import { IoMenu } from "react-icons/io5";

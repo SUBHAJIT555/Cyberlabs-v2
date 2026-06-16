@@ -1,5 +1,6 @@
+import { assetSrc } from "@/lib/utils";
 import { FaCheckCircle } from "react-icons/fa";
-// import { useNavigate, useSearchParams } from "react-router";
+// import { useNavigate, useSearchParams } from "@/lib/react-router";
 import type { Hero } from "@/interface/program";
 import { CONTACT } from "@/constants/contactInfo";
 
@@ -74,7 +75,7 @@ const Checkout = ({
                 {/* Course Image */}
                 <div className="w-full sm:w-48 md:w-56 lg:w-64 h-auto overflow-hidden shrink-0  bg-zinc-900 flex items-center justify-center p-2">
                   <img
-                    src={heroData.image.src}
+                    src={assetSrc(heroData.image.src)}
                     alt={heroData.image.alt}
                     className="w-full h-auto object-contain"
                   />

@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { AnimatedHeading } from "./ui/animated-heading";
@@ -145,7 +146,7 @@ const ElitBootcamp = () => {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
                         <img
-                            src={bootcampImage}
+                            src={assetSrc(bootcampImage)}
                             alt="CYBERLABS Elite Boot Camps"
                             className="w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[340px] h-auto mx-auto lg:mx-0"
                         />

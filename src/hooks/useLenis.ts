@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { LenisContext } from "../context/lenisContext";
+import { LenisContext } from "@/context/LenisContext";
 
 export const useLenis = () => {
   const context = useContext(LenisContext);

@@ -3,7 +3,7 @@ import type { Variants } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 import { AnimatedList } from "../ui/animated-list";
 import type { AnimatedListItem } from "../ui/animated-list";
-import { parseBoldText } from "@/lib/utils";
+import { parseBoldText, assetSrc } from "@/lib/utils";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 import howSvg from "../../assets/img/AboutPageImages/how.svg";
 import whoSvg from "../../assets/img/AboutPageImages/who.svg";
@@ -379,7 +379,7 @@ const AboutTrainsWhoClosing = () => {
               </p>
             </div>
             <div className="order-1 md:order-2 flex justify-center md:justify-end">
-              <img src={howSvg} alt="" className="w-full max-w-md h-auto" />
+              <img src={assetSrc(howSvg)} alt="" className="w-full max-w-md h-auto" />
             </div>
           </div>
         </SectionBlock>
@@ -388,7 +388,7 @@ const AboutTrainsWhoClosing = () => {
         <SectionBlock>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
             <div className="order-1 md:order-1 flex justify-center md:justify-start">
-              <img src={whoSvg} alt="" className="w-full max-w-md h-auto" />
+              <img src={assetSrc(whoSvg)} alt="" className="w-full max-w-md h-auto" />
             </div>
             <div className="space-y-6 order-2 md:order-2">
               <motion.h2
@@ -450,7 +450,7 @@ const AboutTrainsWhoClosing = () => {
               </p>
             </div>
             <div className="order-1 md:order-2 flex justify-center md:justify-end">
-              <img src={whatnotdoSvg} alt="" className="w-full max-w-md h-auto" />
+              <img src={assetSrc(whatnotdoSvg)} alt="" className="w-full max-w-md h-auto" />
             </div>
           </div>
         </SectionBlock>
@@ -460,7 +460,7 @@ const AboutTrainsWhoClosing = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
             <div className="order-1 md:order-1 flex justify-center md:justify-start">
               <img
-                src={whoCyberlabs}
+                src={assetSrc(whoCyberlabs)}
                 alt="Aspiring professionals"
                 className="w-full max-w-md h-auto object-cover rounded-lg"
               />
@@ -544,7 +544,7 @@ const AboutTrainsWhoClosing = () => {
               {/* Image — left side (top on mobile) */}
               <div className="order-2 md:order-2 flex justify-center md:justify-start shrink-0">
                 <img
-                  src={closingImage}
+                  src={assetSrc(closingImage)}
                   alt="Closing Image"
                   className="w-full max-w-[200px] sm:max-w-[240px] md:w-[200px] md:max-w-none lg:w-[260px] h-auto object-cover rounded-lg"
                 />

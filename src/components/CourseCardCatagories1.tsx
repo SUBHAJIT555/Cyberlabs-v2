@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import CallbackModal from "./CallbackModal";
@@ -190,7 +191,7 @@ const CourseCardCategories1 = () => {
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
                         <img
-                            src={flagshipImage}
+                            src={assetSrc(flagshipImage)}
                             alt="CYBERLABS Flagship Programs"
                             className="w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[340px] h-auto mx-auto lg:mx-0"
                         />

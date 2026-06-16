@@ -1,8 +1,9 @@
+import { assetSrc } from "@/lib/utils";
 import { useState, useEffect, type ReactElement } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
-import { createPortal } from "react-dom";
+import Portal from "@/components/ui/Portal";
 import { IoClose } from "react-icons/io5";
 import { useLenis } from "../hooks/useLenis";
 // import { Parallax } from "react-parallax";
@@ -77,7 +78,7 @@ const TeamMemberCard = ({
             {/* Image - fixed aspect so all cards align */}
             <div className="w-full aspect-3/4 overflow-hidden shrink-0">
                 <img
-                    src={member.src}
+                    src={assetSrc(member.src)}
                     alt={member.alt}
                     className="w-full h-full object-cover"
                 />
@@ -104,7 +105,7 @@ const TeamMemberCard = ({
 // Team member data
 const teamMembers: TeamMember[] = [
     {
-        src: guyKlisman,
+        src: assetSrc(guyKlisman),
         alt: "Guy Klisman",
         name: "Guy Klisman",
         designation: "Founder & Chief Executive Officer , CYBERLABS",
@@ -118,7 +119,7 @@ In the civilian domain, Guy has spearheaded multiple cyber and technology ventur
 Under his leadership, CYBERLABS has trained and certified hundreds of cyber professionals who have integrated into the international cybersecurity industry, working in collaboration with top academic institutions in the United States and globally.`,
     },
     {
-        src: ramiSimanTov,
+        src: assetSrc(ramiSimanTov),
         alt: "Rami Siman-Tov",
         name: "Rami Siman-Tov",
         designation: "Co-Founder & Chief Operating Officer , CYBERLABS",
@@ -131,7 +132,7 @@ Before founding CYBERLABS, Rami:
 At CYBERLABS, Rami is responsible for global operations, execution quality, and learner-to-professional transformation, ensuring programs meet real industry and enterprise readiness standards, not academic checklists.`,
     },
     {
-        src: shmulikYehezkel,
+        src: assetSrc(shmulikYehezkel),
         alt: "Shmulik Yehezkel",
         name: "Shmulik Yehezkel",
         designation: "Advisory Board , National Cyber Defense & Strategy",
@@ -144,7 +145,7 @@ He has served in key roles within the Prime Minister's Office, including:
 At CYBERLABS, Shmulik chairs the committee responsible for approving instructors, certifying training quality, and enforcing international-level standards, ensuring Israeli-grade rigor across all programs.`,
     },
     {
-        src: adamGarfinkel,
+        src: assetSrc(adamGarfinkel),
         alt: "Adam Garfinkel",
         name: "Adam Garfinkel",
         designation: "Lead Instructor , Cybersecurity, Cloud & Infrastructure",
@@ -158,7 +159,7 @@ His background spans:
 Adam is known for bridging advanced technology with human capability, translating complex systems into operational understanding, not just technical configuration.`,
     },
     {
-        src: lucienFransman,
+        src: assetSrc(lucienFransman),
         alt: "Lucien Fransman",
         name: "Lucien Fransman",
         designation: "Head of Content & Lead Instructor , Asia Region",
@@ -173,7 +174,7 @@ Key highlights include:
 Lucien currently serves as Virtual CISO for an Israeli cybersecurity startup and is a member of the SANS Institute Advisory Board, bringing real operational depth into CYBERLABS curricula.`,
     },
     {
-        src: najeebIbrahim,
+        src: assetSrc(najeebIbrahim),
         alt: "Najeeb Ibrahim",
         name: "Najeeb Ibrahim",
         designation: "Chief Information Security Officer & Senior Instructor",
@@ -378,8 +379,8 @@ const CoreFaculty = () => {
             </div>
 
             {/* Team Member Modal */}
-            {selectedMember &&
-                createPortal(
+            {selectedMember && (
+                <Portal>
                     <AnimatePresence>
                         {isModalOpen && (
                             <>
@@ -472,7 +473,7 @@ const CoreFaculty = () => {
                                                             <div className="sticky top-8">
                                                                 <div className="border border-neutral-200 ring ring-neutral-300 ring-offset-3 md:ring-offset-6 bg-white  rounded-xl shadow-lg">
                                                                     <img
-                                                                        src={selectedMember.src}
+                                                                        src={assetSrc(selectedMember.src)}
                                                                         alt={selectedMember.alt}
                                                                         className="w-full h-auto object-cover rounded-xl"
                                                                     />
@@ -564,9 +565,9 @@ const CoreFaculty = () => {
                                 </motion.div>
                             </>
                         )}
-                    </AnimatePresence>,
-                    document.body
-                )}
+                    </AnimatePresence>
+                </Portal>
+            )}
         </section>
     );
 };

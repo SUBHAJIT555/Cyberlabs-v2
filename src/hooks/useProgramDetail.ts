@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useParams } from "@/lib/react-router";
 import { useBootcamps } from "@/hooks/useBootcamps";
 import { useCourses } from "@/hooks/useCourses";
 import type { BootcampDetail } from "@/interface/bootcampDetail";

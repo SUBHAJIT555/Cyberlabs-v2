@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef, type ReactNode } from "react";
@@ -866,7 +867,7 @@ const EnterpriseLab = () => {
               </p>
             </div>
             <div className="order-1 md:order-2 flex justify-center md:justify-end">
-              <img src={enterpriseSvg} alt="" className="w-full max-w-md h-auto" />
+              <img src={assetSrc(enterpriseSvg)} alt="" className="w-full max-w-md h-auto" />
             </div>
           </div>
         </SectionBlock>
@@ -950,7 +951,7 @@ const EnterpriseLab = () => {
               </p>
             </div>
             <div className="order-1 md:order-2 flex justify-center md:justify-end">
-              <img src={howpracticalSvg} alt="" className="w-full max-w-md h-auto" />
+              <img src={assetSrc(howpracticalSvg)} alt="" className="w-full max-w-md h-auto" />
             </div>
           </div>
         </SectionBlock>
@@ -1032,7 +1033,7 @@ const EnterpriseLab = () => {
               </p>
             </div>
             <div className="order-1 md:order-2 flex justify-center md:justify-end">
-              <img src={assesmentevaluationSvg} alt="" className="w-full max-w-md h-auto" />
+              <img src={assetSrc(assesmentevaluationSvg)} alt="" className="w-full max-w-md h-auto" />
             </div>
           </div>
         </SectionBlock>
@@ -1098,7 +1099,7 @@ const EnterpriseLab = () => {
               </p>
             </div>
             <div className="order-1 md:order-2 flex justify-center md:justify-end">
-              <img src={roadmapSvg} alt="" className="w-full max-w-md h-auto" />
+              <img src={assetSrc(roadmapSvg)} alt="" className="w-full max-w-md h-auto" />
             </div>
           </div>
         </SectionBlock>

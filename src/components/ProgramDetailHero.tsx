@@ -1,5 +1,6 @@
+import { assetSrc } from "@/lib/utils";
 import { motion } from "framer-motion";
-import { useParams } from "react-router";
+import { useParams } from "@/lib/react-router";
 import { useCourses } from "@/hooks/useCourses";
 import { usePageDetail } from "@/hooks/useProgramDetail";
 import { ShinyButton } from "@/components/ui/shiny-button";
@@ -128,17 +129,19 @@ const ProgramDetailHero = ({ onEnroll }: ProgramDetailHeroProps) => {
                     <div className="relative mx-auto w-full max-w-md lg:max-w-none">
                         <div className="relative overflow-hidden rounded-xl border border-neutral-200 bg-neutral-100 shadow-sm aspect-4/3">
                             <img
-                                src={course.image}
+                                src={assetSrc(course.image)}
                                 alt={course.title}
                                 className="absolute inset-0 h-full w-full object-cover"
                             />
-                            <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/55 via-black/20 to-transparent px-4 py-4 sm:px-5 sm:py-5">
-                                <p className="font-inter-display text-xs font-semibold uppercase tracking-widest text-white/80">
-                                    Flagship Program
-                                </p>
-                                <p className="mt-1 line-clamp-2 font-inter-display text-sm font-semibold leading-snug text-white sm:text-base">
-                                    {course.title}
-                                </p>
+                            <div className="absolute inset-x-0 bottom-0 px-4 py-4 sm:px-5 sm:py-5">
+                                <div className="rounded-lg bg-black/10 px-4 py-3 backdrop-blur-sm sm:px-5 sm:py-4">
+                                    <p className="font-inter-display text-xs font-semibold uppercase tracking-widest text-white/80">
+                                        Flagship Program
+                                    </p>
+                                    <p className="mt-1 line-clamp-2 font-inter-display text-sm font-semibold leading-snug text-white sm:text-base">
+                                        {course.title}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <div className="relative mt-3 overflow-hidden rounded-lg border border-neutral-200 border-dashed bg-white shadow-sm">

@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import React, { useEffect, useRef } from "react";
 import { FiArrowUpRight } from "react-icons/fi";
 
@@ -10,7 +11,7 @@ import scenarioBasedMissionsImage from "../assets/img/Platform/SCENARIO-BASEDMIS
 import mitreAttAckAlignedLearningImage from "../assets/img/Platform/MITREATTACKALIGNEDLEARNING.webp";
 import aiPoweredScoringPerformanceFeedbackImage from "../assets/img/Platform/AI-POWEREDSCORING&PERFORMANCEFEEDBACK.webp";
 import gamifiedProgressionLeaderboardsImage from "../assets/img/Platform/GAMIFIEDPROGRESSION&LEADERBOARDS.webp";
-import { Link } from "react-router";
+import { Link } from "@/lib/react-router";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -306,7 +307,7 @@ const learningTracks: LearningTrack[] = [
     icon: AnimatedTopologyIcon,
     description:
       "Architecture, assets, and trust assumptions",
-    image: realAttackEnvironmentsImage,
+    image: assetSrc(realAttackEnvironmentsImage),
   },
   {
     id: 2,
@@ -314,7 +315,7 @@ const learningTracks: LearningTrack[] = [
     icon: AnimatedTerminalIcon,
     description:
       "Hands-on labs, guided exercises, and simulations",
-    image: scenarioBasedMissionsImage,
+    image: assetSrc(scenarioBasedMissionsImage),
   },
   {
     id: 3,
@@ -322,7 +323,7 @@ const learningTracks: LearningTrack[] = [
     icon: AnimatedAnalyzeIcon,
     description:
       "Logs, behavior, evidence, and indicators",
-    image: mitreAttAckAlignedLearningImage,
+    image: assetSrc(mitreAttAckAlignedLearningImage),
   },
   {
     id: 4,
@@ -330,7 +331,7 @@ const learningTracks: LearningTrack[] = [
     icon: AnimatedShieldCheckIcon,
     description:
       "Detection logic, mitigation steps, and remediation",
-    image: aiPoweredScoringPerformanceFeedbackImage,
+    image: assetSrc(aiPoweredScoringPerformanceFeedbackImage),
   },
   {
     id: 5,
@@ -338,7 +339,7 @@ const learningTracks: LearningTrack[] = [
     icon: AnimatedUserCodeIcon,
     description:
       "Independent practice to build confidence and mastery",
-    image: gamifiedProgressionLeaderboardsImage,
+    image: assetSrc(gamifiedProgressionLeaderboardsImage),
   },
 ];
 
@@ -517,7 +518,7 @@ const ProgramsCard: React.FC = () => {
                         <div className="flex-1 flex items-center justify-center md:h-full md:p-6 lg:p-8">
                           <div className="relative w-full h-40 sm:h-44 md:h-full overflow-hidden">
                             <img
-                              src={track.image}
+                              src={assetSrc(track.image)}
                               alt={track.title}
                               className="w-full h-full object-cover transform transition-transform duration-700 "
                             />

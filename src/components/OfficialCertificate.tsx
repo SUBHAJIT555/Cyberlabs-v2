@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef, type ReactNode } from "react";
@@ -109,7 +110,7 @@ const OfficialCertificate = () => {
               </div>
             </div>
             <div className="order-1 md:order-2 flex justify-center md:justify-end">
-              <img src={officialCertSvg} alt="" className="w-full max-w-md h-auto" />
+              <img src={assetSrc(officialCertSvg)} alt="" className="w-full max-w-md h-auto" />
             </div>
           </div>
         </SectionBlock>
@@ -169,7 +170,7 @@ const OfficialCertificate = () => {
               </div>
             </div>
             <div className="order-1 md:order-2 flex justify-center md:justify-end">
-              <img src={performanceTranscriptSvg} alt="" className="w-full max-w-md h-auto" />
+              <img src={assetSrc(performanceTranscriptSvg)} alt="" className="w-full max-w-md h-auto" />
             </div>
           </div>
         </SectionBlock>

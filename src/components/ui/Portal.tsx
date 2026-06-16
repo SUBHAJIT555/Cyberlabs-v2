@@ -1,12 +1,21 @@
+"use client";
+
 import { createPortal } from "react-dom";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 type PortalProps = {
     children: ReactNode;
 };
 
 const Portal = ({ children }: PortalProps) => {
-    if (typeof document === "undefined") return null;
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    if (!mounted) return null;
+
     return createPortal(children, document.body);
 };
 

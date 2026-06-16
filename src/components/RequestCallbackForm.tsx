@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -158,7 +159,7 @@ const RequestCallbackForm = () => {
                     >
                         <div className="flex justify-center p-4 sm:p-6 md:p-8">
                             <img
-                                src={mailSvg}
+                                src={assetSrc(mailSvg)}
                                 alt=""
                                 className="w-full max-w-sm aspect-square object-contain"
                             />

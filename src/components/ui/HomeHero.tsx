@@ -3,9 +3,9 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { parseBoldText } from "@/lib/utils";
 import { ShinyButton } from "@/components/ui/shiny-button";
-import { useNavigate } from "react-router";
+import { useNavigate } from "@/lib/react-router";
 // import backgroundImage from "../../assets/img/backgrounds/bg.webp";
-import backgroundVideo from "../../assets/img/Hero_vid_02.webm";
+const backgroundVideo = "/videos/Hero_vid_02.webm";
 
 // Animated SVG: shield-code (Israeli Cyber Defense DNA)
 const AnimatedShieldIcon = ({ isInView }: { isInView: boolean }) => (

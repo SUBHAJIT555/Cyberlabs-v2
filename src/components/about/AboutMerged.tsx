@@ -3,7 +3,7 @@ import type { Variants } from "framer-motion";
 import { useRef, type ReactNode } from "react";
 import { AnimatedList } from "../ui/animated-list";
 import type { AnimatedListItem } from "../ui/animated-list";
-import { parseBoldText } from "@/lib/utils";
+import { parseBoldText, assetSrc } from "@/lib/utils";
 import whatcyberlabsSvg from "../../assets/img/AboutPageImages/whatcyberlabs.svg";
 import foundationSvg from "../../assets/img/AboutPageImages/foundation.svg";
 import whySvg from "../../assets/img/AboutPageImages/why.svg";
@@ -197,7 +197,7 @@ const AboutMerged = () => {
             </div>
             <div className="order-1 md:order-2 flex justify-center md:justify-end">
               <img
-                src={whatcyberlabsSvg}
+                src={assetSrc(whatcyberlabsSvg)}
                 alt=""
                 className="w-full max-w-md h-auto"
               />
@@ -210,7 +210,7 @@ const AboutMerged = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="order-1 md:order-1 flex justify-center md:justify-start">
               <img
-                src={foundationSvg}
+                src={assetSrc(foundationSvg)}
                 alt=""
                 className="w-full max-w-md h-auto"
               />
@@ -296,7 +296,7 @@ const AboutMerged = () => {
             </div>
             <div className="order-1 md:order-2 flex justify-center md:justify-end">
               <img
-                src={whySvg}
+                src={assetSrc(whySvg)}
                 alt=""
                 className="w-full max-w-md h-auto"
               />

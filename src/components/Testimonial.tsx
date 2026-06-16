@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PiTrophyDuotone } from "react-icons/pi";
@@ -208,7 +209,7 @@ const Testimonial = () => {
                         {/* Image and text */}
                         <div className="flex flex-col items-center gap-6">
                           <img
-                            src={t.details.image}
+                            src={assetSrc(t.details.image)}
                             alt={t.reviewer}
                             className="w-28 h-28 rounded-lg object-cover mb-2 border border-text-primary/20"
                           />

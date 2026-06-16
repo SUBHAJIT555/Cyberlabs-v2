@@ -1,11 +1,12 @@
 import type { Bootcamp } from "@/interface/bootcamp";
+import { assetSrc } from "@/lib/utils";
 
-import cybercrimeImage from "@/assets/img/ProgramImage/CybercrimeDarkWebAndFinancialIntelligenceOperations.webp";
-import fullStackImage from "@/assets/img/ProgramImage/FullStackCyberDefenseAndOffensiveSecurity.webp";
-import platformImage from "@/assets/img/ProgramImage/PlatformIdentityAndAbuseDefenseEngineering.webp";
-import cyberDefenseTraining from "@/assets/img/HomePageImages/cybredefensetraining.svg";
-import buildingFutureImage from "@/assets/img/ProgramPageImage/buildingfuture.svg";
-import whoOurTraining from "@/assets/img/HomePageImages/whoourtraining.svg";
+import darkWebImage from "@/assets/img/Bootcamp/DarkWebIntelligence&CovertCyberInvestigations.webp";
+import threatHuntingImage from "@/assets/img/Bootcamp/AdvancedThreatHunting&AdversaryDetection.webp";
+import detectionEngineeringImage from "@/assets/img/Bootcamp/DetectionEngineering&AdversaryAnalytics.webp";
+import aiSecurityImage from "@/assets/img/Bootcamp/AISecurity&AdversarialAIOperations.webp";
+import aiSocImage from "@/assets/img/Bootcamp/AI-PoweredSecurityOperationsCenter(SOC).webp";
+import digitalIntelligenceImage from "@/assets/img/Bootcamp/DigitalIntelligenceCollection&Analysis.webp";
 
 export const bootcamps: Bootcamp[] = [
     {
@@ -20,7 +21,7 @@ export const bootcamps: Bootcamp[] = [
         currency: "INR",
         description:
             "Expand your expertise into one of cybersecurity's fastest-growing domains. Develop practical skills in Threat Intelligence, Cyber Investigations, Cryptocurrency Tracing, and Threat Actor Analysis that support career progression into specialized intelligence and investigative roles.",
-        image: cybercrimeImage,
+        image: assetSrc(darkWebImage),
     },
     {
         id: 2,
@@ -34,7 +35,7 @@ export const bootcamps: Bootcamp[] = [
         currency: "INR",
         description:
             "Advance your cybersecurity career by developing the proactive threat hunting skills increasingly sought by employers worldwide. Learn how to identify hidden threats, investigate suspicious activity, and strengthen your value as a modern security professional.",
-        image: fullStackImage,
+        image: assetSrc(threatHuntingImage),
     },
     {
         id: 3,
@@ -48,7 +49,7 @@ export const bootcamps: Bootcamp[] = [
         currency: "INR",
         description:
             "Position yourself for advanced SOC, Detection Engineering, and Cyber Defense roles by learning how modern organizations identify and analyze adversary activity. Develop practical skills that help you move beyond monitoring and contribute to building stronger security operations.",
-        image: platformImage,
+        image: assetSrc(detectionEngineeringImage),
     },
     {
         id: 4,
@@ -62,7 +63,7 @@ export const bootcamps: Bootcamp[] = [
         currency: "INR",
         description:
             "Prepare for the next evolution of cybersecurity. As organizations rapidly adopt Artificial Intelligence, professionals with AI Security and AI Red Teaming capabilities will be among the industry's most sought-after specialists and command premium career opportunities.",
-        image: cyberDefenseTraining,
+        image: assetSrc(aiSecurityImage),
     },
     {
         id: 5,
@@ -78,7 +79,7 @@ export const bootcamps: Bootcamp[] = [
         launchNote: "Phase 2 Program – Launch Date to Be Announced",
         description:
             "Stay ahead of the future of cyber defense by learning how Artificial Intelligence is transforming modern Security Operations Centers. Develop skills that will help you remain relevant, valuable, and future-ready as SOC environments become increasingly automated and intelligence-driven.",
-        image: buildingFutureImage,
+        image: assetSrc(aiSocImage),
     },
     {
         id: 6,
@@ -94,6 +95,6 @@ export const bootcamps: Bootcamp[] = [
         launchNote: "Phase 2 Program – Launch Date to Be Announced",
         description:
             "Enhance your investigative, analytical, and intelligence-gathering capabilities through structured intelligence collection and analysis. Develop highly transferable skills valued across Cybersecurity, Threat Intelligence, Fraud Investigations, Risk Management, and Corporate Intelligence functions.",
-        image: whoOurTraining,
+        image: assetSrc(digitalIntelligenceImage),
     },
 ];

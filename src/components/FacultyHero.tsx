@@ -1,8 +1,9 @@
 import { motion, useInView } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useRef } from "react";
-import { useInViewOnce } from "../hooks/useInViewOnce.tsx";
+import { useInViewOnce } from "../hooks/useInViewOnce";
 import { parseBoldText } from "@/lib/utils";
+import HeroLineBackground from "@/components/ui/HeroLineBackground";
 
 const FacultyHero = () => {
     const { ref, visible } = useInViewOnce();
@@ -203,54 +204,7 @@ const FacultyHero = () => {
             ref={ref}
             className="relative min-h-screen w-full overflow-x-hidden overflow-y-auto bg-white"
         >
-            {/* Dashed grid background (fade at top) - same as AboutHero */}
-            <div
-                className="absolute inset-0 z-0 bg-white pointer-events-none"
-                style={{
-                    backgroundImage: `
-            linear-gradient(to right, #e2e8f0 1px, transparent 1px),
-            linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)
-          `,
-                    backgroundSize: "1px 1px",
-                    backgroundPosition: "0 0, 0 0",
-                    maskImage: `
-            repeating-linear-gradient(
-              to right,
-              black 0px,
-              black 3px,
-              transparent 3px,
-              transparent 8px
-            ),
-            repeating-linear-gradient(
-              to bottom,
-              black 0px,
-              black 3px,
-              transparent 3px,
-              transparent 8px
-            ),
-            radial-gradient(ellipse 80% 100% at 50% 0%, #000 35%, transparent 75%)
-          `,
-                    WebkitMaskImage: `
-            repeating-linear-gradient(
-              to right,
-              black 0px,
-              black 3px,
-              transparent 3px,
-              transparent 8px
-            ),
-            repeating-linear-gradient(
-              to bottom,
-              black 0px,
-              black 3px,
-              transparent 3px,
-              transparent 8px
-            ),
-            radial-gradient(ellipse 80% 100% at 50% 0%, #000 35%, transparent 75%)
-          `,
-                    maskComposite: "intersect",
-                    WebkitMaskComposite: "source-in",
-                }}
-            />
+            <HeroLineBackground />
 
             {/* Content */}
             {/*  py-8 sm:py-12 md:py-8 lg:py-10 */}

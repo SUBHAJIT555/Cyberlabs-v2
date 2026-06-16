@@ -1,3 +1,4 @@
+import { assetSrc } from "@/lib/utils";
 import { useState, useEffect, type ReactElement } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import {
@@ -7,7 +8,7 @@ import {
   Pagination,
 } from "swiper/modules";
 import { motion, AnimatePresence } from "framer-motion";
-import { createPortal } from "react-dom";
+import Portal from "@/components/ui/Portal";
 import { IoClose } from "react-icons/io5";
 import { useLenis } from "../hooks/useLenis";
 
@@ -32,7 +33,7 @@ interface TeamMember {
 // Team member data
 const teamMembers: TeamMember[] = [
   {
-    src: guyKlisman,
+    src: assetSrc(guyKlisman),
     alt: "Guy Klisman",
     name: "Guy Klisman",
     designation: "Founder & CEO , CYBERLABS",
@@ -45,7 +46,7 @@ A former senior commander in Israel's security establishment, he has:\n
 As Founder and CEO of CYBERLABS, Guy has built one of the world's most realistic cyber training ecosystems, CYBERLAB’ AI-driven cyber-range platforms and simulation-based training centers. Under his leadership, CYBERLABS has trained and certified hundreds of cyber professionals who now operate across the global cybersecurity industry, in collaboration with leading academic institutions in the United States and internationally.`,
   },
   {
-    src: ramiSimanTov,
+    src: assetSrc(ramiSimanTov),
     alt: "Rami Siman-Tov",
     name: "Rami Siman-Tov",
     designation: "Co-Founder & COO , CYBERLABS",
@@ -65,7 +66,7 @@ At CYBERLABS, he oversees:\n
 His experience ensures that CYBERLABS INDIA operates at global execution standards, not local training norms.`,
   },
   {
-    src: shmulikYehezkel,
+    src: assetSrc(shmulikYehezkel),
     alt: "Shmulik Yehezkel",
     name: "Shmulik Yehezkel",
     designation: "Advisory Board , National Cyber Defense & Strategy",
@@ -79,7 +80,7 @@ At CYBERLABS, he leads the instructor approval and certification framework, ensu
 His presence ensures CYBERLABStraining remains strategic, disciplined, and nationally relevant.`,
   },
   {
-    src: adamGarfinkel,
+    src: assetSrc(adamGarfinkel),
     alt: "Adam Garfinkel",
     name: "Adam Garfinkel",
     designation: "Lead Instructor , Cybersecurity & Cloud Systems",
@@ -93,7 +94,7 @@ His experience spans:\n
 Adam bridges technical depth with instructional excellence, ensuring students understand not just how systems work - but how they fail and how they are attacked.`,
   },
   {
-    src: lucienFransman,
+    src: assetSrc(lucienFransman),
     alt: "Lucien Fransman",
     name: "Lucien Fransman",
     designation: "Head of Content & Lead Instructor , Asia",
@@ -112,7 +113,7 @@ Lucien has built and operated SOCs, led forensic investigations for internationa
 At CYBERLABS, he designs and delivers advanced, investigation-driven training, ensuring students are prepared for real SOC and incident response roles.`,
   },
   {
-    src: najeebIbrahim,
+    src: assetSrc(najeebIbrahim),
     alt: "Najeeb Ibrahim",
     name: "Najeeb Ibrahim",
     designation: "CYBERLABS CISO, Senior Security Leader & Instructor",
@@ -299,7 +300,7 @@ const Team = () => {
                         style={{ background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white", }}
                       >
                         <img
-                          src={member.src}
+                          src={assetSrc(member.src)}
                           width={500}
                           height={500}
                           className="w-full  object-cover rounded"
@@ -324,7 +325,7 @@ const Team = () => {
                         style={{ background: "repeating-linear-gradient(135deg, #f9fafb 0px, #f9fafb 1px, transparent 1px, transparent 4px), white" }}
                       >
                         <img
-                          src={member.src}
+                          src={assetSrc(member.src)}
                           width={200}
                           height={200}
                           className="w-full  object-cover rounded"
@@ -409,8 +410,8 @@ const Team = () => {
       </section>
 
       {/* Team Member Modal */}
-      {selectedMember &&
-        createPortal(
+      {selectedMember && (
+        <Portal>
           <AnimatePresence>
             {isModalOpen && (
               <>
@@ -503,7 +504,7 @@ const Team = () => {
                               <div className="sticky top-8">
                                 <div className="border border-neutral-300 p-3 bg-white border-dashed rounded-md">
                                   <img
-                                    src={selectedMember.src}
+                                    src={assetSrc(selectedMember.src)}
                                     alt={selectedMember.alt}
                                     className="w-full h-auto object-cover rounded"
                                   />
@@ -594,9 +595,9 @@ const Team = () => {
                 </motion.div>
               </>
             )}
-          </AnimatePresence>,
-          document.body
-        )}
+          </AnimatePresence>
+        </Portal>
+      )}
     </>
   );
 };
