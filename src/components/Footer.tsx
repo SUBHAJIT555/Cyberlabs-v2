@@ -1,6 +1,6 @@
 import { Link } from "@/lib/react-router";
 import { useForm, type FieldValues } from "react-hook-form";
-import { useRef, useState, type BaseSyntheticEvent, type ReactNode } from "react";
+import { useRef, type BaseSyntheticEvent, type ReactNode } from "react";
 import {
     FaFacebookF,
     FaHeart,
@@ -9,10 +9,14 @@ import {
     FaWhatsapp,
 } from "react-icons/fa";
 import footerlogo from "../assets/img/logo/Cyberlabs-logo-03.svg";
-import { CONTACT } from "@/constants/contactInfo";
-import { MAIL_API_URL } from "@/lib/api";
 import { cn, assetSrc } from "@/lib/utils";
 import ShinyText from "@/components/ui/ShinyText";
+import { FormSuccessPopup } from "@/components/ui/FormSuccessPopup";
+import { FormErrorPopup } from "@/components/ui/FormErrorPopup";
+import { useFormSubmitFeedback } from "@/hooks/useFormSubmitFeedback";
+import { CONTACT } from "@/constants/contactInfo";
+import { FORM_FEEDBACK_COPY } from "@/constants/formFeedbackCopy";
+import { emailValidationRules } from "@/lib/formValidation";
 
 const usefulLinks = [
     { label: "CYBERLABS Home", to: "/" },
@@ -57,7 +61,15 @@ const inputClassName =
     "w-full rounded-xl border border-dashed border-zinc-200 bg-zinc-50/60 px-3.5 py-2.5 font-inter-display text-sm text-zinc-900 outline-none transition placeholder:text-zinc-400 focus:border-zinc-400 focus:bg-white focus:ring-2 focus:ring-zinc-200/80";
 
 const Footer = () => {
-    const [message, setMessage] = useState<string>("");
+    const {
+        showSuccessPopup,
+        setShowSuccessPopup,
+        showErrorPopup,
+        setShowErrorPopup,
+        errorMessage,
+        successMessage,
+        submitForm,
+    } = useFormSubmitFeedback();
     const formRef = useRef<HTMLFormElement>(null);
 
     const {
@@ -71,26 +83,16 @@ const Footer = () => {
 
     const onSubmit = async (data: FieldValues) => {
         try {
-            const response = await fetch(MAIL_API_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
+            await submitForm(
+                {
                     formType: "newsletter",
                     email: data.email,
-                }),
-            });
-
-            const result = await response.json();
-            if (!response.ok) {
-                throw new Error(result?.error ?? "Subscription failed");
-            }
-            setMessage(result.message ?? "Subscribed successfully.");
-            setTimeout(() => setMessage(""), 3000);
-            reset();
-        } catch (error) {
-            setMessage(
-                error instanceof Error ? error.message : "Something went wrong.",
+                },
+                { successMessage: FORM_FEEDBACK_COPY.newsletter.successMessage },
             );
+            reset();
+        } catch {
+            // Error popup is handled by useFormSubmitFeedback.
         }
     };
 
@@ -104,7 +106,6 @@ const Footer = () => {
                     register={register}
                     handleSubmit={handleSubmit(onSubmit)}
                     isSubmitting={isSubmitting}
-                    message={message}
                     emailError={errors.email?.message}
                 />
 
@@ -193,6 +194,20 @@ const Footer = () => {
                     </p>
                 </div>
             </div>
+
+            <FormSuccessPopup
+                open={showSuccessPopup}
+                onClose={() => setShowSuccessPopup(false)}
+                title={FORM_FEEDBACK_COPY.newsletter.successTitle}
+                message={successMessage}
+            />
+
+            <FormErrorPopup
+                open={showErrorPopup}
+                onClose={() => setShowErrorPopup(false)}
+                title={FORM_FEEDBACK_COPY.newsletter.errorTitle}
+                message={errorMessage}
+            />
         </footer>
     );
 };
@@ -202,7 +217,6 @@ type NewsletterSignupProps = {
     register: ReturnType<typeof useForm<{ email: string }>>["register"];
     handleSubmit: (event?: BaseSyntheticEvent) => Promise<void>;
     isSubmitting: boolean;
-    message: string;
     emailError?: string;
 };
 
@@ -211,7 +225,6 @@ function NewsletterSignup({
     register,
     handleSubmit,
     isSubmitting,
-    message,
     emailError,
 }: NewsletterSignupProps) {
     return (
@@ -250,9 +263,7 @@ function NewsletterSignup({
                             placeholder="you@company.com"
                             aria-label="Email address"
                             className={cn(inputClassName, "sm:flex-1")}
-                            {...register("email", {
-                                required: "Email is required",
-                            })}
+                            {...register("email", emailValidationRules)}
                         />
                         <button
                             type="submit"
@@ -262,9 +273,6 @@ function NewsletterSignup({
                             {isSubmitting ? "Submitting..." : "Subscribe"}
                         </button>
                     </div>
-                    {message && (
-                        <p className="font-inter-display text-xs text-emerald-600 md:text-sm">{message}</p>
-                    )}
                     {emailError && (
                         <p className="font-inter-display text-xs text-red-600 md:text-sm">{emailError}</p>
                     )}

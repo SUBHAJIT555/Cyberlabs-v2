@@ -10,9 +10,19 @@ import { useCourses } from "@/hooks/useCourses";
 import { useBootcamps } from "@/hooks/useBootcamps";
 import { Course } from "@/interface/program";
 import { CONTACT } from "@/constants/contactInfo";
-import { MAIL_API_URL } from "@/lib/api";
 import { LetterSwapPingPong } from "@/components/ui/LetterSwap";
 import { ShinyButton } from "@/components/ui/shiny-button";
+import {
+    DateTimePickerField,
+    defaultDateTimeLocal,
+} from "@/components/ui/DateTimePickerField";
+import { EmailField } from "@/components/ui/EmailField";
+import { IndianPhoneField } from "@/components/ui/IndianPhoneField";
+import { FormSuccessPopup } from "@/components/ui/FormSuccessPopup";
+import { FormErrorPopup } from "@/components/ui/FormErrorPopup";
+import { useFormSubmitFeedback } from "@/hooks/useFormSubmitFeedback";
+import { FORM_FEEDBACK_COPY } from "@/constants/formFeedbackCopy";
+import { formatIndianMobileE164 } from "@/lib/formValidation";
 
 const inputBase =
     "w-full px-4 py-3 rounded-lg border bg-white/95 text-text-primary placeholder:text-neutral-400 font-inter-display text-base focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors";
@@ -89,7 +99,14 @@ const ContactHeader = () => {
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: true, margin: "-100px" });
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
+    const {
+        showSuccessPopup,
+        setShowSuccessPopup,
+        showErrorPopup,
+        setShowErrorPopup,
+        errorMessage,
+        submitForm,
+    } = useFormSubmitFeedback();
 
     const {
         register,
@@ -105,40 +122,33 @@ const ContactHeader = () => {
             yearsOfExperience: "",
             programOfInterest: "",
             bootCampOfInterest: "",
-            preferredTime: "",
+            preferredTime: defaultDateTimeLocal(),
             questionsOrGoals: "",
         },
     });
 
     const onSubmit = async (data: FormData) => {
         setIsSubmitting(true);
-        setSubmitStatus(null);
 
         try {
-            const response = await fetch(MAIL_API_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
+            await submitForm(
+                {
                     formType: "contact",
                     fullName: data.fullName,
                     email: data.email,
-                    mobileNumber: data.mobileNumber,
+                    mobileNumber: formatIndianMobileE164(data.mobileNumber),
                     currentBackground: data.currentBackground,
                     yearsOfExperience: data.yearsOfExperience,
                     programOfInterest: data.programOfInterest,
                     bootCampOfInterest: data.bootCampOfInterest,
                     preferredTime: data.preferredTime,
                     questionsOrGoals: data.questionsOrGoals ?? "",
-                }),
-            });
-            const result = await response.json();
-            if (!response.ok) {
-                throw new Error(result?.error ?? "Submission failed");
-            }
-            setSubmitStatus("success");
+                },
+                { successMessage: FORM_FEEDBACK_COPY.contact.successMessage },
+            );
             reset();
         } catch {
-            setSubmitStatus("error");
+            // Error popup is handled by useFormSubmitFeedback.
         } finally {
             setIsSubmitting(false);
         }
@@ -277,19 +287,6 @@ const ContactHeader = () => {
                                     </p>
                                 </div>
                                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 sm:space-y-6">
-                                    {/* Success Message */}
-                                    {submitStatus === "success" && (
-                                        <div className="rounded-lg bg-green-50/95 border border-green-200/80 border-dashed px-4 py-3.5 text-green-700 text-sm font-inter-display">
-                                            Thank you! We&apos;ve received your message and will contact you soon.
-                                        </div>
-                                    )}
-
-                                    {submitStatus === "error" && (
-                                        <div className="rounded-lg bg-amber-50/95 border border-amber-200/80 border-dashed px-4 py-3.5 text-amber-800 text-sm font-inter-display">
-                                            Something went wrong. Please try again later.
-                                        </div>
-                                    )}
-
                                     {/* Two-column layout for name and email */}
                                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6">
                                         {/* Full Name */}
@@ -313,53 +310,23 @@ const ContactHeader = () => {
                                         </div>
 
                                         {/* Email Address */}
-                                        <div>
-                                            <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
-                                                Email Address <span className="text-red-500">*</span>
-                                            </label>
-                                            <input
-                                                type="email"
-                                                {...register("email", {
-                                                    required: "Email address is required",
-                                                    pattern: {
-                                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                                        message: "Invalid email address",
-                                                    },
-                                                })}
-                                                className={`${inputBase} ${errors.email ? inputError : inputNormal}`}
-                                                placeholder="Enter your email address"
-                                            />
-                                            {errors.email && (
-                                                <p className="mt-1 text-sm text-red-500 font-inter-display">
-                                                    {errors.email.message}
-                                                </p>
-                                            )}
-                                        </div>
+                                        <EmailField
+                                            label="Email Address"
+                                            name="email"
+                                            register={register}
+                                            error={errors.email}
+                                            inputClassName={`${inputBase} ${errors.email ? inputError : inputNormal}`}
+                                        />
                                     </div>
 
-                                    {/* Mobile Number */}
-                                    <div>
-                                        <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
-                                            Mobile Number (with country code) <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
-                                            type="tel"
-                                            {...register("mobileNumber", {
-                                                required: "Mobile number is required",
-                                                pattern: {
-                                                    value: /^\+?[1-9]\d{1,14}$/,
-                                                    message: "Please enter a valid mobile number with country code",
-                                                },
-                                            })}
-                                            className={`${inputBase} ${errors.mobileNumber ? inputError : inputNormal}`}
-                                            placeholder="e.g., +91 9876543210"
-                                        />
-                                        {errors.mobileNumber && (
-                                            <p className="mt-1 text-sm text-red-500 font-inter-display">
-                                                {errors.mobileNumber.message}
-                                            </p>
-                                        )}
-                                    </div>
+                                    <IndianPhoneField
+                                        label="Mobile Number"
+                                        name="mobileNumber"
+                                        register={register}
+                                        error={errors.mobileNumber}
+                                        inputClassName={`flex-1 ${inputBase} ${errors.mobileNumber ? inputError : inputNormal}`}
+                                        prefixClassName={`shrink-0 px-4 py-3 rounded-lg border bg-white/95 text-text-primary font-inter-display font-medium text-base ${errors.mobileNumber ? inputError : inputNormal}`}
+                                    />
 
                                     {/* Two-column layout for background and experience */}
                                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 sm:gap-6 pt-2 border-t border-neutral-200 border-dashed">
@@ -468,25 +435,15 @@ const ContactHeader = () => {
                                         </div>
                                     </div>
 
-                                    {/* Preferred Time for Call */}
-                                    <div>
-                                        <label className="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2">
-                                            Preferred Time for Call <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            {...register("preferredTime", {
-                                                required: "Please specify your preferred time for call",
-                                            })}
-                                            className={`${inputBase} ${errors.preferredTime ? inputError : inputNormal}`}
-                                            placeholder="e.g., Weekdays 10 AM - 2 PM IST"
-                                        />
-                                        {errors.preferredTime && (
-                                            <p className="mt-1 text-sm text-red-500 font-inter-display">
-                                                {errors.preferredTime.message}
-                                            </p>
-                                        )}
-                                    </div>
+                                    <DateTimePickerField
+                                        label="When should we call you?"
+                                        name="preferredTime"
+                                        register={register}
+                                        rules={{ required: "Preferred callback time is required" }}
+                                        error={errors.preferredTime}
+                                        labelClassName="block text-text-primary text-sm sm:text-base font-medium font-inter-display mb-2"
+                                        inputClassName="bg-white/95 focus:ring-primary/20 focus:border-primary"
+                                    />
 
                                     {/* Questions or Goals (Optional) */}
                                     <div className="space-y-2 pt-2 border-t border-neutral-200 border-dashed">
@@ -517,6 +474,19 @@ const ContactHeader = () => {
                     </motion.div>
                 </div>
             </div>
+
+            <FormSuccessPopup
+                open={showSuccessPopup}
+                onClose={() => setShowSuccessPopup(false)}
+                title={FORM_FEEDBACK_COPY.contact.successTitle}
+                message={FORM_FEEDBACK_COPY.contact.successMessage}
+            />
+            <FormErrorPopup
+                open={showErrorPopup}
+                onClose={() => setShowErrorPopup(false)}
+                title={FORM_FEEDBACK_COPY.contact.errorTitle}
+                message={errorMessage}
+            />
         </section>
     );
 };

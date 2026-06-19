@@ -7,10 +7,20 @@ import Portal from "@/components/ui/Portal";
 import { useCourses } from "@/hooks/useCourses";
 import { useBootcamps } from "@/hooks/useBootcamps";
 import type { Course } from "@/interface/program";
-import { MAIL_API_URL } from "@/lib/api";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
+import {
+  DateTimePickerField,
+  defaultDateTimeLocal,
+} from "@/components/ui/DateTimePickerField";
+import { EmailField } from "@/components/ui/EmailField";
+import { IndianPhoneField } from "@/components/ui/IndianPhoneField";
+import { FormSuccessPopup } from "@/components/ui/FormSuccessPopup";
+import { FormErrorPopup } from "@/components/ui/FormErrorPopup";
+import { useFormSubmitFeedback } from "@/hooks/useFormSubmitFeedback";
+import { FORM_FEEDBACK_COPY } from "@/constants/formFeedbackCopy";
+import { formatIndianMobileE164 } from "@/lib/formValidation";
 
 interface CallbackModalProps {
   isOpen: boolean;
@@ -37,12 +47,7 @@ const validateProgramOrBootCamp = (_value: string, formValues: FormData): true |
   return true;
 };
 
-const defaultCallbackTime = () => {
-  const d = new Date();
-  d.setDate(d.getDate() + 1);
-  d.setHours(10, 0, 0, 0);
-  return d.toISOString().slice(0, 16);
-};
+const defaultCallbackTime = defaultDateTimeLocal;
 
 const CallbackModal: React.FC<CallbackModalProps> = ({
   isOpen,
@@ -59,7 +64,15 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
   const hasContext = Boolean(course || bootcamp);
   const [isMobile, setIsMobile] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
+  const {
+    showSuccessPopup,
+    setShowSuccessPopup,
+    showErrorPopup,
+    setShowErrorPopup,
+    errorMessage,
+    resetFeedback,
+    submitForm,
+  } = useFormSubmitFeedback();
 
   const {
     register,
@@ -94,41 +107,30 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
         enquiryFor: course?.title ?? "",
         bootCampOfInterest: bootcamp?.title ?? "",
       });
-      setSubmitStatus(null);
+      resetFeedback();
     }
-  }, [isOpen, course?.title, bootcamp?.title, reset]);
+  }, [isOpen, course?.title, bootcamp?.title, reset, resetFeedback]);
 
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
-    setSubmitStatus(null);
     try {
-
-      const response = await fetch(MAIL_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      await submitForm(
+        {
           formType: "callback-modal",
           name: data.name,
           email: data.email,
-          phone: data.phone.startsWith("+") ? data.phone : `+91${data.phone.replace(/\D/g, "")}`,
+          phone: formatIndianMobileE164(data.phone),
           callbackTime: data.callbackTime,
           enquiryFor: data.enquiryFor,
           bootCampOfInterest: data.bootCampOfInterest,
           programSlug: programSlug ?? "",
           bootcampSlug: bootcampSlug ?? "",
-        }),
-      });
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result?.error ?? "Submission failed");
-      }
-      setSubmitStatus("success");
+        },
+        { successMessage: FORM_FEEDBACK_COPY.callbackModal.successMessage },
+      );
       reset();
-      setTimeout(() => {
-        onClose();
-      }, 1500);
     } catch {
-      setSubmitStatus("error");
+      // Error popup is handled by useFormSubmitFeedback.
     } finally {
       setIsSubmitting(false);
     }
@@ -224,17 +226,6 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
                 onSubmit={rhfHandleSubmit(onSubmit)}
                 className="relative z-10 px-4 sm:px-6 pb-4 sm:pb-6 space-y-4"
               >
-                {submitStatus === "success" && (
-                  <div className="bg-green-50 border border-green-200 border-dashed rounded-lg p-3 text-green-700 text-sm font-inter-display">
-                    Thank you! We will call you at the requested time.
-                  </div>
-                )}
-                {submitStatus === "error" && (
-                  <div className="bg-red-50 border border-red-200 border-dashed rounded-lg p-3 text-red-600 text-sm font-inter-display">
-                    Something went wrong. Please try again.
-                  </div>
-                )}
-
                 {hasContext && course && (
                   <div className="rounded-lg border border-neutral-200 bg-white/95 p-3 sm:p-4">
                     <p className="mb-2 text-xs font-inter-display font-semibold uppercase tracking-wide text-primary">
@@ -329,119 +320,34 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
                   )}
                 </div>
 
-                {/* Email Field */}
-                <div>
-                  <label className="block text-text-primary text-sm font-medium font-inter-display mb-2">
-                    Email Address <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    {...register("email", {
-                      required: "Email address is required",
-                      pattern: {
-                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                        message: "Invalid email address",
-                      },
-                    })}
-                    placeholder="Enter your email address"
-                    className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-background border text-text-primary placeholder-neutral-400 focus:outline-none rounded-lg focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 transition-colors text-sm sm:text-base font-inter-display ${errors.email ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"
-                      }`}
-                  />
-                  {errors.email && (
-                    <p className="mt-1 text-sm text-red-500 font-inter-display">{errors.email.message}</p>
-                  )}
-                </div>
+                <EmailField
+                  label="Email Address"
+                  name="email"
+                  register={register}
+                  error={errors.email}
+                  labelClassName="block text-text-primary text-sm font-medium font-inter-display mb-2"
+                  inputClassName={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-background border text-text-primary placeholder-neutral-400 focus:outline-none rounded-lg focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 transition-colors text-sm sm:text-base font-inter-display ${errors.email ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"}`}
+                />
 
-                {/* Phone Field */}
-                <div>
-                  <label className="block text-text-primary text-sm font-medium font-inter-display mb-2">
-                    Phone Number <span className="text-red-500">*</span>
-                  </label>
-                  <div className="flex">
-                    <span className="inline-flex items-center px-2 sm:px-3 py-2 sm:py-3 bg-neutral-100 border border-neutral-300 border-r-0 rounded-l-lg text-text-primary text-sm sm:text-base font-inter-display">
-                      🇮🇳 +91
-                    </span>
-                    <input
-                      type="tel"
-                      {...register("phone", {
-                        required: "Phone number is required",
-                        pattern: {
-                          value: /^[6-9]\d{9}$/,
-                          message: "Enter a valid 10-digit Indian mobile number",
-                        },
-                        minLength: { value: 10, message: "Phone number must be 10 digits" },
-                        maxLength: { value: 10, message: "Phone number must be 10 digits" },
-                      })}
-                      placeholder="9876543210"
-                      maxLength={10}
-                      className={`flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-background border border-l-0 text-text-primary placeholder-neutral-400 focus:outline-none focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 rounded-r-lg transition-colors text-sm sm:text-base font-inter-display ${errors.phone ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"
-                        }`}
-                    />
-                  </div>
-                  {errors.phone && (
-                    <p className="mt-1 text-sm text-red-500 font-inter-display">{errors.phone.message}</p>
-                  )}
-                </div>
+                <IndianPhoneField
+                  label="Phone Number"
+                  name="phone"
+                  register={register}
+                  error={errors.phone}
+                  showFlag
+                  labelClassName="block text-text-primary text-sm font-medium font-inter-display mb-2"
+                  wrapperClassName="flex"
+                  prefixClassName={`inline-flex items-center px-2 sm:px-3 py-2 sm:py-3 bg-neutral-100 border border-r-0 rounded-l-lg text-text-primary text-sm sm:text-base font-inter-display ${errors.phone ? "border-red-400" : "border-neutral-300"}`}
+                  inputClassName={`flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-background border border-l-0 text-text-primary placeholder-neutral-400 focus:outline-none focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 rounded-r-lg transition-colors text-sm sm:text-base font-inter-display ${errors.phone ? "border-red-400 focus:border-red-500" : "border-neutral-300 focus:border-neutral-400"}`}
+                />
 
-                {/* Callback Time Field */}
-                <div>
-                  <label className="block text-text-primary text-sm font-medium font-inter-display mb-2">
-                    When should we call you? <span className="text-red-500">*</span>
-                  </label>
-                  <div className="relative">
-                    <input
-                      type="datetime-local"
-                      {...register("callbackTime", { required: "Preferred callback time is required" })}
-                      min={new Date().toISOString().slice(0, 16)}
-                      className={`w-full px-3 sm:px-4 py-2 sm:py-3 pr-10 sm:pr-12 bg-background border text-text-primary focus:outline-none focus:ring focus:ring-neutral-400 focus:ring-offset-2 md:focus-ring-offset-4 rounded-lg transition-colors text-sm sm:text-base font-inter-display cursor-pointer [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none [&::-webkit-calendar-picker-indicator]:w-0 [&::-webkit-calendar-picker-indicator]:h-0 ${errors.callbackTime ? "border-red-400" : "border-neutral-300 focus:border-neutral-400"
-                        }`}
-                      style={{
-                        fontSize: isMobile ? "14px" : "16px",
-                        minHeight: isMobile ? "44px" : "auto",
-                        lineHeight: "1.2",
-                        WebkitAppearance: "none",
-                        MozAppearance: "textfield",
-                        colorScheme: "dark",
-                      }}
-                      onFocus={(e) => {
-                        if (isMobile) e.target.style.fontSize = "16px";
-                      }}
-                      onBlur={(e) => {
-                        if (isMobile) e.target.style.fontSize = "14px";
-                      }}
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 pointer-events-auto cursor-pointer bg-transparent border-0 p-0"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const input = (e.currentTarget as HTMLElement).previousElementSibling as HTMLInputElement;
-                        if (input) {
-                          input.showPicker?.();
-                          input.focus();
-                        }
-                      }}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-text-primary">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12" />
-                        <path d="M16 3v4" />
-                        <path d="M8 3v4" />
-                        <path d="M4 11h16" />
-                        <path d="M7 14h.013" />
-                        <path d="M10.01 14h.005" />
-                        <path d="M13.01 14h.005" />
-                        <path d="M16.015 14h.005" />
-                        <path d="M13.015 17h.005" />
-                        <path d="M7.01 17h.005" />
-                        <path d="M10.01 17h.005" />
-                      </svg>
-                    </button>
-                  </div>
-                  {errors.callbackTime && (
-                    <p className="mt-1 text-sm text-red-500 font-inter-display">{errors.callbackTime.message}</p>
-                  )}
-                </div>
+                <DateTimePickerField
+                  label="When should we call you?"
+                  name="callbackTime"
+                  register={register}
+                  rules={{ required: "Preferred callback time is required" }}
+                  error={errors.callbackTime}
+                />
 
                 {!hasContext && (
                 <div className="space-y-4 pt-2 border-t border-neutral-200 border-dashed">
@@ -512,6 +418,23 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
         </>
       )}
       </AnimatePresence>
+
+      <FormSuccessPopup
+        open={showSuccessPopup}
+        onClose={() => {
+          setShowSuccessPopup(false);
+          onClose();
+        }}
+        title={FORM_FEEDBACK_COPY.callbackModal.successTitle}
+        message={FORM_FEEDBACK_COPY.callbackModal.successMessage}
+      />
+
+      <FormErrorPopup
+        open={showErrorPopup}
+        onClose={() => setShowErrorPopup(false)}
+        title={FORM_FEEDBACK_COPY.callbackModal.errorTitle}
+        message={errorMessage}
+      />
     </Portal>
   );
 };
