@@ -114,6 +114,13 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     try {
+      const programLink = programSlug
+        ? `${window.location.origin}/cyber-defense-programs/${programSlug}`
+        : "";
+      const bootcampLink = bootcampSlug
+        ? `${window.location.origin}/cyber-defense-programs/bootcamp/${bootcampSlug}`
+        : "";
+
       await submitForm(
         {
           formType: "callback-modal",
@@ -123,8 +130,8 @@ const CallbackModal: React.FC<CallbackModalProps> = ({
           callbackTime: data.callbackTime,
           enquiryFor: data.enquiryFor,
           bootCampOfInterest: data.bootCampOfInterest,
-          programSlug: programSlug ?? "",
-          bootcampSlug: bootcampSlug ?? "",
+          programLink,
+          bootcampLink,
         },
         { successMessage: FORM_FEEDBACK_COPY.callbackModal.successMessage },
       );
