@@ -2,15 +2,10 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import AppProviders from "@/providers/AppProviders";
 import MainLayout from "@/layout/MainLayout";
+import { rootMetadata } from "@/lib/siteMetadata";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "CYBERLABS INDIA",
-  description: "Israeli-led Cyber Defense Training in India.",
-  icons: {
-    icon: "/favicon.svg",
-  },
-};
+export const metadata: Metadata = rootMetadata;
 
 export default function RootLayout({
   children,
@@ -18,8 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={GeistSans.variable}>
-      <body className={GeistSans.className}>
+    <html lang="en" className={GeistSans.variable} suppressHydrationWarning>
+      <body className={GeistSans.className} suppressHydrationWarning>
         <AppProviders>
           <MainLayout>{children}</MainLayout>
         </AppProviders>

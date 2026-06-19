@@ -6,9 +6,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useSearchParams } from "@/lib/react-router";
 import type { Hero } from "@/interface/program";
-import { MAIL_API_URL } from "@/lib/api";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import BootcampPriceBlock from "@/components/ui/BootcampPriceBlock";
+import {
+  DateTimePickerField,
+  defaultDateTimeLocal,
+} from "@/components/ui/DateTimePickerField";
+import { FormSuccessPopup } from "@/components/ui/FormSuccessPopup";
+import { FormErrorPopup } from "@/components/ui/FormErrorPopup";
+import { useFormSubmitFeedback } from "@/hooks/useFormSubmitFeedback";
+import { getCheckoutFeedbackCopy } from "@/constants/formFeedbackCopy";
+import {
+  formatIndianMobileE164,
+  zodEmail,
+  zodIndianMobile,
+  zodOptionalIndianMobile,
+} from "@/lib/formValidation";
+import { EmailField } from "@/components/ui/EmailField";
+import { IndianPhoneField } from "@/components/ui/IndianPhoneField";
 
 const parsePriceValue = (value: string) => Number(value.replace(/[^\d]/g, "")) || 0;
 
@@ -28,14 +43,11 @@ const checkoutFormSchema = z.object({
   occupation: z.enum(["Student", "Working", "Gap Year", "Freelancer", "Other"], {
     message: "Please select an occupation",
   }),
-  preferredCallTime: z.string().min(1, "Please select a preferred call time"),
-  phoneNumber: z
-    .string()
-    .min(10, "Phone number must be at least 10 digits")
-    .regex(/^[0-9]+$/, "Phone number must contain only digits"),
-  secondaryPhoneNumber: z.string().optional().or(z.literal("")),
+  preferredCallTime: z.string().min(1, "Preferred callback time is required"),
+  phoneNumber: zodIndianMobile(),
+  secondaryPhoneNumber: zodOptionalIndianMobile(),
   address: z.string().min(10, "Address must be at least 10 characters"),
-  email: z.string().email("Please enter a valid email address"),
+  email: zodEmail(),
   collegeSchool: z.string().min(1, "Please enter your college/school name"),
   graduationYear: z
     .number()
@@ -216,7 +228,15 @@ const CheckoutForm = ({
   const courseSlug = propSlug || searchParams.get("slug") || "";
   const providedCourseLink = searchParams.get("courseLink") || searchParams.get("courseUrl") || "";
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
+  const {
+    showSuccessPopup,
+    setShowSuccessPopup,
+    showErrorPopup,
+    setShowErrorPopup,
+    errorMessage,
+    submitForm,
+  } = useFormSubmitFeedback();
+  const feedbackCopy = getCheckoutFeedbackCopy(formType);
 
   const {
     register,
@@ -227,6 +247,9 @@ const CheckoutForm = ({
   } = useForm<z.infer<typeof checkoutFormSchema>>({
     resolver: zodResolver(checkoutFormSchema),
     mode: "onChange",
+    defaultValues: {
+      preferredCallTime: defaultDateTimeLocal(),
+    },
   });
 
   const graduationYear = watch("graduationYear");
@@ -243,35 +266,33 @@ const CheckoutForm = ({
 
   const onSubmit = async (data: z.infer<typeof checkoutFormSchema>) => {
     setIsSubmitting(true);
-    setSubmitStatus(null);
 
     console.log(data);
+    const normalizedSlug = courseSlug
+      .replace(/^\/+|\/+$/g, "")
+      .replace(/^cyber-defense-programs\/bootcamp\//, "")
+      .replace(/^cyber-defense-programs\//, "")
+      .replace(/^bootcamp\//, "");
+    const isBootcampEnrollment = formType === "bootcamp-enrollment";
+    const coursePath = isBootcampEnrollment
+      ? `/cyber-defense-programs/bootcamp/${normalizedSlug}`
+      : `/cyber-defense-programs/${normalizedSlug}`;
+    const courseLink =
+      providedCourseLink ||
+      (normalizedSlug && typeof window !== "undefined"
+        ? `${window.location.origin}${coursePath}`
+        : "");
 
     try {
-      const normalizedSlug = courseSlug
-        .replace(/^\/+|\/+$/g, "")
-        .replace(/^cyber-defense-programs\/bootcamp\//, "")
-        .replace(/^cyber-defense-programs\//, "")
-        .replace(/^bootcamp\//, "");
-      const isBootcampEnrollment = formType === "bootcamp-enrollment";
-      const coursePath = isBootcampEnrollment
-        ? `/cyber-defense-programs/bootcamp/${normalizedSlug}`
-        : `/cyber-defense-programs/${normalizedSlug}`;
-      const courseLink =
-        providedCourseLink ||
-        (normalizedSlug && typeof window !== "undefined"
-          ? `${window.location.origin}${coursePath}`
-          : "");
-
-      const response = await fetch(MAIL_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
+      await submitForm(
+        {
           formType,
           fullName: data.fullName,
           email: data.email,
-          phoneNumber: data.phoneNumber,
-          secondaryPhoneNumber: data.secondaryPhoneNumber || "",
+          phoneNumber: formatIndianMobileE164(data.phoneNumber),
+          secondaryPhoneNumber: data.secondaryPhoneNumber
+            ? formatIndianMobileE164(data.secondaryPhoneNumber)
+            : "",
           age: data.age.toString(),
           gender: data.gender,
           occupation: data.occupation,
@@ -279,26 +300,13 @@ const CheckoutForm = ({
           address: data.address,
           collegeSchool: data.collegeSchool,
           graduationYear: data.graduationYear.toString(),
+          courseSlug: courseSlug || "",
           courseLink,
-        }),
-      });
-
-      const result = await response.json();
-      if (!response.ok) {
-        throw new Error(result?.error ?? "Submission failed");
-      }
-
-      setSubmitStatus("success");
-
-      // Call onSuccess callback if provided (e.g., to close modal)
-      if (onSuccess) {
-        setTimeout(() => {
-          onSuccess();
-        }, 2000);
-      }
-    } catch (error) {
-      console.error("Form submission error:", error);
-      setSubmitStatus("error");
+        },
+        { successMessage: feedbackCopy.successMessage },
+      );
+    } catch {
+      // Error popup is handled by useFormSubmitFeedback.
     } finally {
       setIsSubmitting(false);
     }
@@ -375,20 +383,6 @@ const CheckoutForm = ({
 
         {/* Form Fields */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* Success Message */}
-          {submitStatus === "success" && (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-green-700 text-sm font-montserrat">
-              Thank you! We've received your enrollment request and will contact you soon.
-            </div>
-          )}
-
-          {/* Error Message */}
-          {submitStatus === "error" && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-600 text-sm font-montserrat">
-              Something went wrong. Please try again later.
-            </div>
-          )}
-
           {/* Full Name */}
           <div>
             <label className="block text-text-primary text-sm font-medium font-montserrat mb-2">
@@ -483,69 +477,40 @@ const CheckoutForm = ({
             )}
           </div>
 
-          {/* Preferred Call Time */}
-          <div>
-            <label className="block text-text-primary text-sm font-medium font-montserrat mb-2">
-              Preferred Call Time <span className="text-red-500">*</span>
-            </label>
-            <select
-              {...register("preferredCallTime")}
-              className={`w-full px-4 py-3 bg-white border rounded-lg text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-montserrat appearance-none cursor-pointer ${errors.preferredCallTime
-                ? "border-red-300 focus:border-red-500"
-                : "border-gray-300 focus:border-primary"
-                }`}
-            >
-              <option value="">Select Preferred Call Time</option>
-              <option value="Morning (9 AM - 12 PM)">
-                Morning (9 AM - 12 PM)
-              </option>
-              <option value="Afternoon (12 PM - 5 PM)">
-                Afternoon (12 PM - 5 PM)
-              </option>
-              <option value="Evening (5 PM - 9 PM)">
-                Evening (5 PM - 9 PM)
-              </option>
-            </select>
-            {errors.preferredCallTime && (
-              <p className="mt-1 text-sm text-red-500 font-montserrat">
-                {errors.preferredCallTime.message}
-              </p>
-            )}
-          </div>
+          <DateTimePickerField
+            label="When should we call you?"
+            name="preferredCallTime"
+            register={register}
+            error={errors.preferredCallTime}
+            labelClassName="block text-text-primary text-sm font-medium font-montserrat mb-2"
+            inputClassName="bg-white font-montserrat focus:ring-primary/20"
+          />
 
-          {/* Primary Phone Number */}
-          <div>
-            <label className="block text-text-primary text-sm font-medium font-montserrat mb-2">
-              Phone Number (Primary) <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="tel"
-              {...register("phoneNumber")}
-              className={`w-full px-4 py-3 bg-white border rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-montserrat ${errors.phoneNumber
-                ? "border-red-300 focus:border-red-500"
-                : "border-gray-300 focus:border-primary"
-                }`}
-              placeholder="Enter Primary Phone Number"
-            />
-            {errors.phoneNumber && (
-              <p className="mt-1 text-sm text-red-500 font-montserrat">
-                {errors.phoneNumber.message}
-              </p>
-            )}
-          </div>
+          <IndianPhoneField
+            label="Phone Number (Primary)"
+            name="phoneNumber"
+            register={register}
+            error={errors.phoneNumber}
+            showHint={false}
+            labelClassName="block text-text-primary text-sm font-medium font-montserrat mb-2"
+            prefixClassName={`shrink-0 inline-flex items-center px-3 py-3 rounded-lg border bg-white text-text-primary font-montserrat font-medium text-base ${errors.phoneNumber ? "border-red-300" : "border-gray-300"}`}
+            inputClassName={`flex-1 px-4 py-3 bg-white border rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-montserrat ${errors.phoneNumber ? "border-red-300 focus:border-red-500" : "border-gray-300 focus:border-primary"}`}
+            errorClassName="mt-1 text-sm text-red-500 font-montserrat"
+          />
 
-          {/* Secondary Phone Number */}
-          <div>
-            <label className="block text-text-primary text-sm font-medium font-montserrat mb-2">
-              Phone Number (Secondary)
-            </label>
-            <input
-              type="tel"
-              {...register("secondaryPhoneNumber")}
-              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-colors font-montserrat"
-              placeholder="Enter Secondary Phone Number (Optional)"
-            />
-          </div>
+          <IndianPhoneField
+            label="Phone Number (Secondary)"
+            name="secondaryPhoneNumber"
+            register={register}
+            error={errors.secondaryPhoneNumber}
+            required={false}
+            showHint={false}
+            placeholder="Optional alternate number"
+            labelClassName="block text-text-primary text-sm font-medium font-montserrat mb-2"
+            prefixClassName={`shrink-0 inline-flex items-center px-3 py-3 rounded-lg border bg-white text-text-primary font-montserrat font-medium text-base ${errors.secondaryPhoneNumber ? "border-red-300" : "border-gray-300"}`}
+            inputClassName={`flex-1 px-4 py-3 bg-white border rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-montserrat ${errors.secondaryPhoneNumber ? "border-red-300 focus:border-red-500" : "border-gray-300 focus:border-primary"}`}
+            errorClassName="mt-1 text-sm text-red-500 font-montserrat"
+          />
 
           {/* Address */}
           <div>
@@ -568,26 +533,16 @@ const CheckoutForm = ({
             )}
           </div>
 
-          {/* Email */}
-          <div>
-            <label className="block text-text-primary text-sm font-medium font-montserrat mb-2">
-              Email Address <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="email"
-              {...register("email")}
-              className={`w-full px-4 py-3 bg-white border rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-montserrat ${errors.email
-                ? "border-red-300 focus:border-red-500"
-                : "border-gray-300 focus:border-primary"
-                }`}
-              placeholder="Enter Email Address"
-            />
-            {errors.email && (
-              <p className="mt-1 text-sm text-red-500 font-montserrat">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
+          <EmailField
+            label="Email Address"
+            name="email"
+            register={register}
+            error={errors.email}
+            labelClassName="block text-text-primary text-sm font-medium font-montserrat mb-2"
+            inputClassName={`w-full px-4 py-3 bg-white border rounded-lg text-text-primary placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors font-montserrat ${errors.email ? "border-red-300 focus:border-red-500" : "border-gray-300 focus:border-primary"}`}
+            errorClassName="mt-1 text-sm text-red-500 font-montserrat"
+            placeholder="Enter Email Address"
+          />
 
           {/* College / School */}
           <div>
@@ -630,6 +585,23 @@ const CheckoutForm = ({
           </ShinyButton>
         </form>
       </div>
+
+      <FormSuccessPopup
+        open={showSuccessPopup}
+        onClose={() => {
+          setShowSuccessPopup(false);
+          onSuccess?.();
+        }}
+        title={feedbackCopy.successTitle}
+        message={feedbackCopy.successMessage}
+      />
+
+      <FormErrorPopup
+        open={showErrorPopup}
+        onClose={() => setShowErrorPopup(false)}
+        title={feedbackCopy.errorTitle}
+        message={errorMessage}
+      />
     </motion.div>
   );
 };

@@ -41,8 +41,9 @@ const DrawerContent = React.forwardRef<
   React.ComponentRef<typeof DialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
     side?: "left" | "right";
+    title?: string;
   }
->(({ className, children, side = "right", ...rest }, forwardedRef) => {
+>(({ className, children, side = "right", title = "Navigation menu", ...rest }, forwardedRef) => {
   const isLeft = side === "left";
 
   return (
@@ -65,6 +66,7 @@ const DrawerContent = React.forwardRef<
           )}
           {...rest}
         >
+          <DialogPrimitive.Title className="sr-only">{title}</DialogPrimitive.Title>
           <div className="relative flex size-full flex-col bg-white">
             <div
               className="absolute inset-0 z-0 pointer-events-none"

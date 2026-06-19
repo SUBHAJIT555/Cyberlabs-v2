@@ -5,10 +5,20 @@ import { useForm } from "react-hook-form";
 import { useCourses } from "@/hooks/useCourses";
 import { useBootcamps } from "@/hooks/useBootcamps";
 import { Course } from "@/interface/program";
-import { MAIL_API_URL } from "@/lib/api";
 import mailSvg from "@/assets/img/Learning-Enviorment/mail.svg";
 import { crosshatchBgStyle } from "@/constants/bootcampStyles";
 import { ShinyButton } from "@/components/ui/shiny-button";
+import {
+    DateTimePickerField,
+    defaultDateTimeLocal,
+} from "@/components/ui/DateTimePickerField";
+import { EmailField } from "@/components/ui/EmailField";
+import { IndianPhoneField } from "@/components/ui/IndianPhoneField";
+import { FormSuccessPopup } from "@/components/ui/FormSuccessPopup";
+import { FormErrorPopup } from "@/components/ui/FormErrorPopup";
+import { useFormSubmitFeedback } from "@/hooks/useFormSubmitFeedback";
+import { FORM_FEEDBACK_COPY } from "@/constants/formFeedbackCopy";
+import { formatIndianMobileE164 } from "@/lib/formValidation";
 
 interface FormData {
     fullName: string;
@@ -65,8 +75,14 @@ const RequestCallbackForm = () => {
     const containerRef = useRef(null);
     const isInView = useInView(containerRef, { once: true, margin: "-80px" });
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
-    const [showWhatHappensNext, setShowWhatHappensNext] = useState(false);
+    const {
+        showSuccessPopup,
+        setShowSuccessPopup,
+        showErrorPopup,
+        setShowErrorPopup,
+        errorMessage,
+        submitForm,
+    } = useFormSubmitFeedback();
 
     const {
         register,
@@ -82,21 +98,18 @@ const RequestCallbackForm = () => {
             yearsOfExperience: "",
             programOfInterest: "",
             bootCampOfInterest: "",
-            preferredTime: "",
+            preferredTime: defaultDateTimeLocal(),
             questionsOrGoals: "",
         },
     });
 
     const onSubmit = async (data: FormData) => {
         setIsSubmitting(true);
-        setSubmitStatus(null);
 
         try {
-            const mobileNumber = data.mobileNumber.startsWith("+") ? data.mobileNumber : `+91${data.mobileNumber.replace(/\D/g, "")}`;
-            const response = await fetch(MAIL_API_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
+            const mobileNumber = formatIndianMobileE164(data.mobileNumber);
+            await submitForm(
+                {
                     formType: "request-callback",
                     fullName: data.fullName,
                     email: data.email,
@@ -107,17 +120,12 @@ const RequestCallbackForm = () => {
                     bootCampOfInterest: data.bootCampOfInterest,
                     preferredTime: data.preferredTime,
                     questionsOrGoals: data.questionsOrGoals ?? "",
-                }),
-            });
-            const result = await response.json();
-            if (!response.ok) {
-                throw new Error(result?.error ?? "Submission failed");
-            }
-            setSubmitStatus("success");
+                },
+                { successMessage: FORM_FEEDBACK_COPY.requestCallback.successMessage },
+            );
             reset();
-            setShowWhatHappensNext(true);
         } catch {
-            setSubmitStatus("error");
+            // Error popup is handled by useFormSubmitFeedback.
         } finally {
             setIsSubmitting(false);
         }
@@ -192,18 +200,6 @@ const RequestCallbackForm = () => {
                                 </div>
 
                                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 sm:space-y-6">
-                                    {submitStatus === "error" && (
-                                        <div className="rounded-lg bg-amber-50/95 border border-amber-200/80 border-dashed px-4 py-3.5 flex items-start gap-3 font-inter-display text-amber-800 text-sm">
-                                            <span className="shrink-0 mt-0.5 text-amber-500" aria-hidden>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                    <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                                                    <path d="M12 16h.01" />
-                                                </svg>
-                                            </span>
-                                            <span>We couldn&apos;t send your request. Please check your connection and try again.</span>
-                                        </div>
-                                    )}
-
                                     <div className="space-y-2">
                                         <label className="block text-sm font-inter-display font-medium text-text-primary">
                                             Full Name <span className="text-red-500">*</span>
@@ -218,47 +214,25 @@ const RequestCallbackForm = () => {
                                     </div>
 
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
-                                        <div className="space-y-2">
-                                            <label className="block text-sm font-inter-display font-medium text-text-primary">
-                                                Email Address <span className="text-red-500">*</span>
-                                            </label>
-                                            <input
-                                                type="email"
-                                                {...register("email", {
-                                                    required: "Email address is required",
-                                                    pattern: { value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, message: "Invalid email address" },
-                                                })}
-                                                className={`${inputBase} ${errors.email ? inputError : inputNormal}`}
-                                                placeholder="Enter your email address"
-                                            />
-                                            {errors.email && <p className="mt-1 text-sm text-red-500 font-inter-display">{errors.email.message}</p>}
-                                        </div>
+                                        <EmailField
+                                            label="Email Address"
+                                            name="email"
+                                            register={register}
+                                            error={errors.email}
+                                            labelClassName="block text-sm font-inter-display font-medium text-text-primary mb-2"
+                                            inputClassName={`${inputBase} ${errors.email ? inputError : inputNormal}`}
+                                        />
 
-                                        <div className="space-y-2">
-                                            <label className="block text-sm font-inter-display font-medium text-text-primary">
-                                                Mobile Number <span className="text-red-500">*</span>
-                                            </label>
-                                            <div className="flex gap-2">
-                                                <div className="shrink-0 px-4 py-3 rounded-lg border border-neutral-200 bg-white/95 text-text-primary font-inter-display font-medium text-base">
-                                                    +91
-                                                </div>
-                                                <input
-                                                    type="tel"
-                                                    {...register("mobileNumber", {
-                                                        required: "Mobile number is required",
-                                                        pattern: { value: /^[6-9]\d{9}$/, message: "Please enter a valid 10-digit Indian mobile number" },
-                                                        minLength: { value: 10, message: "Mobile number must be 10 digits" },
-                                                        maxLength: { value: 10, message: "Mobile number must be 10 digits" },
-                                                    })}
-                                                    className={`${inputBase} flex-1 ${errors.mobileNumber ? inputError : inputNormal}`}
-                                                    placeholder="9876543210"
-                                                    maxLength={10}
-                                                />
-                                            </div>
-                                            {errors.mobileNumber && <p className="mt-1 text-sm text-red-500 font-inter-display">{errors.mobileNumber.message}</p>}
-                                        </div>
+                                        <IndianPhoneField
+                                            label="Mobile Number"
+                                            name="mobileNumber"
+                                            register={register}
+                                            error={errors.mobileNumber}
+                                            labelClassName="block text-sm font-inter-display font-medium text-text-primary mb-2"
+                                            inputClassName={`flex-1 ${inputBase} ${errors.mobileNumber ? inputError : inputNormal}`}
+                                            prefixClassName={`shrink-0 px-4 py-3 rounded-lg border bg-white/95 text-text-primary font-inter-display font-medium text-base ${errors.mobileNumber ? inputError : inputNormal}`}
+                                        />
                                     </div>
-                                    <p className="text-xs text-text-primary/60 font-inter-display -mt-2">Indian mobile numbers only (10 digits, 6–9)</p>
 
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 pt-2 border-t border-neutral-200 border-dashed">
                                         <div className="space-y-2 sm:pt-4">
@@ -352,18 +326,14 @@ const RequestCallbackForm = () => {
                                         </div>
                                     </div>
 
-                                    <div className="space-y-2">
-                                        <label className="block text-sm font-inter-display font-medium text-text-primary">
-                                            Preferred Time for Call <span className="text-red-500">*</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            {...register("preferredTime", { required: "Please specify your preferred time for call" })}
-                                            className={`${inputBase} ${errors.preferredTime ? inputError : inputNormal}`}
-                                            placeholder="e.g., Weekdays 10 AM - 2 PM IST"
-                                        />
-                                        {errors.preferredTime && <p className="mt-1 text-sm text-red-500 font-inter-display">{errors.preferredTime.message}</p>}
-                                    </div>
+                                    <DateTimePickerField
+                                        label="When should we call you?"
+                                        name="preferredTime"
+                                        register={register}
+                                        rules={{ required: "Preferred callback time is required" }}
+                                        error={errors.preferredTime}
+                                        inputClassName="bg-white/95 focus:ring-primary/20 focus:border-primary"
+                                    />
 
                                     <div className="space-y-2 pt-2 border-t border-neutral-200 border-dashed">
                                         <label className="block text-sm font-inter-display font-medium text-text-primary pt-4">
@@ -393,48 +363,23 @@ const RequestCallbackForm = () => {
                 </div>
             </div>
 
-            {/* What Happens Next — popup after submit */}
-            {showWhatHappensNext && (
-                <div
-                    className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
-                    onClick={() => setShowWhatHappensNext(false)}
-                    role="dialog"
-                    aria-modal="true"
-                    aria-labelledby="what-happens-next-title"
-                >
-                    <div
-                        className="relative w-full max-w-md rounded-xl border border-neutral-200 bg-white shadow-xl overflow-hidden"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className="absolute inset-0 z-0 pointer-events-none" style={crosshatchBgStyle} />
-                        <div className="relative z-10 p-6 sm:p-8">
-                            <div className="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-neutral-200 border-dashed">
-                                <h2 id="what-happens-next-title" className="text-xl sm:text-2xl font-inter-display text-text-primary font-semibold tracking-tight">
-                                    What Happens Next
-                                </h2>
-                                <button
-                                    type="button"
-                                    onClick={() => setShowWhatHappensNext(false)}
-                                    className="shrink-0 p-2 rounded-lg text-text-primary/70 hover:bg-neutral-100 hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition-colors"
-                                    aria-label="Close"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M18 6L6 18M6 6l12 12" />
-                                    </svg>
-                                </button>
-                            </div>
-                            {whatHappensNextContent}
-                            <ShinyButton
-                                type="button"
-                                onClick={() => setShowWhatHappensNext(false)}
-                                className="mt-6 w-full rounded-lg! font-inter-display! text-base font-medium shadow-lg! active:scale-95!"
-                            >
-                                Got it
-                            </ShinyButton>
-                        </div>
-                    </div>
-                </div>
-            )}
+            <FormSuccessPopup
+                open={showSuccessPopup}
+                onClose={() => setShowSuccessPopup(false)}
+                title={FORM_FEEDBACK_COPY.requestCallback.successTitle}
+                message={FORM_FEEDBACK_COPY.requestCallback.successMessage}
+            >
+                <h3 className="mb-4 text-lg font-inter-display font-semibold text-text-primary">
+                    What Happens Next
+                </h3>
+                {whatHappensNextContent}
+            </FormSuccessPopup>
+            <FormErrorPopup
+                open={showErrorPopup}
+                onClose={() => setShowErrorPopup(false)}
+                title={FORM_FEEDBACK_COPY.requestCallback.errorTitle}
+                message={errorMessage}
+            />
         </section>
     );
 };

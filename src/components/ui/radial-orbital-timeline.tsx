@@ -35,19 +35,39 @@ export default function RadialOrbitalTimeline({
   const centerOffset = { x: 0, y: 0 } as const;
   const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<Record<number, HTMLDivElement | null>>({});
 
-  // Detect mobile screen size
+  // Defer viewport-dependent layout until after hydration to avoid SSR/client style mismatches.
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
+
     checkMobile();
+    setMounted(true);
     window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+
+    let rotationTimer: ReturnType<typeof setInterval> | undefined;
+
+    if (autoRotate && viewMode === "orbital") {
+      rotationTimer = setInterval(() => {
+        setRotationAngle((prev) => {
+          const newAngle = (prev + 0.3) % 360;
+          return Number(newAngle.toFixed(3));
+        });
+      }, 50);
+    }
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      if (rotationTimer) {
+        clearInterval(rotationTimer);
+      }
+    };
+  }, [autoRotate]);
 
   const handleContainerClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === containerRef.current || e.target === orbitRef.current) {
@@ -91,25 +111,6 @@ export default function RadialOrbitalTimeline({
     });
   };
 
-  useEffect(() => {
-    let rotationTimer: ReturnType<typeof setInterval> | undefined;
-
-    if (autoRotate && viewMode === "orbital") {
-      rotationTimer = setInterval(() => {
-        setRotationAngle((prev) => {
-          const newAngle = (prev + 0.3) % 360;
-          return Number(newAngle.toFixed(3));
-        });
-      }, 50);
-    }
-
-    return () => {
-      if (rotationTimer) {
-        clearInterval(rotationTimer);
-      }
-    };
-  }, [autoRotate]);
-
   const centerViewOnNode = (nodeId: number) => {
     if (viewMode !== "orbital" || !nodeRefs.current[nodeId]) return;
 
@@ -120,19 +121,22 @@ export default function RadialOrbitalTimeline({
     setRotationAngle(270 - targetAngle);
   };
 
+  const roundValue = (value: number, precision: number) =>
+    Number(value.toFixed(precision));
+
   const calculateNodePosition = (index: number, total: number) => {
-    const angle = ((index / total) * 360 + rotationAngle) % 360;
-    // Responsive radius: smaller on mobile
-    const radius = isMobile ? 120 : 200;
+    const effectiveRotation = mounted ? rotationAngle : 0;
+    const angle = ((index / total) * 360 + effectiveRotation) % 360;
+    const radius = mounted && isMobile ? 120 : 200;
     const radian = (angle * Math.PI) / 180;
 
-    const x = radius * Math.cos(radian) + centerOffset.x;
-    const y = radius * Math.sin(radian) + centerOffset.y;
+    const x = roundValue(radius * Math.cos(radian) + centerOffset.x, 3);
+    const y = roundValue(radius * Math.sin(radian) + centerOffset.y, 3);
 
     const zIndex = Math.round(100 + 50 * Math.cos(radian));
-    const opacity = Math.max(
-      0.4,
-      Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(radian)) / 2))
+    const opacity = roundValue(
+      Math.max(0.4, Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(radian)) / 2))),
+      4,
     );
 
     return { x, y, angle, zIndex, opacity };
@@ -243,7 +247,17 @@ export default function RadialOrbitalTimeline({
                   ${isExpanded ? "scale-150" : ""}
                 `}
                 >
-                  <Icon size={isExpanded ? (isMobile ? 28 : 38) : (isMobile ? 20 : 30)} />
+                  <Icon
+                    size={
+                      isExpanded
+                        ? mounted && isMobile
+                          ? 28
+                          : 38
+                        : mounted && isMobile
+                          ? 20
+                          : 30
+                    }
+                  />
                 </div>
 
                 <div
