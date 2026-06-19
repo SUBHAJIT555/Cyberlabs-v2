@@ -214,6 +214,7 @@ const CheckoutForm = ({
   const [searchParams] = useSearchParams();
   // Use prop slug if provided (for modal), otherwise fall back to search params (for payment portal page)
   const courseSlug = propSlug || searchParams.get("slug") || "";
+  const providedCourseLink = searchParams.get("courseLink") || searchParams.get("courseUrl") || "";
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"success" | "error" | null>(null);
 
@@ -244,7 +245,24 @@ const CheckoutForm = ({
     setIsSubmitting(true);
     setSubmitStatus(null);
 
+    console.log(data);
+
     try {
+      const normalizedSlug = courseSlug
+        .replace(/^\/+|\/+$/g, "")
+        .replace(/^cyber-defense-programs\/bootcamp\//, "")
+        .replace(/^cyber-defense-programs\//, "")
+        .replace(/^bootcamp\//, "");
+      const isBootcampEnrollment = formType === "bootcamp-enrollment";
+      const coursePath = isBootcampEnrollment
+        ? `/cyber-defense-programs/bootcamp/${normalizedSlug}`
+        : `/cyber-defense-programs/${normalizedSlug}`;
+      const courseLink =
+        providedCourseLink ||
+        (normalizedSlug && typeof window !== "undefined"
+          ? `${window.location.origin}${coursePath}`
+          : "");
+
       const response = await fetch(MAIL_API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -261,7 +279,7 @@ const CheckoutForm = ({
           address: data.address,
           collegeSchool: data.collegeSchool,
           graduationYear: data.graduationYear.toString(),
-          courseSlug: courseSlug || "",
+          courseLink,
         }),
       });
 
