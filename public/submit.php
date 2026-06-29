@@ -76,6 +76,16 @@ function clean(?string $s): string
 {
     return htmlspecialchars((string) $s, ENT_QUOTES, 'UTF-8');
 }
+function firstNonEmpty(array $keys): string
+{
+    foreach ($keys as $key) {
+        $value = v($key);
+        if ($value !== '') {
+            return $value;
+        }
+    }
+    return '';
+}
 function required(array $arr): ?string
 {
     foreach ($arr as $k => $label) {
@@ -317,6 +327,8 @@ if ($formType === 'contact' || $formType === 'request-callback') {
       </td>
     </tr>';
 } elseif ($formType === 'callback-modal') {
+    $programLink = firstNonEmpty(['programLink', 'programUrl', 'programSlug']);
+    $bootcampLink = firstNonEmpty(['bootcampLink', 'bootcampUrl', 'bootcampSlug']);
     $details = '';
     $details .= '<p><strong>Name:</strong> ' . clean($name) . '</p>';
     $details .= '<p><strong>Email:</strong> ' . clean($email) . '</p>';
@@ -324,11 +336,11 @@ if ($formType === 'contact' || $formType === 'request-callback') {
     $details .= '<p><strong>Preferred Callback Time:</strong> ' . clean(v('callbackTime')) . '</p>';
     $details .= '<p><strong>Program Enquiry:</strong> ' . (v('enquiryFor') !== '' ? clean(v('enquiryFor')) : '—') . '</p>';
     $details .= '<p><strong>Boot Camp Enquiry:</strong> ' . (v('bootCampOfInterest') !== '' ? clean(v('bootCampOfInterest')) : '—') . '</p>';
-    if (v('programSlug') !== '') {
-        $details .= '<p><strong>Program Slug:</strong> ' . clean(v('programSlug')) . '</p>';
+    if ($programLink !== '') {
+        $details .= '<p><strong>Program Link:</strong> ' . clean($programLink) . '</p>';
     }
-    if (v('bootcampSlug') !== '') {
-        $details .= '<p><strong>Boot Camp Slug:</strong> ' . clean(v('bootcampSlug')) . '</p>';
+    if ($bootcampLink !== '') {
+        $details .= '<p><strong>Boot Camp Link:</strong> ' . clean($bootcampLink) . '</p>';
     }
     $mainContent = '
     <tr>
@@ -353,6 +365,7 @@ if ($formType === 'contact' || $formType === 'request-callback') {
     </tr>';
 } elseif ($formType === 'enrollment-modal' || $formType === 'bootcamp-enrollment') {
     $enrollmentLabel = $formType === 'bootcamp-enrollment' ? 'Boot Camp Enrollment Request' : 'Program Enrollment Request';
+    $courseLink = firstNonEmpty(['courseLink', 'courseUrl', 'courseSlug']);
     $details = '';
     $details .= '<p><strong>Enrollment Type:</strong> ' . ($formType === 'bootcamp-enrollment' ? 'Elite Boot Camp' : 'Flagship Program') . '</p>';
     $details .= '<p><strong>Full Name:</strong> ' . clean($name) . '</p>';
@@ -368,8 +381,8 @@ if ($formType === 'contact' || $formType === 'request-callback') {
     $details .= '<p><strong>Address:</strong><br>' . nl2br(clean(v('address'))) . '</p>';
     $details .= '<p><strong>College/School:</strong> ' . clean(v('collegeSchool')) . '</p>';
     $details .= '<p><strong>Graduation Year:</strong> ' . clean(v('graduationYear')) . '</p>';
-    if (v('courseSlug') !== '') {
-        $details .= '<p><strong>Course:</strong> ' . clean(v('courseSlug')) . '</p>';
+    if ($courseLink !== '') {
+        $details .= '<p><strong>Course Link:</strong> ' . clean($courseLink) . '</p>';
     }
     $mainContent = '
     <tr>
@@ -528,21 +541,24 @@ if ($formType === 'contact' || $formType === 'request-callback') {
     if (v('questionsOrGoals') !== '')
         $alt .= "Questions or Goals: " . strip_tags(v('questionsOrGoals')) . "\n";
 } elseif ($formType === 'callback-modal') {
+    $programLink = firstNonEmpty(['programLink', 'programUrl', 'programSlug']);
+    $bootcampLink = firstNonEmpty(['bootcampLink', 'bootcampUrl', 'bootcampSlug']);
     $alt .= "Name: " . $name . "\n";
     $alt .= "Email: " . $email . "\n";
     $alt .= "Phone: " . $phone . "\n";
     $alt .= "Callback Time: " . v('callbackTime') . "\n";
     $alt .= "Program Enquiry: " . (v('enquiryFor') !== '' ? v('enquiryFor') : '—') . "\n";
     $alt .= "Boot Camp Enquiry: " . (v('bootCampOfInterest') !== '' ? v('bootCampOfInterest') : '—') . "\n";
-    if (v('programSlug') !== '') {
-        $alt .= "Program Slug: " . v('programSlug') . "\n";
+    if ($programLink !== '') {
+        $alt .= "Program Link: " . $programLink . "\n";
     }
-    if (v('bootcampSlug') !== '') {
-        $alt .= "Boot Camp Slug: " . v('bootcampSlug') . "\n";
+    if ($bootcampLink !== '') {
+        $alt .= "Boot Camp Link: " . $bootcampLink . "\n";
     }
 } elseif ($formType === 'newsletter') {
     $alt .= "Email: " . $email . "\n";
 } elseif ($formType === 'enrollment-modal' || $formType === 'bootcamp-enrollment') {
+    $courseLink = firstNonEmpty(['courseLink', 'courseUrl', 'courseSlug']);
     $alt .= "Enrollment Type: " . ($formType === 'bootcamp-enrollment' ? 'Elite Boot Camp' : 'Flagship Program') . "\n";
     $alt .= "Name: " . $name . "\n";
     $alt .= "Email: " . $email . "\n";
@@ -557,8 +573,8 @@ if ($formType === 'contact' || $formType === 'request-callback') {
     $alt .= "Address: " . strip_tags(v('address')) . "\n";
     $alt .= "College/School: " . v('collegeSchool') . "\n";
     $alt .= "Graduation Year: " . v('graduationYear') . "\n";
-    if (v('courseSlug') !== '') {
-        $alt .= "Course: " . v('courseSlug') . "\n";
+    if ($courseLink !== '') {
+        $alt .= "Course Link: " . $courseLink . "\n";
     }
 }
 
