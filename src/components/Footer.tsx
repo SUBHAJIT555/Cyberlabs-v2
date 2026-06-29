@@ -2,7 +2,6 @@ import { Link } from "@/lib/react-router";
 import { useForm, type FieldValues } from "react-hook-form";
 import { useRef, type BaseSyntheticEvent, type ReactNode } from "react";
 import {
-    FaFacebookF,
     FaHeart,
     FaInstagram,
     FaLinkedinIn,
@@ -17,6 +16,7 @@ import { useFormSubmitFeedback } from "@/hooks/useFormSubmitFeedback";
 import { CONTACT } from "@/constants/contactInfo";
 import { FORM_FEEDBACK_COPY } from "@/constants/formFeedbackCopy";
 import { emailValidationRules } from "@/lib/formValidation";
+import { YouTubeIcon } from "@/components/ui/YouTubeIcon";
 
 const usefulLinks = [
     { label: "CYBERLABS Home", to: "/" },
@@ -48,7 +48,11 @@ const socialLinks = [
         href: "https://www.instagram.com/cyberlabsindia",
         icon: FaInstagram,
     },
-    { label: "Facebook", href: "#", icon: FaFacebookF },
+    {
+        label: "YouTube",
+        href: "https://www.youtube.com/@cyberlabsindiabycyveritas-y7h",
+        icon: YouTubeIcon,
+    },
     {
         label: "LinkedIn",
         href: "https://www.linkedin.com/company/cyberlabs-india/",

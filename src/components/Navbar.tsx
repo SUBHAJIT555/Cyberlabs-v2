@@ -5,10 +5,11 @@ import { IoSearch } from "react-icons/io5";
 import { SearchIcon } from "lucide-react";
 import { MenuToggleIcon } from "@/components/ui/menu-toggle-icon";
 import {
-    FaFacebookF,
     FaInstagram,
     FaLinkedinIn,
+    FaWhatsapp,
 } from "react-icons/fa";
+import { YouTubeIcon } from "@/components/ui/YouTubeIcon";
 import { Logo } from "./index";
 import { useLenis } from "../hooks/useLenis";
 import {
@@ -407,17 +408,6 @@ const Navbar: React.FC = () => {
                                         {/* Social Links */}
                                         <div className="flex items-center justify-center gap-4">
                                             <motion.a
-                                                href="#"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-gray-600 hover:text-primary transition-colors"
-                                                whileHover={{ scale: 1.1 }}
-                                                whileTap={{ scale: 0.9 }}
-                                                aria-label="Facebook"
-                                            >
-                                                <FaFacebookF className="w-5 h-5" />
-                                            </motion.a>
-                                            <motion.a
                                                 href="https://www.instagram.com/cyberlabsindia"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
@@ -429,6 +419,17 @@ const Navbar: React.FC = () => {
                                                 <FaInstagram className="w-5 h-5" />
                                             </motion.a>
                                             <motion.a
+                                                href="https://www.youtube.com/@cyberlabsindiabycyveritas-y7h"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-gray-600 hover:text-primary transition-colors"
+                                                whileHover={{ scale: 1.1 }}
+                                                whileTap={{ scale: 0.9 }}
+                                                aria-label="YouTube"
+                                            >
+                                                <YouTubeIcon className="w-5 h-5" />
+                                            </motion.a>
+                                            <motion.a
                                                 href="https://www.linkedin.com/company/cyberlabs-india/"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
@@ -438,6 +439,17 @@ const Navbar: React.FC = () => {
                                                 aria-label="LinkedIn"
                                             >
                                                 <FaLinkedinIn className="w-5 h-5" />
+                                            </motion.a>
+                                            <motion.a
+                                                href="#"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-gray-600 hover:text-primary transition-colors"
+                                                whileHover={{ scale: 1.1 }}
+                                                whileTap={{ scale: 0.9 }}
+                                                aria-label="WhatsApp"
+                                            >
+                                                <FaWhatsapp className="w-5 h-5" />
                                             </motion.a>
                                         </div>
 

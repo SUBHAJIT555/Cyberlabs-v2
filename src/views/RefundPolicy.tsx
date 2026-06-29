@@ -94,7 +94,7 @@ const RefundPolicy = () => {
                     1. Introduction
                   </h3>
                   <p className="text-sm sm:text-base md:text-lg text-neutral-700 font-inter-display leading-relaxed mb-4">
-                    At Cyberslabs India, we&apos;re committed to providing learners with high-quality, hands-on cybersecurity education.
+                    At CYBERLABS INDIA, we&apos;re committed to providing learners with high-quality, hands-on cybersecurity education.
                   </p>
                   <p className="text-sm sm:text-base md:text-lg text-neutral-700 font-inter-display leading-relaxed mb-4">
                     This Refund &amp; Cancellation Policy explains how payments, cancellations, and refunds work for our courses, simulators, and subscription services.
@@ -269,7 +269,7 @@ const RefundPolicy = () => {
                     11. Changes to This Policy
                   </h3>
                   <p className="text-sm sm:text-base md:text-lg text-neutral-700 font-inter-display leading-relaxed mb-4">
-                    Cyberslabs India may modify this Refund &amp; Cancellation Policy periodically.
+                    CYBERLABS INDIA may modify this Refund &amp; Cancellation Policy periodically.
                   </p>
                   <p className="text-sm sm:text-base md:text-lg text-neutral-700 font-inter-display leading-relaxed mb-4">
                     Updated versions will be posted on this page with a revised &quot;Last Updated&quot; date.
