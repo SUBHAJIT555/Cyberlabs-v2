@@ -244,7 +244,7 @@ const FoundationFaculty = () => {
                         className="space-y-6 md:space-y-8 order-1 md:order-1 flex flex-col"
                     >
                         <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter-display text-text-primary font-medium leading-relaxed">
-                            <span className="font-bold text-primary">CYBERLABS</span> was founded in Israel, one of the world&apos;s most advanced cybersecurity ecosystems, where cyber defense is inseparable from national security, intelligence operations, and real adversarial pressure.
+                            <span className="font-bold text-primary">CYBERLABS</span>&nbsp; was founded in Israel, one of the world&apos;s most advanced cybersecurity ecosystems, where cyber defense is inseparable from national security, intelligence operations, and real adversarial pressure.
                         </p>
 
                         <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-inter-display text-text-primary font-medium leading-relaxed">

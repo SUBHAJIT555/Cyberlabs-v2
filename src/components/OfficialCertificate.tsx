@@ -132,7 +132,7 @@ const OfficialCertificate = () => {
                 In addition to the primary certificate, CYBERLABS INDIA provides a <span className="font-bold">Professional Performance Transcript</span> for programs delivered in India.
               </p>
               <p className="text-base sm:text-lg md:text-xl font-inter-display font-medium text-text-primary leading-tight">
-                This transcript is designed to meet the expectations of <span className="font-bold">Indian enterprises, multinational employers, and institutional stakeholders</span>, offering a <span className="font-bold">clear, skills-based view of learner performance</span> beyond course completion.
+                This transcript is designed to meet the expectations of <span className="font-bold">Global enterprises, multinational employers, and institutional stakeholders</span>, offering a <span className="font-bold">clear, skills-based view of learner performance</span> beyond course completion.
               </p>
               <p className="text-base sm:text-lg md:text-xl font-inter-display font-medium text-text-primary leading-tight">
                 The transcript complements the CYBERLABS USA certificate and does not replace or modify it.

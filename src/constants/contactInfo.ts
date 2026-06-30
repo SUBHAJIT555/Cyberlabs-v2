@@ -22,5 +22,5 @@ export const CONTACT = {
   educationEmail: "education@cyberlabs-india.com",
 
   /** General support */
-  supportEmail: "support@cyberlabs-india.com",
+  supportEmail: "education@cyberlabs-india.com",
 } as const;

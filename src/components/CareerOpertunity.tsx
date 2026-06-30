@@ -9,9 +9,7 @@ const CareerOpertunity = () => {
     const { getCourseCareerChartBySlug } = useCourses();
     const careerChart = getCourseCareerChartBySlug(slug as string);
     const headingRef = useRef<HTMLDivElement>(null);
-    const tableRef = useRef<HTMLTableSectionElement>(null);
     const headingInView = useInView(headingRef, { once: false, margin: "-80px" });
-    const tableInView = useInView(tableRef, { once: false, margin: "-60px" });
 
     if (!careerChart || careerChart.length === 0) return null;
 
@@ -33,9 +31,8 @@ const CareerOpertunity = () => {
                     </p>
                 </div>
 
-                {/* Table styled like GradePerformance */}
                 <div className="overflow-x-auto">
-                    <table className="w-full min-w-160 sm:min-w-230 md:min-w-6xl table-fixed border-collapse border border-neutral-300  bg-white">
+                    <table className="w-full min-w-[640px] table-fixed border-collapse border border-neutral-300 bg-white">
                         <thead
                             className="bg-white"
                             style={{
@@ -44,33 +41,33 @@ const CareerOpertunity = () => {
                             }}
                         >
                             <tr>
-                                {/* On mobile, first two columns are narrower, last column wider */}
-                                <th className="border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[22%] md:w-[24%] lg:w-[26%]">
+                                <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[24%] md:w-[26%] lg:w-[28%] min-w-26">
                                     Job Role
                                 </th>
-                                <th className="border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[32%] md:w-[34%] lg:w-[36%]">
+                                <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[32%] md:w-[34%] lg:w-[34%]">
                                     What You&apos;ll Do
                                 </th>
-                                <th className="border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[46%] md:w-[42%] lg:w-[38%]">
+                                <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[44%] md:w-[40%] lg:w-[38%]">
                                     Example Employers
                                 </th>
                             </tr>
                         </thead>
-                        <tbody ref={tableRef}>
+                        <tbody>
                             {careerChart.map((row, index) => (
                                 <motion.tr
                                     key={row.jobRole}
-                                    initial={{ opacity: 0, y: 16 }}
-                                    animate={tableInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-                                    transition={{ duration: 0.4, delay: index * 0.06, ease: "easeOut" }}
+                                    initial={{ opacity: 0, x: 24 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: false, amount: 0.3 }}
+                                    transition={{ duration: 0.45, ease: "easeOut", delay: index * 0.06 }}
                                 >
-                                    <td className="align-top border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-normal sm:whitespace-nowrap">
+                                    <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-normal wrap-break-words">
                                         {row.jobRole}
                                     </td>
-                                    <td className="align-top border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary leading-relaxed">
+                                    <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-normal wrap-break-words leading-relaxed">
                                         {row.whatYouDo}
                                     </td>
-                                    <td className="align-top border border-neutral-300  px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary leading-relaxed">
+                                    <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-normal wrap-break-words leading-relaxed">
                                         {row.exampleEmployers}
                                     </td>
                                 </motion.tr>

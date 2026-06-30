@@ -5,6 +5,7 @@ import { IoSearch } from "react-icons/io5";
 import { SearchIcon } from "lucide-react";
 import { MenuToggleIcon } from "@/components/ui/menu-toggle-icon";
 import {
+    FaFacebookF,
     FaInstagram,
     FaLinkedinIn,
     FaWhatsapp,
@@ -419,6 +420,17 @@ const Navbar: React.FC = () => {
                                                 <FaInstagram className="w-5 h-5" />
                                             </motion.a>
                                             <motion.a
+                                                href="https://www.facebook.com/profile.php?id=61587196465882"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="text-gray-600 hover:text-primary transition-colors"
+                                                whileHover={{ scale: 1.1 }}
+                                                whileTap={{ scale: 0.9 }}
+                                                aria-label="Facebook"
+                                            >
+                                                <FaFacebookF className="w-5 h-5" />
+                                            </motion.a>
+                                            <motion.a
                                                 href="https://www.youtube.com/@cyberlabsindiabycyveritas-y7h"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
@@ -441,7 +453,7 @@ const Navbar: React.FC = () => {
                                                 <FaLinkedinIn className="w-5 h-5" />
                                             </motion.a>
                                             <motion.a
-                                                href="#"
+                                                href="https://wa.me/971504602632"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="text-gray-600 hover:text-primary transition-colors"

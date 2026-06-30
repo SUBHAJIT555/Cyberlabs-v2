@@ -104,7 +104,7 @@ const TermsAndCondition = () => {
                     For clarity:
                   </p>
                   <ul className="list-disc list-inside space-y-2 mb-4 text-sm sm:text-base md:text-lg text-neutral-700 font-inter-display ml-4">
-                    <li>&quot;PLATFORM&quot; refers to cyberslabs.in, its subdomains, web applications, and associated online services.</li>
+                    <li>&quot;PLATFORM&quot; refers to cyberlabs-india.com, its subdomains, web applications, and associated online services.</li>
                     <li>&quot;USER&quot;, &quot;YOU&quot;, or &quot;LEARNER&quot; means any individual or entity accessing or using our Platform.</li>
                     <li>&quot;PROGRAMS&quot; refer to online courses, labs, simulators, or certifications offered through CYBERLABS INDIA.</li>
                     <li>&quot;CONTENT&quot; means all materials, videos, exercises, text, graphics, and intellectual property available on the Platform.</li>
@@ -119,7 +119,7 @@ const TermsAndCondition = () => {
                     To register and access CYBERLABS INDIA:
                   </p>
                   <ul className="list-disc list-inside space-y-2 mb-4 text-sm sm:text-base md:text-lg text-neutral-700 font-inter-display ml-4">
-                    <li>You must be at least 16 years old or have parental consent.</li>
+                    
                     <li>You must provide accurate and complete information during signup.</li>
                     <li>We reserve the right to deny or revoke access if false information or misuse is detected.</li>
                   </ul>
@@ -172,9 +172,9 @@ const TermsAndCondition = () => {
                     7. Payments &amp; Refund Policy
                   </h3>
                   <ul className="list-disc list-inside space-y-2 mb-4 text-sm sm:text-base md:text-lg text-neutral-700 font-inter-display ml-4">
-                    <li>All fees are displayed in USD ($) or equivalent currency and are non-transferable.</li>
+                    <li>All fees are displayed in INR (₹) or equivalent currency and are non-transferable.</li>
                     <li>Payments are processed via secure gateways.</li>
-                    <li>Refunds are available only under CYBERLABS INDIA&apos;s Refund Policy, accessible at <Link to="/refund-policy" className="text-primary hover:underline">cyberslabs.in/refund-policy</Link>.</li>
+                    <li>Refunds are available only under CYBERLABS INDIA&apos;s Refund Policy, accessible at <Link to="/refund-policy" className="text-primary hover:underline">cyberlabs-india.com/refund-policy</Link>.</li>
                     <li>We may revise pricing or offers periodically.</li>
                   </ul>
                 </div>
@@ -279,10 +279,10 @@ const TermsAndCondition = () => {
                     15. Governing Law and Jurisdiction
                   </h3>
                   <p className="text-sm sm:text-base md:text-lg text-neutral-700 font-inter-display leading-relaxed mb-4">
-                    These Terms are governed by the laws of India, with jurisdiction in Bangalore, Karnataka.
+                    These Terms are governed by the laws of India, with jurisdiction state of Maharastra.
                   </p>
                   <p className="text-sm sm:text-base md:text-lg text-neutral-700 font-inter-display leading-relaxed">
-                    Any disputes shall be subject to the exclusive jurisdiction of Bangalore courts.
+                    Any disputes shall be subject to the exclusive jurisdiction of Maharashtra courts.
                   </p>
                 </div>
 

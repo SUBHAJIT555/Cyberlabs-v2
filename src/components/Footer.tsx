@@ -2,6 +2,7 @@ import { Link } from "@/lib/react-router";
 import { useForm, type FieldValues } from "react-hook-form";
 import { useRef, type BaseSyntheticEvent, type ReactNode } from "react";
 import {
+    FaFacebookF,
     FaHeart,
     FaInstagram,
     FaLinkedinIn,
@@ -38,8 +39,8 @@ const legalLinks = [
     { label: "Terms & Condition", to: "/terms-and-conditions" },
     { label: "Privacy Policy", to: "/privacy-policy" },
     { label: "Cookie Policy", to: "/cookie-policy" },
-    { label: "Refund Policy", to: "/refund-and-cancellation" },
-    { label: "Support", to: `mailto:${CONTACT.supportEmail}`, external: true },
+    { label: "Refund & Cancellation Policy", to: "/refund-and-cancellation" },
+    { label: "Support", to: `mailto:${CONTACT.educationEmail}`, external: true },
 ];
 
 const socialLinks = [
@@ -47,6 +48,11 @@ const socialLinks = [
         label: "Instagram",
         href: "https://www.instagram.com/cyberlabsindia",
         icon: FaInstagram,
+    },
+    {
+        label: "Facebook",
+        href: "https://www.facebook.com/profile.php?id=61587196465882",
+        icon: FaFacebookF,
     },
     {
         label: "YouTube",
@@ -58,7 +64,7 @@ const socialLinks = [
         href: "https://www.linkedin.com/company/cyberlabs-india/",
         icon: FaLinkedinIn,
     },
-    { label: "WhatsApp", href: "#", icon: FaWhatsapp },
+    { label: "WhatsApp", href: "https://wa.me/971504602632", icon: FaWhatsapp },
 ];
 
 const inputClassName =

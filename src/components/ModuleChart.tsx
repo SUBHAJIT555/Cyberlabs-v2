@@ -56,7 +56,7 @@ const ModuleChart = () => {
                         >
                             <tr>
                                 {/* On mobile, first two columns are narrow, last column wider */}
-                                <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[15%] md:w-[12%] lg:w-[10%]">
+                                <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[20%] md:w-[16%] lg:w-[14%] min-w-26">
                                     {firstColLabel}
                                 </th>
                                 <th className="border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-left text-xs sm:text-sm md:text-base font-montserrat font-bold text-text-primary w-[20%] md:w-[22%] lg:w-[24%]">
@@ -81,10 +81,10 @@ const ModuleChart = () => {
                                     viewport={{ once: false, amount: 0.3 }}
                                     transition={{ duration: 0.45, ease: "easeOut", delay: index * 0.06 }}
                                 >
-                                    <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-normal sm:whitespace-nowrap">
+                                    <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-normal wrap-break-words">
                                         {row.module}
                                     </td>
-                                    <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary">
+                                    <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary whitespace-normal wrap-break-words">
                                         {row.focusArea}
                                     </td>
                                     {hasHours && (
@@ -92,7 +92,7 @@ const ModuleChart = () => {
                                             {row.hours || "-"}
                                         </td>
                                     )}
-                                    <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary leading-relaxed">
+                                    <td className="align-top border border-neutral-300 px-3 sm:px-4 md:px-6 py-3 sm:py-4 text-xs sm:text-sm md:text-base font-inter-display font-medium text-text-primary leading-relaxed whitespace-normal wrap-break-words">
                                         {row.whatYouLearn}
                                     </td>
                                 </motion.tr>
